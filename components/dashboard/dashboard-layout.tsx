@@ -4,7 +4,7 @@ import {useSession} from 'next-auth/react';
 import {Sidebar} from '../sidebar';
 import {Header} from '../header';
 
-export function DashboardWrapper({children}: {children: JSX.Element[]}) {
+export function DashboardWrapper({children}: {children: React.ReactNode}) {
   const [css] = useStyletron();
 
   const boxStyle = css({
@@ -16,7 +16,7 @@ export function DashboardWrapper({children}: {children: JSX.Element[]}) {
   return <div className={boxStyle}>{children}</div>;
 }
 
-export function DashboardLayout({children}: {children: JSX.Element}) {
+export function DashboardLayout({children}: {children: React.ReactNode}) {
   const {status} = useSession({
     required: true,
   });
