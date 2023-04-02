@@ -16,7 +16,7 @@ export default function App({Component, pageProps}: FullAppProps) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <PlausibleProvider domain="trackerjam.com">
+      <PlausibleProvider domain="trackerjam.com" customDomain="p.hostedapp.one">
         <StyletronProvider value={styletron}>
           <BaseProvider theme={Theme}>
             <Layout>
