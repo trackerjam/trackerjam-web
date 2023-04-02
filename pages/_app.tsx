@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import * as React from 'react';
 import type {AppProps} from 'next/app';
 import {SessionProvider} from 'next-auth/react';
+import PlausibleProvider from 'next-plausible';
 import {Provider as StyletronProvider} from 'styletron-react';
 import {LightTheme as Theme, BaseProvider} from 'baseui';
 import {styletron} from '../styletron';
@@ -15,13 +16,15 @@ export default function App({Component, pageProps}: FullAppProps) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <StyletronProvider value={styletron}>
-        <BaseProvider theme={Theme}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </BaseProvider>
-      </StyletronProvider>
+      <PlausibleProvider domain="trackerjam.com">
+        <StyletronProvider value={styletron}>
+          <BaseProvider theme={Theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </BaseProvider>
+        </StyletronProvider>
+      </PlausibleProvider>
     </SessionProvider>
   );
 }
