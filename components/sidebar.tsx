@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useStyletron} from 'baseui';
+import {getBorder} from '../utils/get-border';
 import {UserProfile} from './user-profile';
 import {SideNav} from './side-nav';
 
@@ -9,7 +10,7 @@ export function Sidebar() {
   const boxStyle = css({
     backgroundColor: theme.colors.backgroundSecondary,
     width: '280px',
-    ...theme.borders.border300,
+    borderRight: getBorder(theme.borders.border300),
   });
 
   return (

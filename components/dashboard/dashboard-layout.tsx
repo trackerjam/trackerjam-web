@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {useStyletron} from 'baseui';
-import {useRouter} from 'next/router';
 import {useSession} from 'next-auth/react';
 import {Sidebar} from '../sidebar';
-import {Breadcrumbs} from './breadcrumbs';
+import {Header} from '../header';
 
 export function DashboardWrapper({children}: {children: JSX.Element[]}) {
   const [css] = useStyletron();
@@ -22,7 +21,6 @@ export function DashboardLayout({children}: {children: JSX.Element}) {
     required: true,
   });
   const [css, theme] = useStyletron();
-  const {asPath} = useRouter();
 
   // Do not show dashboard until session is populated
   if (status === 'loading') return null;
@@ -35,19 +33,21 @@ export function DashboardLayout({children}: {children: JSX.Element}) {
   });
 
   const dashboardViewWrapperStyle = css({
-    paddingTop: theme.sizing.scale400,
+    paddingTop: theme.sizing.scale800,
     paddingBottom: theme.sizing.scale400,
     paddingLeft: theme.sizing.scale800,
     paddingRight: theme.sizing.scale800,
   });
 
   return (
-    <div className={boxStyle}>
-      <Sidebar />
-      <DashboardWrapper>
-        <Breadcrumbs path={asPath} />
-        <div className={dashboardViewWrapperStyle}>{children}</div>
-      </DashboardWrapper>
+    <div>
+      <Header />
+      <main className={boxStyle}>
+        <Sidebar />
+        <DashboardWrapper>
+          <div className={dashboardViewWrapperStyle}>{children}</div>
+        </DashboardWrapper>
+      </main>
     </div>
   );
 }
