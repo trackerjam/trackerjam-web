@@ -1,10 +1,9 @@
 import {useStyletron} from 'baseui';
 import {LabelLarge as Title} from 'baseui/typography';
 import {FormControl} from 'baseui/form-control';
-import {Select} from 'baseui/select';
-import {Button, KIND as ButtonKind} from 'baseui/button';
+import {Button} from 'baseui/button';
 import {LABEL_PLACEMENT} from 'baseui/checkbox';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import React, {useCallback} from 'react';
 import {Notification, KIND} from 'baseui/notification';
 import Head from 'next/head';
@@ -12,7 +11,6 @@ import {useRouter} from 'next/router';
 import {RadioGroup} from 'baseui/radio';
 import {Textarea} from 'baseui/textarea';
 import {ControlledInput} from '../common/controlled-input';
-import {ControlledCheckbox} from '../common/controlled-checkbox';
 import {useSendData} from '../hooks/use-send-data';
 import {ControlledRadio} from '../common/controlled-radio';
 
@@ -91,13 +89,6 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
     marginTop: theme.sizing.scale600,
     display: 'flex',
     justifyContent: 'flex-end',
-  });
-
-  const lineStyle = css({
-    border: 'none',
-    marginTop: theme.sizing.scale700,
-    marginBottom: theme.sizing.scale650,
-    borderBottom: `1px solid ${theme.borders.border200.borderColor}`,
   });
 
   const formTitleStyle = css({
