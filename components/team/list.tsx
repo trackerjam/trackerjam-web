@@ -10,6 +10,12 @@ import {useRouter} from 'next/router';
 import {TableSkeleton} from './table-skeleton';
 
 // TODO add table types
+type Row = {
+  id: string;
+  name: string;
+  status: string;
+  description: string;
+};
 
 export function Team() {
   const [css, theme] = useStyletron();
@@ -95,18 +101,18 @@ export function Team() {
               </div>
             }
           >
-            <TableBuilderColumn header="Token">
+            <TableBuilderColumn<Row> header="Token">
               {(row) => {
                 return <div>{row.name}</div>;
               }}
             </TableBuilderColumn>
-            <TableBuilderColumn header="Description">
+            <TableBuilderColumn<Row> header="Description">
               {(row) => row.description?.slice(0, 80) || '-'}
             </TableBuilderColumn>
 
-            <TableBuilderColumn header="Status">{(row) => row.status}</TableBuilderColumn>
+            <TableBuilderColumn<Row> header="Status">{(row) => row.status}</TableBuilderColumn>
 
-            <TableBuilderColumn header="Actions">
+            <TableBuilderColumn<Row> header="Actions">
               {(row) => {
                 return (
                   <div className={buttonsWrapperStyle}>
