@@ -33,28 +33,30 @@ export function ControlledInput({
       rules={rules}
       render={({field: {onChange, onBlur, value, name, ref}, fieldState: {invalid, error}}) => {
         return (
-          <FormControl
-            label={label}
-            error={error?.message || null}
-            caption={caption}
-            overrides={{
-              ControlContainer: {
-                style: () => ({
-                  marginBottom: 0,
-                }),
-              },
-            }}
-          >
-            <Input
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-              inputRef={ref as unknown as React.RefObject<HTMLInputElement>}
-              name={name}
-              error={invalid}
-              {...rest}
-            />
-          </FormControl>
+          <div>
+            <FormControl
+              label={label}
+              error={error?.message || null}
+              caption={caption}
+              overrides={{
+                ControlContainer: {
+                  style: () => ({
+                    marginBottom: 0,
+                  }),
+                },
+              }}
+            >
+              <Input
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                inputRef={ref as unknown as React.RefObject<HTMLInputElement>}
+                name={name}
+                error={invalid}
+                {...rest}
+              />
+            </FormControl>
+          </div>
         );
       }}
     />

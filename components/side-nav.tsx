@@ -2,10 +2,10 @@ import * as React from 'react';
 import {useStyletron} from 'baseui';
 import {Navigation} from 'baseui/side-navigation';
 import {useRouter} from 'next/router';
-import {CiViewList, CiSettings, CiViewBoard, CiBellOn} from 'react-icons/ci';
+import {CiViewList, CiSettings, CiViewBoard, CiBellOn, CiPizza} from 'react-icons/ci';
 import {type IconType} from 'react-icons';
 
-const DEFAULT_ROUTE = '/dashboard/team';
+const DEFAULT_ROUTE = '/dashboard';
 
 type IconTitleProps = {
   title: string;
@@ -16,7 +16,8 @@ function getActivePath(route: string): string {
   if (route === '/dashboard') {
     return DEFAULT_ROUTE;
   }
-  return route;
+  const parts = route.split('/').filter(Boolean);
+  return `/${parts[0]}`;
 }
 
 function IconTitle({title, icon}: IconTitleProps) {
@@ -50,20 +51,24 @@ export function SideNav() {
       <Navigation
         items={[
           {
+            title: <IconTitle title="Dashboard" icon={CiPizza} />,
+            itemId: '/dashboard',
+          },
+          {
             title: <IconTitle title="Team" icon={CiViewList} />,
-            itemId: '/dashboard/team',
+            itemId: '/team',
           },
           {
             title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
-            itemId: '/dashboard/events',
+            itemId: '/events',
           },
           {
             title: <IconTitle title="Statistics" icon={CiViewBoard} />,
-            itemId: '/dashboard/statistics',
+            itemId: '/statistics',
           },
           {
             title: <IconTitle title="Settings" icon={CiSettings} />,
-            itemId: '/dashboard/settings',
+            itemId: '/settings',
           },
         ]}
         activeItemId={getActivePath(router.route)}

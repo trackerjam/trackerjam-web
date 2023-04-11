@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import {LabelLarge as Title, LabelSmall as Subtitle} from 'baseui/typography';
 
-export function Team() {
+export function Dashboard() {
   return (
     <div>
       <Head>
-        <title>Team</title>
+        <title>Dashboard</title>
       </Head>
 
-      <Title marginBottom="scale600">Team</Title>
+      <Title marginBottom="scale600">Dashboard</Title>
 
       <Subtitle>The page is under development</Subtitle>
     </div>

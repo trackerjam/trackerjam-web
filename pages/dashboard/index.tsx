@@ -1,11 +1,11 @@
-import {DashboardLayout} from '../../components/dashboard/dashboard-layout';
-import TeamPage from './team';
+import {Layout} from '../../components/layout';
+import {Dashboard} from '../../components/dashboard/dashboard';
 
 // Default page for "/dashboard" route
 const DashboardPage = () => {
-  return <TeamPage />;
+  return <Dashboard />;
 };
 
-DashboardPage.Layout = DashboardLayout;
+DashboardPage.Layout = Layout;
 
 export default DashboardPage;
