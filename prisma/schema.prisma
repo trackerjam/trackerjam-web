@@ -54,36 +54,42 @@ model VerificationToken {
 }
 
 model Team {
-  id          String       @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   ownerUserId String
-  ownerUser   User         @relation(fields: [ownerUserId], references: [id])
-  members     TeamMember[]
+  ownerUser   User     @relation(fields: [ownerUserId], references: [id])
+  members     Member[]
 }
 
-model TeamMember {
-  id          String        @id @default(cuid())
-  token       String        @unique // JWT? Hash?
-  name        String?
-  title       String?
-  description String?
-  email       String?
-  teams       Team[]
-  activity    TabActivity[]
-  summary     Summary[]
+model Member {
+  token        String        @id @default(uuid())
+  name         String?
+  title        String?
+  description  String?
+  email        String?
+  teams        Team[]
+  activity     TabActivity[]
+  summary      Summary[]
+  trackMode    TRACK_MODE
+  trackDomains String[]
+}
+
+enum TRACK_MODE {
+  ALL
+  SPECIFIC_DOMAINS
 }
 
 model TabActivity {
-  id        String     @id @default(cuid())
-  type      TAB_TYPE
-  datetime  DateTime
-  domain    String
-  title     String?
-  docTitle  String?
-  memberId  String
-  member    TeamMember @relation(fields: [memberId], references: [id])
-  timeSpent Int
-  intervals Json // Array<{tsStart, tsEnd}>
+  id          String   @id @default(cuid())
+  type        TAB_TYPE
+  datetime    DateTime
+  domain      String
+  title       String?
+  docTitle    String?
+  memberToken String
+  member      Member   @relation(fields: [memberToken], references: [token])
+  timeSpent   Int
+  intervals   Json // Array<{tsStart, tsEnd}>
 
   @@unique([datetime, domain])
 }
@@ -94,10 +100,10 @@ enum TAB_TYPE {
 }
 
 model Summary {
-  id           String     @id @default(cuid())
+  id           String   @id @default(cuid())
   datetime     DateTime
   domainsCount Int
   activityTime Int
-  memberId     String
-  member       TeamMember @relation(fields: [memberId], references: [id])
+  memberToken  String
+  member       Member   @relation(fields: [memberToken], references: [token])
 }
