@@ -8,7 +8,7 @@ generator client {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(uuid())
   userId            String
   type              String
   provider          String
@@ -27,7 +27,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -35,7 +35,7 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -54,7 +54,7 @@ model VerificationToken {
 }
 
 model Team {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   name        String
   ownerUserId String
   ownerUser   User     @relation(fields: [ownerUserId], references: [id])
@@ -62,58 +62,53 @@ model Team {
 }
 
 model Member {
-  token        String          @id @default(uuid())
-  name         String?
-  title        String?
-  description  String?
-  email        String?
-  timezone     String
-  teams        Team[]
-  activity     TabActivity[]
-  summary      Summary[]
-  trackMode    TRACK_MODE
-  trackDomains String[]
-  status       STATUS
-  settings     MemberSettings?
-}
-
-enum TRACK_MODE {
-  ALL
-  SPECIFIC_DOMAINS
+  id          String          @id @default(uuid())
+  token       String          @default(uuid())
+  name        String?
+  title       String?
+  description String?
+  email       String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  timezone    String
+  teams       Team[]
+  activity    TabActivity[]
+  summary     Summary[]
+  status      STATUS
+  settings    MemberSettings?
 }
 
 enum STATUS {
   NEW
   ACTIVE
-  PAUSE
+  PAUSED
   DISABLED
   INVALID
 }
 
 model MemberSettings {
-  id          String @id @default(cuid())
-  memberToken String @unique
-  member      Member @relation(fields: [memberToken], references: [token])
-  settings    Json
+  id       String @id @default(uuid())
+  memberId String @unique
+  member   Member @relation(fields: [memberId], references: [id])
+  settings Json // trackMode {ALL, SPECIFIC_DOMAINS}, trackDomains String[]
 }
 
 model TabActivity {
-  id          String             @id @default(cuid())
+  id          String             @id @default(uuid())
   type        TAB_TYPE
   datetime    DateTime
-  domain      String
+  domain      Domain             @relation(fields: [domainId], references: [id])
   title       String?
   docTitle    String?
   memberToken String
-  member      Member             @relation(fields: [memberToken], references: [token])
+  member      Member             @relation(fields: [memberToken], references: [id])
   timeSpent   Int
   intervals   ActivityInterval[]
-
-  @@unique([datetime, domain])
+  domainId    String
 }
 
 model ActivityInterval {
-  id            String      @id @default(cuid())
+  id            String      @id @default(uuid())
   tabActivityId String
   activity      TabActivity @relation(fields: [tabActivityId], references: [id])
   startDatetime DateTime
@@ -126,10 +121,33 @@ enum TAB_TYPE {
 }
 
 model Summary {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   datetime     DateTime
   domainsCount Int
   activityTime Int
   memberToken  String
-  member       Member   @relation(fields: [memberToken], references: [token])
+  member       Member   @relation(fields: [memberToken], references: [id])
+}
+
+model SiteBrand {
+  id         String   @id @default(uuid())
+  title      String
+  mainDomain String   @unique
+  domains    Domain[]
+}
+
+model Domain {
+  id          String        @id @default(uuid())
+  domain      String        @unique
+  catefories  Category[]
+  siteBrandId String
+  siteBrand   SiteBrand     @relation(fields: [siteBrandId], references: [id])
+  TabActivity TabActivity[]
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  domains     Domain[]
 }
