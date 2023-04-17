@@ -129,20 +129,20 @@ model Summary {
   member       Member   @relation(fields: [memberToken], references: [id])
 }
 
+model Domain {
+  id          String        @id @default(uuid())
+  domain      String        @unique
+  TabActivity TabActivity[]
+  siteBrandId String
+  siteBrand   SiteBrand?    @relation(fields: [siteBrandId], references: [id])
+  categories  Category[]
+}
+
 model SiteBrand {
   id         String   @id @default(uuid())
   title      String
   mainDomain String   @unique
   domains    Domain[]
-}
-
-model Domain {
-  id          String        @id @default(uuid())
-  domain      String        @unique
-  catefories  Category[]
-  siteBrandId String
-  siteBrand   SiteBrand     @relation(fields: [siteBrandId], references: [id])
-  TabActivity TabActivity[]
 }
 
 model Category {
