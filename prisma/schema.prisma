@@ -94,20 +94,21 @@ model MemberSettings {
 }
 
 model TabActivity {
-  id          String             @id @default(uuid())
-  type        TAB_TYPE
-  datetime    DateTime
-  domain      Domain             @relation(fields: [domainId], references: [id])
-  title       String?
-  docTitle    String?
-  memberToken String
-  member      Member             @relation(fields: [memberToken], references: [id])
-  timeSpent   Int
-  intervals   ActivityInterval[]
-  domainId    String
+  id                String            @id @default(uuid())
+  type              TAB_TYPE
+  datetime          DateTime
+  url               String            @unique
+  domainId          String
+  title             String?
+  docTitle          String?
+  memberToken       String
+  member            Member            @relation(fields: [memberToken], references: [id])
+  timeSpent         Int
+  sessionActivities SessionActivity[]
+  activitiesCount   Int
 }
 
-model ActivityInterval {
+model SessionActivity {
   id            String      @id @default(uuid())
   tabActivityId String
   activity      TabActivity @relation(fields: [tabActivityId], references: [id])
@@ -130,11 +131,10 @@ model Summary {
 }
 
 model Domain {
-  id          String        @id @default(uuid())
-  domain      String        @unique
-  TabActivity TabActivity[]
+  id          String     @id @default(uuid())
+  domain      String     @unique
   siteBrandId String
-  siteBrand   SiteBrand?    @relation(fields: [siteBrandId], references: [id])
+  siteBrand   SiteBrand? @relation(fields: [siteBrandId], references: [id])
   categories  Category[]
 }
 
