@@ -133,16 +133,7 @@ model Summary {
 model Domain {
   id          String     @id @default(uuid())
   domain      String     @unique
-  siteBrandId String
-  siteBrand   SiteBrand? @relation(fields: [siteBrandId], references: [id])
   categories  Category[]
-}
-
-model SiteBrand {
-  id         String   @id @default(uuid())
-  title      String
-  mainDomain String   @unique
-  domains    Domain[]
 }
 
 model Category {
