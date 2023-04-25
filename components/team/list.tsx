@@ -1,32 +1,23 @@
 import Head from 'next/head';
-import {HeadingSmall as Title, LabelXSmall as Subtitle} from 'baseui/typography';
+import {HeadingSmall as Title, LabelSmall as Subtitle} from 'baseui/typography';
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
 import {Button, KIND as ButtonKind, SIZE as ButtonSize} from 'baseui/button';
+import {Tag, KIND} from 'baseui/tag';
+
 import {useStyletron} from 'baseui';
-import {useEffect, useState} from 'react';
-import {BiLinkExternal} from 'react-icons/bi';
+import {useMemo} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useRouter} from 'next/router';
+import type {Member, Team} from '@prisma/client';
+import {useGetData} from '../hooks/use-get-data';
+import {DEFAULT_TEAM_NAME} from '../../const/team';
+import {ErrorDetails} from '../common/error-details';
 import {TableSkeleton} from './table-skeleton';
-
-// TODO add table types
-type Row = {
-  id: string;
-  name: string;
-  status: string;
-  description: string;
-};
 
 export function Team() {
   const [css, theme] = useStyletron();
-  const [isLoading, setIsLoading] = useState(true);
+  const {data, isLoading, error} = useGetData<Array<Team & {members: Member[]}>>('/api/team');
   const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
-  }, []);
 
   const tableBlockStyle = css({
     padding: theme.sizing.scale400,
@@ -34,16 +25,18 @@ export function Team() {
     borderRadius: '10px',
   });
 
-  const buttonsWrapperStyle = css({
-    display: 'flex',
-    gap: theme.sizing.scale200,
-  });
-
   const buttonsBlock = css({
     display: 'flex',
     justifyContent: 'flex-end',
     marginBottom: theme.sizing.scale600,
   });
+
+  const teamData = useMemo(() => {
+    if (data) {
+      // We currently support the default team only
+      return data.find(({name}) => name === DEFAULT_TEAM_NAME)?.members;
+    }
+  }, [data]);
 
   const addMemberClickHandler = () => {
     router.push('/team/add');
@@ -59,6 +52,8 @@ export function Team() {
         Team
       </Title>
       <Subtitle>List of your team members & contractors</Subtitle>
+
+      {error && <ErrorDetails error={error} />}
 
       <div className={buttonsBlock}>
         <Button
@@ -80,7 +75,7 @@ export function Team() {
         {isLoading && <TableSkeleton />}
         {!isLoading && (
           <TableBuilder
-            data={[]}
+            data={teamData}
             emptyMessage={
               <div
                 className={css({
@@ -101,41 +96,34 @@ export function Team() {
               </div>
             }
           >
-            <TableBuilderColumn<Row> header="Token">
+            <TableBuilderColumn<Member> header="Name">
               {(row) => {
                 return <div>{row.name}</div>;
               }}
             </TableBuilderColumn>
-            <TableBuilderColumn<Row> header="Description">
+
+            <TableBuilderColumn<Member> header="Title">
+              {(row) => {
+                return <div>{row.title}</div>;
+              }}
+            </TableBuilderColumn>
+
+            <TableBuilderColumn<Member> header="Token">
+              {(row) => {
+                return <code>{row.token}</code>;
+              }}
+            </TableBuilderColumn>
+
+            <TableBuilderColumn<Member> header="Description">
               {(row) => row.description?.slice(0, 80) || '-'}
             </TableBuilderColumn>
 
-            <TableBuilderColumn<Row> header="Status">{(row) => row.status}</TableBuilderColumn>
-
-            <TableBuilderColumn<Row> header="Actions">
-              {(row) => {
-                return (
-                  <div className={buttonsWrapperStyle}>
-                    <Button
-                      kind={ButtonKind.secondary}
-                      size={ButtonSize.mini}
-                      $as="a"
-                      href={`/subscribe/${row.id}`}
-                      target="_blank"
-                      rel="noopener"
-                      endEnhancer={<BiLinkExternal title="" />}
-                    >
-                      View
-                    </Button>
-                    <Button kind={ButtonKind.secondary} size={ButtonSize.mini}>
-                      Edit
-                    </Button>
-                    <Button kind={ButtonKind.secondary} size={ButtonSize.mini}>
-                      Archive
-                    </Button>
-                  </div>
-                );
-              }}
+            <TableBuilderColumn<Member> header="Status">
+              {(row) => (
+                <Tag kind={KIND.blue} closeable={false}>
+                  {row.status}
+                </Tag>
+              )}
             </TableBuilderColumn>
           </TableBuilder>
         )}
