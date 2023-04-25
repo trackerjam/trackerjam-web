@@ -69,7 +69,7 @@ model Member {
   description String?
   email       String?
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  updatedAt   DateTime        @updatedAt // investigate the bug: https://github.com/prisma/prisma/issues/12572
   timezone    String
   teams       Team[]
   activity    TabActivity[]
@@ -97,7 +97,7 @@ model TabActivity {
   id                String            @id @default(uuid())
   type              TAB_TYPE
   datetime          DateTime
-  url               String            @unique
+  url               String
   domainId          String
   title             String?
   docTitle          String?
@@ -131,9 +131,9 @@ model Summary {
 }
 
 model Domain {
-  id          String     @id @default(uuid())
-  domain      String     @unique
-  categories  Category[]
+  id         String     @id @default(uuid())
+  domain     String     @unique
+  categories Category[]
 }
 
 model Category {

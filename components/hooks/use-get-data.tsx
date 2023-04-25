@@ -1,16 +1,14 @@
 import {useCallback, useEffect, useState} from 'react';
 
-type DataType = any;
-
-type UsePostReturnType = {
+interface UsePostReturnType<T> {
   isLoading: boolean;
-  data: DataType;
+  data: T | null | undefined;
   error: string | null;
   update: () => void;
-};
+}
 
-export function useGetData(url: string): UsePostReturnType {
-  const [data, setData] = useState<DataType>();
+export function useGetData<T>(url: string): UsePostReturnType<T> {
+  const [data, setData] = useState<T | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
