@@ -1,17 +1,18 @@
 import {useCallback, useState} from 'react';
+import type {ErrorResponse} from '../../types/api';
 
-type UseSendReturnType = {
+interface UseSendReturnType<T> {
   isLoading: boolean;
   error: string | null;
-  send: (data: any, method?: string) => Promise<any>;
-};
+  send: (data: T, method?: string) => Promise<T | ErrorResponse>;
+}
 
-export function useSendData(url: string): UseSendReturnType {
+export function useSendData<T>(url: string): UseSendReturnType<T> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const send = useCallback(
-    async (body: any, method = 'POST') => {
+    async (body: T, method = 'POST') => {
       setIsLoading(true);
       setError(null);
 
@@ -26,7 +27,7 @@ export function useSendData(url: string): UseSendReturnType {
           body: JSON.stringify(body),
         });
         jsonData = await res.json();
-        if (jsonData.status === 'error' && jsonData.errorMsg) {
+        if ('error' in jsonData) {
           throw new Error(jsonData.errorMsg);
         }
       } catch (err: any) {

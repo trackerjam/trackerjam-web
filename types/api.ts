@@ -6,3 +6,8 @@ export interface SessionId extends Session {
     email: string;
   };
 }
+
+export type ErrorResponse = {
+  error: boolean;
+  errorMsg: string;
+};
