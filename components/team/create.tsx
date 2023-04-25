@@ -10,17 +10,14 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {RadioGroup} from 'baseui/radio';
 import {Textarea} from 'baseui/textarea';
+import {Member} from '@prisma/client';
 import {ControlledInput} from '../common/controlled-input';
 import {useSendData} from '../hooks/use-send-data';
 import {ControlledRadio} from '../common/controlled-radio';
 
-export type FormDataType = {
-  id?: string;
-  name: string;
-  description: string;
-  email: string;
-  trackType: string;
-};
+const ADDITIONAL_FIELDS_SHOWN = false;
+
+export type FormDataType = Partial<Member>;
 
 type CreateProductProps = {
   editingProduct?: undefined | Partial<FormDataType>;
@@ -30,15 +27,14 @@ const defaultValues: FormDataType = {
   name: '',
   description: '',
   email: '',
-  trackType: '',
 };
 
 export function CreateProduct({editingProduct}: CreateProductProps) {
   const isEditing = Boolean(editingProduct);
   const router = useRouter();
   const [css, theme] = useStyletron();
-  const {send, isLoading, error} = useSendData(
-    `/api/products/${isEditing ? editingProduct?.id : ''}`
+  const {send, isLoading, error} = useSendData<FormDataType>(
+    `/api/member/${isEditing ? editingProduct?.id : ''}`
   );
   const {handleSubmit, control, reset} = useForm({
     reValidateMode: 'onBlur',
@@ -47,7 +43,7 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
 
   const onSubmit = useCallback(
     async (formData: Partial<FormDataType>) => {
-      let dataToSend: any = {};
+      let dataToSend: FormDataType = {};
 
       if (isEditing) {
         dataToSend = {...formData};
@@ -59,11 +55,11 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
       }
 
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
-      if (res?.status === 'error') {
+      if ('error' in res) {
         console.error('Unknown error', res);
       } else {
         reset();
-        await router.push('/dashboard/products');
+        await router.push('/team');
       }
     },
     [isEditing, reset, router, send]
@@ -124,11 +120,19 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
           )}
 
           <ControlledInput
-            label="Name"
+            label="Name *"
             required
             control={control}
             name="name"
-            caption="Person name or title"
+            caption="Person name"
+            disabled={isLoading}
+          />
+
+          <ControlledInput
+            label="Title"
+            control={control}
+            name="title"
+            caption="Job title"
             disabled={isLoading}
           />
 
@@ -136,7 +140,7 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
             label="Description"
             control={control}
             name="description"
-            caption="Any details, visible to you only"
+            caption="Any details, visible only to you"
             maxLength={255}
             disabled={isLoading}
           />
@@ -148,33 +152,37 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
             placeholder=""
             type="email"
             disabled={isLoading}
-            caption="We'll send them tracking key"
+            caption="We will send them the tracking key"
           />
 
-          <RadioGroup name="trackType" value="trackAll">
-            <ControlledRadio
-              control={control}
-              required
-              name="trackAll"
-              value="trackAll"
-              labelPlacement={LABEL_PLACEMENT.right}
-              disabled={isLoading}
-              label="Track all tabs"
-            />
-            <ControlledRadio
-              control={control}
-              required
-              name="trackDomains"
-              value="trackDomains"
-              labelPlacement={LABEL_PLACEMENT.right}
-              disabled={isLoading}
-              label="Track specific domains"
-            />
-          </RadioGroup>
+          {ADDITIONAL_FIELDS_SHOWN && (
+            <>
+              <RadioGroup name="trackType" value="trackAll">
+                <ControlledRadio
+                  control={control}
+                  required
+                  name="trackAll"
+                  value="trackAll"
+                  labelPlacement={LABEL_PLACEMENT.right}
+                  disabled={isLoading}
+                  label="Track all tabs"
+                />
+                <ControlledRadio
+                  control={control}
+                  required
+                  name="trackDomains"
+                  value="trackDomains"
+                  labelPlacement={LABEL_PLACEMENT.right}
+                  disabled={isLoading}
+                  label="Track specific domains"
+                />
+              </RadioGroup>
 
-          <FormControl label="List domains to track">
-            <Textarea></Textarea>
-          </FormControl>
+              <FormControl label="List domains to track">
+                <Textarea></Textarea>
+              </FormControl>
+            </>
+          )}
 
           <div className={buttonBoxStyle}>
             <Button type="submit" isLoading={isLoading}>

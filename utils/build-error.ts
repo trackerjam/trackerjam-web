@@ -1,6 +1,8 @@
-export function buildError(errorMsg: string) {
+import {ErrorResponse} from '../types/api';
+
+export function buildError(errorMsg: string): ErrorResponse {
   return {
-    status: 'error',
+    error: true,
     errorMsg,
   };
 }
