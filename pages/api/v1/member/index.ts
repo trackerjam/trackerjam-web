@@ -66,7 +66,7 @@ async function get({req, res}: PublicMethodContext) {
       console.log(`MemberSettings not found, memberId: ${member.id}`);
     }
 
-    return res.status(200).json(settings ?? {});
+    return res.status(200).json(settings || {});
   } catch (e) {
     console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
