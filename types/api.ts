@@ -11,3 +11,7 @@ export type ErrorResponse = {
   error: boolean;
   errorMsg: string;
 };
+
+export interface DashboardResponse {
+  membersCount: number | undefined | null;
+}
