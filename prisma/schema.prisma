@@ -65,7 +65,7 @@ model Team {
 
 model Member {
   id          String          @id @default(uuid())
-  token       String          @default(uuid())
+  token       String          @unique @default(uuid())
   name        String?
   title       String?
   description String?

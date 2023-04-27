@@ -1,4 +1,3 @@
-// eslint-disable-next-line camelcase
 import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import type {Member, Team} from '@prisma/client';
@@ -6,16 +5,10 @@ import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {SessionId} from '../../../types/api';
+import {AuthMethodContext, SessionId} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 
-type Context = {
-  req: NextApiRequest;
-  res: NextApiResponse;
-  session: SessionId;
-};
-
-async function create({req, res, session}: Context) {
+async function create({req, res, session}: AuthMethodContext) {
   const data: Member = req.body;
 
   try {
@@ -45,7 +38,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json(buildError('not auth'));
   }
 
-  const context: Context = {req, res, session};
+  const context: AuthMethodContext = {req, res, session};
 
   switch (method) {
     case 'POST':
