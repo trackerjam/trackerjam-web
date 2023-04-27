@@ -1,4 +1,5 @@
 import {Session} from 'next-auth';
+import {NextApiRequest, NextApiResponse} from 'next';
 
 export interface SessionId extends Session {
   user: Session['user'] & {
@@ -10,6 +11,17 @@ export interface SessionId extends Session {
 export type ErrorResponse = {
   error: boolean;
   errorMsg: string;
+};
+
+export type AuthMethodContext = {
+  req: NextApiRequest;
+  res: NextApiResponse;
+  session: SessionId;
+};
+
+export type PublicMethodContext = {
+  req: NextApiRequest;
+  res: NextApiResponse;
 };
 
 export interface DashboardResponse {
