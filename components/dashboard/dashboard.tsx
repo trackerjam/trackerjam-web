@@ -13,6 +13,7 @@ export function Dashboard() {
   const {data, isLoading, error} = useGetData<DashboardResponse>('/api/dashboard');
 
   const {membersCount} = data || {};
+  const showTeamMembers = typeof membersCount === 'number';
 
   return (
     <div>
@@ -33,13 +34,15 @@ export function Dashboard() {
           flexGridColumnGap="scale800"
           flexGridRowGap="scale800"
         >
-          <FlexGridItem>
-            <MessageCard
-              heading={`${membersCount} team member${membersCount > 1 ? 's' : ''}`}
-              buttonLabel="Go to Team"
-              onClick={async () => await router.push('/team')}
-            />
-          </FlexGridItem>
+          {showTeamMembers && (
+            <FlexGridItem>
+              <MessageCard
+                heading={`${membersCount} team member${membersCount > 1 ? 's' : ''}`}
+                buttonLabel="Go to Team"
+                onClick={async () => await router.push('/team')}
+              />
+            </FlexGridItem>
+          )}
         </FlexGrid>
       )}
     </div>
