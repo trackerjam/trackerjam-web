@@ -5,8 +5,7 @@ import Link from 'next/link';
 import {HeadingXLarge} from 'baseui/typography';
 import {useSession} from 'next-auth/react';
 import {useRouter} from 'next/router';
-// eslint-disable-next-line camelcase
-import {unstable_getServerSession} from 'next-auth/next';
+import {getServerSession} from 'next-auth/next';
 import {GetServerSidePropsContext} from 'next/types';
 import {useEffect} from 'react';
 import {authOptions} from './api/auth/[...nextauth]';
@@ -96,7 +95,7 @@ export default function Home() {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
-      session: await unstable_getServerSession(context.req, context.res, authOptions),
+      session: await getServerSession(context.req, context.res, authOptions),
     },
   };
 }
