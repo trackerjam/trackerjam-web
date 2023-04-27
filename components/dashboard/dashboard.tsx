@@ -14,6 +14,11 @@ export function Dashboard() {
 
   const {membersCount} = data || {};
   const showTeamMembers = typeof membersCount === 'number';
+  const membersCountActionName = membersCount === 0 ? 'Add member' : 'Go to team';
+
+  const handleTeamMembersClick = async () => {
+    await router.push(membersCount === 0 ? '/team/add' : '/team');
+  };
 
   return (
     <div>
@@ -37,9 +42,9 @@ export function Dashboard() {
           {showTeamMembers && (
             <FlexGridItem>
               <MessageCard
-                heading={`${membersCount} team member${membersCount > 1 ? 's' : ''}`}
-                buttonLabel="Go to Team"
-                onClick={async () => await router.push('/team')}
+                heading={`${membersCount} team member${membersCount === 1 ? '' : 's'}`}
+                buttonLabel={membersCountActionName}
+                onClick={handleTeamMembersClick}
               />
             </FlexGridItem>
           )}
