@@ -3,7 +3,6 @@ import {HeadingSmall as Title, LabelSmall as Subtitle} from 'baseui/typography';
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
 import {Button, KIND as ButtonKind, SIZE as ButtonSize} from 'baseui/button';
 import {Tag, KIND} from 'baseui/tag';
-import copy from 'copy-to-clipboard';
 
 import {useStyletron} from 'baseui';
 import {useMemo} from 'react';
