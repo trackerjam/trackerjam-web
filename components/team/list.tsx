@@ -3,6 +3,7 @@ import {HeadingSmall as Title, LabelSmall as Subtitle} from 'baseui/typography';
 import {TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
 import {Button, KIND as ButtonKind, SIZE as ButtonSize} from 'baseui/button';
 import {Tag, KIND} from 'baseui/tag';
+import copy from 'copy-to-clipboard';
 
 import {useStyletron} from 'baseui';
 import {useMemo} from 'react';
@@ -13,6 +14,7 @@ import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
 import {TableSkeleton} from './table-skeleton';
+import {CopyableUuid} from './copyable-uuid';
 
 export function Team() {
   const [css, theme] = useStyletron();
@@ -76,6 +78,15 @@ export function Team() {
         {!isLoading && (
           <TableBuilder
             data={teamData}
+            overrides={{
+              TableBodyRow: {
+                style: {
+                  ':hover': {
+                    backgroundColor: 'transparent',
+                  },
+                },
+              },
+            }}
             emptyMessage={
               <div
                 className={css({
@@ -110,7 +121,7 @@ export function Team() {
 
             <TableBuilderColumn<Member> header="Token">
               {(row) => {
-                return <code>{row.token}</code>;
+                return <CopyableUuid uuid={row.token} />;
               }}
             </TableBuilderColumn>
 
