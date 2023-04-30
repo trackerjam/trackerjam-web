@@ -1,5 +1,6 @@
 import {Session} from 'next-auth';
 import {NextApiRequest, NextApiResponse} from 'next';
+import {TAB_TYPE} from '@prisma/client';
 
 export interface SessionId extends Session {
   user: Session['user'] & {
@@ -27,3 +28,19 @@ export type PublicMethodContext = {
 export interface DashboardResponse {
   membersCount: number | undefined | null;
 }
+
+export type CreateDomainActivityInput = {
+  date: string;
+  type: TAB_TYPE;
+  token: string;
+  domain: string;
+  sessions: CreateSessionActivityInput[];
+};
+
+export type CreateSessionActivityInput = {
+  url: string;
+  title?: string;
+  docTitle?: string;
+  startTime: number;
+  endTime: number;
+};
