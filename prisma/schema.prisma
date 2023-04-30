@@ -64,20 +64,20 @@ model Team {
 }
 
 model Member {
-  id          String          @id @default(uuid())
-  token       String          @default(uuid())
-  name        String?
-  title       String?
-  description String?
-  email       String?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt // investigate the bug: https://github.com/prisma/prisma/issues/12572
-  timezone    String?
-  teams       Team[]
-  activity    TabActivity[]
-  summary     Summary[]
-  status      STATUS          @default(NEW)
-  settings    MemberSettings?
+  id             String           @id @default(uuid())
+  token          String           @unique @default(uuid())
+  name           String?
+  title          String?
+  description    String?          @db.Text
+  email          String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt // investigate the bug: https://github.com/prisma/prisma/issues/12572
+  timezone       String?
+  teams          Team[]
+  domainActivity DomainActivity[]
+  summary        Summary[]
+  status         STATUS           @default(NEW)
+  settings       MemberSettings?
 }
 
 enum STATUS {
@@ -95,27 +95,29 @@ model MemberSettings {
   settings Json // trackMode {ALL, SPECIFIC_DOMAINS}, trackDomains String[]
 }
 
-model TabActivity {
+model DomainActivity {
   id                String            @id @default(uuid())
-  type              TAB_TYPE
-  datetime          DateTime
-  url               String
+  type              TAB_TYPE          @default(WEBSITE)
+  date              DateTime          @db.Date
   domainId          String
-  title             String?
-  docTitle          String?
   memberToken       String
   member            Member            @relation(fields: [memberToken], references: [id])
   timeSpent         Int
   sessionActivities SessionActivity[]
   activitiesCount   Int
+
+  @@unique([date, domainId])
 }
 
 model SessionActivity {
-  id            String      @id @default(uuid())
-  tabActivityId String
-  activity      TabActivity @relation(fields: [tabActivityId], references: [id])
-  startDatetime DateTime
-  endDatetime   DateTime
+  id               String         @id @default(uuid())
+  domainActivityId String
+  domainActivity   DomainActivity @relation(fields: [domainActivityId], references: [id])
+  startDatetime    DateTime
+  endDatetime      DateTime
+  url              String         @db.Text
+  title            String?        @db.Text
+  docTitle         String?        @db.Text
 }
 
 enum TAB_TYPE {
@@ -125,11 +127,13 @@ enum TAB_TYPE {
 
 model Summary {
   id           String   @id @default(uuid())
-  datetime     DateTime
-  domainsCount Int
+  date         DateTime @db.Date
   activityTime Int
+  domainsCount Int?
   memberToken  String
   member       Member   @relation(fields: [memberToken], references: [id])
+
+  @@unique([date, memberToken])
 }
 
 model Domain {
