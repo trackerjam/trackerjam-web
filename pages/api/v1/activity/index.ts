@@ -70,17 +70,16 @@ async function create({req, res}: PublicMethodContext) {
       throw new Error('Activity record was not created');
     }
 
-    const sessions = payload?.sessions?.map(({url, title, docTitle, startTime, endTime}) => ({
-      url,
-      domainActivityId: activityRecord.id,
-      startDatetime: new Date(startTime),
-      endDatetime: new Date(endTime),
-      title: title ?? undefined,
-      docTitle: docTitle ?? undefined,
-    }));
-
     const sessionRecords = await prismadb.sessionActivity.createMany({
-      data: sessions,
+      data: payload?.sessions?.map(({url, title, docTitle, startTime, endTime, isHTTPS}) => ({
+        url,
+        domainActivityId: activityRecord.id,
+        startDatetime: new Date(startTime),
+        endDatetime: new Date(endTime),
+        title: title ?? undefined,
+        docTitle: docTitle ?? undefined,
+        isHTTPS,
+      })),
     });
 
     if (!sessionRecords.count) {

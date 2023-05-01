@@ -118,6 +118,7 @@ model SessionActivity {
   url              String         @db.Text
   title            String?        @db.Text
   docTitle         String?        @db.Text
+  isHTTPS          Boolean?
 }
 
 enum TAB_TYPE {

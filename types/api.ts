@@ -41,6 +41,7 @@ export type CreateSessionActivityInput = {
   url: string;
   title?: string;
   docTitle?: string;
+  isHTTPS?: boolean;
   startTime: number;
   endTime: number;
 };
