@@ -61,11 +61,7 @@ async function create({req, res}: PublicMethodContext) {
         type: payload.type || TAB_TYPE.WEBSITE,
         timeSpent: timeSpentInc,
         activitiesCount: activitiesCountInc,
-        member: {
-          connect: {
-            token: payload.token,
-          },
-        },
+        memberToken: payload.token,
       },
     });
 
