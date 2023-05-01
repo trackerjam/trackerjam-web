@@ -92,7 +92,24 @@ async function create({req, res}: PublicMethodContext) {
       throw new Error('SessionActivity was not created');
     }
 
-    // TODO Update summary
+    await prismadb.summary.upsert({
+      where: {
+        date_memberToken: {
+          date,
+          memberToken: payload.token,
+        },
+      },
+      update: {
+        activityTime: {
+          increment: timeSpentInc,
+        },
+      },
+      create: {
+        date,
+        activityTime: timeSpentInc,
+        memberToken: payload.token,
+      },
+    });
 
     return res.status(201).end();
   } catch (e) {

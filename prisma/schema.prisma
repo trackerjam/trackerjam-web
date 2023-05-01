@@ -101,7 +101,7 @@ model DomainActivity {
   date              DateTime          @db.Date
   domainId          String
   memberToken       String
-  member            Member            @relation(fields: [memberToken], references: [id])
+  member            Member            @relation(fields: [memberToken], references: [token])
   timeSpent         Int
   sessionActivities SessionActivity[]
   activitiesCount   Int
@@ -131,7 +131,7 @@ model Summary {
   activityTime Int
   domainsCount Int?
   memberToken  String
-  member       Member   @relation(fields: [memberToken], references: [id])
+  member       Member   @relation(fields: [memberToken], references: [token])
 
   @@unique([date, memberToken])
 }
