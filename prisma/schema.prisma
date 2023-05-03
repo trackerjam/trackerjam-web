@@ -129,8 +129,9 @@ enum TAB_TYPE {
 model Summary {
   id           String   @id @default(uuid())
   date         DateTime @db.Date
-  activityTime Int
+  activityTime Int?
   domainsCount Int?
+  sessionCount Int?
   memberToken  String
   member       Member   @relation(fields: [memberToken], references: [token])
 

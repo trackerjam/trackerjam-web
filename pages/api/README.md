@@ -40,7 +40,6 @@ Saves member activity
    - docTitle?: string;
    - startTime: number; (timestamp)
    - endTime: number; (timestamp)
-   - isHTTPS?: boolean
 
 **Response:**
 - HTTP 201

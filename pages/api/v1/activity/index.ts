@@ -39,6 +39,7 @@ async function create({req, res}: PublicMethodContext) {
     const timeSpentInc =
       payload?.sessions?.reduce((mem, {startTime, endTime}) => mem + (endTime - startTime), 0) || 0;
     const activitiesCountInc = payload?.sessions?.length || 0;
+    const sessionCountInc = payload?.sessions?.length || 0;
 
     const activityRecord = await prismadb.domainActivity.upsert({
       where: {
@@ -71,15 +72,18 @@ async function create({req, res}: PublicMethodContext) {
     }
 
     const sessionRecords = await prismadb.sessionActivity.createMany({
-      data: payload?.sessions?.map(({url, title, docTitle, startTime, endTime, isHTTPS}) => ({
-        url,
-        domainActivityId: activityRecord.id,
-        startDatetime: new Date(startTime),
-        endDatetime: new Date(endTime),
-        title: title ?? undefined,
-        docTitle: docTitle ?? undefined,
-        isHTTPS,
-      })),
+      data: payload?.sessions?.map(({url, title, docTitle, startTime, endTime}) => {
+        const isHTTPS = url?.toLowerCase().startsWith('https');
+        return {
+          url,
+          domainActivityId: activityRecord.id,
+          startDatetime: new Date(startTime),
+          endDatetime: new Date(endTime),
+          title: title ?? undefined,
+          docTitle: docTitle ?? undefined,
+          isHTTPS,
+        };
+      }),
     });
 
     if (!sessionRecords.count) {
@@ -98,10 +102,14 @@ async function create({req, res}: PublicMethodContext) {
         activityTime: {
           increment: timeSpentInc,
         },
+        sessionCount: {
+          increment: sessionCountInc,
+        },
       },
       create: {
         date,
         activityTime: timeSpentInc,
+        sessionCount: sessionRecords.count,
         memberToken: payload.token,
       },
     });
