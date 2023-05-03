@@ -8,8 +8,6 @@ import {AuthMethodContext, DashboardResponse, SessionId} from '../../../types/ap
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 
 async function get({res, session}: AuthMethodContext) {
-  // TODO Create default team on first login
-
   try {
     const currentTeam = (await prismadb.team.findUniqueOrThrow({
       where: {ownerUserId_name: {ownerUserId: session.user.id, name: DEFAULT_TEAM_NAME}},

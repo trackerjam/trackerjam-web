@@ -5,17 +5,8 @@ import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-
 import {SessionId} from '../../../types/api';
-import {DEFAULT_TEAM_NAME} from '../../../const/team';
-async function createDefaultRecord(session: SessionId) {
-  return prismadb.team.create({
-    data: {
-      name: DEFAULT_TEAM_NAME,
-      ownerUserId: session.user.id,
-    },
-  });
-}
+
 async function get(res: NextApiResponse, session: SessionId) {
   const getData = () =>
     prismadb.team.findMany({
@@ -32,11 +23,7 @@ async function get(res: NextApiResponse, session: SessionId) {
     });
 
   try {
-    let result = await getData();
-    if (!result.length) {
-      await createDefaultRecord(session);
-      result = await getData();
-    }
+    const result = await getData();
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));

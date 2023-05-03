@@ -4,6 +4,7 @@ import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import EmailProvider from 'next-auth/providers/email';
 
 import prisma from '../../../lib/prismadb';
+import {initUserFirstTime} from '../../../utils/database/init-user';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -20,9 +21,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({session, user}) => {
       if (session?.user) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore - todo investigate why
+        // To have .id field in API endpoints
+        // https://next-auth.js.org/configuration/callbacks#session-callback
         session.user.id = user.id;
+
+        // Create default records when user signs in first time
+        await initUserFirstTime(user.id);
       }
       return session;
     },
