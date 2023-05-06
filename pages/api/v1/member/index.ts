@@ -45,7 +45,7 @@ async function update({req, res}: PublicMethodContext) {
 }
 
 async function get({req, res}: PublicMethodContext) {
-  const {token} = req.query as GetParams;
+  const {token} = req.query as GetParams; // TODO get from header?
 
   if (!token) {
     return res.status(400).json(buildError('bad params'));
@@ -63,7 +63,7 @@ async function get({req, res}: PublicMethodContext) {
     });
 
     if (!settings) {
-      console.log(`MemberSettings not found, memberId: ${member.id}`);
+      console.error(`MemberSettings not found, memberId: ${member.id}`);
     }
 
     return res.status(200).json(settings || {});

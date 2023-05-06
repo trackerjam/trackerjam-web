@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import extractDomain from 'extract-domain';
 import {TAB_TYPE} from '.prisma/client';
+import {STATUS} from '@prisma/client';
 import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
@@ -114,7 +115,19 @@ async function create({req, res}: PublicMethodContext) {
       },
     });
 
-    return res.status(201).end();
+    // Early data return
+    res.status(201).end();
+
+    // Check & update status in background
+    await prismadb.member.upsert({
+      where: {
+        token: payload.token,
+      },
+      update: {
+        status: STATUS.ACTIVE,
+      },
+      create: {},
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));

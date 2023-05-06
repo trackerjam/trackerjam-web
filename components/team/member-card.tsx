@@ -1,5 +1,5 @@
 import {useStyletron} from 'baseui';
-import {Member} from '@prisma/client';
+import {Member, Summary} from '@prisma/client';
 import Avatar from 'boring-avatars';
 import {Button, KIND, SIZE, SHAPE} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
@@ -7,8 +7,11 @@ import type {IconType} from 'react-icons';
 import {Tag, KIND as TAG_KIND} from 'baseui/tag';
 import {StatefulPopover} from 'baseui/popover';
 import {StatefulMenu} from 'baseui/menu';
-import {BiCopy, BiEdit, BiTrash} from 'react-icons/bi';
+import {BiCopy, BiEdit, BiTrash, BiTime, BiListUl} from 'react-icons/bi';
+import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import {getBorder} from '../../utils/get-border';
+import {useGetData} from '../hooks/use-get-data';
+import {formatTimeDuration} from '../../utils/format-time-duration';
 
 interface MenuOptionPros {
   icon: IconType;
@@ -18,7 +21,6 @@ interface MenuOptionPros {
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   const Icon = icon;
   const [css, theme] = useStyletron();
-  // const {data, isLoading, error} = useGetData('/api/')
 
   const boxStyle = css({
     display: 'flex',
@@ -35,8 +37,11 @@ const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
 };
 
 export function MemberCard({data}: {data: Member}) {
-  const {name, title, status} = data;
+  const {name, title, status, token} = data;
   const [css, theme] = useStyletron();
+  const {data: summaryData, isLoading: summaryLoading} = useGetData<Summary>(
+    `/api/summary?token=${token}`
+  );
 
   const cardStyle = css({
     position: 'relative',
@@ -82,6 +87,30 @@ export function MemberCard({data}: {data: Member}) {
   const avatarStyle = css({
     flexShrink: 0,
   });
+
+  const statsWrapperStyle = css({
+    display: 'flex',
+    justifyContent: 'space-between',
+  });
+
+  const statsColumnStyle = css({
+    borderRight: getBorder(theme.borders.border200),
+    display: 'flex',
+    justifyContent: 'center',
+    padding: theme.sizing.scale400,
+    flexGrow: 1,
+  });
+
+  const statsContentStyle = css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.sizing.scale200,
+    color: theme.colors.contentTertiary,
+    fontSize: theme.typography.LabelXSmall.fontSize,
+  });
+
+  const emptySummaryText = summaryLoading ? '...' : '0';
 
   return (
     <div className={cardStyle}>
@@ -152,24 +181,45 @@ export function MemberCard({data}: {data: Member}) {
       </div>
 
       <hr className={hrStyle} />
-      <div>
-        <Tag
-          kind={TAG_KIND.blue}
-          closeable={false}
-          overrides={{
-            Root: {
-              style: {
-                marginTop: 0,
-                marginRight: 0,
-                marginBottom: 0,
-                marginLeft: 0,
-                fontSize: '11px',
+      <div className={statsWrapperStyle}>
+        <div className={statsColumnStyle}>
+          <Tag
+            kind={TAG_KIND.blue}
+            closeable={false}
+            overrides={{
+              Root: {
+                style: {
+                  marginTop: 0,
+                  marginRight: 0,
+                  marginBottom: 0,
+                  marginLeft: 0,
+                  fontSize: '11px',
+                },
               },
-            },
-          }}
-        >
-          {status}
-        </Tag>
+            }}
+          >
+            {status}
+          </Tag>
+        </div>
+        <div className={statsColumnStyle}>
+          <StatefulTooltip content="Activity time" showArrow placement={PLACEMENT.bottom}>
+            <div className={statsContentStyle}>
+              <BiTime color={theme.colors.contentInverseTertiary} title="" />{' '}
+              {summaryData?.activityTime
+                ? formatTimeDuration(summaryData.activityTime)
+                : emptySummaryText}
+            </div>
+          </StatefulTooltip>
+        </div>
+
+        <div className={statsColumnStyle} style={{borderRight: 'none'}}>
+          <StatefulTooltip content="Session count" showArrow placement={PLACEMENT.bottom}>
+            <div className={statsContentStyle}>
+              <BiListUl color={theme.colors.contentInverseTertiary} title="" />{' '}
+              {summaryData?.sessionCount ?? emptySummaryText}
+            </div>
+          </StatefulTooltip>
+        </div>
       </div>
     </div>
   );
