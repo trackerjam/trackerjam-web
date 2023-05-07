@@ -119,14 +119,13 @@ async function create({req, res}: PublicMethodContext) {
     res.status(201).end();
 
     // Check & update status in background
-    await prismadb.member.upsert({
+    await prismadb.member.update({
       where: {
         token: payload.token,
       },
-      update: {
+      data: {
         status: STATUS.ACTIVE,
       },
-      create: {},
     });
   } catch (e) {
     console.error(e);
