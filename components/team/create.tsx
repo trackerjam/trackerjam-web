@@ -55,7 +55,7 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
       }
 
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
-      if ('error' in res) {
+      if (!res && 'error' in res) {
         console.error('Unknown error', res);
       } else {
         reset();

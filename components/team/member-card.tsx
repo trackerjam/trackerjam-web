@@ -7,16 +7,24 @@ import type {IconType} from 'react-icons';
 import {Tag, KIND as TAG_KIND} from 'baseui/tag';
 import {StatefulPopover} from 'baseui/popover';
 import {StatefulMenu} from 'baseui/menu';
-import {BiCopy, BiEdit, BiTrash, BiTime, BiListUl} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiTime, BiListUl} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
+import copy from 'copy-to-clipboard';
 import {getBorder} from '../../utils/get-border';
 import {useGetData} from '../hooks/use-get-data';
 import {formatTimeDuration} from '../../utils/format-time-duration';
+import {useSendData} from '../hooks/use-send-data';
 
 interface MenuOptionPros {
   icon: IconType;
   label: string;
   iconColor?: string;
+}
+
+interface MemberCardProps {
+  data: Member;
+  onDelete: () => void;
+  onCopy: () => void;
 }
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   const Icon = icon;
@@ -36,12 +44,27 @@ const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   );
 };
 
-export function MemberCard({data}: {data: Member}) {
+export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   const {name, title, status, token} = data;
   const [css, theme] = useStyletron();
   const {data: summaryData, isLoading: summaryLoading} = useGetData<Summary>(
-    `/api/summary?token=${token}`
+    `/api/summary?token=${token}` // TODO Restify
   );
+  const {send} = useSendData(`/api/member/${token}`);
+
+  const handleMenuClick = async (id: string, close: () => void) => {
+    switch (id) {
+      case 'copy':
+        copy(token);
+        onCopy();
+        close();
+        break;
+      case 'delete':
+        await send(null, 'DELETE');
+        onDelete();
+        break;
+    }
+  };
 
   const cardStyle = css({
     position: 'relative',
@@ -141,18 +164,24 @@ export function MemberCard({data}: {data: Member}) {
           })}
         >
           <StatefulPopover
-            content={() => (
+            content={({close}) => (
               <StatefulMenu
+                onItemSelect={({item}) => handleMenuClick(item.id, close)}
                 items={[
                   {
-                    label: <MenuOptionIcon icon={BiCopy} label="Copy tracking key" />,
+                    label: <MenuOptionIcon key="copy" icon={BiCopy} label="Copy tracking key" />,
+                    id: 'copy',
                   },
-                  {
-                    label: <MenuOptionIcon icon={BiEdit} label="Edit member" />,
-                  },
+                  // {
+                  //   label: <MenuOptionIcon key="edit" icon={BiEdit} label="Edit member" />,
+                  //   id: 'edit',
+                  // },
                   {divider: true},
                   {
-                    label: <MenuOptionIcon icon={BiTrash} label="Delete" iconColor="red" />,
+                    label: (
+                      <MenuOptionIcon key="delete" icon={BiTrash} label="Delete" iconColor="red" />
+                    ),
+                    id: 'delete',
                   },
                 ]}
               />

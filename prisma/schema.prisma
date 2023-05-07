@@ -43,6 +43,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   teams         Team[]
+  Member        Member[]
 }
 
 model VerificationToken {
@@ -74,6 +75,8 @@ model Member {
   updatedAt      DateTime         @updatedAt // investigate the bug: https://github.com/prisma/prisma/issues/12572
   timezone       String?
   teams          Team[]
+  mangerId       String
+  manager        User             @relation(fields: [mangerId], references: [id])
   domainActivity DomainActivity[]
   summary        Summary[]
   status         STATUS           @default(NEW)
