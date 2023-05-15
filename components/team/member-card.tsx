@@ -1,7 +1,7 @@
 import {useStyletron} from 'baseui';
 import {Member, Summary} from '@prisma/client';
 import Avatar from 'boring-avatars';
-import {Button, KIND, SIZE, SHAPE} from 'baseui/button';
+import {Button, KIND, SIZE, SHAPE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import type {IconType} from 'react-icons';
 import {Tag, KIND as TAG_KIND} from 'baseui/tag';
@@ -10,6 +10,8 @@ import {StatefulMenu} from 'baseui/menu';
 import {BiCopy, BiTrash, BiTime, BiListUl} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
+import {useState} from 'react';
+import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {getBorder} from '../../utils/get-border';
 import {useGetData} from '../hooks/use-get-data';
 import {formatTimeDuration} from '../../utils/format-time-duration';
@@ -47,24 +49,31 @@ const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
 
 export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   const {name, title, status, token} = data;
+  const [deleteShown, setDeleteShown] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [css, theme] = useStyletron();
   const {data: summaryData, isLoading: summaryLoading} = useGetData<Summary>(
     `/api/summary/${token}`
   );
   const {send} = useSendData(`/api/member/${token}`);
 
-  const handleMenuClick = async (id: string, close: () => void) => {
+  const handleMenuClick = async (id: string) => {
     switch (id) {
       case 'copy':
         copy(token);
         onCopy();
-        close();
         break;
       case 'delete':
-        await send(null, 'DELETE');
-        onDelete();
+        setDeleteShown(true);
         break;
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+    await send(null, 'DELETE');
+    onDelete();
+    setIsDeleting(false);
   };
 
   const cardStyle = css({
@@ -138,6 +147,27 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
 
   return (
     <div className={cardStyle}>
+      <Modal
+        onClose={() => setDeleteShown(false)}
+        closeable
+        isOpen={deleteShown}
+        animate
+        autoFocus
+        size={SIZE.default}
+        role={ROLE.dialog}
+      >
+        <ModalHeader>Delete member</ModalHeader>
+        <ModalBody>Do you want to delete this member and their data?</ModalBody>
+        <ModalFooter>
+          <ModalButton kind={ButtonKind.tertiary} onClick={() => setDeleteShown(false)}>
+            Cancel
+          </ModalButton>
+          <ModalButton onClick={handleDeleteConfirm} isLoading={isDeleting} disabled={isDeleting}>
+            Delete
+          </ModalButton>
+        </ModalFooter>
+      </Modal>
+
       <div className={headerLayoutStyle}>
         <div className={avatarStyle}>
           <Avatar
@@ -167,22 +197,21 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
           <StatefulPopover
             content={({close}) => (
               <StatefulMenu
-                onItemSelect={({item}) => handleMenuClick(item.id, close)}
+                onItemSelect={({item}) => {
+                  close();
+                  handleMenuClick(item.id);
+                }}
                 items={[
                   {
-                    label: <MenuOptionIcon key="copy" icon={BiCopy} label="Copy tracking key" />,
+                    label: <MenuOptionIcon icon={BiCopy} label="Copy tracking key" />,
                     id: 'copy',
+                    key: 'copy',
                   },
-                  // {
-                  //   label: <MenuOptionIcon key="edit" icon={BiEdit} label="Edit member" />,
-                  //   id: 'edit',
-                  // },
                   {divider: true},
                   {
-                    label: (
-                      <MenuOptionIcon key="delete" icon={BiTrash} label="Delete" iconColor="red" />
-                    ),
+                    label: <MenuOptionIcon icon={BiTrash} label="Delete" iconColor="red" />,
                     id: 'delete',
+                    key: 'delete',
                   },
                 ]}
               />
