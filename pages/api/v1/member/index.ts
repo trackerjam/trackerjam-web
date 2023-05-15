@@ -45,7 +45,7 @@ async function update({req, res}: PublicMethodContext) {
 }
 
 async function get({req, res}: PublicMethodContext) {
-  const {token} = req.query as GetParams; // TODO get from header?
+  const {token} = req.query as GetParams;
 
   if (!token) {
     return res.status(400).json(buildError('bad params'));

@@ -14,7 +14,6 @@ async function get({req, res}: AuthMethodContext) {
   }
 
   try {
-    // TODO Return data partially
     // TODO Accept array of tokens
 
     const summary = await prismadb.summary.findUnique({
@@ -26,7 +25,16 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
-    res.json(summary ?? {});
+    const {activityTime, domainsCount, sessionCount} = summary || {};
+    const response = summary
+      ? {
+          activityTime,
+          domainsCount,
+          sessionCount,
+        }
+      : {};
+
+    res.json(response);
   } catch (e) {
     console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));

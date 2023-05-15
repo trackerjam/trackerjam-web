@@ -24,6 +24,8 @@ async function create({req, res}: PublicMethodContext) {
     return res.status(400).json(buildError('bad token'));
   }
 
+  // TODO Handle bunch request
+
   try {
     const domain = extractDomain(payload.domain);
     const domainRecord = await prismadb.domain.upsert({

@@ -26,6 +26,7 @@ interface MemberCardProps {
   onDelete: () => void;
   onCopy: () => void;
 }
+
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   const Icon = icon;
   const [css, theme] = useStyletron();
@@ -48,7 +49,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   const {name, title, status, token} = data;
   const [css, theme] = useStyletron();
   const {data: summaryData, isLoading: summaryLoading} = useGetData<Summary>(
-    `/api/summary?token=${token}` // TODO Restify
+    `/api/summary/${token}`
   );
   const {send} = useSendData(`/api/member/${token}`);
 
@@ -231,7 +232,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
           </Tag>
         </div>
         <div className={statsColumnStyle}>
-          <StatefulTooltip content="Activity time" showArrow placement={PLACEMENT.bottom}>
+          <StatefulTooltip content="Activity time today" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
               <BiTime color={theme.colors.contentInverseTertiary} title="" />{' '}
               {summaryData?.activityTime
@@ -242,7 +243,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         </div>
 
         <div className={statsColumnStyle} style={{borderRight: 'none'}}>
-          <StatefulTooltip content="Session count" showArrow placement={PLACEMENT.bottom}>
+          <StatefulTooltip content="Session count today" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
               <BiListUl color={theme.colors.contentInverseTertiary} title="" />{' '}
               {summaryData?.sessionCount ?? emptySummaryText}
