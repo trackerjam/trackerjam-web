@@ -19,10 +19,24 @@ Change member status (Activate token)
 Returns member settings
 
 **Request:**
-- token: string
+ - `/api/v1/member/${token}`
 
 **Response:**
-- [MemberSettings](../../prisma/schema.prisma)
+```
+{
+    "token": string,
+    "settings": {
+        "idleTime": number,
+        "trackMode": "ALL" | "LIMITED",
+        "excludeDomains": Array<string>,
+        "includeDomains": Array<string>,
+        "showTrackMode": boolean,
+        "showActivityTime": boolean,
+        "showDomainsCount": boolean,
+        "showSessionsCount": boolean
+    }
+}
+```
 
 
 ### /api/v1/activity

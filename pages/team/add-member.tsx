@@ -1,8 +1,8 @@
 import {Layout} from '../../components/layout';
-import {CreateProduct} from '../../components/team/add-member/add-member';
+import {AddMember} from '../../components/team/add-member/add-member';
 
 const AddTeamMemberPage = () => {
-  return <CreateProduct />;
+  return <AddMember />;
 };
 
 AddTeamMemberPage.Layout = Layout;

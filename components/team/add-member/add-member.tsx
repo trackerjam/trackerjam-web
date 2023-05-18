@@ -12,48 +12,51 @@ import {Notification, KIND} from 'baseui/notification';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {Textarea} from 'baseui/textarea';
-import {Member} from '@prisma/client';
 import {BiHide, BiCaretRight, BiCaretDown} from 'react-icons/bi';
-import {Checkbox, LABEL_PLACEMENT} from 'baseui/checkbox';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
+import {ControlledCheckbox} from '../../common/controlled-checkbox';
+import {extractDomains} from '../../../utils/extract-domains';
+import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {RadioTrackMode} from './form/radio-track-mode';
 
-type SettingsType = {
-  trackMode: 'all' | 'limited';
-  idleTime: string;
-};
-export type FormDataType = Partial<Member> & Partial<SettingsType>;
-
-type CreateProductProps = {
-  editingProduct?: undefined | Partial<FormDataType>;
+type CreateMemberProps = {
+  editingMember?: undefined | EditMemberDataType;
 };
 
-const defaultValues: FormDataType = {
+const defaultValues: CreateMemberDataType = {
   name: '',
-  description: '',
   email: '',
-  trackMode: 'all',
-  idleTime: '10', // TODO convert
+  title: '',
+  settings: {
+    trackMode: 'ALL',
+    idleTime: 10,
+    includeDomains: [],
+    excludeDomains: [],
+    showTrackMode: true,
+    showActivityTime: true,
+    showDomainsCount: true,
+    showSessionsCount: true,
+  },
 };
 
-export function CreateProduct({editingProduct}: CreateProductProps) {
-  const isEditing = Boolean(editingProduct);
+export function AddMember({editingMember}: CreateMemberProps) {
+  const isEditing = Boolean(editingMember);
   const router = useRouter();
   const [css, theme] = useStyletron();
-  const {send, isLoading, error} = useSendData<FormDataType>(
-    `/api/member/${isEditing ? editingProduct?.id : ''}`
+  const {send, isLoading, error} = useSendData<EditMemberDataType>(
+    `/api/member/${isEditing ? editingMember?.id : ''}`
   );
-  const {handleSubmit, control, reset, watch} = useForm({
+  const {handleSubmit, control, reset, setValue, watch} = useForm({
     reValidateMode: 'onBlur',
-    defaultValues: editingProduct || defaultValues,
+    defaultValues: editingMember || defaultValues,
   });
   const [excludedListShown, setExcludedListShown] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const onSubmit = useCallback(
-    async (formData: Partial<FormDataType>) => {
-      let dataToSend: FormDataType = {};
+    async (formData: Partial<CreateMemberDataType>) => {
+      let dataToSend: EditMemberDataType;
 
       if (isEditing) {
         dataToSend = {...formData};
@@ -74,6 +77,11 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
     },
     [isEditing, reset, router, send]
   );
+
+  const handleDomainInput = (key: 'includeDomains' | 'excludeDomains', value: string) => {
+    const domains = extractDomains(value);
+    setValue(`settings.${key}`, domains);
+  };
 
   const formBoxStyle = css({
     display: 'flex',
@@ -116,8 +124,8 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
   });
 
   const title = `${isEditing ? 'Update' : 'Add a new'} team member`;
-  const trackMode = watch('trackMode');
-  const domainListsDisabled = trackMode === 'all';
+  const trackMode = watch('settings.trackMode');
+  const domainListsDisabled = trackMode === 'ALL';
   const AdvancedCaredIcon = showAdvanced ? BiCaretDown : BiCaretRight;
 
   const radioControlOverrides = {
@@ -169,13 +177,18 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
               disabled={isLoading}
             />
 
-            <ControlledInput label="Title" control={control} name="title" disabled={isLoading} />
+            <ControlledInput
+              label="Title"
+              control={control}
+              name="title"
+              disabled={isLoading}
+              type="text"
+            />
 
             <ControlledInput
               label="Email"
               control={control}
-              name="description"
-              placeholder=""
+              name="email"
               type="email"
               disabled={isLoading}
               caption="We will send them the tracking key"
@@ -187,14 +200,16 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
           </SubTitle>
 
           <div className={formSectionStyle}>
-            <RadioTrackMode control={control} name="trackMode" />
+            <RadioTrackMode control={control} name="settings.trackMode" />
             <div>
               <FormControl
                 caption="List of domains, separated by comma (i.e. google.com, amazon.com, bbc.co.uk)"
                 disabled={domainListsDisabled}
                 overrides={radioControlOverrides}
               >
-                <Textarea></Textarea>
+                <Textarea
+                  onChange={(e) => handleDomainInput('includeDomains', e.target.value)}
+                ></Textarea>
               </FormControl>
             </div>
           </div>
@@ -216,7 +231,9 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
                   label="Exclude domains"
                   caption="Excluded domains and subdomains separated by comma (i.e. mail.google.com)"
                 >
-                  <Textarea></Textarea>
+                  <Textarea
+                    onChange={(e) => handleDomainInput('excludeDomains', e.target.value)}
+                  ></Textarea>
                 </FormControl>
               </div>
             )}
@@ -229,34 +246,33 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
           <div className={formSectionStyle}>
             <SectionTitle marginBottom="scale600">Let member see</SectionTitle>
             <div className={extensionSettingsCheckboxesStyle}>
-              <Checkbox
-                checked={false}
-                labelPlacement={LABEL_PLACEMENT.right}
+              <ControlledCheckbox
+                control={control}
+                name="settings.showTrackMode"
+                label="Track mode settings"
                 overrides={checkboxOverrides}
-              >
-                Track mode settings
-              </Checkbox>
-              <Checkbox
-                checked={false}
-                labelPlacement={LABEL_PLACEMENT.right}
+              />
+
+              <ControlledCheckbox
+                control={control}
+                name="settings.showActivityTime"
+                label="Total activity time"
                 overrides={checkboxOverrides}
-              >
-                Total activity time
-              </Checkbox>
-              <Checkbox
-                checked={false}
-                labelPlacement={LABEL_PLACEMENT.right}
+              />
+
+              <ControlledCheckbox
+                control={control}
+                name="settings.showDomainsCount"
+                label="Domains count"
                 overrides={checkboxOverrides}
-              >
-                Domains count
-              </Checkbox>
-              <Checkbox
-                checked={false}
-                labelPlacement={LABEL_PLACEMENT.right}
+              />
+
+              <ControlledCheckbox
+                control={control}
+                name="settings.showSessionsCount"
+                label="Sessions count"
                 overrides={checkboxOverrides}
-              >
-                Session count
-              </Checkbox>
+              />
             </div>
           </div>
 
@@ -288,7 +304,7 @@ export function CreateProduct({editingProduct}: CreateProductProps) {
               <ControlledInput
                 label="Idle time in seconds"
                 control={control}
-                name="idleTime"
+                name="settings.idleTime"
                 placeholder=""
                 type="number"
                 disabled={isLoading}
