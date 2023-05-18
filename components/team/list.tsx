@@ -43,7 +43,7 @@ export function Team() {
   }, [data]);
 
   const addMemberClickHandler = () => {
-    router.push('/team/add');
+    router.push('/team/add-member');
   };
 
   const handleCardDelete = () => {

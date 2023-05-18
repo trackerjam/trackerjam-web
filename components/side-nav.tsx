@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useStyletron} from 'baseui';
 import {Navigation} from 'baseui/side-navigation';
 import {useRouter} from 'next/router';
-import {CiViewList, CiSettings, CiViewBoard, CiBellOn, CiPizza} from 'react-icons/ci';
+import {CiSettings, CiViewBoard, CiBellOn, CiPizza, CiUser} from 'react-icons/ci';
 import {type IconType} from 'react-icons';
 
 const DEFAULT_ROUTE = '/dashboard';
@@ -55,7 +55,7 @@ export function SideNav() {
             itemId: '/dashboard',
           },
           {
-            title: <IconTitle title="Team" icon={CiViewList} />,
+            title: <IconTitle title="Team" icon={CiUser} />,
             itemId: '/team',
           },
           {

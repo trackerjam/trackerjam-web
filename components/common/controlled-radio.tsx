@@ -32,7 +32,7 @@ export function ControlledRadio({
         <Radio
           inputRef={ref as unknown as React.RefObject<HTMLInputElement>}
           checked={value}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
           name={name}
           error={invalid}

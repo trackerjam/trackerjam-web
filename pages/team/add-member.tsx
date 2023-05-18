@@ -1,5 +1,5 @@
 import {Layout} from '../../components/layout';
-import {CreateProduct} from '../../components/team/create';
+import {CreateProduct} from '../../components/team/add-member/add-member';
 
 const AddTeamMemberPage = () => {
   return <CreateProduct />;

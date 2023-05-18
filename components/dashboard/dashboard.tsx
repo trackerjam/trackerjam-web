@@ -17,7 +17,7 @@ export function Dashboard() {
   const membersCountActionName = membersCount === 0 ? 'Add member' : 'Go to team';
 
   const handleTeamMembersClick = async () => {
-    await router.push(membersCount === 0 ? '/team/add' : '/team');
+    await router.push(membersCount === 0 ? '/team/add-member' : '/team');
   };
 
   return (
