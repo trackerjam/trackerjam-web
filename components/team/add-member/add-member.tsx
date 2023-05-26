@@ -123,6 +123,10 @@ export function AddMember({editingMember}: CreateMemberProps) {
     gap: theme.sizing.scale300,
   });
 
+  const rightButtonStyle = css({
+    textAlign: 'right',
+  });
+
   const title = `${isEditing ? 'Update' : 'Add a new'} team member`;
   const trackMode = watch('settings.trackMode');
   const domainListsDisabled = trackMode === 'ALL';
@@ -235,6 +239,16 @@ export function AddMember({editingMember}: CreateMemberProps) {
                     onChange={(e) => handleDomainInput('excludeDomains', e.target.value)}
                   ></Textarea>
                 </FormControl>
+                <div className={rightButtonStyle}>
+                  <Button
+                    type="button"
+                    size={ButtonSize.mini}
+                    kind={ButtonKind.tertiary}
+                    onClick={() => setExcludedListShown(false)}
+                  >
+                    Hide field
+                  </Button>
+                </div>
               </div>
             )}
           </div>

@@ -23,10 +23,10 @@ export function RadioTrackMode({control, name, required, validate}: ControlledRa
       name={name}
       render={({field}) => (
         <RadioGroup {...field}>
-          <Radio required value="all" labelPlacement={LABEL_PLACEMENT.right}>
+          <Radio required value="ALL" labelPlacement={LABEL_PLACEMENT.right}>
             Track All Domains
           </Radio>
-          <Radio required value="limited" labelPlacement={LABEL_PLACEMENT.right}>
+          <Radio required value="LIMITED" labelPlacement={LABEL_PLACEMENT.right}>
             Track Specific Domains
           </Radio>
         </RadioGroup>
