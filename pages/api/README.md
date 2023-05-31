@@ -41,19 +41,20 @@ Returns member settings
 
 ### /api/v1/activity
 #### POST
-Saves member activity
+Records member activity
 
 **Request:**
- - date: string; (ISO date, ex.: 2023-04-30)
- - type: [TAB_TYPE](../../prisma/schema.prisma);
  - token: string;
- - domain: string;
- - sessions: Array:
-   - url: string;
-   - title?: string;
-   - docTitle?: string;
-   - startTime: number; (timestamp)
-   - endTime: number; (timestamp)
+ - activity: Array
+   - date: string; (ISO date, ex.: 2023-04-30)
+   - type: [TAB_TYPE](../../prisma/schema.prisma);
+   - domain: string;
+   - sessions: Array:
+     - url: string;
+     - title?: string;
+     - docTitle?: string;
+     - startTime: number; (timestamp)
+     - endTime: number; (timestamp)
 
 **Response:**
 - HTTP 201

@@ -30,9 +30,13 @@ export interface DashboardResponse {
 }
 
 export type CreateDomainActivityInput = {
+  token: string;
+  activities: Array<CreateActivityInput>;
+};
+
+export type CreateActivityInput = {
   date: string;
   type: TAB_TYPE;
-  token: string;
   domain: string;
   sessions: CreateSessionActivityInput[];
 };

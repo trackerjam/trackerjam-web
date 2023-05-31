@@ -16,6 +16,7 @@ import {getBorder} from '../../utils/get-border';
 import {useGetData} from '../hooks/use-get-data';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
+import {shortenUUID} from '../../utils/shorten-uuid';
 
 interface MenuOptionPros {
   icon: IconType;
@@ -26,7 +27,7 @@ interface MenuOptionPros {
 interface MemberCardProps {
   data: Member;
   onDelete: () => void;
-  onCopy: () => void;
+  onCopy: (shortToken: string) => void;
 }
 
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
@@ -61,7 +62,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
     switch (id) {
       case 'copy':
         copy(token);
-        onCopy();
+        onCopy(shortenUUID(token));
         break;
       case 'delete':
         setDeleteShown(true);

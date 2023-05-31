@@ -50,8 +50,12 @@ export function Team() {
     update();
   };
 
-  const handleCopyClick = () => {
-    toaster.info('Key copied');
+  const handleCopyClick = (shortToken: string) => {
+    toaster.info(
+      <span>
+        Key &quot;<code>{shortToken}</code>&quot; copied
+      </span>
+    );
   };
 
   return (
