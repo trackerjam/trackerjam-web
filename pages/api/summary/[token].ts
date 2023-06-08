@@ -4,7 +4,7 @@ import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, SessionId} from '../../../types/api';
+import {AuthMethodContext, SessionId, SummaryResponse} from '../../../types/api';
 
 async function get({req, res}: AuthMethodContext) {
   const {token} = req.query as {token: string};
@@ -25,14 +25,27 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
+    const activityRecordDays = await prismadb.summary.groupBy({
+      where: {
+        memberToken: token,
+      },
+      by: ['date'],
+    });
+    const totalDays = activityRecordDays.length;
+
     const {activityTime, domainsCount, sessionCount} = summary || {};
-    const response = summary
+    const response: SummaryResponse = summary
       ? {
           activityTime,
           domainsCount,
           sessionCount,
+          totalDays,
         }
       : {};
+
+    if (totalDays) {
+      response.totalDays = totalDays;
+    }
 
     res.json(response);
   } catch (e) {

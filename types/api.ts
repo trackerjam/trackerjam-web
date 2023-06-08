@@ -49,3 +49,10 @@ export type CreateSessionActivityInput = {
   startTime: number;
   endTime: number;
 };
+
+export interface SummaryResponse {
+  activityTime?: number | null | undefined;
+  domainsCount?: number | null | undefined;
+  sessionCount?: number | null | undefined;
+  totalDays?: number | null | undefined;
+}

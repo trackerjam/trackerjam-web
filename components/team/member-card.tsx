@@ -1,13 +1,12 @@
 import {useStyletron} from 'baseui';
-import {Member, Summary} from '@prisma/client';
+import {Member} from '@prisma/client';
 import Avatar from 'boring-avatars';
 import {Button, KIND, SIZE, SHAPE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import type {IconType} from 'react-icons';
-import {Tag, KIND as TAG_KIND} from 'baseui/tag';
 import {StatefulPopover} from 'baseui/popover';
 import {StatefulMenu} from 'baseui/menu';
-import {BiCopy, BiTrash, BiTime, BiListUl} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiTime, BiListUl, BiRightArrowAlt, BiCalendar} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
@@ -17,6 +16,8 @@ import {useGetData} from '../hooks/use-get-data';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
+import {SummaryResponse} from '../../types/api';
+import {StatusTag} from './status-tag';
 
 interface MenuOptionPros {
   icon: IconType;
@@ -53,7 +54,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [css, theme] = useStyletron();
-  const {data: summaryData, isLoading: summaryLoading} = useGetData<Summary>(
+  const {data: summaryData, isLoading: summaryLoading} = useGetData<SummaryResponse>(
     `/api/summary/${token}`
   );
   const {send} = useSendData(`/api/member/${token}`);
@@ -144,7 +145,13 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
     fontSize: theme.typography.LabelXSmall.fontSize,
   });
 
+  const actionsStyle = css({
+    display: 'flex',
+    justifyContent: 'flex-end',
+  });
+
   const emptySummaryText = summaryLoading ? '...' : '0';
+  const avatarSeed = name + token;
 
   return (
     <div className={cardStyle}>
@@ -173,7 +180,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         <div className={avatarStyle}>
           <Avatar
             size={40}
-            name={`${name}${title ? ' - ' + title : ''}`}
+            name={avatarSeed}
             variant="beam"
             colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
           />
@@ -241,26 +248,25 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
       </div>
 
       <hr className={hrStyle} />
+
       <div className={statsWrapperStyle}>
         <div className={statsColumnStyle}>
-          <Tag
-            kind={TAG_KIND.blue}
-            closeable={false}
-            overrides={{
-              Root: {
-                style: {
-                  marginTop: 0,
-                  marginRight: 0,
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  fontSize: '11px',
-                },
-              },
-            }}
-          >
-            {status}
-          </Tag>
+          <StatusTag status={status} />
         </div>
+
+        <div className={statsColumnStyle}>
+          <StatefulTooltip
+            content="Total days with activity"
+            showArrow
+            placement={PLACEMENT.bottom}
+          >
+            <div className={statsContentStyle}>
+              <BiCalendar color={theme.colors.contentInverseTertiary} title="" />{' '}
+              {summaryData?.totalDays ? summaryData.totalDays : emptySummaryText}
+            </div>
+          </StatefulTooltip>
+        </div>
+
         <div className={statsColumnStyle}>
           <StatefulTooltip content="Activity time today" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
@@ -280,6 +286,14 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
             </div>
           </StatefulTooltip>
         </div>
+      </div>
+
+      <hr className={hrStyle} />
+
+      <div className={actionsStyle}>
+        <Button size={SIZE.mini} kind={KIND.secondary} endEnhancer={<BiRightArrowAlt title="" />}>
+          Statistics
+        </Button>
       </div>
     </div>
   );
