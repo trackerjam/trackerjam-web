@@ -8,6 +8,7 @@ import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SessionId} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 import {EditMemberDataType} from '../../../types/member';
+import {sendTokenMail} from '../../../utils/api/send-main';
 
 async function create({req, res, session}: AuthMethodContext) {
   const data: EditMemberDataType = req.body;
@@ -38,7 +39,12 @@ async function create({req, res, session}: AuthMethodContext) {
       },
     });
 
-    res.json(newMember);
+    res.json(newMember); // early return
+
+    // Send token to the new member
+    if (newMember.email) {
+      await sendTokenMail(newMember.email, newMember.token);
+    }
   } catch (e) {
     console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
