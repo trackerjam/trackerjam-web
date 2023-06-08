@@ -5,7 +5,7 @@ import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {SessionId} from '../../../types/api';
+import {GetTeamResponse, SessionId} from '../../../types/api';
 
 async function get(res: NextApiResponse, session: SessionId) {
   const getData = () =>
@@ -18,12 +18,24 @@ async function get(res: NextApiResponse, session: SessionId) {
           orderBy: {
             createdAt: 'desc',
           },
+          include: {
+            summary: {
+              where: {
+                date: new Date(),
+              },
+              select: {
+                activityTime: true,
+                domainsCount: true,
+                sessionCount: true,
+              },
+            },
+          },
         },
       },
     });
 
   try {
-    const result = await getData();
+    const result: GetTeamResponse = await getData();
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));

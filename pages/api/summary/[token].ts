@@ -14,8 +14,6 @@ async function get({req, res}: AuthMethodContext) {
   }
 
   try {
-    // TODO Accept array of tokens
-
     const summary = await prismadb.summary.findUnique({
       where: {
         date_memberToken: {
@@ -25,27 +23,14 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
-    const activityRecordDays = await prismadb.summary.groupBy({
-      where: {
-        memberToken: token,
-      },
-      by: ['date'],
-    });
-    const totalDays = activityRecordDays.length;
-
     const {activityTime, domainsCount, sessionCount} = summary || {};
     const response: SummaryResponse = summary
       ? {
           activityTime,
           domainsCount,
           sessionCount,
-          totalDays,
         }
       : {};
-
-    if (totalDays) {
-      response.totalDays = totalDays;
-    }
 
     res.json(response);
   } catch (e) {

@@ -1,22 +1,20 @@
 import {useStyletron} from 'baseui';
-import {Member} from '@prisma/client';
 import Avatar from 'boring-avatars';
 import {Button, KIND, SIZE, SHAPE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import type {IconType} from 'react-icons';
 import {StatefulPopover} from 'baseui/popover';
 import {StatefulMenu} from 'baseui/menu';
-import {BiCopy, BiTrash, BiTime, BiListUl, BiRightArrowAlt, BiCalendar} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiTime, BiListUl, BiRightArrowAlt} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {getBorder} from '../../utils/get-border';
-import {useGetData} from '../hooks/use-get-data';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
-import {SummaryResponse} from '../../types/api';
+import {MemberAndSummary} from '../../types/api';
 import {StatusTag} from './status-tag';
 
 interface MenuOptionPros {
@@ -26,10 +24,12 @@ interface MenuOptionPros {
 }
 
 interface MemberCardProps {
-  data: Member;
+  data: MemberAndSummary;
   onDelete: () => void;
   onCopy: (shortToken: string) => void;
 }
+
+const emptySummaryText = '0';
 
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   const Icon = icon;
@@ -50,13 +50,10 @@ const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
 };
 
 export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
-  const {name, title, status, token} = data;
+  const {name, title, status, token, summary} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [css, theme] = useStyletron();
-  const {data: summaryData, isLoading: summaryLoading} = useGetData<SummaryResponse>(
-    `/api/summary/${token}`
-  );
   const {send} = useSendData(`/api/member/${token}`);
 
   const handleMenuClick = async (id: string) => {
@@ -150,8 +147,8 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
     justifyContent: 'flex-end',
   });
 
-  const emptySummaryText = summaryLoading ? '...' : '0';
   const avatarSeed = name + token;
+  const summaryData = summary?.[0] || {};
 
   return (
     <div className={cardStyle}>
@@ -252,19 +249,6 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
       <div className={statsWrapperStyle}>
         <div className={statsColumnStyle}>
           <StatusTag status={status} />
-        </div>
-
-        <div className={statsColumnStyle}>
-          <StatefulTooltip
-            content="Total days with activity"
-            showArrow
-            placement={PLACEMENT.bottom}
-          >
-            <div className={statsContentStyle}>
-              <BiCalendar color={theme.colors.contentInverseTertiary} title="" />{' '}
-              {summaryData?.totalDays ? summaryData.totalDays : emptySummaryText}
-            </div>
-          </StatefulTooltip>
         </div>
 
         <div className={statsColumnStyle}>

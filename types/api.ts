@@ -1,6 +1,6 @@
 import {Session} from 'next-auth';
 import {NextApiRequest, NextApiResponse} from 'next';
-import {TAB_TYPE} from '@prisma/client';
+import {Member, TAB_TYPE, Team} from '@prisma/client';
 
 export interface SessionId extends Session {
   user: Session['user'] & {
@@ -56,3 +56,15 @@ export interface SummaryResponse {
   sessionCount?: number | null | undefined;
   totalDays?: number | null | undefined;
 }
+
+export type GetTeamResponse = (Team & {
+  members: MemberAndSummary[];
+})[];
+
+export type MemberAndSummary = Member & {
+  summary: {
+    activityTime: number | null;
+    domainsCount: number | null;
+    sessionCount: number | null;
+  }[];
+};

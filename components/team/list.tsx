@@ -6,11 +6,11 @@ import {useStyletron} from 'baseui';
 import {useMemo} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useRouter} from 'next/router';
-import type {Member, Team} from '@prisma/client';
 import {toaster, ToasterContainer, PLACEMENT} from 'baseui/toast';
 import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
+import {GetTeamResponse} from '../../types/api';
 import {ListSkeleton} from './list-skeleton';
 import {MemberCard} from './member-card';
 
@@ -18,8 +18,7 @@ export const GRID_TEMPLATE = 'repeat(auto-fit, minmax(250px, 350px))';
 
 export function Team() {
   const [css, theme] = useStyletron();
-  const {data, isLoading, error, update} =
-    useGetData<Array<Team & {members: Member[]}>>('/api/team');
+  const {data, isLoading, error, update} = useGetData<GetTeamResponse>('/api/team');
   const router = useRouter();
 
   const cardsBlockWrapper = css({
