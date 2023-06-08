@@ -70,7 +70,7 @@ function getHtml(token: string) {
 
 <p>
     <small>
-        Ignore this email is you are not expecting any traking key and do not now what is TrackerJam.
+        Ignore this email is you are not expecting any tracking key and do not know what is TrackerJam.
     </small>
 </p>
 
