@@ -10,6 +10,7 @@ import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
+import {useRouter} from 'next/router';
 import {getBorder} from '../../utils/get-border';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
@@ -50,11 +51,12 @@ const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
 };
 
 export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
-  const {name, title, status, token, summary} = data;
+  const {name, title, status, token, summary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [css, theme] = useStyletron();
   const {send} = useSendData(`/api/member/${token}`);
+  const {push} = useRouter();
 
   const handleMenuClick = async (id: string) => {
     switch (id) {
@@ -275,7 +277,14 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
       <hr className={hrStyle} />
 
       <div className={actionsStyle}>
-        <Button size={SIZE.mini} kind={KIND.secondary} endEnhancer={<BiRightArrowAlt title="" />}>
+        <Button
+          size={SIZE.mini}
+          kind={KIND.secondary}
+          endEnhancer={<BiRightArrowAlt title="" />}
+          onClick={async () => {
+            await push(`/statistics/${memberId}`);
+          }}
+        >
           Statistics
         </Button>
       </div>
