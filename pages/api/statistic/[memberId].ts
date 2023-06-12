@@ -27,9 +27,29 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
+    const extendedActivities = [];
+    for (let i = 0; i < activities.length; i++) {
+      const domain = await prismadb.domain.findUnique({
+        where: {
+          id: activities[i].domainId,
+        },
+      });
+
+      const extendedActivity = {
+        ...activities[i],
+        domainName: domain?.domain || 'unknown',
+      };
+
+      extendedActivities.push(extendedActivity);
+
+      if (domain?.domain) {
+        console.error(`Domain for id "${activities[i].domainId}" not found`);
+      }
+    }
+
     const result = {
       member,
-      activities,
+      activities: extendedActivities,
     };
 
     res.json(result);
