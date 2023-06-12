@@ -132,6 +132,7 @@ enum TAB_TYPE {
 model Summary {
   id           String   @id @default(uuid())
   date         DateTime @db.Date
+  updatedAt    DateTime @updatedAt
   activityTime Int?
   domainsCount Int?
   sessionCount Int?

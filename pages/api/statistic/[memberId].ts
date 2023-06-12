@@ -4,38 +4,34 @@ import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {GetTeamResponse, SessionId} from '../../../types/api';
+import {AuthMethodContext, SessionId} from '../../../types/api';
 
-async function get(res: NextApiResponse, session: SessionId) {
-  const getData = () =>
-    prismadb.team.findMany({
+async function get({req, res}: AuthMethodContext) {
+  const memberId = req.query?.memberId as string;
+
+  try {
+    const member = await prismadb.member.findUniqueOrThrow({
       where: {
-        ownerUserId: session.user.id,
-      },
-      include: {
-        members: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-          include: {
-            summary: {
-              where: {
-                date: new Date(),
-              },
-              select: {
-                activityTime: true,
-                domainsCount: true,
-                sessionCount: true,
-                updatedAt: true,
-              },
-            },
-          },
-        },
+        id: memberId,
       },
     });
 
-  try {
-    const result: GetTeamResponse = await getData();
+    const activities = await prismadb.domainActivity.findMany({
+      where: {
+        member: {
+          id: member.id,
+        },
+      },
+      include: {
+        sessionActivities: true,
+      },
+    });
+
+    const result = {
+      member,
+      activities,
+    };
+
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
@@ -52,7 +48,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   switch (method) {
     case 'GET':
-      return get(res, session);
+      return get({req, res, session});
     default:
       return res.status(405).json(buildError('not allowed'));
   }

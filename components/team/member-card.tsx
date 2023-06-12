@@ -5,12 +5,13 @@ import {HiMenu as MenuIcon} from 'react-icons/hi';
 import type {IconType} from 'react-icons';
 import {StatefulPopover} from 'baseui/popover';
 import {StatefulMenu} from 'baseui/menu';
-import {BiCopy, BiTrash, BiTime, BiListUl, BiRightArrowAlt} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiTime, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {useRouter} from 'next/router';
+import {formatDistanceToNow} from 'date-fns';
 import {getBorder} from '../../utils/get-border';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
@@ -30,7 +31,7 @@ interface MemberCardProps {
   onCopy: (shortToken: string) => void;
 }
 
-const emptySummaryText = '0';
+const emptySummaryText = '-';
 
 const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
   const Icon = icon;
@@ -265,10 +266,12 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         </div>
 
         <div className={statsColumnStyle} style={{borderRight: 'none'}}>
-          <StatefulTooltip content="Session count today" showArrow placement={PLACEMENT.bottom}>
+          <StatefulTooltip content="Last reported activity" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
-              <BiListUl color={theme.colors.contentInverseTertiary} title="" />{' '}
-              {summaryData?.sessionCount ?? emptySummaryText}
+              <BiCheckShield color={theme.colors.contentInverseTertiary} title="" />{' '}
+              {summaryData?.updatedAt
+                ? formatDistanceToNow(new Date(summaryData?.updatedAt)) + ' ago'
+                : emptySummaryText}
             </div>
           </StatefulTooltip>
         </div>
