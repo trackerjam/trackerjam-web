@@ -7,7 +7,8 @@ import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SessionId} from '../../../types/api';
 import {getIsoDate} from '../../../utils/get-iso-date';
-import {TAKE_STATS_LIMIT} from '../../../const/stats';
+
+// TODO Limit response by time window
 
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
@@ -25,7 +26,6 @@ async function get({req, res}: AuthMethodContext) {
           id: member.id,
         },
       },
-      take: TAKE_STATS_LIMIT,
       orderBy: {
         date: 'desc',
       },

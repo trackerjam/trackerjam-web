@@ -1,48 +1,121 @@
 import Head from 'next/head';
-import {LabelLarge as Title, LabelSmall as Subtitle} from 'baseui/typography';
+import {LabelLarge as Title} from 'baseui/typography';
 import {useRouter} from 'next/router';
 import dynamic from 'next/dynamic';
-import {useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useStyletron} from 'baseui';
+import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
+import {Button} from 'baseui/button';
+import {format, formatDistanceToNow} from 'date-fns';
+import {DIVIDER, TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {MemberStatisticType} from '../../types/api';
 import {formatTimeDuration} from '../../utils/format-time-duration';
+import brandColors from './brand-colors.json';
+
+type ChartAndTableType = {
+  id: string;
+  label: string;
+  value: number;
+  sessionCount: number;
+  lastSession: number | null;
+  color: string;
+};
 
 // Read more about this import issue: https://github.com/plouc/nivo/issues/2310
 const ResponsivePie = dynamic(() => import('@nivo/pie').then((m) => m.ResponsivePie), {
   ssr: false,
 });
 
+function getColorByDomain(domain: string): string {
+  const domainNoTld = domain.split('.')[0];
+  const colors = (brandColors as {[domain: string]: Array<string>})[domainNoTld];
+  return colors?.length ? '#' + colors[0] : 'transparent';
+}
+
 export function MemberStatistics() {
-  const [css] = useStyletron();
+  const [css, theme] = useStyletron();
   const {
     query: {memberId},
   } = useRouter();
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
   const hasData = Boolean(!isLoading && data);
+  const [currentDate, setCurrentDate] = useState<string | null>(null);
 
-  const currentDate = useMemo(() => {
-    // TODO Use date selector
+  const availableDates = useMemo(() => {
     if (data?.activities) {
       return Object.keys(data?.activities).sort((a: string, b: string) => {
-        return new Date(b).getTime() - new Date(a).getTime();
-      })[0];
+        return new Date(a).getTime() - new Date(b).getTime();
+      });
     }
   }, [data?.activities]);
 
+  useEffect(() => {
+    if (availableDates?.length && currentDate === null) {
+      setCurrentDate(availableDates[availableDates.length - 1]);
+    }
+  }, [availableDates, currentDate]);
+  const selectedDateIdx = availableDates?.indexOf(currentDate || '');
+
   const pieData = useMemo(() => {
     if (data?.activities && currentDate) {
-      return data?.activities[currentDate].map(({timeSpent, domainName}) => {
-        return {
-          id: domainName,
-          label: domainName,
-          value: timeSpent,
-        };
-      });
+      const byDomains = data?.activities[currentDate].reduce(
+        (mem, {timeSpent, domainName, sessionActivities}) => {
+          if (!mem[domainName]) {
+            mem[domainName] = {
+              id: domainName,
+              label: domainName,
+              value: 0,
+              sessionCount: 0,
+              lastSession: null,
+              color: getColorByDomain(domainName),
+            };
+          }
+
+          mem[domainName].value += timeSpent;
+          mem[domainName].sessionCount += sessionActivities?.length || 0;
+          mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
+            return Math.max(max, new Date(endDatetime).getTime());
+          }, 0);
+
+          return mem;
+        },
+        {} as {[domain: string]: ChartAndTableType}
+      );
+
+      return Object.values(byDomains);
     }
     return [];
   }, [data?.activities, currentDate]);
+
+  const handleChangeDate = (idx: number) => {
+    setCurrentDate(availableDates?.[idx] || null);
+  };
+
+  const pieChartStyle = css({
+    ...theme.borders.border200,
+    width: 'min(600px, 100%)',
+    height: '400px',
+    marginTop: theme.sizing.scale600,
+    borderRadius: theme.borders.radius300,
+  });
+
+  const tableWrapperStyle = css({
+    marginTop: theme.sizing.scale600,
+  });
+
+  const domainLabelStyle = css({
+    display: 'flex',
+    gap: theme.sizing.scale400,
+  });
+
+  const domainColorTagStyle = css({
+    width: theme.sizing.scale600,
+    height: theme.sizing.scale600,
+    borderRadius: '50%',
+    ...theme.borders.border200,
+  });
 
   return (
     <div>
@@ -59,9 +132,24 @@ export function MemberStatistics() {
 
       {hasData && (
         <>
-          <Subtitle>on {currentDate}</Subtitle>
+          <div>
+            {Boolean(availableDates?.length) && (
+              <ButtonGroup
+                size={SIZE.compact}
+                mode={MODE.radio}
+                selected={selectedDateIdx}
+                onClick={(_, idx) => handleChangeDate(idx)}
+              >
+                {
+                  availableDates?.map((dateStr) => {
+                    return <Button key={dateStr}>{format(new Date(dateStr), 'E, dd MMM')}</Button>;
+                  }) as React.ReactNode[]
+                }
+              </ButtonGroup>
+            )}
+          </div>
 
-          <div className={css({width: '600px', height: '400px'})}>
+          <div className={pieChartStyle}>
             <ResponsivePie
               data={pieData}
               valueFormat={(value) => formatTimeDuration(value)}
@@ -111,6 +199,33 @@ export function MemberStatistics() {
                 },
               ]}
             />
+          </div>
+
+          <div className={tableWrapperStyle}>
+            <TableBuilder data={pieData} divider={DIVIDER.grid}>
+              <TableBuilderColumn header="Domain">
+                {(row: ChartAndTableType) => (
+                  <div className={domainLabelStyle}>
+                    <span
+                      className={domainColorTagStyle}
+                      style={{backgroundColor: getColorByDomain(row.label)}}
+                    />
+                    <span>{row.label}</span>
+                  </div>
+                )}
+              </TableBuilderColumn>
+              <TableBuilderColumn header="Activity Time">
+                {(row: ChartAndTableType) => formatTimeDuration(row.value)}
+              </TableBuilderColumn>
+              <TableBuilderColumn header="Sessions Count">
+                {(row: ChartAndTableType) => row.sessionCount}
+              </TableBuilderColumn>
+              <TableBuilderColumn header="Last Session">
+                {(row: ChartAndTableType) =>
+                  row.lastSession ? formatDistanceToNow(new Date(row.lastSession)) : '-'
+                }
+              </TableBuilderColumn>
+            </TableBuilder>
           </div>
         </>
       )}

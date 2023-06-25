@@ -5,7 +5,8 @@ import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {GetTeamResponse, SessionId} from '../../../types/api';
-import {TAKE_STATS_LIMIT} from '../../../const/stats';
+
+// TODO Limit response by time window
 
 async function get(res: NextApiResponse, session: SessionId) {
   const response = await prismadb.team.findMany({
@@ -22,7 +23,6 @@ async function get(res: NextApiResponse, session: SessionId) {
             orderBy: {
               date: 'desc',
             },
-            take: TAKE_STATS_LIMIT,
             select: {
               activityTime: true,
               domainsCount: true,
