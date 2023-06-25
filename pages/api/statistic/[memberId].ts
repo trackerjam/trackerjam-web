@@ -1,10 +1,13 @@
 import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
+import {DomainActivity} from '@prisma/client';
 import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SessionId} from '../../../types/api';
+import {getIsoDate} from '../../../utils/get-iso-date';
+import {TAKE_STATS_LIMIT} from '../../../const/stats';
 
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
@@ -21,6 +24,10 @@ async function get({req, res}: AuthMethodContext) {
         member: {
           id: member.id,
         },
+      },
+      take: TAKE_STATS_LIMIT,
+      orderBy: {
+        date: 'desc',
       },
       include: {
         sessionActivities: true,
@@ -42,14 +49,23 @@ async function get({req, res}: AuthMethodContext) {
 
       extendedActivities.push(extendedActivity);
 
-      if (domain?.domain) {
+      if (!domain?.domain) {
         console.error(`Domain for id "${activities[i].domainId}" not found`);
       }
     }
 
+    const activitiesByDate = extendedActivities.reduce((mem, act) => {
+      const isoDate = getIsoDate(act.date);
+      if (!mem[isoDate]) {
+        mem[isoDate] = [];
+      }
+      mem[isoDate].push(act);
+      return mem;
+    }, {} as {[date: string]: Array<DomainActivity>});
+
     const result = {
       member,
-      activities: extendedActivities,
+      activities: activitiesByDate,
     };
 
     res.json(result);

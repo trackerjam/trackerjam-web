@@ -5,37 +5,38 @@ import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {GetTeamResponse, SessionId} from '../../../types/api';
+import {TAKE_STATS_LIMIT} from '../../../const/stats';
 
 async function get(res: NextApiResponse, session: SessionId) {
-  const getData = () =>
-    prismadb.team.findMany({
-      where: {
-        ownerUserId: session.user.id,
-      },
-      include: {
-        members: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-          include: {
-            summary: {
-              where: {
-                date: new Date(),
-              },
-              select: {
-                activityTime: true,
-                domainsCount: true,
-                sessionCount: true,
-                updatedAt: true,
-              },
+  const response = await prismadb.team.findMany({
+    where: {
+      ownerUserId: session.user.id,
+    },
+    include: {
+      members: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+        include: {
+          summary: {
+            orderBy: {
+              date: 'desc',
+            },
+            take: TAKE_STATS_LIMIT,
+            select: {
+              activityTime: true,
+              domainsCount: true,
+              sessionCount: true,
+              updatedAt: true,
             },
           },
         },
       },
-    });
+    },
+  });
 
   try {
-    const result: GetTeamResponse = await getData();
+    const result: GetTeamResponse = response;
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));

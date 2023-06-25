@@ -151,7 +151,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   });
 
   const avatarSeed = name + token;
-  const summaryData = summary?.[0] || {};
+  const summaryData = summary?.[0] || {}; // should be ordered desc
 
   return (
     <div className={cardStyle}>
@@ -255,7 +255,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         </div>
 
         <div className={statsColumnStyle}>
-          <StatefulTooltip content="Activity time today" showArrow placement={PLACEMENT.bottom}>
+          <StatefulTooltip content="Last reported summary" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
               <BiTime color={theme.colors.contentInverseTertiary} title="" />{' '}
               {summaryData?.activityTime

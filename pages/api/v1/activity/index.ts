@@ -10,6 +10,7 @@ import {
   CreateDomainActivityInput,
   PublicMethodContext,
 } from '../../../../types/api';
+import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 
 async function handleRecordActivity(activity: CreateActivityInput, token: string) {
   const domain = extractDomain(activity.domain);
@@ -23,7 +24,7 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
     },
   });
 
-  const date = new Date(activity.date);
+  const date = getHourBasedDate(activity.date); // convert to hour-based index value
   const timeSpentInc =
     activity?.sessions?.reduce((mem, {startTime, endTime}) => mem + (endTime - startTime), 0) || 0;
   const activitiesCountInc = activity?.sessions?.length || 0;

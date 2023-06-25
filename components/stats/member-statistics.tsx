@@ -22,9 +22,18 @@ export function MemberStatistics() {
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
   const hasData = Boolean(!isLoading && data);
 
-  const pieData = useMemo(() => {
+  const currentDate = useMemo(() => {
+    // TODO Use date selector
     if (data?.activities) {
-      return data?.activities.map(({timeSpent, domainName}) => {
+      return Object.keys(data?.activities).sort((a: string, b: string) => {
+        return new Date(b).getTime() - new Date(a).getTime();
+      })[0];
+    }
+  }, [data?.activities]);
+
+  const pieData = useMemo(() => {
+    if (data?.activities && currentDate) {
+      return data?.activities[currentDate].map(({timeSpent, domainName}) => {
         return {
           id: domainName,
           label: domainName,
@@ -33,7 +42,7 @@ export function MemberStatistics() {
       });
     }
     return [];
-  }, [data?.activities]);
+  }, [data?.activities, currentDate]);
 
   return (
     <div>
@@ -41,14 +50,16 @@ export function MemberStatistics() {
         <title>Statistics</title>
       </Head>
 
-      <Title marginBottom="scale600">Statistics</Title>
+      <Title marginBottom="scale600">
+        Statistic {data?.member ? `for ${data?.member?.name}` : ''}
+      </Title>
 
       {isLoading && <span>Loading...</span>}
       {error && <ErrorDetails error={error} />}
 
       {hasData && (
         <>
-          <Subtitle>Statistic for {data?.member?.name}</Subtitle>
+          <Subtitle>on {currentDate}</Subtitle>
 
           <div className={css({width: '600px', height: '400px'})}>
             <ResponsivePie

@@ -8,7 +8,7 @@ import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SessionId} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 import {EditMemberDataType} from '../../../types/member';
-import {sendTokenMail} from '../../../utils/api/send-main';
+import {sendTokenMail} from '../../../utils/api/send-mail';
 
 async function create({req, res, session}: AuthMethodContext) {
   const data: EditMemberDataType = req.body;

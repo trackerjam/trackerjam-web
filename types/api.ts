@@ -72,8 +72,10 @@ export type MemberAndSummary = Member & {
 
 export type MemberStatisticType = {
   member: Member | null;
-  activities: (DomainActivity & {
-    sessionActivities: SessionActivity[];
-    domainName: string;
-  })[];
+  activities: {
+    [date: string]: (DomainActivity & {
+      sessionActivities: SessionActivity[];
+      domainName: string;
+    })[];
+  };
 };
