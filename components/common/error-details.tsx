@@ -46,7 +46,7 @@ export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.Reac
     borderTopLeftRadius: theme.borders.radius300,
     borderBottomRightRadius: theme.borders.radius300,
     borderBottomLeftRadius: theme.borders.radius300,
-    backgroundColor: theme.colors.backgroundLightNegative,
+    backgroundColor: theme.colors.backgroundNegativeLight,
     color: theme.colors.contentNegative,
   });
 
