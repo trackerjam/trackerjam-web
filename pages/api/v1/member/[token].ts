@@ -24,9 +24,13 @@ async function update({req, res}: PublicMethodContext) {
   }
 
   try {
-    const member = (await prismadb.member.findUniqueOrThrow({
+    const member = (await prismadb.member.findUnique({
       where: {token},
     })) as Member;
+
+    if (!member) {
+      return res.status(204).json(buildError('user not found'));
+    }
 
     await prismadb.member.update({
       where: {
@@ -52,9 +56,13 @@ async function get({req, res}: PublicMethodContext) {
   }
 
   try {
-    const member = (await prismadb.member.findUniqueOrThrow({
+    const member = (await prismadb.member.findUnique({
       where: {token},
     })) as Member;
+
+    if (!member) {
+      return res.status(204).json(buildError('user not found'));
+    }
 
     const settingsRecord = await prismadb.memberSettings.findUnique({
       where: {
