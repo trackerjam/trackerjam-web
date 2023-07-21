@@ -14,12 +14,15 @@ async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
 
   try {
+    // Find user
     const member = await prismadb.member.findUniqueOrThrow({
       where: {
         id: memberId,
       },
     });
 
+    // Find domain and session activities for that user just by user ID
+    // TODO: Consider limiting this to last 7/30 days only
     const activities = await prismadb.domainActivity.findMany({
       where: {
         member: {
@@ -34,6 +37,7 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
+    // Extend activities with the real domain name
     const extendedActivities = [];
     for (let i = 0; i < activities.length; i++) {
       const domain = await prismadb.domain.findUnique({
@@ -51,9 +55,11 @@ async function get({req, res}: AuthMethodContext) {
 
       if (!domain?.domain) {
         console.error(`Domain for id "${activities[i].domainId}" not found`);
+        // TODO Consider throw Sentry error
       }
     }
 
+    // Group activities by date, without specific time
     const activitiesByDate = extendedActivities.reduce((mem, act) => {
       const isoDate = getIsoDate(act.date);
       if (!mem[isoDate]) {
