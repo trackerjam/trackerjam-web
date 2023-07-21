@@ -96,7 +96,7 @@ export function MemberStatistics() {
 
   const pieChartStyle = css({
     ...theme.borders.border200,
-    width: 'min(600px, 100%)',
+    width: 'min(720px, 100%)',
     height: '400px',
     marginTop: theme.sizing.scale600,
     borderRadius: theme.borders.radius300,
@@ -154,7 +154,7 @@ export function MemberStatistics() {
             <ResponsivePie
               data={pieData}
               valueFormat={(value) => formatTimeDuration(value)}
-              margin={{top: 40, right: 20, bottom: 80, left: 80}}
+              margin={{top: 40, right: 210, bottom: 80, left: 80}}
               innerRadius={0.5}
               padAngle={0.7}
               cornerRadius={3}
@@ -176,14 +176,14 @@ export function MemberStatistics() {
               }}
               legends={[
                 {
-                  anchor: 'bottom',
-                  direction: 'row',
+                  anchor: 'top-right',
+                  direction: 'column',
                   justify: false,
                   itemsSpacing: 0,
-                  translateX: 0,
-                  translateY: 60,
+                  translateX: 160,
+                  translateY: 0,
                   itemWidth: 100,
-                  itemHeight: 18,
+                  itemHeight: 20,
                   itemTextColor: '#999',
                   itemDirection: 'left-to-right',
                   itemOpacity: 1,
