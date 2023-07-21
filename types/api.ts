@@ -70,12 +70,14 @@ export type MemberAndSummary = Member & {
   }[];
 };
 
+export type MemberStatisticActivityType = DomainActivity & {
+  sessionActivities: SessionActivity[];
+  domainName: string;
+};
+
 export type MemberStatisticType = {
   member: Member | null;
   activities: {
-    [date: string]: (DomainActivity & {
-      sessionActivities: SessionActivity[];
-      domainName: string;
-    })[];
+    [date: string]: MemberStatisticActivityType[];
   };
 };
