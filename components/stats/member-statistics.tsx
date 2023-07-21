@@ -13,7 +13,7 @@ import {ErrorDetails} from '../common/error-details';
 import {MemberStatisticType} from '../../types/api';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import brandColors from './brand-colors.json';
-import Table from './table';
+import DebugTable from './debug-table';
 
 type ChartAndTableType = {
   id: string;
@@ -234,7 +234,7 @@ export function MemberStatistics() {
               <br />
               <h3>Debug table</h3>
 
-              <Table data={data?.activities[currentDate]} />
+              <DebugTable data={data?.activities[currentDate]} />
             </div>
           )}
         </>

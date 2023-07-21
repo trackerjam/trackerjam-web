@@ -14,20 +14,25 @@ function Tasks(props: {tasks: any[]}) {
         padding: '32px 24px',
       })}
     >
-      <StyledTable role="grid" $gridTemplateColumns="auto auto auto auto">
+      <StyledTable role="grid" $gridTemplateColumns="auto auto auto auto auto">
         <div role="row" className={css({display: 'contents'})}>
           <StyledHeadCell $sticky={false}>Title</StyledHeadCell>
           <StyledHeadCell $sticky={false}>URL</StyledHeadCell>
           <StyledHeadCell $sticky={false}>Start Time</StyledHeadCell>
           <StyledHeadCell $sticky={false}>End Time</StyledHeadCell>
+          <StyledHeadCell $sticky={false}>Length</StyledHeadCell>
         </div>
         {props.tasks.map((task, idx) => {
+          const lengthSec = (new Date(task[3]).getTime() - new Date(task[2]).getTime()) / 1000;
           return (
             <div role="row" className={css({display: 'contents'})} key={idx}>
               <StyledBodyCell>{task[0]}</StyledBodyCell>
               <StyledBodyCell>{task[1]}</StyledBodyCell>
               <StyledBodyCell>{task[2]}</StyledBodyCell>
               <StyledBodyCell>{task[3]}</StyledBodyCell>
+              <StyledBodyCell>
+                {lengthSec} sec ({(lengthSec / 60).toFixed(3)} min)
+              </StyledBodyCell>
             </div>
           );
         })}
@@ -62,7 +67,7 @@ function Row({striped, row}: any) {
     </div>
   );
 }
-export default function Table({data}: {data: MemberStatisticActivityType[] | undefined}) {
+export default function DebugTable({data}: {data: MemberStatisticActivityType[] | undefined}) {
   const [css] = useStyletron();
 
   const tableData = useMemo(() => {
