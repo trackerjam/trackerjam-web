@@ -10,10 +10,11 @@ import {format, formatDistanceToNow} from 'date-fns';
 import {DIVIDER, TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
-import {MemberStatisticType} from '../../types/api';
+import {MemberStatisticActivityType, MemberStatisticType} from '../../types/api';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import brandColors from './brand-colors.json';
 import DebugTable from './debug-table';
+import {TimelineChart} from './timeline-chart/timeline-chart';
 
 type ChartAndTableType = {
   id: string;
@@ -59,36 +60,40 @@ export function MemberStatistics() {
   }, [availableDates, currentDate]);
   const selectedDateIdx = availableDates?.indexOf(currentDate || '');
 
+  const currentDayData: MemberStatisticActivityType[] | null | undefined = useMemo(() => {
+    if (currentDate) {
+      return data?.activities[currentDate];
+    }
+    return null;
+  }, [currentDate, data?.activities]);
+
   const pieData = useMemo(() => {
-    if (data?.activities && currentDate) {
-      const byDomains = data?.activities[currentDate].reduce(
-        (mem, {timeSpent, domainName, sessionActivities}) => {
-          if (!mem[domainName]) {
-            mem[domainName] = {
-              id: domainName,
-              label: domainName,
-              value: 0,
-              sessionCount: 0,
-              lastSession: null,
-              color: getColorByDomain(domainName),
-            };
-          }
+    if (currentDayData) {
+      const byDomains = currentDayData.reduce((mem, {timeSpent, domainName, sessionActivities}) => {
+        if (!mem[domainName]) {
+          mem[domainName] = {
+            id: domainName,
+            label: domainName,
+            value: 0,
+            sessionCount: 0,
+            lastSession: null,
+            color: getColorByDomain(domainName),
+          };
+        }
 
-          mem[domainName].value += timeSpent;
-          mem[domainName].sessionCount += sessionActivities?.length || 0;
-          mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
-            return Math.max(max, new Date(endDatetime).getTime());
-          }, 0);
+        mem[domainName].value += timeSpent;
+        mem[domainName].sessionCount += sessionActivities?.length || 0;
+        mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
+          return Math.max(max, new Date(endDatetime).getTime());
+        }, 0);
 
-          return mem;
-        },
-        {} as {[domain: string]: ChartAndTableType}
-      );
+        return mem;
+      }, {} as {[domain: string]: ChartAndTableType});
 
       return Object.values(byDomains);
     }
     return [];
-  }, [data?.activities, currentDate]);
+  }, [currentDayData]);
 
   const handleChangeDate = (idx: number) => {
     setCurrentDate(availableDates?.[idx] || null);
@@ -200,6 +205,12 @@ export function MemberStatistics() {
                 },
               ]}
             />
+          </div>
+
+          <div>
+            {Boolean(currentDate) && (
+              <TimelineChart data={data?.activities[currentDate as string]} />
+            )}
           </div>
 
           <div className={tableWrapperStyle}>
