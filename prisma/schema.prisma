@@ -122,6 +122,8 @@ model SessionActivity {
   title            String?        @db.Text
   docTitle         String?        @db.Text
   isHTTPS          Boolean?
+
+  @@unique([domainActivityId, startDatetime, endDatetime])
 }
 
 enum TAB_TYPE {
