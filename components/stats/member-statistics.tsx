@@ -69,26 +69,29 @@ export function MemberStatistics() {
 
   const pieData = useMemo(() => {
     if (currentDayData) {
-      const byDomains = currentDayData.reduce((mem, {timeSpent, domainName, sessionActivities}) => {
-        if (!mem[domainName]) {
-          mem[domainName] = {
-            id: domainName,
-            label: domainName,
-            value: 0,
-            sessionCount: 0,
-            lastSession: null,
-            color: getColorByDomain(domainName),
-          };
-        }
+      const byDomains = currentDayData.reduce(
+        (mem, {timeSpent, domainName, sessionActivities}) => {
+          if (!mem[domainName]) {
+            mem[domainName] = {
+              id: domainName,
+              label: domainName,
+              value: 0,
+              sessionCount: 0,
+              lastSession: null,
+              color: getColorByDomain(domainName),
+            };
+          }
 
-        mem[domainName].value += timeSpent;
-        mem[domainName].sessionCount += sessionActivities?.length || 0;
-        mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
-          return Math.max(max, new Date(endDatetime).getTime());
-        }, 0);
+          mem[domainName].value += timeSpent;
+          mem[domainName].sessionCount += sessionActivities?.length || 0;
+          mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
+            return Math.max(max, new Date(endDatetime).getTime());
+          }, 0);
 
-        return mem;
-      }, {} as {[domain: string]: ChartAndTableType});
+          return mem;
+        },
+        {} as {[domain: string]: ChartAndTableType}
+      );
 
       return Object.values(byDomains);
     }

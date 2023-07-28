@@ -9,12 +9,11 @@ class MyDocument extends Document<{stylesheets: any[]}> {
     const renderPage = () =>
       context.renderPage({
         // eslint-disable-next-line react/display-name
-        enhanceApp: (App: any) => (props: any) =>
-          (
-            <StyletronProvider value={styletron}>
-              <App {...props} />
-            </StyletronProvider>
-          ),
+        enhanceApp: (App: any) => (props: any) => (
+          <StyletronProvider value={styletron}>
+            <App {...props} />
+          </StyletronProvider>
+        ),
       });
 
     const initialProps = await Document.getInitialProps({

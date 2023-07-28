@@ -60,14 +60,17 @@ async function get({req, res}: AuthMethodContext) {
     }
 
     // Group activities by date, without specific time
-    const activitiesByDate = extendedActivities.reduce((mem, act) => {
-      const isoDate = getIsoDateString(act.date);
-      if (!mem[isoDate]) {
-        mem[isoDate] = [];
-      }
-      mem[isoDate].push(act);
-      return mem;
-    }, {} as {[date: string]: Array<DomainActivity>});
+    const activitiesByDate = extendedActivities.reduce(
+      (mem, act) => {
+        const isoDate = getIsoDateString(act.date);
+        if (!mem[isoDate]) {
+          mem[isoDate] = [];
+        }
+        mem[isoDate].push(act);
+        return mem;
+      },
+      {} as {[date: string]: Array<DomainActivity>}
+    );
 
     const result = {
       member,
