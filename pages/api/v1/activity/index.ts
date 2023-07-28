@@ -8,13 +8,13 @@ import {buildError} from '../../../../utils/build-error';
 import {
   CreateActivityInput,
   CreateDomainActivityInput,
+  CreateSessionActivityInput,
   PublicMethodContext,
 } from '../../../../types/api';
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 
-async function handleRecordActivity(activity: CreateActivityInput, token: string) {
-  const domain = extractDomain(activity.domain);
-  const domainRecord = await prismadb.domain.upsert({
+async function upsertDomain(domain: string) {
+  return prismadb.domain.upsert({
     where: {
       domain,
     },
@@ -23,48 +23,139 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
       domain,
     },
   });
+}
 
-  const date = getHourBasedDate(activity.date); // convert to hour-based index value
-  const timeSpentInc =
-    activity?.sessions?.reduce((mem, {startTime, endTime}) => mem + (endTime - startTime), 0) || 0;
-  const activitiesCountInc = activity?.sessions?.length || 0;
-  const sessionCountInc = activity?.sessions?.length || 0;
-
-  const activityRecord = await prismadb.domainActivity.upsert({
+async function upsertDomainActivity({
+  date,
+  domainId,
+  activityType,
+  token,
+}: {
+  date: Date;
+  domainId: string;
+  activityType: TAB_TYPE;
+  token: string;
+}) {
+  return prismadb.domainActivity.upsert({
     where: {
       date_domainId: {
-        domainId: domainRecord.id,
+        domainId,
         date,
       },
     },
-    update: {
-      timeSpent: {
-        increment: timeSpentInc,
-      },
-      activitiesCount: {
-        increment: activitiesCountInc,
-      },
-    },
+    update: {},
     create: {
       date,
-      domainId: domainRecord.id,
-      type: activity.type || TAB_TYPE.WEBSITE,
-      timeSpent: timeSpentInc,
-      activitiesCount: activitiesCountInc,
+      domainId,
+      type: activityType || TAB_TYPE.WEBSITE,
+      timeSpent: 0,
+      activitiesCount: 0,
       memberToken: token,
     },
   });
+}
 
-  if (!activityRecord?.id) {
-    throw new Error('Activity record was not created');
+/**
+ * 1. **Domain Extraction:** Extract the domain from the activity URL using the `extractDomain()` function.
+ *
+ * 2. **Domain Upsert:** Fetch or create a record in the `domain` table for the extracted domain.
+ * This is accomplished with the `upsertDomain()` function, which calls the `prisma.domain.upsert()` method.
+ *
+ * 3. **Date Conversion:** Convert the activity date to an hour-based index value using the `getHourBasedDate()` function.
+ *
+ * 4. **Domain Activity Upsert:** Fetch or create a record in the `domainActivity` table using the `upsertDomainActivity()`
+ * function. This function calls the `prisma.domainActivity.upsert()` method. The record is initially empty as we need
+ * to filter the incoming session data first.
+ *
+ * 5. **Domain Activity Check:** An error is thrown if a `domainActivityRecord` is not found.
+ *
+ * 6. **Fetch Last Session:** Retrieve the most recent session activity for the `domainActivity` record using the
+ * `prisma.sessionActivity.findFirst()` method.
+ *
+ * 7. **Last Session End Time:** Obtain the end time of the last session. If no previous session exists,
+ * a default value of 0 is used.
+ *
+ * 8. **Session Filtering:** For each session in the activity, check if its start time is after the end time of the
+ * last session. If true, it's considered a new session and added to the `newSessions` array. If not, it's considered
+ * a duplicate session and a log message is printed.
+ *
+ * 9. **Time Calculation:** Compute the total time spent on the activity by summing the duration of each new session.
+ *
+ * 10. **Session Creation:** Create a record for each new session in the `sessionActivity` table using the
+ * `prisma.sessionActivity.createMany()` method.
+ *
+ * 11. **Session Validation:** If no session activity records were created, log a message and return early.
+ *
+ * 12. **Domain Activity Update:** Update the `domainActivity` record, incrementing the total time spent and the count
+ * of new sessions.
+ *
+ * 13. **Summary Upsert:** Upsert a summary record. If a record with the same date and member token exists, increment its
+ * `activityTime` and `sessionCount` fields. If it doesn't exist, create a new record with the respective data.
+ *
+ *
+ * This algorithm avoids duplicate session entries and properly updates associated records in a chronological order of the
+ * activities. It assumes that the sessions are sent in chronological order, so a late arriving session could be
+ * considered as a duplicate.
+ */
+
+async function handleRecordActivity(activity: CreateActivityInput, token: string) {
+  // Extract the domain from the activity's URL.
+  const domain = extractDomain(activity.domain);
+
+  // Fetch or create a domain record based on the domain from the activity.
+  const domainRecord = await upsertDomain(domain);
+
+  // Convert the activity date to an hour-based index value.
+  const date = getHourBasedDate(activity.date);
+
+  // Retrieve the DomainActivity record, or create a new, empty one. It's crucial to keep it empty initially,
+  // as we need to filter the incoming session first.
+  const domainActivityRecord = await upsertDomainActivity({
+    date,
+    token,
+    domainId: domainRecord.id,
+    activityType: activity.type,
+  });
+
+  if (!domainActivityRecord) {
+    throw new Error('domainActivityRecord not found');
   }
 
+  // Fetch the most recent session activity for this domain activity.
+  const lastSession = await prismadb.sessionActivity.findFirst({
+    where: {domainActivityId: domainActivityRecord.id},
+    orderBy: {endDatetime: 'desc'},
+  });
+
+  // Get the end time of the last session, or 0 if there is no previous session.
+  const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
+
+  // Filter out any sessions from the activity that start before or at the same time as the end of the last session.
+  // Log any duplicate sessions.
+  const newSessions: CreateSessionActivityInput[] = [];
+  if (activity.sessions) {
+    activity.sessions.forEach((session) => {
+      const startTime = new Date(session.startTime).getTime();
+
+      if (startTime > lastSessionEndTime) {
+        newSessions.push(session);
+      } else {
+        console.log(`Duplicate session detected: ${JSON.stringify(session)}`);
+      }
+    });
+  }
+
+  // Compute the total time spent on the activity.
+  const timeSpentInc =
+    newSessions.reduce((mem, {startTime, endTime}) => mem + (endTime - startTime), 0) || 0;
+
+  // Create session activity records for the new sessions.
   const sessionRecords = await prismadb.sessionActivity.createMany({
-    data: activity?.sessions?.map(({url, title, docTitle, startTime, endTime}) => {
+    data: newSessions.map(({url, title, docTitle, startTime, endTime}) => {
       const isHTTPS = url?.toLowerCase().startsWith('https');
       return {
         url,
-        domainActivityId: activityRecord.id,
+        domainActivityId: domainActivityRecord.id,
         startDatetime: new Date(startTime),
         endDatetime: new Date(endTime),
         title: title ?? undefined,
@@ -74,10 +165,31 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
     }),
   });
 
+  // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
-    throw new Error('SessionActivity was not created');
+    console.log('SessionActivity was not created');
+    return;
   }
 
+  // Upsert a domain activity record.
+  await prismadb.domainActivity.update({
+    where: {
+      date_domainId: {
+        domainId: domainRecord.id,
+        date,
+      },
+    },
+    data: {
+      timeSpent: {
+        increment: timeSpentInc,
+      },
+      activitiesCount: {
+        increment: sessionRecords.count,
+      },
+    },
+  });
+
+  // Upsert a summary record.
   await prismadb.summary.upsert({
     where: {
       date_memberToken: {
@@ -90,7 +202,7 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
         increment: timeSpentInc,
       },
       sessionCount: {
-        increment: sessionCountInc,
+        increment: sessionRecords.count,
       },
     },
     create: {
