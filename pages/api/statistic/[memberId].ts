@@ -6,7 +6,7 @@ import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SessionId} from '../../../types/api';
-import {getIsoDate} from '../../../utils/get-iso-date';
+import {getIsoDateString} from '../../../utils/get-iso-date-string';
 
 // TODO Limit response by time window
 
@@ -61,7 +61,7 @@ async function get({req, res}: AuthMethodContext) {
 
     // Group activities by date, without specific time
     const activitiesByDate = extendedActivities.reduce((mem, act) => {
-      const isoDate = getIsoDate(act.date);
+      const isoDate = getIsoDateString(act.date);
       if (!mem[isoDate]) {
         mem[isoDate] = [];
       }

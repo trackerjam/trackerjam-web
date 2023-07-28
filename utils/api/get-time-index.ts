@@ -1,19 +1,8 @@
 export function getHourBasedDate(dateStr: string | Date): Date {
   const date = new Date(dateStr);
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setMilliseconds(0);
-
-  return date;
-}
-
-export function getDayBasedDate(dateStr: string | Date): Date {
-  const date = new Date(dateStr);
-
-  date.setHours(0);
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setMilliseconds(0);
+  date.setUTCMinutes(0);
+  date.setUTCSeconds(0);
+  date.setUTCMilliseconds(0);
 
   return date;
 }
