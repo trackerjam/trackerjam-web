@@ -1,6 +1,6 @@
 import {MemberStatisticActivityType} from '../../../types/api';
 
-type HourlyData = {
+export type HourlyData = {
   id: string;
   total: number;
   [domainName: string]: number | string; // 'id' will be string, others will be numbers

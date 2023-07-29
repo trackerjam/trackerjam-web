@@ -1,40 +1,19 @@
 import Head from 'next/head';
 import {LabelLarge as Title} from 'baseui/typography';
 import {useRouter} from 'next/router';
-import dynamic from 'next/dynamic';
 import {useEffect, useMemo, useState} from 'react';
 import {useStyletron} from 'baseui';
 import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
 import {Button} from 'baseui/button';
-import {format, formatDistanceToNow} from 'date-fns';
-import {DIVIDER, TableBuilder, TableBuilderColumn} from 'baseui/table-semantic';
+import {format} from 'date-fns';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {MemberStatisticActivityType, MemberStatisticType} from '../../types/api';
-import {formatTimeDuration} from '../../utils/format-time-duration';
-import brandColors from './brand-colors.json';
 import DebugTable from './debug-table';
 import {TimelineChart} from './timeline-chart/timeline-chart';
-
-type ChartAndTableType = {
-  id: string;
-  label: string;
-  value: number;
-  sessionCount: number;
-  lastSession: number | null;
-  color: string;
-};
-
-// Read more about this import issue: https://github.com/plouc/nivo/issues/2310
-const ResponsivePie = dynamic(() => import('@nivo/pie').then((m) => m.ResponsivePie), {
-  ssr: false,
-});
-
-function getColorByDomain(domain: string): string {
-  const domainNoTld = domain.split('.')[0];
-  const colors = (brandColors as {[domain: string]: Array<string>})[domainNoTld];
-  return colors?.length ? '#' + colors[0] : 'transparent';
-}
+import {PieChart} from './pie-chart';
+import {useAggregatedData} from './hooks/use-aggregated-data';
+import {DomainTable} from './domain-table';
 
 export function MemberStatistics() {
   const [css, theme] = useStyletron();
@@ -67,62 +46,30 @@ export function MemberStatistics() {
     return null;
   }, [currentDate, data?.activities]);
 
-  const pieData = useMemo(() => {
-    if (currentDayData) {
-      const byDomains = currentDayData.reduce(
-        (mem, {timeSpent, domainName, sessionActivities}) => {
-          if (!mem[domainName]) {
-            mem[domainName] = {
-              id: domainName,
-              label: domainName,
-              value: 0,
-              sessionCount: 0,
-              lastSession: null,
-              color: getColorByDomain(domainName),
-            };
-          }
-
-          mem[domainName].value += timeSpent;
-          mem[domainName].sessionCount += sessionActivities?.length || 0;
-          mem[domainName].lastSession = sessionActivities.reduce((max, {endDatetime}) => {
-            return Math.max(max, new Date(endDatetime).getTime());
-          }, 0);
-
-          return mem;
-        },
-        {} as {[domain: string]: ChartAndTableType}
-      );
-
-      return Object.values(byDomains);
-    }
-    return [];
-  }, [currentDayData]);
+  const aggregatedData = useAggregatedData(currentDayData);
 
   const handleChangeDate = (idx: number) => {
     setCurrentDate(availableDates?.[idx] || null);
   };
 
-  const pieChartStyle = css({
-    ...theme.borders.border200,
-    width: 'min(720px, 100%)',
-    height: '400px',
-    marginTop: theme.sizing.scale600,
-    borderRadius: theme.borders.radius300,
-  });
-
-  const tableWrapperStyle = css({
-    marginTop: theme.sizing.scale600,
-  });
-
-  const domainLabelStyle = css({
+  const topStatWrapperStyle = css({
     display: 'flex',
-    gap: theme.sizing.scale400,
+    gap: theme.sizing.scale600,
+    marginTop: theme.sizing.scale600,
   });
 
-  const domainColorTagStyle = css({
-    width: theme.sizing.scale600,
-    height: theme.sizing.scale600,
-    borderRadius: '50%',
+  const chartBlockStyle = css({
+    width: 'min(50%, 600px)',
+    height: '400px',
+    borderRadius: theme.borders.radius300,
+    ...theme.borders.border200,
+  });
+
+  const timelineChartStyle = css({
+    width: '1100px',
+    height: '400px',
+    borderRadius: theme.borders.radius300,
+    marginTop: theme.sizing.scale600,
     ...theme.borders.border200,
   });
 
@@ -157,99 +104,25 @@ export function MemberStatistics() {
               </ButtonGroup>
             )}
           </div>
+          {Boolean(currentDayData) && (
+            <>
+              <div className={topStatWrapperStyle}>
+                <div className={chartBlockStyle}>
+                  <PieChart data={aggregatedData} />
+                </div>
+                <div>
+                  <DomainTable data={aggregatedData} height="400px" />
+                </div>
+              </div>
 
-          <div className={pieChartStyle}>
-            <ResponsivePie
-              data={pieData}
-              valueFormat={(value) => formatTimeDuration(value)}
-              margin={{top: 40, right: 210, bottom: 80, left: 80}}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              activeOuterRadiusOffset={8}
-              borderWidth={1}
-              sortByValue={true}
-              borderColor={{
-                from: 'color',
-                modifiers: [['darker', 0.2]],
-              }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
-              arcLinkLabelsThickness={2}
-              arcLinkLabelsColor={{from: 'color'}}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{
-                from: 'color',
-                modifiers: [['darker', 2]],
-              }}
-              legends={[
-                {
-                  anchor: 'top-right',
-                  direction: 'column',
-                  justify: false,
-                  itemsSpacing: 0,
-                  translateX: 160,
-                  translateY: 0,
-                  itemWidth: 100,
-                  itemHeight: 20,
-                  itemTextColor: '#999',
-                  itemDirection: 'left-to-right',
-                  itemOpacity: 1,
-                  symbolSize: 18,
-                  symbolShape: 'circle',
-                  effects: [
-                    {
-                      on: 'hover',
-                      style: {
-                        itemTextColor: '#000',
-                      },
-                    },
-                  ],
-                },
-              ]}
-            />
-          </div>
+              <div className={timelineChartStyle}>
+                <TimelineChart data={currentDayData} />
+              </div>
 
-          <div>
-            {Boolean(currentDate) && (
-              <TimelineChart data={data?.activities[currentDate as string]} />
-            )}
-          </div>
-
-          <div className={tableWrapperStyle}>
-            <TableBuilder data={pieData} divider={DIVIDER.grid}>
-              <TableBuilderColumn header="Domain">
-                {(row: ChartAndTableType) => (
-                  <div className={domainLabelStyle}>
-                    <span
-                      className={domainColorTagStyle}
-                      style={{backgroundColor: getColorByDomain(row.label)}}
-                    />
-                    <span>{row.label}</span>
-                  </div>
-                )}
-              </TableBuilderColumn>
-              <TableBuilderColumn header="Activity Time">
-                {(row: ChartAndTableType) => formatTimeDuration(row.value)}
-              </TableBuilderColumn>
-              <TableBuilderColumn header="Sessions Count">
-                {(row: ChartAndTableType) => row.sessionCount}
-              </TableBuilderColumn>
-              <TableBuilderColumn header="Last Session">
-                {(row: ChartAndTableType) =>
-                  row.lastSession ? formatDistanceToNow(new Date(row.lastSession)) : '-'
-                }
-              </TableBuilderColumn>
-            </TableBuilder>
-          </div>
-
-          {currentDate && (
-            <div>
-              <br />
-              <h3>Debug table</h3>
-
-              <DebugTable data={data?.activities[currentDate]} />
-            </div>
+              <div>
+                <DebugTable data={currentDayData} />
+              </div>
+            </>
           )}
         </>
       )}

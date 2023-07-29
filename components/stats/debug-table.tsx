@@ -67,8 +67,12 @@ function Row({striped, row}: any) {
     </div>
   );
 }
-export default function DebugTable({data}: {data: MemberStatisticActivityType[] | undefined}) {
-  const [css] = useStyletron();
+export default function DebugTable({
+  data,
+}: {
+  data: MemberStatisticActivityType[] | undefined | null;
+}) {
+  const [css, theme] = useStyletron();
 
   const tableData = useMemo(() => {
     if (data) {
@@ -88,7 +92,9 @@ export default function DebugTable({data}: {data: MemberStatisticActivityType[] 
   }, [data]);
 
   return (
-    <div className={css({height: '600px'})}>
+    <div className={css({marginTop: theme.sizing.scale800})}>
+      <h3 className={css({color: theme.colors.contentPrimary})}>Debug table</h3>
+
       <StyledTable
         role="grid"
         $gridTemplateColumns="max-content minmax(200px,min-content) minmax(200px,min-content) auto"
