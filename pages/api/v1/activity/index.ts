@@ -6,12 +6,13 @@ import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
 import {
-  CreateActivityInput,
+  CreateActivityInputInternal,
   CreateDomainActivityInput,
   CreateSessionActivityInput,
   PublicMethodContext,
 } from '../../../../types/api';
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
+import {translatePayloadToInternalStructure} from '../../../../utils/api/translate-payload';
 
 async function upsertDomain(domain: string) {
   return prismadb.domain.upsert({
@@ -38,9 +39,10 @@ async function upsertDomainActivity({
 }) {
   return prismadb.domainActivity.upsert({
     where: {
-      date_domainId: {
+      date_domainId_memberToken: {
         domainId,
         date,
+        memberToken: token,
       },
     },
     update: {},
@@ -98,7 +100,10 @@ async function upsertDomainActivity({
  * considered as a duplicate.
  */
 
-async function handleRecordActivity(activity: CreateActivityInput, token: string) {
+// TODO Filter elements that are in the future
+// TODO Filter elements that are 24h in the past
+
+async function handleRecordActivity(activity: CreateActivityInputInternal, token: string) {
   // Extract the domain from the activity's URL.
   const domain = extractDomain(activity.domain);
 
@@ -151,7 +156,7 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
 
   // Create session activity records for the new sessions.
   const sessionRecords = await prismadb.sessionActivity.createMany({
-    data: newSessions.map(({url, title, docTitle, startTime, endTime}) => {
+    data: newSessions.map(({url, title, startTime, endTime}) => {
       const isHTTPS = url?.toLowerCase().startsWith('https');
       return {
         url,
@@ -159,7 +164,7 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
         startDatetime: new Date(startTime),
         endDatetime: new Date(endTime),
         title: title ?? undefined,
-        docTitle: docTitle ?? undefined,
+        docTitle: title ?? undefined, // TODO Do we need this field?
         isHTTPS,
       };
     }),
@@ -174,8 +179,9 @@ async function handleRecordActivity(activity: CreateActivityInput, token: string
   // Upsert a domain activity record.
   await prismadb.domainActivity.update({
     where: {
-      date_domainId: {
+      date_domainId_memberToken: {
         domainId: domainRecord.id,
+        memberToken: token,
         date,
       },
     },
@@ -231,15 +237,14 @@ async function create({req, res}: PublicMethodContext) {
     return res.status(400).json(buildError('bad token'));
   }
 
-  const activity = payload.activities;
-
-  if (!activity?.length) {
-    return res.status(400).json(buildError('bad activity format'));
+  if (!payload?.sessions?.length) {
+    return res.status(400).json(buildError('bad sessions format'));
   }
 
   try {
-    for (let i = 0; i < activity.length; i++) {
-      await handleRecordActivity(activity[i], payload.token);
+    const {activities} = translatePayloadToInternalStructure(payload);
+    for (let i = 0; i < activities.length; i++) {
+      await handleRecordActivity(activities[i], payload.token);
     }
 
     // Early status return

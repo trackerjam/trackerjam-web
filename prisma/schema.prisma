@@ -109,7 +109,7 @@ model DomainActivity {
   sessionActivities SessionActivity[]
   activitiesCount   Int
 
-  @@unique([date, domainId])
+  @@unique([date, domainId, memberToken])
 }
 
 model SessionActivity {
@@ -123,7 +123,7 @@ model SessionActivity {
   docTitle         String?        @db.Text
   isHTTPS          Boolean?
 
-  @@unique([domainActivityId, startDatetime, endDatetime])
+  @@unique([url, startDatetime, endDatetime]) // To fail on hard duplicates
 }
 
 enum TAB_TYPE {

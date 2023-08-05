@@ -31,23 +31,26 @@ export interface DashboardResponse {
 
 export type CreateDomainActivityInput = {
   token: string;
-  activities: Array<CreateActivityInput>;
+  sessions: Array<CreateSessionActivityInput>;
 };
 
-export type CreateActivityInput = {
-  date: string;
-  type: TAB_TYPE;
-  domain: string;
-  sessions: CreateSessionActivityInput[];
+export type CreateDomainActivityInputInternal = {
+  token: string;
+  activities: Array<CreateActivityInputInternal>;
 };
 
 export type CreateSessionActivityInput = {
   url: string;
   title?: string;
-  docTitle?: string;
-  isHTTPS?: boolean;
   startTime: number;
   endTime: number;
+};
+
+export type CreateActivityInputInternal = {
+  date: string;
+  type: TAB_TYPE;
+  domain: string;
+  sessions: CreateSessionActivityInput[];
 };
 
 export interface SummaryResponse {

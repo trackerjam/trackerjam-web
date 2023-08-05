@@ -2,23 +2,27 @@ import {normalize} from 'duration-fns';
 
 export function formatTimeDuration(durationMs: number): string {
   const normalized = normalize({milliseconds: durationMs});
-  let res = '';
+  const res = [];
 
   if (normalized.weeks) {
-    res += `${normalized.weeks}w`;
+    res.push(`${normalized.weeks}w`);
   }
 
   if (normalized.days) {
-    res += ` ${normalized.days}d`;
+    res.push(`${normalized.days}d`);
   }
 
   if (normalized.hours) {
-    res += ` ${normalized.hours}h`;
+    res.push(`${normalized.hours}h`);
   }
 
   if (normalized.minutes) {
-    res += ` ${normalized.minutes}m`;
+    res.push(`${normalized.minutes}m`);
   }
 
-  return res;
+  if (normalized.seconds) {
+    res.push(`${normalized.seconds}s`);
+  }
+
+  return res.join(' ').trim();
 }

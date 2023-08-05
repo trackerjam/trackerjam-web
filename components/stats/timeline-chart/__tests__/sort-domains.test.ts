@@ -41,13 +41,13 @@ describe('sortDomains', () => {
     const result = sortDomains(domains, data);
 
     expect(result).toEqual([
-      'microsoft.com',
-      'google.com',
-      'youtube.com',
-      'wikipedia.org',
-      'apple.com',
-      'jetbrains.com',
       'bing.com',
+      'jetbrains.com',
+      'apple.com',
+      'wikipedia.org',
+      'youtube.com',
+      'google.com',
+      'microsoft.com',
     ]);
   });
 
