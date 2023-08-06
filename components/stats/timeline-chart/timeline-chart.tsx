@@ -47,7 +47,7 @@ export function TimelineChart({data}: TimelineChartProps) {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'hour',
+        legend: 'UTC Hour',
         legendPosition: 'middle',
         legendOffset: 32,
       }}
@@ -55,7 +55,7 @@ export function TimelineChart({data}: TimelineChartProps) {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'minutes',
+        legend: 'Minutes',
         legendPosition: 'middle',
         legendOffset: -40,
       }}

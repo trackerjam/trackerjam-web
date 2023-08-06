@@ -16,7 +16,7 @@ interface DomainTableProps {
   height?: string;
 }
 
-export function DomainTable({data, height = 'auto'}: DomainTableProps) {
+export function DomainsTable({data, height = 'auto'}: DomainTableProps) {
   const [css, theme] = useStyletron();
 
   const domainLabelStyle = css({
@@ -39,6 +39,7 @@ export function DomainTable({data, height = 'auto'}: DomainTableProps) {
           style: {
             height,
             maxHeight: height,
+            borderRadius: theme.borders.radius300,
           },
         },
       }}

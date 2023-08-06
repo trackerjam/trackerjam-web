@@ -13,7 +13,11 @@ import DebugTable from './debug-table';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
-import {DomainTable} from './domain-table';
+import {DomainsTable} from './domains-table';
+
+const PIR_CHART_AND_TABLE_HEIGHT = '400px';
+
+// TODO Unify colors in table and charts
 
 export function MemberStatistics() {
   const [css, theme] = useStyletron();
@@ -58,16 +62,22 @@ export function MemberStatistics() {
     marginTop: theme.sizing.scale600,
   });
 
-  const chartBlockStyle = css({
+  const pieChartBlockStyle = css({
     width: 'min(50%, 600px)',
-    height: '400px',
+    height: PIR_CHART_AND_TABLE_HEIGHT,
+    flexShrink: 0,
     borderRadius: theme.borders.radius300,
     ...theme.borders.border200,
   });
 
+  const domainsTableStyle = css({
+    flexGrow: 1,
+  });
+
   const timelineChartStyle = css({
-    width: '1100px',
-    height: '400px',
+    flexBasis: '1100px',
+    flexGrow: 1,
+    height: PIR_CHART_AND_TABLE_HEIGHT,
     borderRadius: theme.borders.radius300,
     marginTop: theme.sizing.scale600,
     ...theme.borders.border200,
@@ -107,11 +117,11 @@ export function MemberStatistics() {
           {Boolean(currentDayData) && (
             <>
               <div className={topStatWrapperStyle}>
-                <div className={chartBlockStyle}>
+                <div className={pieChartBlockStyle}>
                   <PieChart data={aggregatedData} />
                 </div>
-                <div>
-                  <DomainTable data={aggregatedData} height="400px" />
+                <div className={domainsTableStyle}>
+                  <DomainsTable data={aggregatedData} height={PIR_CHART_AND_TABLE_HEIGHT} />
                 </div>
               </div>
 

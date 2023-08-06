@@ -4,7 +4,7 @@ import {AggregatedDataType} from '../types';
 
 export function useAggregatedData(
   currentDayData: MemberStatisticActivityType[] | null | undefined
-) {
+): AggregatedDataType[] {
   return useMemo(() => {
     if (currentDayData) {
       const byDomains = currentDayData.reduce(
@@ -34,7 +34,9 @@ export function useAggregatedData(
         {} as {[domain: string]: AggregatedDataType}
       );
 
-      return Object.values(byDomains);
+      const dataValues = Object.values(byDomains);
+      const sortedData = dataValues.sort((a, b) => b.value - a.value);
+      return sortedData;
     }
     return [];
   }, [currentDayData]);
