@@ -1,13 +1,14 @@
 import {useMemo} from 'react';
-import {MemberStatisticActivityType} from '../../../types/api';
+import {CurrentDayActivityData} from '../../../types/api';
 import {AggregatedDataType} from '../types';
 
 export function useAggregatedData(
-  currentDayData: MemberStatisticActivityType[] | null | undefined
+  currentDayData: CurrentDayActivityData | null | undefined,
+  showIdle = false
 ): AggregatedDataType[] {
   return useMemo(() => {
     if (currentDayData) {
-      const byDomains = currentDayData.reduce(
+      const byDomains = currentDayData.activities.reduce(
         (mem, {timeSpent, domainName, sessionActivities}) => {
           if (!mem[domainName]) {
             mem[domainName] = {
@@ -35,9 +36,18 @@ export function useAggregatedData(
       );
 
       const dataValues = Object.values(byDomains);
+      if (showIdle) {
+        dataValues.push({
+          id: '[Idle Time]',
+          label: '[Idle Time]',
+          value: currentDayData.idleTime,
+          lastSession: null,
+          sessionCount: 0,
+        });
+      }
       const sortedData = dataValues.sort((a, b) => b.value - a.value);
       return sortedData;
     }
     return [];
-  }, [currentDayData]);
+  }, [currentDayData, showIdle]);
 }

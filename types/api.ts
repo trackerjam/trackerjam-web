@@ -80,7 +80,15 @@ export type MemberStatisticActivityType = DomainActivity & {
 
 export type MemberStatisticType = {
   member: Member | null;
-  activities: {
-    [date: string]: MemberStatisticActivityType[];
-  };
+  activitiesByDate: ActivitiesByDate;
+};
+
+export type ActivitiesByDate = {
+  [date: string]: CurrentDayActivityData;
+};
+
+export type CurrentDayActivityData = {
+  activities: MemberStatisticActivityType[];
+  totalActivityTime: number;
+  idleTime: number;
 };

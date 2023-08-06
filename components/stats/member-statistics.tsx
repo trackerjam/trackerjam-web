@@ -6,9 +6,10 @@ import {useStyletron} from 'baseui';
 import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
 import {Button} from 'baseui/button';
 import {format} from 'date-fns';
+import {Checkbox} from 'baseui/checkbox';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
-import {MemberStatisticActivityType, MemberStatisticType} from '../../types/api';
+import {CurrentDayActivityData, MemberStatisticType} from '../../types/api';
 import DebugTable from './debug-table';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
@@ -27,14 +28,15 @@ export function MemberStatistics() {
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
   const hasData = Boolean(!isLoading && data);
   const [currentDate, setCurrentDate] = useState<string | null>(null);
+  const [showIdle, setShowIdle] = useState(false);
 
   const availableDates = useMemo(() => {
-    if (data?.activities) {
-      return Object.keys(data?.activities).sort((a: string, b: string) => {
+    if (data?.activitiesByDate) {
+      return Object.keys(data?.activitiesByDate).sort((a: string, b: string) => {
         return new Date(a).getTime() - new Date(b).getTime();
       });
     }
-  }, [data?.activities]);
+  }, [data?.activitiesByDate]);
 
   useEffect(() => {
     if (availableDates?.length && currentDate === null) {
@@ -43,14 +45,14 @@ export function MemberStatistics() {
   }, [availableDates, currentDate]);
   const selectedDateIdx = availableDates?.indexOf(currentDate || '');
 
-  const currentDayData: MemberStatisticActivityType[] | null | undefined = useMemo(() => {
+  const currentDayData: CurrentDayActivityData | null | undefined = useMemo(() => {
     if (currentDate) {
-      return data?.activities[currentDate];
+      return data?.activitiesByDate[currentDate];
     }
     return null;
-  }, [currentDate, data?.activities]);
+  }, [currentDate, data?.activitiesByDate]);
 
-  const aggregatedData = useAggregatedData(currentDayData);
+  const aggregatedData = useAggregatedData(currentDayData, showIdle);
 
   const handleChangeDate = (idx: number) => {
     setCurrentDate(availableDates?.[idx] || null);
@@ -81,6 +83,10 @@ export function MemberStatistics() {
     borderRadius: theme.borders.radius300,
     marginTop: theme.sizing.scale600,
     ...theme.borders.border200,
+  });
+
+  const chartSettingsStyle = css({
+    marginTop: theme.sizing.scale800,
   });
 
   return (
@@ -114,8 +120,14 @@ export function MemberStatistics() {
               </ButtonGroup>
             )}
           </div>
+
           {Boolean(currentDayData) && (
             <>
+              <div className={chartSettingsStyle}>
+                <Checkbox checked={showIdle} onChange={(e) => setShowIdle(e.target.checked)}>
+                  Show Idle Time
+                </Checkbox>
+              </div>
               <div className={topStatWrapperStyle}>
                 <div className={pieChartBlockStyle}>
                   <PieChart data={aggregatedData} />
@@ -126,11 +138,11 @@ export function MemberStatistics() {
               </div>
 
               <div className={timelineChartStyle}>
-                <TimelineChart data={currentDayData} />
+                <TimelineChart data={currentDayData?.activities} />
               </div>
 
               <div>
-                <DebugTable data={currentDayData} />
+                <DebugTable data={currentDayData?.activities} />
               </div>
             </>
           )}

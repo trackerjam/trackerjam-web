@@ -1,12 +1,20 @@
 import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {DomainActivity} from '@prisma/client';
+import * as Sentry from '@sentry/node';
 import {authOptions} from '../auth/[...nextauth]';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, SessionId} from '../../../types/api';
+import {
+  ActivitiesByDate,
+  AuthMethodContext,
+  MemberStatisticActivityType,
+  MemberStatisticType,
+  SessionId,
+} from '../../../types/api';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
+import {calculateIdleTime} from '../../../utils/api/calculate-idle';
 
 // TODO Limit response by time window
 
@@ -37,27 +45,34 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
-    // Extend activities with the real domain name
-    const extendedActivities = [];
-    for (let i = 0; i < activities.length; i++) {
-      const domain = await prismadb.domain.findUnique({
-        where: {
-          id: activities[i].domainId,
+    // Batch query for domain names
+    const uniqueDomainIds = [...new Set(activities.map((activity) => activity.domainId))];
+    const domainRecords = await prismadb.domain.findMany({
+      where: {
+        id: {
+          in: uniqueDomainIds,
         },
-      });
+      },
+    });
 
-      const extendedActivity = {
-        ...activities[i],
-        domainName: domain?.domain || 'unknown',
-      };
+    const domainMap: {[id: string]: string} = {};
+    domainRecords.forEach((record) => {
+      domainMap[record.id] = record.domain;
+    });
 
-      extendedActivities.push(extendedActivity);
-
-      if (!domain?.domain) {
-        console.error(`Domain for id "${activities[i].domainId}" not found`);
-        // TODO Consider throw Sentry error
+    // Extend activities with the real domain name
+    const extendedActivities = activities.map((activity) => {
+      const domainName = domainMap[activity.domainId] || 'unknown';
+      if (domainName === 'unknown') {
+        const error = `Domain for id "${activity.domainId}" not found`;
+        console.error(error);
+        Sentry.captureException(error);
       }
-    }
+      return {
+        ...activity,
+        domainName,
+      };
+    });
 
     // Group activities by date, without specific time
     const activitiesByDate = extendedActivities.reduce(
@@ -72,14 +87,26 @@ async function get({req, res}: AuthMethodContext) {
       {} as {[date: string]: Array<DomainActivity>}
     );
 
-    const result = {
+    const resultActivities = Object.entries(activitiesByDate).reduce((acc, item) => {
+      const [dateStr, activities] = item as [string, MemberStatisticActivityType[]];
+      const {totalActivityTime, idleTime} = calculateIdleTime(activities);
+      acc[dateStr] = {
+        activities,
+        totalActivityTime,
+        idleTime,
+      };
+      return acc;
+    }, {} as ActivitiesByDate);
+
+    const result: MemberStatisticType = {
       member,
-      activities: activitiesByDate,
+      activitiesByDate: resultActivities,
     };
 
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
+    throw e;
   }
 }
 

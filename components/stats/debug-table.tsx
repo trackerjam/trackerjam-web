@@ -107,7 +107,7 @@ export default function DebugTable({
         </div>
         {tableData.map((row, index) => {
           const striped = index % 2 === 0;
-          return <Row row={row} striped={striped} key={row[0]} />;
+          return <Row row={row} striped={striped} key={index} />;
         })}
       </StyledTable>
     </div>
