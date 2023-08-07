@@ -22,6 +22,7 @@
     "axios": "^1.4.0",
     "baseui": "^13.0.0",
     "boring-avatars": "^1.10.1",
+    "clsx": "^2.0.0",
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^2.30.0",
     "duration-fns": "^3.0.2",
@@ -30,6 +31,7 @@
     "next-auth": "^4.22.3",
     "next-plausible": "^3.10.1",
     "nodemailer": "^6.9.4",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "react": "18.2.0",
     "react-avatar": "^5.0.3",
     "react-colorful": "^5.6.1",
@@ -62,8 +64,10 @@
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^29.6.2",
+    "postcss": "^8.4.27",
     "prettier": "^3.0.0",
     "prisma": "^5.1.1",
+    "tailwindcss": "^3.3.3",
     "ts-jest": "^29.1.1",
     "typescript": "5.1.6"
   }
