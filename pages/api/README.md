@@ -52,7 +52,6 @@ Records member activity
    - sessions: Array:
      - url: string;
      - title?: string;
-     - docTitle?: string;
      - startTime: number; (timestamp)
      - endTime: number; (timestamp)
 

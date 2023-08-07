@@ -164,7 +164,6 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
         startDatetime: new Date(startTime),
         endDatetime: new Date(endTime),
         title: title ?? undefined,
-        docTitle: title ?? undefined, // TODO Do we need this field?
         isHTTPS,
       };
     }),

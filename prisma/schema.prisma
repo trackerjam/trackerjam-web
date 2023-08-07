@@ -120,7 +120,6 @@ model SessionActivity {
   endDatetime      DateTime
   url              String         @db.Text
   title            String?        @db.Text
-  docTitle         String?        @db.Text
   isHTTPS          Boolean?
 
   @@unique([url, startDatetime, endDatetime]) // To fail on hard duplicates
