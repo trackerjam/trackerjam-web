@@ -46,9 +46,42 @@ module.exports = {
     },
     extend: {
       colors: {
+        gray: {
+          80: '#eeeeee',
+          85: '#ebebeb',
+          90: '#e2e2e2',
+          100: '#f6f6f6',
+        },
+        blue: {
+          100: '#276ef1',
+        },
         mono: {
           800: '#545454',
         },
+      },
+      keyframes: {
+        slideDownAndFade: {
+          from: {opacity: 0, transform: 'translateY(-2px)'},
+          to: {opacity: 1, transform: 'translateY(0)'},
+        },
+        slideLeftAndFade: {
+          from: {opacity: 0, transform: 'translateX(2px)'},
+          to: {opacity: 1, transform: 'translateX(0)'},
+        },
+        slideUpAndFade: {
+          from: {opacity: 0, transform: 'translateY(2px)'},
+          to: {opacity: 1, transform: 'translateY(0)'},
+        },
+        slideRightAndFade: {
+          from: {opacity: 0, transform: 'translateX(-2px)'},
+          to: {opacity: 1, transform: 'translateX(0)'},
+        },
+      },
+      animation: {
+        slideDownAndFade: 'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideLeftAndFade: 'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideRightAndFade: 'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },

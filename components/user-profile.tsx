@@ -1,88 +1,53 @@
-import * as React from 'react';
-import {useStyletron} from 'baseui';
-import {Button} from 'baseui/button';
-import {BsThreeDots} from 'react-icons/bs';
-import {StatefulPopover} from 'baseui/popover';
-import {StatefulMenu, type Item} from 'baseui/menu';
-import {signOut, useSession} from 'next-auth/react';
+'use client';
 import Avatar from 'react-avatar';
 
-export function UserProfile() {
-  const [css, theme] = useStyletron();
-  const {data} = useSession();
-  const user = data?.user;
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import {BsThreeDots} from 'react-icons/bs';
+import {signOut} from 'next-auth/react';
+import {Session} from 'next-auth';
 
-  const boxStyle = css({
-    display: 'flex',
-    ...theme.borders.border300,
-    padding: theme.sizing.scale300,
-    borderRadius: theme.borders.radius400,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: theme.sizing.scale900,
-    marginRight: theme.sizing.scale400,
-    marginBottom: theme.sizing.scale400,
-    marginLeft: theme.sizing.scale400,
-  });
-
-  const userDataStyle = css({
-    alignItems: 'center',
-    display: 'flex',
-    gap: theme.sizing.scale300,
-    flex: 1,
-    overflow: 'hidden',
-  });
-
-  const imageStyle = css({
-    width: theme.sizing.scale900,
-    height: theme.sizing.scale900,
-    borderRadius: '50%',
-    flexShrink: 0,
-  });
-
-  const usernameStyle = css({
-    fontSize: '14px',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    minWidth: 0,
-    flexBasis: '100%',
-    color: theme.colors.contentPrimary,
-  });
-
-  const handleMenuClick = ({item}: {item: Item}) => {
-    if (item.id === 'signout') {
-      signOut({callbackUrl: '/'});
-    }
-  };
+export function UserProfile({session}: {session: Session}) {
+  const user = session.user;
 
   return (
-    <div className={boxStyle}>
-      <div className={userDataStyle}>
+    <div className="flex items-center justify-between mx-2.5 mt-8 mb-2.5 rounded-xl border border-black/10 p-2">
+      <div className="items-center flex flex-1 overflow-hidden gap-x-2">
         <Avatar
           size="32"
           round={true}
           email={user?.email || ''}
-          className={imageStyle}
+          className="w-8 h-8 rounded-full shrink-0"
           alt="User avatar"
         />
-        <span className={usernameStyle}>{user?.email}</span>
+        <span className="text-14 whitespace-nowrap overflow-hidden text-ellipsis min-w-0 basis-full">
+          {user?.email}
+        </span>
       </div>
 
-      <StatefulPopover
-        content={() => (
-          <StatefulMenu
-            items={[{label: 'Sign Out', id: 'signout'}]}
-            onItemSelect={handleMenuClick}
-          />
-        )}
-        returnFocus
-        autoFocus
-      >
-        <Button kind="secondary" shape="round">
-          <BsThreeDots title="" />
-        </Button>
-      </StatefulPopover>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          <button
+            className="rounded-full w-11 h-11 inline-flex hover:bg-gray-90 transition-colors duration-200 items-center justify-center outline-none bg-gray-80"
+            aria-label="Open dropdown menu"
+          >
+            <BsThreeDots />
+          </button>
+        </DropdownMenu.Trigger>
+
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content
+            className="bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
+            sideOffset={5}
+          >
+            <DropdownMenu.Item
+              className="group py-2 px-3 text-14 leading-none flex items-center h-[25px] relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200"
+              onSelect={() => signOut({callbackUrl: '/'})}
+            >
+              Sign Out
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
     </div>
   );
 }
