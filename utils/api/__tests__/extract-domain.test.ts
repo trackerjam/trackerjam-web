@@ -1,4 +1,5 @@
 import {extractDomain} from '../extract-domain';
+import {LOCAL_FILE_STR} from '../../../const/string';
 
 describe('extractDomain', () => {
   // Extract domain name
@@ -9,7 +10,7 @@ describe('extractDomain', () => {
       'translate.google.com'
     );
     expect(extractDomain('https://localhost:9999/qfewf?few=123')).toEqual('localhost');
-    expect(extractDomain('file://C:/Temp/myfile.dat')).toEqual('Local File');
+    expect(extractDomain('file://C:/Temp/myfile.dat')).toEqual(LOCAL_FILE_STR);
   });
 
   // Strip www and convert to lowercase
