@@ -42,7 +42,7 @@ describe('translatePayloadToInternalStructure', () => {
       },
       {
         date: '2023-08-02',
-        domain: 'ycombinator.com',
+        domain: 'news.ycombinator.com',
         type: TAB_TYPE.WEBSITE,
         sessions: [
           {

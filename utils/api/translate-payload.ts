@@ -6,7 +6,7 @@ import {
   CreateSessionActivityInput,
 } from '../../types/api';
 import {getIsoDateString} from '../get-iso-date-string';
-import {extractTopLevelDomain} from './extract-domain';
+import {extractDomain} from './extract-domain';
 
 export function translatePayloadToInternalStructure(
   activity: CreateDomainActivityInput
@@ -14,7 +14,7 @@ export function translatePayloadToInternalStructure(
   const activitiesMap: {[key: string]: CreateActivityInputInternal} = {};
 
   activity.sessions.forEach((session) => {
-    const domain = extractTopLevelDomain(session.url);
+    const domain = extractDomain(session.url);
     if (!domain) {
       throw new Error('no domain extracted');
     }
