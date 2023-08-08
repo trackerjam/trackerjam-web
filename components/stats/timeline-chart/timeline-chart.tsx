@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import dynamic from 'next/dynamic';
 import {MemberStatisticActivityType} from '../../../types/api';
+import {getStringColor} from '../../../utils/get-string-color';
 import {getHourlyData} from './get-hourly-data';
 import {extractDomainNames} from './extract-domain-names';
 import {sortDomains} from './sort-domains';
@@ -34,11 +35,11 @@ export function TimelineChart({data}: TimelineChartProps) {
       indexBy="id"
       label={(d) => d?.value?.toFixed(2) || ''}
       valueFormat="0.1f"
-      margin={{top: 50, right: 130, bottom: 50, left: 60}}
+      margin={{top: 50, right: 200, bottom: 50, left: 60}}
+      colors={(datum) => getStringColor(datum.id as string)}
       padding={0.3}
       valueScale={{type: 'linear'}}
       indexScale={{type: 'band', round: true}}
-      colors={{scheme: 'nivo'}}
       axisTop={null}
       axisRight={null}
       groupMode="stacked"
@@ -71,14 +72,14 @@ export function TimelineChart({data}: TimelineChartProps) {
           anchor: 'bottom-right',
           direction: 'column',
           justify: false,
-          translateX: 120,
+          translateX: 160,
           translateY: 0,
-          itemsSpacing: 2,
-          itemWidth: 100,
-          itemHeight: 20,
+          itemsSpacing: 1,
+          itemWidth: 140,
+          itemHeight: 16,
           itemDirection: 'left-to-right',
           itemOpacity: 0.85,
-          symbolSize: 20,
+          symbolSize: 16,
           effects: [
             {
               on: 'hover',

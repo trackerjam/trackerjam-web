@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import {formatTimeDuration} from '../../utils/format-time-duration';
+import {getStringColor} from '../../utils/get-string-color';
 import {AggregatedDataType} from './types';
 
 // Read more about this import issue: https://github.com/plouc/nivo/issues/2310
@@ -9,14 +10,17 @@ const ResponsivePie = dynamic(() => import('@nivo/pie').then((m) => m.Responsive
 
 interface PieDataProps {
   data: AggregatedDataType[];
+  hoveredId?: null | string;
+  onHover: (domainId: string | null) => void;
 }
 
-export function PieChart({data}: PieDataProps) {
+export function PieChart({data, hoveredId, onHover}: PieDataProps) {
   return (
     <ResponsivePie
       data={data}
       valueFormat={(value) => formatTimeDuration(value)}
-      margin={{top: 40, right: 210, bottom: 80, left: 80}}
+      margin={{top: 40, right: 80, bottom: 80, left: 80}}
+      colors={(datum) => getStringColor(datum.id as string)}
       innerRadius={0.5}
       padAngle={0.7}
       cornerRadius={3}
@@ -27,6 +31,8 @@ export function PieChart({data}: PieDataProps) {
         from: 'color',
         modifiers: [['darker', 0.2]],
       }}
+      onMouseEnter={({id}) => onHover(id as string)}
+      onMouseLeave={() => onHover(null)}
       arcLinkLabelsSkipAngle={10}
       arcLinkLabelsTextColor="#333333"
       arcLinkLabelsThickness={2}
@@ -36,29 +42,23 @@ export function PieChart({data}: PieDataProps) {
         from: 'color',
         modifiers: [['darker', 2]],
       }}
-      legends={[
+      defs={[
         {
-          anchor: 'top-right',
-          direction: 'column',
-          justify: false,
-          itemsSpacing: 0,
-          translateX: 160,
-          translateY: 0,
-          itemWidth: 100,
-          itemHeight: 20,
-          itemTextColor: '#999',
-          itemDirection: 'left-to-right',
-          itemOpacity: 1,
-          symbolSize: 18,
-          symbolShape: 'circle',
-          effects: [
-            {
-              on: 'hover',
-              style: {
-                itemTextColor: '#000',
-              },
-            },
-          ],
+          id: 'dots',
+          type: 'patternLines',
+          background: 'inherit',
+          color: 'rgba(255, 255, 255, 0.4)',
+          size: 4,
+          padding: 1,
+          stagger: true,
+        },
+      ]}
+      fill={[
+        {
+          match: {
+            id: hoveredId,
+          },
+          id: 'dots',
         },
       ]}
     />

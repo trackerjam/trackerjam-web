@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import {CurrentDayActivityData} from '../../../types/api';
 import {AggregatedDataType} from '../types';
+import {IDLE_TIME_STR} from '../../../const/string';
 
 export function useAggregatedData(
   currentDayData: CurrentDayActivityData | null | undefined,
@@ -38,8 +39,8 @@ export function useAggregatedData(
       const dataValues = Object.values(byDomains);
       if (showIdle) {
         dataValues.push({
-          id: '[Idle Time]',
-          label: '[Idle Time]',
+          id: IDLE_TIME_STR,
+          label: IDLE_TIME_STR,
           value: currentDayData.idleTime,
           lastSession: null,
           sessionCount: 0,
