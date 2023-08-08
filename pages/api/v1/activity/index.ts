@@ -14,6 +14,8 @@ import {
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 import {translatePayloadToInternalStructure} from '../../../../utils/api/translate-payload';
 
+const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
+
 async function upsertDomain(domain: string) {
   return prismadb.domain.upsert({
     where: {
@@ -79,7 +81,8 @@ async function upsertDomainActivity({
  *
  * 8. **Session Filtering:** For each session in the activity, check if its start time is after the end time of the
  * last session. If true, it's considered a new session and added to the `newSessions` array. If not, it's considered
- * a duplicate session and a log message is printed.
+ * a duplicate session and a log message is printed. We also filter out everything that is older than 24 hours or in
+ * the future.
  *
  * 9. **Time Calculation:** Compute the total time spent on the activity by summing the duration of each new session.
  *
@@ -99,9 +102,6 @@ async function upsertDomainActivity({
  * activities. It assumes that the sessions are sent in chronological order, so a late arriving session could be
  * considered as a duplicate.
  */
-
-// TODO Filter elements that are in the future
-// TODO Filter elements that are 24h in the past
 
 async function handleRecordActivity(activity: CreateActivityInputInternal, token: string) {
   // Extract the domain from the activity's URL.
@@ -135,18 +135,36 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // Get the end time of the last session, or 0 if there is no previous session.
   const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
 
-  // Filter out any sessions from the activity that start before or at the same time as the end of the last session.
-  // Log any duplicate sessions.
+  // Filter out any sessions from the activity that:
+  // - Start before or at the same time as the end of the last session (considered duplicates).
+  // - Start or end in the future.
+  // - Ended more than 24 hours ago.
+  // Log any filtered sessions.
   const newSessions: CreateSessionActivityInput[] = [];
+
   if (activity.sessions) {
+    const currentTime = Date.now();
+
     activity.sessions.forEach((session) => {
       const startTime = new Date(session.startTime).getTime();
+      const endTime = new Date(session.endTime).getTime();
 
-      if (startTime > lastSessionEndTime) {
-        newSessions.push(session);
-      } else {
-        console.log(`Duplicate session detected: ${JSON.stringify(session)}`);
+      if (startTime <= lastSessionEndTime) {
+        console.error(`Duplicate session detected: ${JSON.stringify(session)}`);
+        return;
       }
+
+      if (startTime > currentTime || endTime > currentTime) {
+        console.error(`Future session detected: ${JSON.stringify(session)}`);
+        return;
+      }
+
+      if (currentTime - endTime > twentyFourHoursInMilliseconds) {
+        console.error(`Old session detected: ${JSON.stringify(session)}`); // Corrected the message here
+        return;
+      }
+
+      newSessions.push(session);
     });
   }
 
