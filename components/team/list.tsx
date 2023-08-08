@@ -1,11 +1,12 @@
-import Head from 'next/head';
+'use client';
+
 import {HeadingSmall as Title, LabelSmall as Subtitle} from 'baseui/typography';
 import {Button} from 'baseui/button';
 
 import {useStyletron} from 'baseui';
 import {useMemo} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {toaster, ToasterContainer, PLACEMENT} from 'baseui/toast';
 import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
@@ -60,10 +61,6 @@ export function Team() {
   return (
     <div>
       <ToasterContainer placement={PLACEMENT.topRight} autoHideDuration={1500}>
-        <Head>
-          <title>Team</title>
-        </Head>
-
         <Title marginBottom="scale600" marginTop="0">
           Team
         </Title>

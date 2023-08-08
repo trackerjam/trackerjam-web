@@ -1,10 +1,4 @@
-import {
-  // CiSettings,
-  // CiViewBoard,
-  // CiBellOn,
-  CiPizza,
-  CiUser,
-} from 'react-icons/ci';
+import {CiSettings, CiViewBoard, CiBellOn, CiPizza, CiUser} from 'react-icons/ci';
 import {type IconType} from 'react-icons';
 
 import {SideNavLink} from './side-nav-link';
@@ -29,24 +23,24 @@ function IconTitle({title, icon}: IconTitleProps) {
 const items = [
   {
     title: <IconTitle title="Dashboard" icon={CiPizza} />,
-    itemId: '/dashboards',
+    itemId: '/dashboard',
   },
   {
     title: <IconTitle title="Team" icon={CiUser} />,
-    itemId: '/teams',
+    itemId: '/team',
   },
-  // {
-  //   title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
-  //   itemId: '/events',
-  // },
-  // {
-  //   title: <IconTitle title="Statistics" icon={CiViewBoard} />,
-  //   itemId: '/statistics',
-  // },
-  // {
-  //   title: <IconTitle title="Settings" icon={CiSettings} />,
-  //   itemId: '/settings',
-  // },
+  {
+    title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
+    itemId: '/events',
+  },
+  {
+    title: <IconTitle title="Statistics" icon={CiViewBoard} />,
+    itemId: '/statistics',
+  },
+  {
+    title: <IconTitle title="Settings" icon={CiSettings} />,
+    itemId: '/settings',
+  },
 ];
 
 export function SideNav() {

@@ -24,7 +24,7 @@ export function Dashboard() {
       {error && <ErrorDetails error={error} />}
 
       {!isLoading && (
-        <div className="">
+        <div>
           {showTeamMembers && (
             <button
               className="p-4 pr-2 border-2 flex flex-col w-[230px] rounded-xl border-gray-90"

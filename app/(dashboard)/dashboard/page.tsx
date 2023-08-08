@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 function DashboardPage() {
   return (
-    <div className="p-6 pb-2.5">
+    <div>
       <h2 className="font-bold text-28 mb-4 leading-tight">Dashboard</h2>
       <Dashboard />
     </div>
