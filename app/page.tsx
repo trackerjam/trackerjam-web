@@ -7,8 +7,7 @@ import {Button} from '../components/common/button';
 
 export const metadata: Metadata = {
   title: 'Trackerjam',
-  description:
-    'Browser session tracking application for efficient web activity monitoring. - Trackerjam',
+  description: 'Browser session tracking application for efficient web activity monitoring.w',
 };
 
 const Home = async () => {

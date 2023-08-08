@@ -12,9 +12,7 @@ async function Layout({children}: {children: React.ReactNode}) {
       <Header />
       <main className="flex min-h-screen">
         <Sidebar session={session} />
-        {/* <DashboardWrapper> */}
-        <div className="">{children}</div>
-        {/* </DashboardWrapper> */}
+        <div>{children}</div>
       </main>
     </Provider>
   );

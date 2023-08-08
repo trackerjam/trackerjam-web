@@ -6,8 +6,8 @@ import {BsThreeDots} from 'react-icons/bs';
 import {signOut} from 'next-auth/react';
 import {Session} from 'next-auth';
 
-export function UserProfile({session}: {session: Session}) {
-  const user = session.user;
+export function UserProfile({session}: {session?: Session | null}) {
+  const user = session?.user;
 
   return (
     <div className="flex items-center justify-between mx-2.5 mt-8 mb-2.5 rounded-xl border border-black/10 p-2">
