@@ -14,6 +14,25 @@ interface DomainTableProps {
 
 const TABLE_HEADER = ['Domain', 'Activity Time', 'Sessions Count', 'Last Session'];
 
+function getTimeShare({
+  totalActivityTime,
+  value,
+}: {
+  totalActivityTime: undefined | number;
+  value: number;
+}) {
+  let timeShare = 0;
+  let sharePercentage = '';
+  let shareWidth = '';
+  if (totalActivityTime) {
+    timeShare = (value / totalActivityTime) * 100;
+    sharePercentage = timeShare.toFixed(1) + '%';
+    shareWidth = Math.min(timeShare, 100).toFixed(1) + '%';
+  }
+
+  return {timeShare, sharePercentage, shareWidth};
+}
+
 export function DomainsTable({
   data,
   onHover,
@@ -95,13 +114,10 @@ export function DomainsTable({
         </thead>
         <tbody>
           {data.map(({label, value, id, lastSession, sessionCount}) => {
-            let domainTimeShare = 0;
-            let domainSharePercentage = '';
-            if (totalActivityTime) {
-              domainTimeShare = (value / totalActivityTime) * 100;
-              domainSharePercentage = Math.min(domainTimeShare, 100).toFixed(1) + '%';
-            }
-
+            const {shareWidth, sharePercentage} = getTimeShare({
+              totalActivityTime,
+              value,
+            });
             return (
               <tr
                 key={id}
@@ -128,8 +144,8 @@ export function DomainsTable({
                   </div>
                 </td>
                 <td className={tableCellStyle}>
-                  <div className={domainShareBarStyle} style={{width: domainSharePercentage}} />
-                  {formatTimeDuration(value)} ({domainSharePercentage})
+                  <div className={domainShareBarStyle} style={{width: shareWidth}} />
+                  {formatTimeDuration(value)} ({sharePercentage})
                 </td>
                 <td className={tableCellStyle}>{sessionCount}</td>
                 <td className={tableCellStyle}>
