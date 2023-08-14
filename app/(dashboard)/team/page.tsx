@@ -5,7 +5,13 @@ export const metadata: Metadata = {
   description: 'Browser session tracking application for efficient web activity monitoring.',
 };
 function TeamPage() {
-  return <Team />;
+  return (
+    <>
+      <h2 className="text-24 leading-snug font-bold">Team</h2>
+      <p className="mt-4 text-14 font-medium">List of your team members & contractors</p>
+      <Team />
+    </>
+  );
 }
 
 export default TeamPage;

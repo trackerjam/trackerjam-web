@@ -1,3 +1,4 @@
+'use client';
 import {useStyletron} from 'baseui';
 import {
   HeadingSmall as Title,
@@ -10,7 +11,7 @@ import {useForm} from 'react-hook-form';
 import React, {useCallback, useState} from 'react';
 import {Notification, KIND} from 'baseui/notification';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Textarea} from 'baseui/textarea';
 import {BiHide, BiCaretRight, BiCaretDown} from 'react-icons/bi';
 import {ControlledInput} from '../../common/controlled-input';

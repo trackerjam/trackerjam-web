@@ -1,13 +1,9 @@
 'use client';
 
-import {HeadingSmall as Title, LabelSmall as Subtitle} from 'baseui/typography';
-import {Button} from 'baseui/button';
-
-import {useStyletron} from 'baseui';
 import {useMemo} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useRouter} from 'next/navigation';
-import {toaster, ToasterContainer, PLACEMENT} from 'baseui/toast';
+import {toaster} from 'baseui/toast';
 import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
@@ -18,22 +14,8 @@ import {MemberCard} from './member-card';
 export const GRID_TEMPLATE = 'repeat(auto-fit, minmax(250px, 350px))';
 
 export function Team() {
-  const [css, theme] = useStyletron();
   const {data, isLoading, error, update} = useGetData<GetTeamResponse>('/api/team');
   const router = useRouter();
-
-  const cardsBlockWrapper = css({
-    display: 'grid',
-    gridTemplateColumns: GRID_TEMPLATE,
-    gap: theme.sizing.scale600,
-    marginBottom: theme.sizing.scale800,
-  });
-
-  const buttonsBlock = css({
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginBottom: theme.sizing.scale600,
-  });
 
   const teamData = useMemo(() => {
     if (data) {
@@ -59,47 +41,35 @@ export function Team() {
   };
 
   return (
-    <div>
-      <ToasterContainer placement={PLACEMENT.topRight} autoHideDuration={1500}>
-        <Title marginBottom="scale600" marginTop="0">
-          Team
-        </Title>
-        <Subtitle>List of your team members & contractors</Subtitle>
+    <>
+      {error && <ErrorDetails error={error} />}
 
-        {error && <ErrorDetails error={error} />}
+      <div className="flex justify-end mb-4">
+        <button
+          className="text-white bg-green-700 flex leading-none transition-colors duration-200 hover:bg-slate-100 font-medium items-center py-3.5 px-4 rounded-lg"
+          onClick={addMemberClickHandler}
+          type="button"
+        >
+          <BsPlusCircle className="mr-3" />
+          Add member
+        </button>
+      </div>
 
-        <div className={buttonsBlock}>
-          <Button
-            startEnhancer={BsPlusCircle}
-            onClick={addMemberClickHandler}
-            overrides={{
-              BaseButton: {
-                style: {
-                  backgroundColor: theme.colors.backgroundPositive,
-                },
-              },
-            }}
-          >
-            Add member
-          </Button>
+      {isLoading && <ListSkeleton />}
+      {!isLoading && (
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-5 mb-7">
+          {teamData?.map((userData) => {
+            return (
+              <MemberCard
+                key={userData.id}
+                data={userData}
+                onDelete={handleCardDelete}
+                onCopy={handleCopyClick}
+              />
+            );
+          })}
         </div>
-
-        {isLoading && <ListSkeleton />}
-        {!isLoading && (
-          <div className={cardsBlockWrapper}>
-            {teamData?.map((userData) => {
-              return (
-                <MemberCard
-                  key={userData.id}
-                  data={userData}
-                  onDelete={handleCardDelete}
-                  onCopy={handleCopyClick}
-                />
-              );
-            })}
-          </div>
-        )}
-      </ToasterContainer>
-    </div>
+      )}
+    </>
   );
 }
