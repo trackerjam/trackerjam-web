@@ -8,6 +8,7 @@ import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
+import {Button} from '../common/button';
 import {ListSkeleton} from './list-skeleton';
 import {MemberCard} from './member-card';
 
@@ -45,14 +46,10 @@ export function Team() {
       {error && <ErrorDetails error={error} />}
 
       <div className="flex justify-end mb-4">
-        <button
-          className="text-white bg-green-700 flex leading-none transition-colors duration-200 hover:bg-slate-100 font-medium items-center py-3.5 px-4 rounded-lg"
-          onClick={addMemberClickHandler}
-          type="button"
-        >
+        <Button onClick={addMemberClickHandler} type="button" kind="primary">
           <BsPlusCircle className="mr-3" />
           Add member
-        </button>
+        </Button>
       </div>
 
       {isLoading && <ListSkeleton />}

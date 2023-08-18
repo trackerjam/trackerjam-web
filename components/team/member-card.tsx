@@ -10,7 +10,7 @@ import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {formatDistanceToNow} from 'date-fns';
 import {getBorder} from '../../utils/get-border';
 import {formatTimeDuration} from '../../utils/format-time-duration';
