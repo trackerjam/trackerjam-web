@@ -1,16 +1,16 @@
 import {Metadata} from 'next';
 
 export const metadata: Metadata = {
-  title: 'Events - Trackerjam',
+  title: 'Statistics - Trackerjam',
 };
 
-function EventsPage() {
+function StatisticsPage() {
   return (
     <div>
-      <h2 className="font-bold text-28 mb-4 leading-tight">Events</h2>
+      <h2 className="font-bold text-28 mb-4 leading-tight">Statistics</h2>
       <p className="font-medium text-14 leading-tight">The page is under development</p>
     </div>
   );
 }
 
-export default EventsPage;
+export default StatisticsPage;
