@@ -16,7 +16,7 @@ import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
 import {DomainsTable} from './domains-table';
 
-const PIR_CHART_AND_TABLE_HEIGHT = '400px';
+const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
 export function MemberStatistics({memberId}: {memberId: string}) {
   const [css, theme] = useStyletron();
@@ -65,7 +65,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
   const pieChartBlockStyle = css({
     width: 'min(50%, 600px)',
-    height: PIR_CHART_AND_TABLE_HEIGHT,
+    height: PIE_CHART_AND_TABLE_HEIGHT,
     flexShrink: 0,
     borderRadius: theme.borders.radius300,
     ...theme.borders.border200,
@@ -76,9 +76,8 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   });
 
   const timelineChartStyle = css({
-    flexBasis: '1100px',
     flexGrow: 1,
-    height: PIR_CHART_AND_TABLE_HEIGHT,
+    height: PIE_CHART_AND_TABLE_HEIGHT,
     borderRadius: theme.borders.radius300,
     marginTop: theme.sizing.scale600,
     ...theme.borders.border200,
@@ -130,7 +129,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 <div className={domainsTableStyle}>
                   <DomainsTable
                     data={aggregatedData}
-                    height={PIR_CHART_AND_TABLE_HEIGHT}
+                    height={PIE_CHART_AND_TABLE_HEIGHT}
                     totalActivityTime={currentDayData?.totalActivityTime}
                     hoveredId={hoveredId}
                     onHover={setHoveredId}

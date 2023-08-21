@@ -1,6 +1,7 @@
 import {CiSettings, CiViewBoard, CiBellOn, CiPizza, CiUser} from 'react-icons/ci';
+import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
-
+import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
 import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
@@ -19,8 +20,7 @@ function IconTitle({title, icon}: IconTitleProps) {
   );
 }
 
-// TODO: add proper links
-const items = [
+const topItems = [
   {
     title: <IconTitle title="Dashboard" icon={CiPizza} />,
     itemId: '/dashboard',
@@ -43,18 +43,42 @@ const items = [
   },
 ];
 
+const bottomItems = [
+  {
+    title: <IconTitle title="Feature Request" icon={PiLightbulbLight} />,
+    itemId: FEEDBACK_URL,
+    isTargetBlank: true,
+  },
+  {
+    title: <IconTitle title="Support" icon={PiQuestionLight} />,
+    itemId: `mailto:${SUPPORT_EMAIL}`,
+  },
+];
+
 export function SideNav() {
   return (
     <div className="mt-6">
       <nav>
         <ul>
-          {items.map(({title, itemId}, index) => (
-            <li key={index}>
-              <SideNavLink title={title} itemId={itemId} />
-            </li>
-          ))}
+          {topItems.map(({title, itemId}, index) => {
+            return (
+              <li key={index}>
+                <SideNavLink title={title} itemId={itemId} />
+              </li>
+            );
+          })}
         </ul>
       </nav>
+
+      <ul>
+        {bottomItems.map(({title, itemId, isTargetBlank}, index) => {
+          return (
+            <li key={index}>
+              <SideNavLink title={title} itemId={itemId} isTargetBlank={isTargetBlank ?? false} />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

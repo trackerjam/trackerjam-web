@@ -4,7 +4,15 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
-export function SideNavLink({title, itemId}: {title: React.ReactNode; itemId: string}) {
+export function SideNavLink({
+  title,
+  itemId,
+  isTargetBlank,
+}: {
+  title: React.ReactNode;
+  itemId: string;
+  isTargetBlank?: boolean;
+}) {
   const pathname = usePathname();
   const isActive = pathname?.startsWith(itemId);
 
@@ -15,6 +23,7 @@ export function SideNavLink({title, itemId}: {title: React.ReactNode; itemId: st
         isActive ? 'border-blue-100 bg-gray-85' : 'border-transparent'
       )}
       href={itemId}
+      target={isTargetBlank ? '_blank' : '_self'}
     >
       {title}
     </Link>
