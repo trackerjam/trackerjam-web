@@ -1,7 +1,8 @@
 import {getServerSession} from 'next-auth';
 import {Header} from '../../components/header';
 import {Sidebar} from '../../components/sidebar';
-import {authOptions} from '../../pages/api/auth/[...nextauth]';
+
+import {authOptions} from '../api/auth/[...nextauth]/route';
 import Provider from './provider';
 
 async function Layout({children}: {children: React.ReactNode}) {

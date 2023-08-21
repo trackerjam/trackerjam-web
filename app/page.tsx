@@ -2,8 +2,8 @@ import {getServerSession} from 'next-auth/next';
 
 import {redirect} from 'next/navigation';
 import {Metadata} from 'next';
-import {authOptions} from '../pages/api/auth/[...nextauth]';
 import {Button} from '../components/common/button';
+import {authOptions} from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
   title: 'Trackerjam',
