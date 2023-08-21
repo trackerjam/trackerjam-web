@@ -1,6 +1,5 @@
-import Head from 'next/head';
-import {LabelLarge as Title} from 'baseui/typography';
-import {useRouter} from 'next/router';
+'use client';
+
 import {useEffect, useMemo, useState} from 'react';
 import {useStyletron} from 'baseui';
 import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
@@ -11,6 +10,7 @@ import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {CurrentDayActivityData, MemberStatisticType} from '../../types/api';
 import DebugTable from './debug-table';
+
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
@@ -20,13 +20,13 @@ const PIR_CHART_AND_TABLE_HEIGHT = '400px';
 
 // TODO Unify colors in table and charts
 
-export function MemberStatistics() {
+export function MemberStatistics({memberId}: {memberId: string}) {
   const [css, theme] = useStyletron();
-  const {
-    query: {memberId},
-  } = useRouter();
+
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
+
   const hasData = Boolean(!isLoading && data);
+
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState(false);
 
@@ -90,14 +90,10 @@ export function MemberStatistics() {
   });
 
   return (
-    <div>
-      <Head>
-        <title>Statistics</title>
-      </Head>
-
-      <Title marginBottom="scale600">
+    <>
+      <h1 className="font-bold text-28 mb-4 leading-tight">
         Statistic {data?.member ? `for ${data?.member?.name}` : ''}
-      </Title>
+      </h1>
 
       {isLoading && <span>Loading...</span>}
       {error && <ErrorDetails error={error} />}
@@ -148,6 +144,6 @@ export function MemberStatistics() {
           )}
         </>
       )}
-    </div>
+    </>
   );
 }

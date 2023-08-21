@@ -12,7 +12,7 @@ async function Layout({children}: {children: React.ReactNode}) {
       <Header />
       <main className="flex min-h-screen">
         <Sidebar session={session} />
-        <div className="flex grow flex-col p-6 pb-2.5">{children}</div>
+        <div className="flex grow flex-col p-12 pb-2.5">{children}</div>
       </main>
     </Provider>
   );

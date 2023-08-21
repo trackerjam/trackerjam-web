@@ -6,10 +6,10 @@ export const metadata: Metadata = {
 
 function EventsPage() {
   return (
-    <div>
-      <h2 className="font-bold text-28 mb-4 leading-tight">Events</h2>
+    <>
+      <h1 className="font-bold text-28 mb-4 leading-tight">Events</h1>
       <p className="font-medium text-14 leading-tight">The page is under development</p>
-    </div>
+    </>
   );
 }
 

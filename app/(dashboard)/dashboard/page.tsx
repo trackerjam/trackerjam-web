@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 
 function DashboardPage() {
   return (
-    <div>
-      <h2 className="font-bold text-28 mb-4 leading-tight">Dashboard</h2>
+    <>
+      <h1 className="font-bold text-28 mb-4 leading-tight">Dashboard</h1>
       <Dashboard />
-    </div>
+    </>
   );
 }
 

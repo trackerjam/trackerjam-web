@@ -25,6 +25,7 @@ export function useGetData<T>(url: string): UsePostReturnType<T> {
       })
       .then((res) => res.json())
       .then((json) => {
+        console.log('json', json);
         if (json?.status === 'error' && json?.errorMsg) {
           throw new Error(json?.errorMsg);
         } else {
