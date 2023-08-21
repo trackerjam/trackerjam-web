@@ -2,7 +2,7 @@ import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {DomainActivity} from '@prisma/client';
 import * as Sentry from '@sentry/node';
-import {authOptions} from '../auth/[...nextauth]';
+import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';

@@ -1,94 +1,60 @@
-import * as React from 'react';
-import {useStyletron} from 'baseui';
-import {Navigation} from 'baseui/side-navigation';
-import {useRouter} from 'next/router';
 import {CiSettings, CiViewBoard, CiBellOn, CiPizza, CiUser} from 'react-icons/ci';
 import {type IconType} from 'react-icons';
 
-const DEFAULT_ROUTE = '/dashboard';
+import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
   title: string;
   icon: IconType;
 };
 
-function getActivePath(route: string): string {
-  if (route === '/dashboard') {
-    return DEFAULT_ROUTE;
-  }
-  const parts = route.split('/').filter(Boolean);
-  return `/${parts[0]}`;
-}
-
 function IconTitle({title, icon}: IconTitleProps) {
-  const [css, theme] = useStyletron();
   const Icon = icon;
 
-  const style = css({
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.sizing.scale300,
-  });
-
   return (
-    <span className={style}>
+    <span className="flex items-center gap-x-2">
       <Icon title="" size={18} />
       {title}
     </span>
   );
 }
 
+// TODO: add proper links
+const items = [
+  {
+    title: <IconTitle title="Dashboard" icon={CiPizza} />,
+    itemId: '/dashboard',
+  },
+  {
+    title: <IconTitle title="Team" icon={CiUser} />,
+    itemId: '/team',
+  },
+  {
+    title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
+    itemId: '/events',
+  },
+  {
+    title: <IconTitle title="Statistics" icon={CiViewBoard} />,
+    itemId: '/statistics',
+  },
+  {
+    title: <IconTitle title="Settings" icon={CiSettings} />,
+    itemId: '/settings',
+  },
+];
+
 export function SideNav() {
-  const [css, theme] = useStyletron();
-  const router = useRouter();
-
-  const boxStyle = css({
-    marginTop: theme.sizing.scale800,
-  });
-
   return (
-    <div className={boxStyle}>
-      <Navigation
-        items={[
-          {
-            title: <IconTitle title="Dashboard" icon={CiPizza} />,
-            itemId: '/dashboard',
-          },
-          {
-            title: <IconTitle title="Team" icon={CiUser} />,
-            itemId: '/team',
-          },
-          {
-            title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
-            itemId: '/events',
-          },
-          {
-            title: <IconTitle title="Statistics" icon={CiViewBoard} />,
-            itemId: '/statistics',
-          },
-          {
-            title: <IconTitle title="Settings" icon={CiSettings} />,
-            itemId: '/settings',
-          },
-        ]}
-        activeItemId={getActivePath(router.route)}
-        onChange={({item, event}) => {
-          event.preventDefault();
-          router.push(`${item.itemId}`);
-        }}
-        overrides={{
-          NavItem: {
-            style: ({$active, $theme}) => {
-              return {
-                borderLeftColor: 'transparent',
-                borderRightWidth: '4px',
-                borderRightStyle: 'solid',
-                borderRightColor: $active ? $theme.colors.accent : 'transparent',
-              };
-            },
-          },
-        }}
-      />
+    <div className="mt-6">
+      <nav>
+        <ul>
+          {items.map(({title, itemId}, index) => (
+            <li key={index}>
+              <SideNavLink title={title} itemId={itemId} />
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

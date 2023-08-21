@@ -1,8 +1,5 @@
-import Head from 'next/head';
-import {HeadingMedium as Title} from 'baseui/typography';
-import {MessageCard} from 'baseui/message-card';
-import {FlexGrid, FlexGridItem} from 'baseui/flex-grid';
-import {useRouter} from 'next/router';
+'use client';
+import {useRouter} from 'next/navigation';
 import {useGetData} from '../hooks/use-get-data';
 import type {DashboardResponse} from '../../types/api';
 import {ErrorDetails} from '../common/error-details';
@@ -21,35 +18,28 @@ export function Dashboard() {
   };
 
   return (
-    <div>
-      <Head>
-        <title>Dashboard</title>
-      </Head>
-      <Title marginBottom="scale600" marginTop="0">
-        Dashboard
-      </Title>
-
+    <>
       {isLoading && <DashboardSkeleton />}
 
       {error && <ErrorDetails error={error} />}
 
       {!isLoading && (
-        <FlexGrid
-          flexGridColumnCount={[1, 1, 3, 4]}
-          flexGridColumnGap="scale800"
-          flexGridRowGap="scale800"
-        >
+        <div>
           {showTeamMembers && (
-            <FlexGridItem>
-              <MessageCard
-                heading={`${membersCount} team member${membersCount === 1 ? '' : 's'}`}
-                buttonLabel={membersCountActionName}
-                onClick={handleTeamMembersClick}
-              />
-            </FlexGridItem>
+            <button
+              className="p-4 pr-2 border-2 flex flex-col w-[230px] rounded-xl border-gray-90"
+              onClick={handleTeamMembersClick}
+            >
+              <h3 className="text-20 leading-tight font-bold">
+                {membersCount} team member{membersCount === 1 ? '' : 's'}
+              </h3>
+              <span className="py-2.5 px-3 mt-3 text-14 leading-none font-medium bg-gray-80 rounded-[30px]">
+                {membersCountActionName}
+              </span>
+            </button>
           )}
-        </FlexGrid>
+        </div>
       )}
-    </div>
+    </>
   );
 }

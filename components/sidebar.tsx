@@ -1,21 +1,11 @@
-import * as React from 'react';
-import {useStyletron} from 'baseui';
-import {getBorder} from '../utils/get-border';
+import {Session} from 'next-auth';
 import {UserProfile} from './user-profile';
 import {SideNav} from './side-nav';
 
-export function Sidebar() {
-  const [css, theme] = useStyletron();
-
-  const boxStyle = css({
-    backgroundColor: theme.colors.backgroundSecondary,
-    width: '280px',
-    borderRight: getBorder(theme.borders.border300),
-  });
-
+export function Sidebar({session}: {session?: Session | null}) {
   return (
-    <div className={boxStyle}>
-      <UserProfile />
+    <div className="bg-gray-100 w-[280px] border-r border-black/10">
+      <UserProfile session={session} />
       <SideNav />
     </div>
   );

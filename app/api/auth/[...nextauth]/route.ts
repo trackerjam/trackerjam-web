@@ -3,8 +3,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import EmailProvider from 'next-auth/providers/email';
 
-import prisma from '../../../lib/prismadb';
-import {initUserFirstTime} from '../../../utils/database/init-user';
+import prisma from '../../../../lib/prismadb';
+import {initUserFirstTime} from '../../../../utils/database/init-user';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -33,4 +33,6 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+
+export {handler as GET, handler as POST};
