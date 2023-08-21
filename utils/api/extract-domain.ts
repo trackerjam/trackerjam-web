@@ -1,17 +1,15 @@
-export function extractTopLevelDomain(url: string): string | null {
-  // TODO Handle file protocol
+import {LOCAL_FILE_STR} from '../../const/string';
+
+export function extractDomain(url: string): string | null {
   try {
-    const domain = new URL(url).hostname;
+    const urlObject = new URL(url);
+    const domain = urlObject.hostname;
 
-    // Remove 'www.' if present.
-    const withoutWWW = domain.replace(/^www\./, '');
-
-    // Split by dots and take the last two parts to get the top-level domain.
-    const parts = withoutWWW.split('.');
-    if (parts.length >= 2) {
-      return `${parts[parts.length - 2]}.${parts[parts.length - 1]}`;
+    if (urlObject.protocol === 'file:') {
+      return LOCAL_FILE_STR;
     }
-    return withoutWWW; // It's a case like 'localhost' or custom top-level domain.
+
+    return domain.replace(/^www\./, '').toLocaleLowerCase();
   } catch (error) {
     return null;
   }

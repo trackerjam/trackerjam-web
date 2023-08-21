@@ -7,6 +7,13 @@ export function calculateIdleTime(activities: MemberStatisticActivityType[]) {
   let totalActivityTime = 0;
 
   const allSessions = activities.flatMap((session) => session.sessionActivities);
+  if (!allSessions?.length) {
+    return {
+      idleTime: 0,
+      totalActivityTime: 0,
+    };
+  }
+
   const sessions = [...allSessions].sort((a, b) => toMs(a.startDatetime) - toMs(b.startDatetime));
 
   // Summarize all activity times across all sessions

@@ -18,8 +18,6 @@ import {DomainsTable} from './domains-table';
 
 const PIR_CHART_AND_TABLE_HEIGHT = '400px';
 
-// TODO Unify colors in table and charts
-
 export function MemberStatistics({memberId}: {memberId: string}) {
   const [css, theme] = useStyletron();
 
@@ -29,6 +27,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState(false);
+  const [hoveredId, setHoveredId] = useState<null | string>(null);
 
   const availableDates = useMemo(() => {
     if (data?.activitiesByDate) {
@@ -126,10 +125,16 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </div>
               <div className={topStatWrapperStyle}>
                 <div className={pieChartBlockStyle}>
-                  <PieChart data={aggregatedData} />
+                  <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
                 </div>
                 <div className={domainsTableStyle}>
-                  <DomainsTable data={aggregatedData} height={PIR_CHART_AND_TABLE_HEIGHT} />
+                  <DomainsTable
+                    data={aggregatedData}
+                    height={PIR_CHART_AND_TABLE_HEIGHT}
+                    totalActivityTime={currentDayData?.totalActivityTime}
+                    hoveredId={hoveredId}
+                    onHover={setHoveredId}
+                  />
                 </div>
               </div>
 
