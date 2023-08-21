@@ -1,10 +1,8 @@
-import {useStyletron} from 'baseui';
 import Avatar from 'boring-avatars';
-import {Button, KIND, SIZE, SHAPE, KIND as ButtonKind} from 'baseui/button';
+import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
-import type {IconType} from 'react-icons';
-import {StatefulPopover} from 'baseui/popover';
-import {StatefulMenu} from 'baseui/menu';
+
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiTime, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
@@ -12,18 +10,14 @@ import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {useRouter} from 'next/navigation';
 import {formatDistanceToNow} from 'date-fns';
-import {getBorder} from '../../utils/get-border';
+import clsx from 'clsx';
+
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
 import {MemberAndSummary} from '../../types/api';
+import {Button} from '../common/button';
 import {StatusTag} from './status-tag';
-
-interface MenuOptionPros {
-  icon: IconType;
-  label: string;
-  iconColor?: string;
-}
 
 interface MemberCardProps {
   data: MemberAndSummary;
@@ -33,29 +27,26 @@ interface MemberCardProps {
 
 const emptySummaryText = '-';
 
-const MenuOptionIcon = ({icon, label, iconColor}: MenuOptionPros) => {
-  const Icon = icon;
-  const [css, theme] = useStyletron();
-
-  const boxStyle = css({
-    display: 'flex',
-    gap: theme.sizing.scale300,
-    alignItems: 'center',
-  });
-
-  return (
-    <span className={boxStyle}>
-      <Icon title="" color={iconColor ?? 'inherit'} />
-      {label}
-    </span>
-  );
-};
+const menuItems = [
+  {
+    id: 'copy',
+    icon: BiCopy,
+    label: 'Copy tracking key',
+    iconColor: '',
+  },
+  {
+    id: 'delete',
+    icon: BiTrash,
+    label: 'Delete',
+    iconColor: 'text-red-600',
+  },
+];
 
 export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
   const {name, title, status, token, summary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [css, theme] = useStyletron();
+
   const {send} = useSendData(`/api/member/${token}`);
   const {push} = useRouter();
 
@@ -78,83 +69,18 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
     setIsDeleting(false);
   };
 
-  const cardStyle = css({
-    position: 'relative',
-    ...theme.borders.border200,
-    padding: theme.sizing.scale600,
-    borderRadius: theme.borders.radius300,
-    boxShadow: theme.lighting.shadow400,
-    transition: '0.2s ease box-shadow',
-    ':hover': {
-      boxShadow: theme.lighting.shadow500,
-    },
-  });
+  const hrStyle = 'border-t border-black border-opacity-[0.08]';
 
-  const nameStyle = css({
-    marginRight: theme.sizing.scale300,
-    fontWeight: 'bold',
-    display: '-webkit-box',
-    '-webkit-line-clamp': 1,
-    '-webkit-box-orient': 'vertical',
-    overflow: 'hidden',
-  });
+  const statsColumnStyle =
+    'border-r border-black border-opacity-[0.08] grow flex justify-center p-2.5';
 
-  const smallTextStyle = css({
-    color: theme.colors.contentTertiary,
-    fontSize: theme.typography.LabelXSmall.fontSize,
-    display: '-webkit-box',
-    '-webkit-line-clamp': 1,
-    '-webkit-box-orient': 'vertical',
-    overflow: 'hidden',
-  });
-
-  const headerLayoutStyle = css({
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: theme.sizing.scale500,
-  });
-
-  const hrStyle = css({
-    border: 'none',
-    borderTop: getBorder(theme.borders.border200),
-  });
-
-  const avatarStyle = css({
-    flexShrink: 0,
-  });
-
-  const statsWrapperStyle = css({
-    display: 'flex',
-    justifyContent: 'space-between',
-  });
-
-  const statsColumnStyle = css({
-    borderRight: getBorder(theme.borders.border200),
-    display: 'flex',
-    justifyContent: 'center',
-    padding: theme.sizing.scale400,
-    flexGrow: 1,
-  });
-
-  const statsContentStyle = css({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: theme.sizing.scale200,
-    color: theme.colors.contentTertiary,
-    fontSize: theme.typography.LabelXSmall.fontSize,
-  });
-
-  const actionsStyle = css({
-    display: 'flex',
-    justifyContent: 'flex-end',
-  });
+  const statsContentStyle = 'flex items-center justify-center gap-x-1.5 text-gray-120 font-12';
 
   const avatarSeed = name + token;
   const summaryData = summary?.[0] || {}; // should be ordered desc
 
   return (
-    <div className={cardStyle}>
+    <div className="relative rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
       <Modal
         onClose={() => setDeleteShown(false)}
         closeable
@@ -176,8 +102,8 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         </ModalFooter>
       </Modal>
 
-      <div className={headerLayoutStyle}>
-        <div className={avatarStyle}>
+      <div className="flex items-start gap-x-3 mb-2">
+        <div className="shrink-0">
           <Avatar
             size={40}
             name={avatarSeed}
@@ -186,70 +112,45 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
           />
         </div>
         <div>
-          <div className={css({display: 'flex'})}>
-            <span className={nameStyle}>{name}</span>
+          <div className="flex">
+            <span className="mr-2 font-bold">{name}</span>
           </div>
           <div>
-            <span className={smallTextStyle}>{title}</span>
+            <span className="text-gray-120 text-12">{title}</span>
           </div>
         </div>
 
-        <div
-          className={css({
-            justifySelf: 'flex-start',
-            marginBottom: 'auto',
-            alignSelf: 'flex-end',
-            marginLeft: 'auto',
-          })}
-        >
-          <StatefulPopover
-            content={({close}) => (
-              <StatefulMenu
-                onItemSelect={({item}) => {
-                  close();
-                  handleMenuClick(item.id);
-                }}
-                items={[
-                  {
-                    label: <MenuOptionIcon icon={BiCopy} label="Copy tracking key" />,
-                    id: 'copy',
-                    key: 'copy',
-                  },
-                  {divider: true},
-                  {
-                    label: <MenuOptionIcon icon={BiTrash} label="Delete" iconColor="red" />,
-                    id: 'delete',
-                    key: 'delete',
-                  },
-                ]}
-              />
-            )}
-            returnFocus
-            autoFocus
-          >
-            <Button
-              title="Member actions"
-              kind={KIND.secondary}
-              shape={SHAPE.circle}
-              size={SIZE.mini}
-              overrides={{
-                BaseButton: {
-                  style: {
-                    top: '10px',
-                    right: '10px',
-                  },
-                },
-              }}
-            >
-              <MenuIcon title="" />
-            </Button>
-          </StatefulPopover>
+        <div className="justify-start mb-auto self-end ml-auto">
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <button className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-80 hover:bg-gray-90 transition-colors duration-200">
+                <MenuIcon title="" />
+              </button>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content
+                className="bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
+                sideOffset={5}
+              >
+                {menuItems.map(({id, icon: Icon, label, iconColor}) => (
+                  <DropdownMenu.Item
+                    className="group py-2 px-3 text-14 gap-x-1.5 leading-none flex items-center relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200"
+                    key={id}
+                    onSelect={() => handleMenuClick(id)}
+                  >
+                    <Icon className={iconColor} /> {label}
+                  </DropdownMenu.Item>
+                ))}
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
         </div>
       </div>
 
       <hr className={hrStyle} />
 
-      <div className={statsWrapperStyle}>
+      <div className="flex justify-between">
         <div className={statsColumnStyle}>
           <StatusTag status={status} />
         </div>
@@ -257,7 +158,7 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         <div className={statsColumnStyle}>
           <StatefulTooltip content="Last reported summary" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
-              <BiTime color={theme.colors.contentInverseTertiary} title="" />{' '}
+              <BiTime className="text-gray-130" title="" />{' '}
               {summaryData?.activityTime
                 ? formatTimeDuration(summaryData.activityTime)
                 : emptySummaryText}
@@ -265,10 +166,10 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
           </StatefulTooltip>
         </div>
 
-        <div className={statsColumnStyle} style={{borderRight: 'none'}}>
+        <div className={clsx(statsColumnStyle, 'border-r-0')}>
           <StatefulTooltip content="Last reported activity" showArrow placement={PLACEMENT.bottom}>
             <div className={statsContentStyle}>
-              <BiCheckShield color={theme.colors.contentInverseTertiary} title="" />{' '}
+              <BiCheckShield className="text-gray-130" title="" />{' '}
               {summaryData?.updatedAt
                 ? formatDistanceToNow(new Date(summaryData?.updatedAt)) + ' ago'
                 : emptySummaryText}
@@ -279,16 +180,17 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
 
       <hr className={hrStyle} />
 
-      <div className={actionsStyle}>
+      <div className="flex justify-end mt-2">
         <Button
-          size={SIZE.mini}
-          kind={KIND.secondary}
-          endEnhancer={<BiRightArrowAlt title="" />}
+          type="button"
+          kind="gray"
+          size="xs"
           onClick={async () => {
             await push(`/statistics/${memberId}`);
           }}
         >
           Statistics
+          <BiRightArrowAlt title="" />
         </Button>
       </div>
     </div>
