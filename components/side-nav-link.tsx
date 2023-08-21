@@ -1,11 +1,12 @@
 'use client';
+
 import clsx from 'clsx';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
 export function SideNavLink({title, itemId}: {title: React.ReactNode; itemId: string}) {
   const pathname = usePathname();
-  const isActive = pathname === itemId;
+  const isActive = pathname?.startsWith(itemId);
 
   return (
     <Link
