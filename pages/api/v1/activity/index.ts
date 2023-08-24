@@ -2,6 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import extractDomain from 'extract-domain';
 import {TAB_TYPE} from '.prisma/client';
 import {STATUS} from '@prisma/client';
+import * as Sentry from '@sentry/nextjs';
 import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
@@ -150,17 +151,23 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const endTime = new Date(session.endTime).getTime();
 
       if (startTime <= lastSessionEndTime) {
-        console.error(`Duplicate session detected: ${JSON.stringify(session)}`);
+        const msg = `Duplicate session detected: ${JSON.stringify(session)}`;
+        Sentry.captureMessage(msg);
+        console.error(msg);
         return;
       }
 
       if (startTime > currentTime || endTime > currentTime) {
-        console.error(`Future session detected: ${JSON.stringify(session)}`);
+        const msg = `Future session detected: ${JSON.stringify(session)}`;
+        Sentry.captureMessage(msg);
+        console.error(msg);
         return;
       }
 
       if (currentTime - endTime > twentyFourHoursInMilliseconds) {
-        console.error(`Old session detected: ${JSON.stringify(session)}`); // Corrected the message here
+        const msg = `Old session detected: ${JSON.stringify(session)}`;
+        Sentry.captureMessage(msg);
+        console.error(msg);
         return;
       }
 
@@ -277,8 +284,9 @@ async function create({req, res}: PublicMethodContext) {
       },
     });
   } catch (e) {
-    console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
+    Sentry.captureException(e);
+    console.error(e);
   }
 }
 

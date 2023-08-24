@@ -1,5 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import type {Member, STATUS} from '@prisma/client';
+import * as Sentry from '@sentry/nextjs';
 import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
@@ -43,8 +44,8 @@ async function update({req, res}: PublicMethodContext) {
 
     return res.status(200).end();
   } catch (e) {
-    console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
+    Sentry.captureException(e);
   }
 }
 
@@ -71,14 +72,17 @@ async function get({req, res}: PublicMethodContext) {
     });
 
     if (!settingsRecord?.settings) {
-      console.error(`MemberSettings not found, memberId: ${member.id}`);
+      const msg = `MemberSettings not found, memberId: ${member.id}`;
+      console.error(msg);
+      Sentry.captureMessage(msg);
     }
 
     const settings = settingsRecord?.settings ?? {};
     return res.status(200).json({token, settings});
   } catch (e) {
-    console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
+    console.error(e);
+    Sentry.captureException(e);
   }
 }
 

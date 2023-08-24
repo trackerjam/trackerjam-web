@@ -1,5 +1,6 @@
 import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
+import * as Sentry from '@sentry/nextjs';
 import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
@@ -34,8 +35,9 @@ async function get({req, res}: AuthMethodContext) {
 
     res.json(response);
   } catch (e) {
-    console.error(e);
     res.status(500).json(buildError(getErrorMessage(e)));
+    Sentry.captureException(e);
+    console.error(e);
   }
 }
 
