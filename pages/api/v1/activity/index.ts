@@ -1,5 +1,4 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import extractDomain from 'extract-domain';
 import {TAB_TYPE} from '.prisma/client';
 import {STATUS} from '@prisma/client';
 import * as Sentry from '@sentry/nextjs';
@@ -105,8 +104,8 @@ async function upsertDomainActivity({
  */
 
 async function handleRecordActivity(activity: CreateActivityInputInternal, token: string) {
-  // Extract the domain from the activity's URL.
-  const domain = extractDomain(activity.domain);
+  // We expect the translate-payload.ts to handle domain extraction
+  const domain = activity.domain;
 
   // Fetch or create a domain record based on the domain from the activity.
   const domainRecord = await upsertDomain(domain);

@@ -3,6 +3,7 @@ import {useStyletron} from 'baseui';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {getStringColor} from '../../utils/get-string-color';
 import {AggregatedDataType} from './types';
+import {Favicon} from './favicon';
 
 interface DomainTableProps {
   data: AggregatedDataType[];
@@ -135,11 +136,7 @@ export function DomainsTable({
                       className={domainColorTagStyle}
                       style={{backgroundColor: getStringColor(label)}}
                     />
-                    <img
-                      className={faviconStyle}
-                      src={`https://www.google.com/s2/favicons?domain=${label}&sz=64`}
-                      alt={`${label} favicon`}
-                    />
+                    <Favicon domain={label} />
                     <span>{label}</span>
                   </div>
                 </td>
