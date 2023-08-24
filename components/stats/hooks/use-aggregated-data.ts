@@ -3,10 +3,15 @@ import {CurrentDayActivityData} from '../../../types/api';
 import {AggregatedDataType} from '../types';
 import {IDLE_TIME_STR} from '../../../const/string';
 
-export function useAggregatedData(
-  currentDayData: CurrentDayActivityData | null | undefined,
-  showIdle = false
-): AggregatedDataType[] {
+interface UseAggregatedData {
+  currentDayData: CurrentDayActivityData | null | undefined;
+  showIdle: boolean;
+}
+
+export function useAggregatedData({
+  currentDayData,
+  showIdle = false,
+}: UseAggregatedData): AggregatedDataType[] {
   return useMemo(() => {
     if (currentDayData) {
       const byDomains = currentDayData.activities.reduce(

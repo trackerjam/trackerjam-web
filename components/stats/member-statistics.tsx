@@ -26,7 +26,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const hasData = Boolean(!isLoading && data);
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
-  const [showIdle, setShowIdle] = useState(false);
+  const [showIdle, setShowIdle] = useState<boolean>(false);
   const [hoveredId, setHoveredId] = useState<null | string>(null);
 
   const availableDates = useMemo(() => {
@@ -51,7 +51,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     return null;
   }, [currentDate, data?.activitiesByDate]);
 
-  const aggregatedData = useAggregatedData(currentDayData, showIdle);
+  const aggregatedData = useAggregatedData({currentDayData, showIdle});
 
   const handleChangeDate = (idx: number) => {
     setCurrentDate(availableDates?.[idx] || null);

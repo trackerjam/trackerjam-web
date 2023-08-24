@@ -21,6 +21,7 @@ export function Favicon({domain}: FaviconProps) {
   const iconStyle = css({
     width: theme.sizing.scale600,
     height: theme.sizing.scale600,
+    marginLeft: theme.sizing.scale0,
   });
 
   const faviconStyle = css({
