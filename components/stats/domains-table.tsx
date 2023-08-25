@@ -4,6 +4,7 @@ import {formatTimeDuration} from '../../utils/format-time-duration';
 import {getStringColor} from '../../utils/get-string-color';
 import {AggregatedDataType} from './types';
 import {Favicon} from './favicon';
+import {getWebsiteCategory} from './utils/get-website-category';
 
 interface DomainTableProps {
   data: AggregatedDataType[];
@@ -13,7 +14,7 @@ interface DomainTableProps {
   hoveredId?: null | string;
 }
 
-const TABLE_HEADER = ['Domain', 'Activity Time', 'Sessions Count', 'Last Session'];
+const TABLE_HEADER = ['Domain', 'Category', 'Activity Time', 'Sessions Count', 'Last Session'];
 
 function getTimeShare({
   totalActivityTime,
@@ -84,13 +85,6 @@ export function DomainsTable({
     marginRight: theme.sizing.scale600,
   });
 
-  const faviconStyle = css({
-    width: theme.sizing.scale700,
-    height: theme.sizing.scale700,
-    borderRadius: '50%',
-    ...theme.borders.border200,
-  });
-
   const domainShareBarStyle = css({
     position: 'absolute',
     top: 0,
@@ -140,6 +134,7 @@ export function DomainsTable({
                     <span>{label}</span>
                   </div>
                 </td>
+                <td className={tableCellStyle}>{getWebsiteCategory(label)}</td>
                 <td className={tableCellStyle}>
                   <div className={domainShareBarStyle} style={{width: shareWidth}} />
                   {formatTimeDuration(value)} ({sharePercentage})
