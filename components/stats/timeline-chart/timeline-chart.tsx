@@ -12,13 +12,18 @@ const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.Responsive
 
 interface TimelineChartProps {
   data: MemberStatisticActivityType[] | null | undefined;
+  focusedDomainId?: string | null;
 }
 
-export function TimelineChart({data}: TimelineChartProps) {
+export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
   const {chartData = [], domains = []} = useMemo(() => {
     if (data?.length) {
-      const chartData = getHourlyData(data);
-      const domains = extractDomainNames(data);
+      let filteredData = data;
+      if (focusedDomainId) {
+        filteredData = data.filter((d) => d.domainName === focusedDomainId);
+      }
+      const chartData = getHourlyData(filteredData);
+      const domains = extractDomainNames(filteredData);
       const sortedDomains = sortDomains(domains, chartData);
       return {
         chartData,
@@ -26,7 +31,7 @@ export function TimelineChart({data}: TimelineChartProps) {
       };
     }
     return {};
-  }, [data]);
+  }, [data, focusedDomainId]);
 
   return (
     <ResponsiveBar

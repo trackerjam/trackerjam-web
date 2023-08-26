@@ -144,7 +144,10 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </div>
 
               <div className={timelineChartStyle}>
-                <TimelineChart data={currentDayData?.activities} />
+                <TimelineChart
+                  data={currentDayData?.activities}
+                  focusedDomainId={focusedDomainId}
+                />
               </div>
 
               <div>

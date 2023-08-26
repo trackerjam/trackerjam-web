@@ -8,14 +8,14 @@ import {authOptions} from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
   title: 'Trackerjam',
-  description: 'Browser session tracking application for efficient web activity monitoring.w',
+  description: 'Browser session tracking application for efficient web activity monitoring',
 };
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
   const hasSession = Boolean(session);
 
-  if (session) {
+  if (session?.user) {
     redirect('/dashboard');
   }
 
