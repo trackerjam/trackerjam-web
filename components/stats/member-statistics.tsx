@@ -28,6 +28,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState<boolean>(false);
   const [hoveredId, setHoveredId] = useState<null | string>(null);
+  const [focusedDomainId, setFocusedDomainId] = useState<null | string>(null);
 
   const availableDates = useMemo(() => {
     if (data?.activitiesByDate) {
@@ -51,7 +52,11 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     return null;
   }, [currentDate, data?.activitiesByDate]);
 
-  const aggregatedData = useAggregatedData({currentDayData, showIdle});
+  const aggregatedData = useAggregatedData({
+    currentDayData,
+    showIdle,
+    focusOnDomain: focusedDomainId,
+  });
 
   const handleChangeDate = (idx: number) => {
     setCurrentDate(availableDates?.[idx] || null);
@@ -130,9 +135,10 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   <DomainsTable
                     data={aggregatedData}
                     height={PIE_CHART_AND_TABLE_HEIGHT}
-                    totalActivityTime={currentDayData?.totalActivityTime}
                     hoveredId={hoveredId}
                     onHover={setHoveredId}
+                    focusedDomainId={focusedDomainId}
+                    onDomainFocus={setFocusedDomainId}
                   />
                 </div>
               </div>

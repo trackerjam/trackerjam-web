@@ -28,7 +28,6 @@ export function Favicon({domain}: FaviconProps) {
     width: theme.sizing.scale700,
     height: theme.sizing.scale700,
     borderRadius: '50%',
-    ...theme.borders.border200,
   });
 
   if (ExceptionIcon) {
