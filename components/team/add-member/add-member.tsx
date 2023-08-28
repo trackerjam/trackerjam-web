@@ -14,6 +14,7 @@ import {ControlledCheckbox} from '../../common/controlled-checkbox';
 import {extractDomains} from '../../../utils/extract-domains';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {Button} from '../../common/button';
+import {DEFAULT_SETTINGS_IDLE_TIME_SEC} from '../../../const/team';
 import {RadioTrackMode} from './form/radio-track-mode';
 
 type CreateMemberProps = {
@@ -26,7 +27,7 @@ const defaultValues: CreateMemberDataType = {
   title: '',
   settings: {
     trackMode: 'ALL',
-    idleTime: 10,
+    idleTime: DEFAULT_SETTINGS_IDLE_TIME_SEC,
     includeDomains: [],
     excludeDomains: [],
     showTrackMode: true,
