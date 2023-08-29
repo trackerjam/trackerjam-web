@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import {useMemo} from 'react';
 import {formatTimeDuration} from '../../utils/format-time-duration';
-import {getStringColor} from '../../utils/get-string-color';
 import {OTHER_BUCKET_STR} from '../../const/string';
 import {AggregatedDataType} from './types';
 import {createOtherBucket} from './utils/create-other-bucket';
@@ -35,7 +34,7 @@ export function PieChart({data, hoveredId, onHover}: PieDataProps) {
       data={dataWithOther}
       valueFormat={(value) => formatTimeDuration(value)}
       margin={{top: 40, right: 80, bottom: 80, left: 80}}
-      colors={(datum) => getStringColor(datum.id as string)}
+      colors={{scheme: 'set2'}}
       innerRadius={0.5}
       padAngle={0.7}
       cornerRadius={3}
