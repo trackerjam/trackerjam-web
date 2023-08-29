@@ -1,15 +1,54 @@
 import {MemberStatisticActivityType} from '../../../types/api';
+import {OTHER_BUCKET_STR} from '../../../const/string';
+
+export const TOTAL_KEY = 'total';
 
 export type HourlyData = {
   id: string;
-  total: number;
+  [TOTAL_KEY]: number;
   [domainName: string]: number | string; // 'id' will be string, others will be numbers
 };
 
+// This helper function will keep only the top N domains and sum the rest into the "Other" bucket
+function bucketizeDomains(hourData: HourlyData, N = 5): HourlyData {
+  // Deep copy the input hourData
+  const clonedHourData: HourlyData = JSON.parse(JSON.stringify(hourData));
+
+  const domains: {[key: string]: number} = {};
+
+  for (const key in clonedHourData) {
+    if (key !== 'id' && key !== TOTAL_KEY) {
+      domains[key] = clonedHourData[key] as number;
+    }
+  }
+
+  const sortedDomains = Object.entries(domains)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key]) => key);
+
+  const topNDomains = new Set(sortedDomains.slice(0, N)); // Convert top domains to a set for easier look-up
+  let otherValue = 0;
+
+  // Go through all domain keys in clonedHourData
+  for (const domain in domains) {
+    if (!topNDomains.has(domain)) {
+      otherValue += clonedHourData[domain] as number;
+      delete clonedHourData[domain];
+    }
+  }
+
+  // If there's any value accumulated in "Other", assign it
+  if (otherValue > 0) {
+    clonedHourData[OTHER_BUCKET_STR] = otherValue;
+  }
+
+  return clonedHourData;
+}
+
 export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[] {
   const hourlyData = Array.from({length: 24}, (_, i) => ({
-    id: String(i).padStart(2, '0'),
-    total: 0, // Initialize the 'total' property to 0 for each hour
+    id: String(i).padStart(2, '0') + 'h',
+    [TOTAL_KEY]: 0, // Initialize the 'total' property to 0 for each hour
   })) as HourlyData[];
 
   data.forEach((session) => {
@@ -92,7 +131,7 @@ export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[]
         (hourlyData[currentHour][session.domainName] as number) += secondsToAdd;
 
         // Update the 'total' property in seconds
-        hourlyData[currentHour].total += secondsToAdd;
+        hourlyData[currentHour][TOTAL_KEY] += secondsToAdd;
 
         durationSeconds -= currentHourSeconds;
       }
@@ -102,7 +141,7 @@ export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[]
   // Convert all values (except 'id' and 'total') from seconds to minutes
   hourlyData.forEach((hourData) => {
     for (const key in hourData) {
-      if (key !== 'id' && key !== 'total') {
+      if (key !== 'id' && key !== TOTAL_KEY) {
         hourData[key] = (hourData[key] as number) / 60;
       }
     }
@@ -110,8 +149,8 @@ export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[]
 
   // Convert the 'total' property from seconds to minutes
   hourlyData.forEach((hourData) => {
-    hourData.total /= 60;
+    hourData[TOTAL_KEY] /= 60;
   });
 
-  return hourlyData;
+  return hourlyData.map((d) => bucketizeDomains(d));
 }

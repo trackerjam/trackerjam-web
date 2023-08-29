@@ -1,9 +1,13 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import dynamic from 'next/dynamic';
+import {useStyletron} from 'baseui';
+import {Checkbox} from 'baseui/checkbox';
 import {MemberStatisticActivityType} from '../../../types/api';
-import {getHourlyData} from './get-hourly-data';
-import {extractDomainNames} from './extract-domain-names';
-import {sortDomains} from './sort-domains';
+import {OTHER_BUCKET_STR} from '../../../const/string';
+import {PIE_CHART_AND_TABLE_HEIGHT} from '../member-statistics';
+import {getHourlyData, TOTAL_KEY} from './get-hourly-data';
+import {getDomainNamesFromData} from './get-domain-names-from-data';
+import {TimeLineTooltip} from './tooltip';
 
 const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.ResponsiveBar), {
   ssr: false,
@@ -15,6 +19,25 @@ interface TimelineChartProps {
 }
 
 export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
+  const [isDetailsEnabled, setIsDetailsEnabled] = useState<boolean>(false);
+  const [css, theme] = useStyletron();
+
+  const wrapperStyle = css({
+    flexGrow: 1,
+    borderRadius: theme.borders.radius300,
+    marginTop: theme.sizing.scale600,
+    ...theme.borders.border200,
+  });
+
+  const timelineChartStyle = css({
+    height: PIE_CHART_AND_TABLE_HEIGHT,
+  });
+
+  const chartSettingsStyle = css({
+    padding: theme.sizing.scale600,
+    display: 'flex',
+  });
+
   const {chartData = [], domains = []} = useMemo(() => {
     if (data?.length) {
       let filteredData = data;
@@ -22,80 +45,99 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
         filteredData = data.filter((d) => d.domainName === focusedDomainId);
       }
       const chartData = getHourlyData(filteredData);
-      const domains = extractDomainNames(filteredData);
-      const sortedDomains = sortDomains(domains, chartData);
+      const domains = getDomainNamesFromData(chartData);
+
       return {
         chartData,
-        domains: sortedDomains,
+        domains,
       };
     }
     return {};
   }, [data, focusedDomainId]);
 
+  const chartKeys = isDetailsEnabled ? domains : [TOTAL_KEY];
+
   return (
-    <ResponsiveBar
-      data={chartData}
-      keys={domains}
-      indexBy="id"
-      label={(d) => d?.value?.toFixed(2) || ''}
-      valueFormat="0.1f"
-      margin={{top: 50, right: 200, bottom: 50, left: 60}}
-      colors={{scheme: 'set2'}}
-      padding={0.3}
-      valueScale={{type: 'linear'}}
-      indexScale={{type: 'band', round: true}}
-      axisTop={null}
-      axisRight={null}
-      groupMode="stacked"
-      maxValue={60}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: 'UTC Hour',
-        legendPosition: 'middle',
-        legendOffset: 32,
-      }}
-      axisLeft={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: 'Minutes',
-        legendPosition: 'middle',
-        legendOffset: -40,
-      }}
-      labelSkipWidth={12}
-      labelSkipHeight={12}
-      labelTextColor={{
-        from: 'color',
-        modifiers: [['darker', 1.6]],
-      }}
-      legends={[
-        {
-          dataFrom: 'keys',
-          anchor: 'bottom-right',
-          direction: 'column',
-          justify: false,
-          translateX: 160,
-          translateY: 0,
-          itemsSpacing: 1,
-          itemWidth: 140,
-          itemHeight: 16,
-          itemDirection: 'left-to-right',
-          itemOpacity: 0.85,
-          symbolSize: 16,
-          effects: [
+    <div className={wrapperStyle}>
+      <div className={chartSettingsStyle}>
+        <Checkbox
+          checked={isDetailsEnabled}
+          onChange={(e) => setIsDetailsEnabled(e.target.checked)}
+        >
+          Domain details
+        </Checkbox>
+      </div>
+
+      <div className={timelineChartStyle}>
+        <ResponsiveBar
+          data={chartData}
+          keys={chartKeys}
+          indexBy="id"
+          label={(d) => d?.value?.toFixed(1) || ''}
+          valueFormat="0.1f"
+          margin={{top: 20, right: 50, bottom: 50, left: 70}}
+          colors={{scheme: 'set2'}}
+          padding={0.3}
+          valueScale={{type: 'linear'}}
+          indexScale={{type: 'band', round: true}}
+          axisTop={null}
+          axisRight={null}
+          groupMode="stacked"
+          maxValue={60}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'UTC Hour',
+            legendPosition: 'middle',
+            legendOffset: 32,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'Activity in minutes',
+            legendPosition: 'middle',
+            legendOffset: -40,
+          }}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor={{
+            from: 'color',
+            modifiers: [['darker', 1.6]],
+          }}
+          role="application"
+          defs={[
             {
-              on: 'hover',
-              style: {
-                itemOpacity: 1,
-              },
+              id: 'dots',
+              type: 'patternDots',
+              background: 'inherit',
+              color: '#38bcb2',
+              size: 4,
+              padding: 1,
+              stagger: true,
             },
-          ],
-        },
-      ]}
-      role="application"
-      ariaLabel="Sessions distribution per domains in minutes"
-    />
+          ]}
+          fill={[
+            {
+              match: {
+                id: OTHER_BUCKET_STR,
+              },
+              id: 'dots',
+            },
+          ]}
+          tooltip={({data, id, formattedValue}) => {
+            if (isDetailsEnabled) {
+              return (
+                <span className="border-2 shadow bg-white p-2">
+                  {id} - {formattedValue} min
+                </span>
+              );
+            }
+            return <TimeLineTooltip data={data} domains={domains} />;
+          }}
+        />
+      </div>
+    </div>
   );
 }

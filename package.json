@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint --fix",
     "tsc": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "all": "npm run tsc && npm run lint && npm run test"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

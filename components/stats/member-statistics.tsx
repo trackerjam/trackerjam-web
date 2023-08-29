@@ -16,7 +16,7 @@ import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
 import {DomainsTable} from './domains-table';
 
-const PIE_CHART_AND_TABLE_HEIGHT = '400px';
+export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
 export function MemberStatistics({memberId}: {memberId: string}) {
   const [css, theme] = useStyletron();
@@ -80,14 +80,6 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     flexGrow: 1,
   });
 
-  const timelineChartStyle = css({
-    flexGrow: 1,
-    height: PIE_CHART_AND_TABLE_HEIGHT,
-    borderRadius: theme.borders.radius300,
-    marginTop: theme.sizing.scale600,
-    ...theme.borders.border200,
-  });
-
   const chartSettingsStyle = css({
     marginTop: theme.sizing.scale800,
   });
@@ -143,12 +135,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 </div>
               </div>
 
-              <div className={timelineChartStyle}>
-                <TimelineChart
-                  data={currentDayData?.activities}
-                  focusedDomainId={focusedDomainId}
-                />
-              </div>
+              <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
 
               <div>
                 <DebugTable data={currentDayData?.activities} />
