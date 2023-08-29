@@ -150,22 +150,25 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const endTime = new Date(session.endTime).getTime();
 
       if (startTime <= lastSessionEndTime) {
-        const msg = `Duplicate session detected: ${JSON.stringify(session)}`;
-        Sentry.captureMessage(msg);
-        console.error(msg);
+        const msg = 'Duplicate session detected';
+        const data = JSON.stringify(session);
+        sentryCatchMessage({data, msg, token});
+        console.error(msg, data);
         return;
       }
 
       if (startTime > currentTime || endTime > currentTime) {
-        const msg = `Future session detected: ${JSON.stringify(session)}`;
-        Sentry.captureMessage(msg);
+        const msg = 'Future session detected';
+        const data = JSON.stringify(session);
+        sentryCatchMessage({data, msg, token});
         console.error(msg);
         return;
       }
 
       if (currentTime - endTime > twentyFourHoursInMilliseconds) {
-        const msg = `Old session detected: ${JSON.stringify(session)}`;
-        Sentry.captureMessage(msg);
+        const msg = 'Old session detected';
+        const data = JSON.stringify(session);
+        sentryCatchMessage({data, msg, token});
         console.error(msg);
         return;
       }
@@ -287,6 +290,17 @@ async function create({req, res}: PublicMethodContext) {
     Sentry.captureException(e);
     console.error(e);
   }
+}
+
+function sentryCatchMessage({data, msg, token}: {data: string; msg: string; token: string}) {
+  Sentry.captureMessage(msg, {
+    user: {
+      id: token,
+    },
+    extra: {
+      session: data,
+    },
+  });
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
