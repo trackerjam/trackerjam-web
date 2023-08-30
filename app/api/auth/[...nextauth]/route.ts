@@ -31,6 +31,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  theme: {
+    colorScheme: 'light',
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: 'Browser session tracking application for efficient web activity monitoring',
 };
 
+// To make sure this page remains dynamic.
+export const dynamic = 'force-dynamic';
+
 const Home = async () => {
   const session = await getServerSession(authOptions);
   const hasSession = Boolean(session);

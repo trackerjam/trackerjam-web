@@ -5,6 +5,9 @@ import {Sidebar} from '../../components/sidebar';
 import {authOptions} from '../api/auth/[...nextauth]/route';
 import Provider from './provider';
 
+// To make sure this page remains dynamic.
+export const dynamic = 'force-dynamic';
+
 async function Layout({children}: {children: React.ReactNode}) {
   const session = await getServerSession(authOptions);
 
