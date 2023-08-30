@@ -15,6 +15,7 @@ import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
 import {DomainsTable} from './domains-table';
+import {HeatMap} from './heatmap/heatmap';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
@@ -51,6 +52,8 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     }
     return null;
   }, [currentDate, data?.activitiesByDate]);
+
+  !!currentDayData && console.log({currentDayData});
 
   const aggregatedData = useAggregatedData({
     currentDayData,
@@ -136,6 +139,10 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </div>
 
               <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
+
+              <div className="w-[700px] h-[500px] border-2">
+                <HeatMap data={currentDayData?.activities} />
+              </div>
 
               <div>
                 <DebugTable data={currentDayData?.activities} />
