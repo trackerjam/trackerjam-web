@@ -142,6 +142,8 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // Log any filtered sessions.
   const newSessions: CreateSessionActivityInput[] = [];
 
+  // TODO Debug with postman data
+
   if (activity.sessions) {
     const currentTime = Date.now();
 
