@@ -8,13 +8,16 @@ import {format} from 'date-fns';
 import {Checkbox} from 'baseui/checkbox';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
-import {CurrentDayActivityData, MemberStatisticType} from '../../types/api';
+import {DateActivityData, MemberStatisticType} from '../../types/api';
 import DebugTable from './debug-table';
 
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
 import {DomainsTable} from './domains-table';
+import {StatCards} from './stat-cards/stat-cards';
+import {UserStatus} from './user-status/user-status';
+import {getMostRecentData} from './utils/get-most-recent-data';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
@@ -38,6 +41,13 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     }
   }, [data?.activitiesByDate]);
 
+  const mostRecentDateData = useMemo(() => {
+    if (!data?.activitiesByDate) {
+      return null;
+    }
+    return getMostRecentData(data.activitiesByDate);
+  }, [data]);
+
   useEffect(() => {
     if (availableDates?.length && currentDate === null) {
       setCurrentDate(availableDates[availableDates.length - 1]);
@@ -45,7 +55,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   }, [availableDates, currentDate]);
   const selectedDateIdx = availableDates?.indexOf(currentDate || '');
 
-  const currentDayData: CurrentDayActivityData | null | undefined = useMemo(() => {
+  const currentDayData: DateActivityData | null | undefined = useMemo(() => {
     if (currentDate) {
       return data?.activitiesByDate[currentDate];
     }
@@ -86,16 +96,20 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
   return (
     <>
-      <h1 className="font-bold text-28 mb-4 leading-tight">
-        Statistic {data?.member ? `for ${data?.member?.name}` : ''}
-      </h1>
+      <div className="flex flex-col">
+        <h1 className="font-bold text-28 mb-4 leading-tight">
+          <span className="text-gray-400">Statistics for</span>{' '}
+          <span className="text-black">{data?.member ? `${data?.member?.name}` : '...'}</span>
+        </h1>
+        {hasData && <UserStatus data={mostRecentDateData} />}
+      </div>
 
       {isLoading && <span>Loading...</span>}
       {error && <ErrorDetails error={error} />}
 
       {hasData && (
         <>
-          <div>
+          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-4">
             {Boolean(availableDates?.length) && (
               <ButtonGroup
                 size={SIZE.compact}
@@ -111,6 +125,8 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </ButtonGroup>
             )}
           </div>
+
+          <StatCards data={currentDayData} />
 
           {Boolean(currentDayData) && (
             <>

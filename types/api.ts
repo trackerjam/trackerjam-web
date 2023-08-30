@@ -84,10 +84,10 @@ export type MemberStatisticType = {
 };
 
 export type ActivitiesByDate = {
-  [date: string]: CurrentDayActivityData;
+  [date: string]: DateActivityData;
 };
 
-export type CurrentDayActivityData = {
+export type DateActivityData = {
   activities: MemberStatisticActivityType[];
   totalActivityTime: number;
   idleTime: number;

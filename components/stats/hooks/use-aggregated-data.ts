@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
 import {SessionActivity} from '@prisma/client';
-import {CurrentDayActivityData} from '../../../types/api';
+import {DateActivityData} from '../../../types/api';
 import {AggregatedDataType} from '../types';
 import {IDLE_TIME_STR} from '../../../const/string';
 
 interface UseAggregatedData {
-  currentDayData: CurrentDayActivityData | null | undefined;
+  currentDayData: DateActivityData | null | undefined;
   showIdle: boolean;
   focusOnDomain?: string | null | undefined;
 }
@@ -45,7 +45,7 @@ export function useAggregatedData({
   }, [currentDayData, focusOnDomain, showIdle]);
 }
 
-export function aggregateByDomain(data: CurrentDayActivityData) {
+export function aggregateByDomain(data: DateActivityData) {
   return data.activities.reduce(
     (mem, {timeSpent, domainName, sessionActivities}) => {
       const aggregatedSessions = aggregateSessionsByTitle({sessionActivities, domainName});

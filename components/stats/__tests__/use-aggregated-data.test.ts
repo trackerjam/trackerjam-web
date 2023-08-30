@@ -1,7 +1,7 @@
 import {SessionActivity} from '@prisma/client';
 import {aggregateByDomain, aggregateSessionsByTitle} from '../hooks/use-aggregated-data';
 import {AggregatedDataType} from '../types';
-import {CurrentDayActivityData} from '../../../types/api';
+import {DateActivityData} from '../../../types/api';
 
 describe('aggregateSessionsByTitle', () => {
   it('should aggregate session activities by title and sort by total length', () => {
@@ -188,7 +188,7 @@ describe('aggregateSessionsByTitle', () => {
 
 describe('aggregateByDomain', () => {
   it('should aggregate data for a single domain', () => {
-    const data: CurrentDayActivityData = {
+    const data: DateActivityData = {
       activities: [
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
@@ -231,7 +231,7 @@ describe('aggregateByDomain', () => {
   });
 
   it('should aggregate data across multiple domains with multiple session activities', () => {
-    const data: CurrentDayActivityData = {
+    const data: DateActivityData = {
       activities: [
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
@@ -320,7 +320,7 @@ describe('aggregateByDomain', () => {
   });
 
   it('should handle no activities', () => {
-    const data: CurrentDayActivityData = {
+    const data: DateActivityData = {
       activities: [],
       totalActivityTime: 0,
       idleTime: 0,
