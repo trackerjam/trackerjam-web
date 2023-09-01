@@ -5,15 +5,13 @@ interface SingleCards {
 export function SingleCards({title, value}: SingleCards) {
   let finalValue = value;
   if (
-    isNaN(finalValue as number) ||
+    (typeof finalValue === 'number' && isNaN(finalValue as number)) ||
     finalValue === null ||
     finalValue === undefined ||
     finalValue === ''
   ) {
     finalValue = '...';
   }
-
-  console.log({finalValue});
 
   return (
     <div className="flex flex-col items-center justify-center border-2 shadow p-4 rounded-xl gap-2 min-w-[160px]">
