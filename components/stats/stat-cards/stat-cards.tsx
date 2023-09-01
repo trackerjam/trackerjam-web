@@ -33,10 +33,10 @@ export function StatCards({data}: StatCardProps) {
   return (
     <div className="flex gap-8 mt-4">
       <SingleCards value={activityTimeFormatted} title="Activity Time" />
-      <SingleCards value={sessionCount} title="Session Count" />
-      <SingleCards value={totalDomainsCount} title="Domains Count" />
-      <SingleCards value={httpsPercentageFormatted} title="HTTPS Percentage" />
       <SingleCards value={mostVisitedDomain} title="Most Time Spent On" />
+      <SingleCards value={totalDomainsCount} title="Domains Count" />
+      <SingleCards value={sessionCount} title="Session Count" />
+      <SingleCards value={httpsPercentageFormatted} title="HTTPS Percentage" />
     </div>
   );
 }
