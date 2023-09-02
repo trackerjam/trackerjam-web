@@ -43,7 +43,7 @@ async function create({req, res, session}: AuthMethodContext) {
     res.json(newMember); // early return
 
     // Send token to the new member
-    if (typeof newMember.email === 'string') {
+    if (typeof newMember.email === 'string' && newMember.email) {
       await sendTokenMail(newMember.email as string, newMember.token);
     }
   } catch (e) {

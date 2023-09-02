@@ -87,7 +87,7 @@ function getHtml(token: string) {
 
 export async function sendTokenMail(to: string, token: string) {
   if (!to || !token) {
-    throw new Error('No "to" or "token" for email');
+    throw new Error('Missing "to" or "token" fields for email');
   }
 
   const transporter = await nodemailer.createTransport({

@@ -15,6 +15,7 @@ import {extractDomains} from '../../../utils/extract-domains';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {Button} from '../../common/button';
 import {DEFAULT_SETTINGS_IDLE_TIME_SEC} from '../../../const/team';
+import {ErrorResponse} from '../../../types/api';
 import {RadioTrackMode} from './form/radio-track-mode';
 
 type CreateMemberProps = {
@@ -65,7 +66,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
       }
 
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
-      if (!res && 'error' in res) {
+      if (!(res as ErrorResponse)?.error) {
         console.error('Unknown error', res);
       } else {
         reset();
