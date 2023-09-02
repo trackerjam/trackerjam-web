@@ -6,6 +6,7 @@ import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
 import {Button} from 'baseui/button';
 import {format} from 'date-fns';
 import {Checkbox} from 'baseui/checkbox';
+import {Drawer} from 'baseui/drawer';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
@@ -18,6 +19,7 @@ import {DomainsTable} from './domains-table';
 import {StatCards} from './stat-cards/stat-cards';
 import {UserStatus} from './user-status/user-status';
 import {getMostRecentData} from './utils/get-most-recent-data';
+import {EventsList} from './events-list';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
@@ -32,6 +34,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const [showIdle, setShowIdle] = useState<boolean>(false);
   const [hoveredId, setHoveredId] = useState<null | string>(null);
   const [focusedDomainId, setFocusedDomainId] = useState<null | string>(null);
+  const [isEventsOpen, setIsEventsOpen] = useState<boolean>(false);
 
   const availableDates = useMemo(() => {
     if (data?.activitiesByDate) {
@@ -96,11 +99,24 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
   return (
     <>
-      <div className="flex flex-col">
-        <h1 className="font-bold text-28 mb-4 leading-tight">
-          <span className="text-gray-400">Statistics for</span>{' '}
-          <span className="text-black">{data?.member ? `${data?.member?.name}` : '...'}</span>
-        </h1>
+      <div className="flex flex-col mb-4">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="font-bold text-28 leading-tight flex flex-row gap-1 items-center">
+            <span className="text-gray-400">Statistics for</span>
+            <span className="text-black">{data?.member ? `${data?.member?.name}` : '...'}</span>
+          </h1>
+
+          {hasData && (
+            <div>
+              <button
+                className="text-gray-300 border-dashed border-b-2 border-gray-300"
+                onClick={() => setIsEventsOpen(true)}
+              >
+                Events ({data?.member?.memberEvent?.length ?? 0})
+              </button>
+            </div>
+          )}
+        </div>
         {hasData && <UserStatus data={mostRecentDateData} />}
       </div>
 
@@ -152,6 +168,21 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </div>
 
               <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
+
+              <Drawer
+                isOpen={isEventsOpen}
+                autoFocus
+                onClose={() => setIsEventsOpen(false)}
+                overrides={{
+                  Root: {
+                    style: {
+                      zIndex: 11,
+                    },
+                  },
+                }}
+              >
+                <EventsList events={data?.member?.memberEvent ?? []} />
+              </Drawer>
 
               <div>
                 <DebugTable data={currentDayData?.activities} />

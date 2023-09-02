@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 import {DateActivityData} from '../../../types/api';
 import {formatTimeDuration} from '../../../utils/format-time-duration';
-import {SingleCards} from './single-cards';
+import {SingleCard} from './single-card';
 import {countUniqueDomains} from './count-unique-domains';
 import {calcHttpsPercentage} from './calc-https-percentage';
 import {getDomainWithLongestSession} from './get-domain-with-logest-sessions';
@@ -32,11 +32,11 @@ export function StatCards({data}: StatCardProps) {
 
   return (
     <div className="flex gap-8 mt-4">
-      <SingleCards value={activityTimeFormatted} title="Activity Time" />
-      <SingleCards value={mostVisitedDomain} title="Most Time Spent On" />
-      <SingleCards value={totalDomainsCount} title="Domains Count" />
-      <SingleCards value={sessionCount} title="Session Count" />
-      <SingleCards value={httpsPercentageFormatted} title="HTTPS Percentage" />
+      <SingleCard value={activityTimeFormatted} title="Activity Time" />
+      <SingleCard value={mostVisitedDomain} title="Most Time Spent On" />
+      <SingleCard value={totalDomainsCount} title="Domains Count" />
+      <SingleCard value={sessionCount} title="Session Count" />
+      <SingleCard value={httpsPercentageFormatted} title="HTTPS Percentage" />
     </div>
   );
 }

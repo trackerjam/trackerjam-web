@@ -2,7 +2,7 @@ interface SingleCards {
   value: string | number | null | undefined;
   title: string;
 }
-export function SingleCards({title, value}: SingleCards) {
+export function SingleCard({title, value}: SingleCards) {
   let finalValue = value;
   if (
     (typeof finalValue === 'number' && isNaN(finalValue as number)) ||

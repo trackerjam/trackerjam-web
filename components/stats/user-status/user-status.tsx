@@ -72,7 +72,7 @@ export function UserStatus({data}: UserStatusProps) {
       <div
         className={cx('w-4 h-4 rounded-full', dotColor, isOnline ? 'animate-pulsate-border' : null)}
       ></div>
-      <div className={cx('text-22 font-bold', textColor)}>{status ?? 'Unknown'}</div>
+      <div className={cx('text-20 font-bold', textColor)}>{status ?? 'Unknown'}</div>
       <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
     </div>
   );

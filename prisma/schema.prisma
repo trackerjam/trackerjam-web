@@ -81,6 +81,7 @@ model Member {
   summary        Summary[]
   status         STATUS           @default(NEW)
   settings       MemberSettings?
+  memberEvent    MemberEvent[]
 }
 
 enum STATUS {
@@ -96,6 +97,15 @@ model MemberSettings {
   memberId String @unique
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
   settings Json // trackMode {ALL, SPECIFIC_DOMAINS}, trackDomains String[]
+}
+
+model MemberEvent {
+  id          String   @id @default(uuid())
+  event       String
+  date        DateTime
+  ipAddress   String?
+  memberToken String
+  member      Member   @relation(fields: [memberToken], references: [token], onDelete: Cascade)
 }
 
 model DomainActivity {

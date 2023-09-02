@@ -27,6 +27,9 @@ async function get({req, res}: AuthMethodContext) {
       where: {
         id: memberId,
       },
+      include: {
+        memberEvent: true,
+      },
     });
 
     // Find domain and session activities for that user just by user ID
