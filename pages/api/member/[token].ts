@@ -43,8 +43,15 @@ async function create({req, res, session}: AuthMethodContext) {
     res.status(200).json(newMember); // early return
 
     // Send token to the new member
-    if (typeof newMember.email === 'string' && newMember.email) {
-      await sendTokenMail(newMember.email as string, newMember.token);
+    try {
+      if (typeof newMember.email === 'string' && newMember.email) {
+        await sendTokenMail(newMember.email as string, newMember.token);
+      }
+    } catch (e) {
+      // Do not throw error if email sending failed, just log it
+      // We also can't update the response anymore, because it was already sent
+      Sentry.captureException(e);
+      console.error(e);
     }
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
