@@ -66,7 +66,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
       }
 
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
-      if (!(res as ErrorResponse)?.error) {
+      if (!res || (res as ErrorResponse)?.error) {
         console.error('Unknown error', res);
       } else {
         reset();

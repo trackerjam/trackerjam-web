@@ -40,7 +40,7 @@ async function create({req, res, session}: AuthMethodContext) {
       },
     });
 
-    res.json(newMember); // early return
+    res.status(200).json(newMember); // early return
 
     // Send token to the new member
     if (typeof newMember.email === 'string' && newMember.email) {
