@@ -149,7 +149,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const startTime = new Date(session.startTime).getTime();
       const endTime = new Date(session.endTime).getTime();
 
-      if (startTime <= lastSessionEndTime) {
+      if (endTime <= lastSessionEndTime) {
         const msg = 'Duplicate session detected';
         const data = JSON.stringify(session);
         sentryCatchMessage({data, msg, token});
