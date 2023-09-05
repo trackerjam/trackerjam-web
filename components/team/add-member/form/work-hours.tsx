@@ -86,17 +86,20 @@ export function WorkHours({value, onDaysChange, onTimeChange}: WorkHoursProps) {
           })}
         </div>
 
-        <div className="flex gap-12">
-          <TimeInput
-            value={value.time.startTime}
-            label="Start Time"
-            onChange={(val: string) => onTimeChange('startTime', val)}
-          />
-          <TimeInput
-            value={value.time.endTime}
-            label="End Time"
-            onChange={(val: string) => onTimeChange('endTime', val)}
-          />
+        <div>
+          <div className="flex gap-12 mb-2">
+            <TimeInput
+              value={value.time.startTime}
+              label="Start Time"
+              onChange={(val: string) => onTimeChange('startTime', val)}
+            />
+            <TimeInput
+              value={value.time.endTime}
+              label="End Time"
+              onChange={(val: string) => onTimeChange('endTime', val)}
+            />
+          </div>
+          <div className="text-gray-300 text-12">This would be their local time</div>
         </div>
       </div>
     </div>

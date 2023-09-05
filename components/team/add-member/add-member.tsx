@@ -247,7 +247,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
       )}
 
       <div className="mt-4 flex justify-end">
-        <Button type="submit" kind="primary">
+        <Button type="submit" kind="primary" isLoading={isLoading}>
           {!isEditing && 'Add member'}
           {isEditing && 'Update member'}
         </Button>

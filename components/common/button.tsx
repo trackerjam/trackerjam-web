@@ -25,6 +25,7 @@ type ButtonType = {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
+  isLoading?: boolean;
 };
 
 export function Button({
@@ -35,6 +36,7 @@ export function Button({
   children,
   disabled,
   onClick,
+  isLoading,
   ...rest
 }: ButtonType) {
   const Tag = href ? Link : 'button';
@@ -42,17 +44,17 @@ export function Button({
   return (
     <Tag
       className={clsx(
-        'inline-flex items-center leading-none transition-colors duration-200 font-medium',
+        'inline-flex items-center leading-none transition-colors duration-200 font-medium disabled:opacity-25',
         kindClassNames[kind],
         sizeClassNames[size],
         additionalClassName
       )}
       href={href}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={onClick}
       {...rest}
     >
-      {children}
+      {isLoading ? 'Loading...' : children}
     </Tag>
   );
 }
