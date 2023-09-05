@@ -3,19 +3,25 @@
 import {FormControl} from 'baseui/form-control';
 import {useForm} from 'react-hook-form';
 import React, {useCallback, useState} from 'react';
-import {Notification, KIND} from 'baseui/notification';
+import {KIND, Notification} from 'baseui/notification';
 
 import {useRouter} from 'next/navigation';
 import {Textarea} from 'baseui/textarea';
-import {BiHide, BiCaretRight, BiCaretDown} from 'react-icons/bi';
+import {BiCaretDown, BiCaretRight, BiHide} from 'react-icons/bi';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
 import {extractDomains} from '../../../utils/extract-domains';
-import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
+import type {
+  CreateMemberDataType,
+  EditMemberDataType,
+  WorkHoursDaysType,
+} from '../../../types/member';
 import {Button} from '../../common/button';
 import {DEFAULT_SETTINGS_IDLE_TIME_SEC} from '../../../const/team';
 import {ErrorResponse} from '../../../types/api';
+import {DAY} from '../../../const/member';
 import {RadioTrackMode} from './form/radio-track-mode';
+import {WorkHours} from './form/work-hours';
 
 type CreateMemberProps = {
   editingMember?: undefined | EditMemberDataType;
@@ -30,6 +36,19 @@ const defaultValues: CreateMemberDataType = {
     idleTime: DEFAULT_SETTINGS_IDLE_TIME_SEC,
     includeDomains: [],
     excludeDomains: [],
+    workHours: {
+      days: {
+        [DAY.MON]: true,
+        [DAY.TUE]: true,
+        [DAY.WED]: true,
+        [DAY.THU]: true,
+        [DAY.FRI]: true,
+      },
+      time: {
+        startTime: '09:00',
+        endTime: '17:00',
+      },
+    },
   },
 };
 
@@ -76,9 +95,26 @@ export function AddMember({editingMember}: CreateMemberProps) {
     setValue(`settings.${key}`, domains);
   };
 
+  const handleWorkHoursDaySet = (day: DAY, value: boolean) => {
+    const newVal: WorkHoursDaysType = {...settings.workHours.days};
+    if (value) {
+      newVal[day] = value;
+    } else {
+      delete newVal[day];
+    }
+    setValue('settings.workHours.days', newVal);
+  };
+
+  const handleWorkHoursTimeSet = (label: 'startTime' | 'endTime', value: string) => {
+    const newVal = {...settings.workHours.time};
+    newVal[label] = value;
+    setValue('settings.workHours.time', newVal);
+  };
+
   const formSectionStyle = 'border border-black border-opacity-[0.08] rounded-lg p-4';
 
   const trackMode = watch('settings.trackMode');
+  const settings = watch('settings');
   const domainListsDisabled = trackMode === 'ALL';
   const AdvancedCaredIcon = showAdvanced ? BiCaretDown : BiCaretRight;
 
@@ -181,7 +217,13 @@ export function AddMember({editingMember}: CreateMemberProps) {
 
       <h3 className="text-20 leading-tight mt-4 font-bold mb-2.5">Work Hours</h3>
 
-      <div className={formSectionStyle}></div>
+      <div className={formSectionStyle}>
+        <WorkHours
+          value={settings.workHours}
+          onDaysChange={handleWorkHoursDaySet}
+          onTimeChange={handleWorkHoursTimeSet}
+        />
+      </div>
 
       <button
         className="flex self-start items-center space-x-1.5 text-20 leading-snug font-bold mt-4 border-b border-dashed border-transparent hover:border-black transition-colors duration-200"
