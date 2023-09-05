@@ -1,6 +1,6 @@
 import {MemberStatisticActivityType} from '../../../types/api';
 
-export function calcHttpsPercentage(activities: MemberStatisticActivityType[]) {
+export function calcHttpsPercentage(activities: MemberStatisticActivityType[]): number {
   let totalActivities = 0;
   let httpsActivities = 0;
 
@@ -16,5 +16,5 @@ export function calcHttpsPercentage(activities: MemberStatisticActivityType[]) {
   }
 
   const percentage = (httpsActivities / totalActivities) * 100;
-  return Math.round(percentage) + '%';
+  return Math.round(percentage);
 }
