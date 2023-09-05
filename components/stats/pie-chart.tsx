@@ -51,6 +51,8 @@ export function PieChart({data, hoveredId, onHover}: PieDataProps) {
       arcLinkLabelsThickness={2}
       arcLinkLabelsColor={{from: 'color'}}
       arcLabelsSkipAngle={10}
+      arcLinkLabelsDiagonalLength={8}
+      arcLinkLabelsStraightLength={12}
       arcLabelsTextColor={{
         from: 'color',
         modifiers: [['darker', 2]],

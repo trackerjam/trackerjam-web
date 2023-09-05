@@ -9,6 +9,7 @@ const WebsiteCategory = {
   DevelopmentDesign: 'Development and Design',
   MediaNews: 'Media and News',
   ForumsCommunities: 'Forums and Communities',
+  Adult: 'Adult',
 };
 
 const domainsByCategory: {[domain: string]: string} = {
