@@ -144,6 +144,21 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
           <StatCards data={currentDayData} />
 
+          <Drawer
+            isOpen={isEventsOpen}
+            autoFocus
+            onClose={() => setIsEventsOpen(false)}
+            overrides={{
+              Root: {
+                style: {
+                  zIndex: 11,
+                },
+              },
+            }}
+          >
+            <EventsList events={data?.member?.memberEvent ?? []} />
+          </Drawer>
+
           {Boolean(currentDayData) && (
             <>
               <div className={chartSettingsStyle}>
@@ -168,21 +183,6 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               </div>
 
               <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
-
-              <Drawer
-                isOpen={isEventsOpen}
-                autoFocus
-                onClose={() => setIsEventsOpen(false)}
-                overrides={{
-                  Root: {
-                    style: {
-                      zIndex: 11,
-                    },
-                  },
-                }}
-              >
-                <EventsList events={data?.member?.memberEvent ?? []} />
-              </Drawer>
 
               <div>
                 <DebugTable data={currentDayData?.activities} />
