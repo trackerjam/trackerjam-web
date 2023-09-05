@@ -10,7 +10,6 @@ import {Textarea} from 'baseui/textarea';
 import {BiHide, BiCaretRight, BiCaretDown} from 'react-icons/bi';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
-import {ControlledCheckbox} from '../../common/controlled-checkbox';
 import {extractDomains} from '../../../utils/extract-domains';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {Button} from '../../common/button';
@@ -31,10 +30,6 @@ const defaultValues: CreateMemberDataType = {
     idleTime: DEFAULT_SETTINGS_IDLE_TIME_SEC,
     includeDomains: [],
     excludeDomains: [],
-    showTrackMode: true,
-    showActivityTime: true,
-    showDomainsCount: true,
-    showSessionsCount: true,
   },
 };
 
@@ -91,14 +86,6 @@ export function AddMember({editingMember}: CreateMemberProps) {
     Caption: {
       style: {
         opacity: domainListsDisabled ? 0.2 : 1,
-      },
-    },
-  };
-
-  const checkboxOverrides = {
-    Label: {
-      style: {
-        fontWeight: '300',
       },
     },
   };
@@ -192,40 +179,9 @@ export function AddMember({editingMember}: CreateMemberProps) {
         )}
       </div>
 
-      <h3 className="text-20 leading-tight mt-4 font-bold mb-2.5">Extension settings</h3>
+      <h3 className="text-20 leading-tight mt-4 font-bold mb-2.5">Work Hours</h3>
 
-      <div className={formSectionStyle}>
-        <h4 className="leading-tight font-medium mb-4 text-16">Let member see</h4>
-        <div className="flex flex-col gap-2">
-          <ControlledCheckbox
-            control={control}
-            name="settings.showTrackMode"
-            label="Track mode settings"
-            overrides={checkboxOverrides}
-          />
-
-          <ControlledCheckbox
-            control={control}
-            name="settings.showActivityTime"
-            label="Total activity time"
-            overrides={checkboxOverrides}
-          />
-
-          <ControlledCheckbox
-            control={control}
-            name="settings.showDomainsCount"
-            label="Domains count"
-            overrides={checkboxOverrides}
-          />
-
-          <ControlledCheckbox
-            control={control}
-            name="settings.showSessionsCount"
-            label="Sessions count"
-            overrides={checkboxOverrides}
-          />
-        </div>
-      </div>
+      <div className={formSectionStyle}></div>
 
       <button
         className="flex self-start items-center space-x-1.5 text-20 leading-snug font-bold mt-4 border-b border-dashed border-transparent hover:border-black transition-colors duration-200"
