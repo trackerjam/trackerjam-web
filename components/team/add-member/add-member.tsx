@@ -21,7 +21,7 @@ import {DEFAULT_SETTINGS_IDLE_TIME_SEC} from '../../../const/team';
 import {ErrorResponse} from '../../../types/api';
 import {DAY} from '../../../const/member';
 import {RadioTrackMode} from './form/radio-track-mode';
-import {WorkHours} from './form/work-hours';
+import {TIME_PRESETS, WorkHours} from './form/work-hours';
 
 type CreateMemberProps = {
   editingMember?: undefined | EditMemberDataType;
@@ -36,19 +36,7 @@ const defaultValues: CreateMemberDataType = {
     idleTime: DEFAULT_SETTINGS_IDLE_TIME_SEC,
     includeDomains: [],
     excludeDomains: [],
-    workHours: {
-      days: {
-        [DAY.MON]: true,
-        [DAY.TUE]: true,
-        [DAY.WED]: true,
-        [DAY.THU]: true,
-        [DAY.FRI]: true,
-      },
-      time: {
-        startTime: '09:00',
-        endTime: '17:00',
-      },
-    },
+    workHours: TIME_PRESETS[0],
   },
 };
 

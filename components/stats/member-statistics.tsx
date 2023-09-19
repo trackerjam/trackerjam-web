@@ -65,6 +65,19 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     return null;
   }, [currentDate, data?.activitiesByDate]);
 
+  const previousDayData: DateActivityData | null | undefined = useMemo(() => {
+    if (currentDate && availableDates && availableDates?.length > 1) {
+      const currentDatIndex = availableDates?.indexOf(currentDate);
+      if (currentDatIndex !== 0) {
+        const prevDay = availableDates[currentDatIndex - 1];
+        return data?.activitiesByDate[prevDay];
+      }
+    }
+    return null;
+  }, [currentDate, availableDates, data?.activitiesByDate]);
+
+  console.log(currentDayData);
+
   const aggregatedData = useAggregatedData({
     currentDayData,
     showIdle,
@@ -142,7 +155,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             )}
           </div>
 
-          <StatCards data={currentDayData} />
+          <StatCards data={currentDayData} previousDayData={previousDayData} />
 
           <Drawer
             isOpen={isEventsOpen}

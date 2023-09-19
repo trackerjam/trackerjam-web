@@ -5,38 +5,91 @@ import {SingleCard} from './single-card';
 import {countUniqueDomains} from './count-unique-domains';
 import {calcHttpsPercentage} from './calc-https-percentage';
 import {getDomainWithLongestSession} from './get-domain-with-logest-sessions';
+import {getStatDelta} from './get-stat-delta';
 
+type ActivityDataType = DateActivityData | null | undefined;
 interface StatCardProps {
-  data: DateActivityData | null | undefined;
+  data: ActivityDataType;
+  previousDayData: ActivityDataType;
 }
-export function StatCards({data}: StatCardProps) {
-  const {
-    activityTimeFormatted,
-    sessionCount,
-    totalDomainsCount,
-    httpsPercentageFormatted,
-    mostVisitedDomain,
-  } = useMemo(() => {
+
+export enum DELTA_INCLINE {
+  POSITIVE,
+  NEGATIVE,
+  SAME,
+}
+
+function useStatData(data: ActivityDataType, previousDayData: ActivityDataType) {
+  return useMemo(() => {
     if (!data) {
       return {};
     }
 
+    const sessionCountNumber = data.activities.reduce(
+      (acc, {activitiesCount}) => acc + activitiesCount,
+      0
+    );
+    const prevSessionCountNumber = previousDayData?.activities.reduce(
+      (acc, {activitiesCount}) => acc + activitiesCount,
+      0
+    );
+
+    const totalDomainsCountNumber = countUniqueDomains(data.activities);
+    const prevTotalDomainsCountNumber =
+      previousDayData?.activities && countUniqueDomains(previousDayData.activities);
+
+    const httpsPercentageNumber = calcHttpsPercentage(data.activities);
+    const prevHttpsPercentageNumber =
+      previousDayData?.activities && calcHttpsPercentage(previousDayData.activities);
+
     return {
-      activityTimeFormatted: formatTimeDuration(data.totalActivityTime),
-      sessionCount: data.activities.reduce((acc, {activitiesCount}) => acc + activitiesCount, 0),
-      totalDomainsCount: countUniqueDomains(data.activities),
-      httpsPercentageFormatted: calcHttpsPercentage(data.activities),
-      mostVisitedDomain: getDomainWithLongestSession(data.activities),
+      activityTime: {
+        value: formatTimeDuration(data.totalActivityTime),
+        ...getStatDelta({
+          value: data.totalActivityTime,
+          prevValue: previousDayData?.totalActivityTime,
+          type: 'percentage',
+        }),
+      },
+      sessionCount: {
+        value: sessionCountNumber,
+        ...getStatDelta({
+          value: sessionCountNumber,
+          prevValue: prevSessionCountNumber,
+        }),
+      },
+      totalDomainsCount: {
+        value: totalDomainsCountNumber,
+        ...getStatDelta({
+          value: totalDomainsCountNumber,
+          prevValue: prevTotalDomainsCountNumber,
+        }),
+      },
+      httpsPercentage: {
+        value: httpsPercentageNumber + '%',
+        ...getStatDelta({
+          value: httpsPercentageNumber,
+          prevValue: prevHttpsPercentageNumber,
+          type: 'percentage',
+        }),
+      },
+      mostVisitedDomain: {
+        value: getDomainWithLongestSession(data.activities),
+      },
     };
-  }, [data]);
+  }, [data, previousDayData]);
+}
+export function StatCards({data, previousDayData}: StatCardProps) {
+  const {activityTime, sessionCount, totalDomainsCount, httpsPercentage, mostVisitedDomain} =
+    useStatData(data, previousDayData);
 
   return (
     <div className="flex gap-8 mt-4">
-      <SingleCard value={activityTimeFormatted} title="Activity Time" />
-      <SingleCard value={mostVisitedDomain} title="Most Time Spent On" />
-      <SingleCard value={totalDomainsCount} title="Domains Count" />
-      <SingleCard value={sessionCount} title="Session Count" />
-      <SingleCard value={httpsPercentageFormatted} title="HTTPS Percentage" />
+      <SingleCard stat={activityTime} title="Activity Time" />
+      <SingleCard stat={mostVisitedDomain} title="Most Time Spent On" />
+      <SingleCard stat={totalDomainsCount} title="Domains Count" />
+      <SingleCard stat={sessionCount} title="Session Count" />
+      <SingleCard stat={httpsPercentage} title="HTTPS Percentage" />
     </div>
   );
 }

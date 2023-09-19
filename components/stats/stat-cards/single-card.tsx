@@ -1,8 +1,20 @@
+import {BiCaretDown, BiCaretUp, BiCaretLeft} from 'react-icons/bi';
+import cx from 'classnames';
+import {DELTA_INCLINE} from './stat-cards';
+
 interface SingleCards {
-  value: string | number | null | undefined;
+  stat: StatDelta | undefined;
   title: string;
 }
-export function SingleCard({title, value}: SingleCards) {
+
+export type StatDelta = {
+  value: string | number | null | undefined;
+  deltaValue?: string | number;
+  deltaIncline?: DELTA_INCLINE;
+};
+
+export function SingleCard({title, stat}: SingleCards) {
+  const {value, deltaValue, deltaIncline} = stat || {};
   let finalValue = value;
   if (
     (typeof finalValue === 'number' && isNaN(finalValue as number)) ||
@@ -13,10 +25,32 @@ export function SingleCard({title, value}: SingleCards) {
     finalValue = '...';
   }
 
+  const hasDelta = Boolean(deltaValue);
+  const deltaColor =
+    deltaIncline === DELTA_INCLINE.SAME
+      ? 'text-gray-500'
+      : deltaIncline === DELTA_INCLINE.POSITIVE
+      ? 'text-green-500'
+      : 'text-red-500';
+
+  const DeltaIcon =
+    deltaIncline === DELTA_INCLINE.SAME
+      ? BiCaretLeft
+      : deltaIncline === DELTA_INCLINE.POSITIVE
+      ? BiCaretUp
+      : BiCaretDown;
+
   return (
     <div className="flex flex-col items-center justify-center border-2 shadow p-4 rounded-xl gap-2 min-w-[160px]">
       <div className="text-sm text-gray-400">{title}</div>
-      <div className="text-gray-600 text-22 font-bold">{finalValue}</div>
+      <div className="flex items-center gap-3">
+        <span className="text-gray-600 text-22 font-bold">{finalValue}</span>
+        {hasDelta && (
+          <span className={cx('flex gap-0 items-center text-12 font-light -mr-2', deltaColor)}>
+            {deltaValue} <DeltaIcon />
+          </span>
+        )}
+      </div>
     </div>
   );
 }
