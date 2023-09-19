@@ -1,24 +1,35 @@
 import {DELTA_INCLINE} from './stat-cards';
 
-export function getStatDelta(value?: number, prevValue?: number) {
+interface GetStatDeltaProps {
+  value?: number;
+  prevValue?: number;
+  formatFn?: (value: string) => string;
+  type?: 'value' | 'percentage';
+}
+
+export function getStatDelta({value, prevValue, formatFn, type = 'value'}: GetStatDeltaProps) {
   if (typeof value !== 'number' || typeof prevValue !== 'number') {
     return {};
   }
 
-  const delta = value - prevValue;
+  const delta = type === 'value' ? value - prevValue : ((value - prevValue) / prevValue) * 100;
   let deltaIncline = DELTA_INCLINE.SAME;
-  let deltaValue = '+0';
+  let deltaValue = '';
 
   if (delta > 0) {
     deltaIncline = DELTA_INCLINE.POSITIVE;
-    deltaValue = `+${delta}`;
+    deltaValue = `+${delta.toFixed(0)}`;
   } else if (delta < 0) {
     deltaIncline = DELTA_INCLINE.NEGATIVE;
-    deltaValue = `${delta}`;
+    deltaValue = `${delta.toFixed(0)}`;
+  }
+
+  if (type === 'percentage') {
+    deltaValue += '%';
   }
 
   return {
     deltaIncline,
-    deltaValue,
+    deltaValue: typeof formatFn === 'function' ? formatFn(deltaValue) : deltaValue,
   };
 }

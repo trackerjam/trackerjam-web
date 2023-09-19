@@ -45,19 +45,33 @@ function useStatData(data: ActivityDataType, previousDayData: ActivityDataType) 
     return {
       activityTime: {
         value: formatTimeDuration(data.totalActivityTime),
-        ...getStatDelta(data.totalActivityTime, previousDayData?.totalActivityTime),
+        ...getStatDelta({
+          value: data.totalActivityTime,
+          prevValue: previousDayData?.totalActivityTime,
+          type: 'percentage',
+        }),
       },
       sessionCount: {
         value: sessionCountNumber,
-        ...getStatDelta(sessionCountNumber, prevSessionCountNumber),
+        ...getStatDelta({
+          value: sessionCountNumber,
+          prevValue: prevSessionCountNumber,
+        }),
       },
       totalDomainsCount: {
         value: totalDomainsCountNumber,
-        ...getStatDelta(totalDomainsCountNumber, prevTotalDomainsCountNumber),
+        ...getStatDelta({
+          value: totalDomainsCountNumber,
+          prevValue: prevTotalDomainsCountNumber,
+        }),
       },
       httpsPercentage: {
         value: httpsPercentageNumber + '%',
-        ...getStatDelta(httpsPercentageNumber, prevHttpsPercentageNumber),
+        ...getStatDelta({
+          value: httpsPercentageNumber,
+          prevValue: prevHttpsPercentageNumber,
+          type: 'percentage',
+        }),
       },
       mostVisitedDomain: {
         value: getDomainWithLongestSession(data.activities),
