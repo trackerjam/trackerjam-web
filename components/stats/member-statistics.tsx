@@ -10,7 +10,6 @@ import {Drawer} from 'baseui/drawer';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
-import DebugTable from './debug-table';
 
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
@@ -76,8 +75,6 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     return null;
   }, [currentDate, availableDates, data?.activitiesByDate]);
 
-  console.log(currentDayData);
-
   const aggregatedData = useAggregatedData({
     currentDayData,
     showIdle,
@@ -88,22 +85,12 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     setCurrentDate(availableDates?.[idx] || null);
   };
 
-  const topStatWrapperStyle = css({
-    display: 'flex',
-    gap: theme.sizing.scale600,
-    marginTop: theme.sizing.scale600,
-  });
-
   const pieChartBlockStyle = css({
     width: 'min(50%, 600px)',
     height: PIE_CHART_AND_TABLE_HEIGHT,
     flexShrink: 0,
     borderRadius: theme.borders.radius300,
     ...theme.borders.border200,
-  });
-
-  const domainsTableStyle = css({
-    flexGrow: 1,
   });
 
   const chartSettingsStyle = css({
@@ -179,27 +166,21 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   Show Idle Time
                 </Checkbox>
               </div>
-              <div className={topStatWrapperStyle}>
+              <div className="flex mt-5 gap-4">
                 <div className={pieChartBlockStyle}>
                   <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
                 </div>
-                <div className={domainsTableStyle}>
-                  <DomainsTable
-                    data={aggregatedData}
-                    height={PIE_CHART_AND_TABLE_HEIGHT}
-                    hoveredId={hoveredId}
-                    onHover={setHoveredId}
-                    focusedDomainId={focusedDomainId}
-                    onDomainFocus={setFocusedDomainId}
-                  />
-                </div>
+                <DomainsTable
+                  data={aggregatedData}
+                  height={PIE_CHART_AND_TABLE_HEIGHT}
+                  hoveredId={hoveredId}
+                  onHover={setHoveredId}
+                  focusedDomainId={focusedDomainId}
+                  onDomainFocus={setFocusedDomainId}
+                />
               </div>
 
               <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
-
-              <div>
-                <DebugTable data={currentDayData?.activities} />
-              </div>
             </>
           )}
         </>
