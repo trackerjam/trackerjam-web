@@ -46,7 +46,7 @@ export function SingleCard({title, stat}: SingleCards) {
       <div className="flex items-center gap-3">
         <span className="text-gray-600 text-22 font-bold">{finalValue}</span>
         {hasDelta && (
-          <span className={cx('flex gap-0 items-center text-12 font-light -mr-2', deltaColor)}>
+          <span className={cx('flex gap-0 items-center text-12 -mr-2', deltaColor)}>
             {deltaValue} <DeltaIcon />
           </span>
         )}
