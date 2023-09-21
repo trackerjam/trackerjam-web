@@ -2,10 +2,12 @@ import {useEffect, useMemo, useState} from 'react';
 import cx from 'classnames';
 import {formatDistanceToNow} from 'date-fns';
 import {DateActivityData} from '../../../types/api';
+import {SettingsType} from '../../../types/member';
 import {getMostRecentSessionTime} from './get-most-recent-session-time';
 
 interface UserStatusProps {
   data: DateActivityData | null;
+  settings: SettingsType | null | undefined;
 }
 
 enum ONLINE_STATUS {
@@ -31,7 +33,11 @@ const TEXT_COLOR = {
   [ONLINE_STATUS.OFFLINE]: 'text-gray-500',
 };
 
-export function UserStatus({data}: UserStatusProps) {
+function capitalize(text: string) {
+  return text[0].toUpperCase() + text.substring(1);
+}
+
+export function UserStatus({data, settings}: UserStatusProps) {
   const [currentTimeMs, setCurrentTimeMs] = useState<number>(Date.now());
 
   const {mostRecentSessionTimeFormatted, status} = useMemo(() => {
@@ -56,6 +62,22 @@ export function UserStatus({data}: UserStatusProps) {
     };
   }, [data, currentTimeMs]);
 
+  const workTimeStr = useMemo(() => {
+    if (
+      settings?.workHours?.days &&
+      settings?.workHours?.time?.startTime &&
+      settings?.workHours?.time?.endTime
+    ) {
+      const daysStr = Object.entries(settings.workHours.days)
+        .filter(([, val]) => !!val)
+        .map(([key]) => capitalize(key))
+        .join(', ');
+      const timeStr = `From ${settings.workHours.time.startTime} to ${settings.workHours.time.endTime}.`;
+      return daysStr + '. ' + timeStr;
+    }
+    return null;
+  }, [settings]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTimeMs(Date.now());
@@ -68,12 +90,19 @@ export function UserStatus({data}: UserStatusProps) {
   const isOnline = status === ONLINE_STATUS.ONLINE;
 
   return (
-    <div className="flex items-center gap-2">
-      <div
-        className={cx('w-4 h-4 rounded-full', dotColor, isOnline ? 'animate-pulsate-border' : null)}
-      ></div>
-      <div className={cx('text-20 font-bold', textColor)}>{status ?? 'Unknown'}</div>
-      <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
+    <div>
+      <div className="flex items-center gap-2">
+        <div
+          className={cx(
+            'w-4 h-4 rounded-full',
+            dotColor,
+            isOnline ? 'animate-pulsate-border' : null
+          )}
+        ></div>
+        <div className={cx('text-20 font-bold', textColor)}>{status ?? 'Unknown'}</div>
+        <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
+      </div>
+      {Boolean(workTimeStr) && <div>Work time: {workTimeStr}</div>}
     </div>
   );
 }

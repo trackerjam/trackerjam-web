@@ -15,6 +15,7 @@ import {
 } from '../../../types/api';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
 import {calculateIdleTime} from '../../../utils/api/calculate-idle';
+import {SettingsType} from '../../../types/member';
 
 // TODO Limit response by time window
 
@@ -28,16 +29,29 @@ async function get({req, res}: AuthMethodContext) {
         id: memberId,
       },
       include: {
-        memberEvent: true,
+        memberEvent: {
+          orderBy: {
+            date: 'desc',
+          },
+        },
+        settings: true,
       },
     });
+
+    const memberResponse = {
+      ...member,
+      settings:
+        typeof member?.settings?.settings === 'object'
+          ? (member.settings.settings as SettingsType)
+          : null,
+    };
 
     // Find domain and session activities for that user just by user ID
     // TODO: Consider limiting this to last 7/30 days only
     const activities = await prismadb.domainActivity.findMany({
       where: {
         member: {
-          id: member.id,
+          id: memberResponse.id,
         },
       },
       orderBy: {
@@ -113,7 +127,7 @@ async function get({req, res}: AuthMethodContext) {
     }, {} as ActivitiesByDate);
 
     const result: MemberStatisticType = {
-      member,
+      member: memberResponse,
       activitiesByDate: resultActivities,
     };
 

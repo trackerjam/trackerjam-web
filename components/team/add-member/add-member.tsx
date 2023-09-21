@@ -36,7 +36,10 @@ const defaultValues: CreateMemberDataType = {
     idleTime: DEFAULT_SETTINGS_IDLE_TIME_SEC,
     includeDomains: [],
     excludeDomains: [],
-    workHours: TIME_PRESETS[0],
+    workHours: {
+      days: {...TIME_PRESETS[0].days},
+      time: {...TIME_PRESETS[0].time},
+    },
   },
 };
 
@@ -47,7 +50,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
     `/api/member/${isEditing ? editingMember?.id : ''}`
   );
-  const {handleSubmit, control, reset, setValue, watch} = useForm({
+  const {handleSubmit, control, setValue, watch, getValues} = useForm({
     reValidateMode: 'onBlur',
     defaultValues: editingMember || defaultValues,
   });
@@ -71,11 +74,10 @@ export function AddMember({editingMember}: CreateMemberProps) {
       if (!res || (res as ErrorResponse)?.error) {
         console.error('Unknown error', res);
       } else {
-        reset();
         await router.push('/team');
       }
     },
-    [isEditing, reset, router, send]
+    [isEditing, router, send]
   );
 
   const handleDomainInput = (key: 'includeDomains' | 'excludeDomains', value: string) => {
@@ -84,7 +86,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
   };
 
   const handleWorkHoursDaySet = (day: DAY, value: boolean) => {
-    const newVal: WorkHoursDaysType = {...settings.workHours.days};
+    const newVal: WorkHoursDaysType = getValues('settings.workHours.days');
     if (value) {
       newVal[day] = value;
     } else {
@@ -94,7 +96,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
   };
 
   const handleWorkHoursTimeSet = (label: 'startTime' | 'endTime', value: string) => {
-    const newVal = {...settings.workHours.time};
+    const newVal = getValues('settings.workHours.time');
     newVal[label] = value;
     setValue('settings.workHours.time', newVal);
   };

@@ -117,7 +117,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             </div>
           )}
         </div>
-        {hasData && <UserStatus data={mostRecentDateData} />}
+        {hasData && <UserStatus data={mostRecentDateData} settings={data?.member?.settings} />}
       </div>
 
       {isLoading && <span>Loading...</span>}
