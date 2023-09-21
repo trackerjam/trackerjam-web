@@ -15,7 +15,7 @@ export function EventsList({events}: EventsListProps) {
             <strong>{eventRecord.event}</strong>
             <div className="text-gray-500">
               {dateObj.toLocaleDateString()} {dateObj.toLocaleTimeString()}{' '}
-              <span className="text-gray-400">({formatDistanceToNowStrict(dateObj)})</span>
+              <span className="text-gray-400">({formatDistanceToNowStrict(dateObj)} ago)</span>
             </div>
             {Boolean(eventRecord.ipAddress) && (
               <div className="text-gray-400">From IP {eventRecord.ipAddress}</div>
