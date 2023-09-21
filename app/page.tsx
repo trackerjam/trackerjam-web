@@ -4,6 +4,7 @@ import {redirect} from 'next/navigation';
 import {Metadata} from 'next';
 
 import {Button} from '../components/common/button';
+import {DEFAULT_PAGE} from '../const/url';
 import {authOptions} from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ const Home = async () => {
   const hasSession = Boolean(session);
 
   if (session?.user) {
-    redirect('/dashboard');
+    redirect(DEFAULT_PAGE);
   }
 
   return (

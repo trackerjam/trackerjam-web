@@ -1,4 +1,4 @@
-import {CiSettings, CiViewBoard, CiBellOn, CiPizza, CiUser} from 'react-icons/ci';
+import {CiSettings, CiViewBoard, CiPizza} from 'react-icons/ci';
 import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
@@ -22,16 +22,8 @@ function IconTitle({title, icon}: IconTitleProps) {
 
 const topItems = [
   {
-    title: <IconTitle title="Dashboard" icon={CiPizza} />,
-    itemId: '/dashboard',
-  },
-  {
-    title: <IconTitle title="Team" icon={CiUser} />,
+    title: <IconTitle title="Team" icon={CiPizza} />,
     itemId: '/team',
-  },
-  {
-    title: <IconTitle title="Events & Payments" icon={CiBellOn} />,
-    itemId: '/events',
   },
   {
     title: <IconTitle title="Statistics" icon={CiViewBoard} />,
