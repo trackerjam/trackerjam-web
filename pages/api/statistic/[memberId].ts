@@ -71,8 +71,19 @@ async function get({req, res}: AuthMethodContext) {
         console.error(error);
         Sentry.captureException(error);
       }
-      return {
+
+      // TODO An option to include URL for Admin View
+      const activityNoUrl = {
         ...activity,
+        sessionActivities: activity.sessionActivities.map((sessionActivity) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const {url, ...rest} = sessionActivity;
+          return rest;
+        }),
+      };
+
+      return {
+        ...activityNoUrl,
         domainName,
       };
     });

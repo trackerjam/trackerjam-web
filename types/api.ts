@@ -73,8 +73,9 @@ export type MemberAndSummary = Member & {
   }[];
 };
 
+export type SessionActivityOptionalUrl = SessionActivity & {url?: string};
 export type MemberStatisticActivityType = DomainActivity & {
-  sessionActivities: SessionActivity[];
+  sessionActivities: SessionActivityOptionalUrl[];
   domainName: string;
 };
 
