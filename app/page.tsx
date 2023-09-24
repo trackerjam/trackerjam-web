@@ -41,7 +41,7 @@ const Home = async () => {
         )}
       </main>
 
-      <footer className="flex mt-auto justify-center text-12 p-6 text-mono-800">
+      <footer className="flex mt-auto justify-center text-12 p-6 text-gray-500">
         Trackerjam 2023
       </footer>
     </div>

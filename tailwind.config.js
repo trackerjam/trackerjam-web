@@ -54,15 +54,6 @@ module.exports = {
           120: '#6b6b6b',
           130: '#AFAFAF',
         },
-        slate: {
-          100: '#333333',
-        },
-        blue: {
-          100: '#276ef1',
-        },
-        mono: {
-          800: '#545454',
-        },
       },
       keyframes: {
         slideDownAndFade: {
