@@ -1,7 +1,7 @@
 import Avatar from 'boring-avatars';
 import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
-
+import {LuCopyCheck} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiTime, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
@@ -12,6 +12,7 @@ import {useRouter} from 'next/navigation';
 import {formatDistanceToNow} from 'date-fns';
 import clsx from 'clsx';
 
+import * as Toast from '@radix-ui/react-toast';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
@@ -22,7 +23,6 @@ import {StatusTag} from './status-tag';
 interface MemberCardProps {
   data: MemberAndSummary;
   onDelete: () => void;
-  onCopy: (shortToken: string) => void;
 }
 
 const emptySummaryText = '-';
@@ -42,10 +42,12 @@ const menuItems = [
   },
 ];
 
-export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
+export function MemberCard({data, onDelete}: MemberCardProps) {
   const {name, title, status, token, summary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [shortToken, setShortToken] = useState('');
 
   const {send} = useSendData(`/api/member/${token}`);
   const {push} = useRouter();
@@ -54,7 +56,8 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
     switch (id) {
       case 'copy':
         copy(token);
-        onCopy(shortenUUID(token));
+        setIsToastOpen(true);
+        setShortToken(shortenUUID(token));
         break;
       case 'delete':
         setDeleteShown(true);
@@ -121,30 +124,45 @@ export function MemberCard({data, onDelete, onCopy}: MemberCardProps) {
         </div>
 
         <div className="justify-start mb-auto self-end ml-auto">
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild>
-              <button className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-80 hover:bg-gray-90 transition-colors duration-200">
-                <MenuIcon title="" />
-              </button>
-            </DropdownMenu.Trigger>
+          <Toast.Provider swipeDirection="right">
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="flex justify-center items-center w-8 h-8 rounded-full bg-gray-80 hover:bg-gray-90 transition-colors duration-200">
+                  <MenuIcon title="" />
+                </button>
+              </DropdownMenu.Trigger>
 
-            <DropdownMenu.Portal>
-              <DropdownMenu.Content
-                className="bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
-                sideOffset={5}
-              >
-                {menuItems.map(({id, icon: Icon, label, iconColor}) => (
-                  <DropdownMenu.Item
-                    className="group py-2 px-3 text-14 gap-x-1.5 leading-none flex items-center relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200"
-                    key={id}
-                    onSelect={() => handleMenuClick(id)}
-                  >
-                    <Icon className={iconColor} /> {label}
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Content>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Root>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  className="bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
+                  sideOffset={5}
+                >
+                  {menuItems.map(({id, icon: Icon, label, iconColor}) => (
+                    <DropdownMenu.Item
+                      className="group py-2 px-3 text-14 gap-x-1.5 leading-none flex items-center relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200"
+                      key={id}
+                      onSelect={() => handleMenuClick(id)}
+                    >
+                      <Icon className={iconColor} /> {label}
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+            <Toast.Root
+              className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-md bg-green-500/10 shadow-lg ring-1 ring-black ring-opacity-5 p-4 border-l-4 border-green-500 data-[state=open]:animate-slideIn data-[state=closed]:animate-hide data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=end]:animate-swipeOut"
+              open={isToastOpen}
+              onOpenChange={setIsToastOpen}
+            >
+              <Toast.Title className="flex items-center space-x-2 leading-none mb-[5px] font-medium text-[15px]">
+                <LuCopyCheck className="shrink-0 w-5 h-auto text-green-600" />
+                <span>
+                  Key &quot;<code>{shortToken}</code>&quot; copied
+                </span>
+              </Toast.Title>
+            </Toast.Root>
+            <Toast.Viewport className="[--viewport-padding:_25px] fixed bottom-0 right-0 flex flex-col p-[var(--viewport-padding)] gap-[10px] w-[390px] max-w-[100vw] m-0 list-none z-[2147483647] outline-none" />
+          </Toast.Provider>
         </div>
       </div>
 
