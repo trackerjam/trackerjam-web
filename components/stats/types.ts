@@ -7,6 +7,6 @@ export type AggregatedDataType = {
   sessionCount: number;
   lastSession?: number | null;
   children?: AggregatedDataType[];
-  domainsTags: DomainTags;
+  domainsTags?: DomainTags;
   _domainName?: string; // Appears inside children to show correct domain favicon
 };

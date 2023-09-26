@@ -138,7 +138,16 @@ export function DomainsTable({
             </>
           )}
           {data.map(
-            ({label, value, id, lastSession, sessionCount, children, domainsTags, _domainName}) => {
+            ({
+              label,
+              value,
+              id,
+              lastSession,
+              sessionCount,
+              children,
+              domainsTags = {},
+              _domainName,
+            }) => {
               const {shareWidth, sharePercentage} = getTimeShare({
                 totalActivityTime: totalTime,
                 value,
