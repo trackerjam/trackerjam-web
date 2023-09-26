@@ -1,7 +1,6 @@
 import {formatDistanceToNow} from 'date-fns';
 import {useStyletron} from 'baseui';
 import {BsEyeFill, BsBackspace} from 'react-icons/bs';
-import {useMemo} from 'react';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {DomainTags} from '../../types/api';
 import {TAG} from '../../utils/classification/tags';

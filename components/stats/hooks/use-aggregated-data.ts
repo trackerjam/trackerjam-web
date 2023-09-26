@@ -28,7 +28,6 @@ export function useAggregatedData({
           lastSession: null,
           sessionCount: 0,
           children: [],
-          domainsTags: {},
         });
       }
 
@@ -116,7 +115,6 @@ export function aggregateSessionsByTitle({
       label: title,
       value: totalLength,
       sessionCount: count,
-      domainsTags: {},
       _domainName: domainName,
     }));
 }
