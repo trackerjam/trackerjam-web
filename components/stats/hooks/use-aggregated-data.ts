@@ -28,6 +28,7 @@ export function useAggregatedData({
           lastSession: null,
           sessionCount: 0,
           children: [],
+          domainsTags: {},
         });
       }
 
@@ -47,7 +48,7 @@ export function useAggregatedData({
 
 export function aggregateByDomain(data: DateActivityData) {
   return data.activities.reduce(
-    (mem, {timeSpent, domainName, sessionActivities}) => {
+    (mem, {timeSpent, domainName, sessionActivities, domainsTags}) => {
       const aggregatedSessions = aggregateSessionsByTitle({sessionActivities, domainName});
 
       if (!mem[domainName]) {
@@ -58,6 +59,7 @@ export function aggregateByDomain(data: DateActivityData) {
           sessionCount: 0,
           lastSession: null,
           children: aggregatedSessions,
+          domainsTags,
         };
       }
 
@@ -114,6 +116,7 @@ export function aggregateSessionsByTitle({
       label: title,
       value: totalLength,
       sessionCount: count,
+      domainsTags: {},
       _domainName: domainName,
     }));
 }

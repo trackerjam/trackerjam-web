@@ -1,10 +1,12 @@
 import {formatDistanceToNow} from 'date-fns';
 import {useStyletron} from 'baseui';
 import {BsEyeFill, BsBackspace} from 'react-icons/bs';
+import {useMemo} from 'react';
 import {formatTimeDuration} from '../../utils/format-time-duration';
+import {DomainTags} from '../../types/api';
+import {TAG} from '../../utils/classification/tags';
 import {AggregatedDataType} from './types';
 import {Favicon} from './favicon';
-import {getWebsiteCategory} from './utils/get-website-category';
 
 interface DomainTableProps {
   data: AggregatedDataType[];
@@ -41,6 +43,13 @@ function getTimeShare({
   }
 
   return {timeShare, sharePercentage, shareWidth};
+}
+
+function getBestTag(tags: DomainTags): string {
+  if (!tags) return TAG.Other;
+
+  const sortedTags = Object.entries(tags).sort((a, b) => b[1] - a[1]);
+  return sortedTags?.[0]?.[0] || TAG.Other;
 }
 
 export function DomainsTable({
@@ -128,54 +137,60 @@ export function DomainsTable({
               </tr>
             </>
           )}
-          {data.map(({label, value, id, lastSession, sessionCount, children, _domainName}) => {
-            const {shareWidth, sharePercentage} = getTimeShare({
-              totalActivityTime: totalTime,
-              value,
-            });
-            return (
-              <tr
-                key={id}
-                className={tableRowStyle}
-                onMouseEnter={() => onHover(id)}
-                onMouseLeave={() => onHover(null)}
-                style={{
-                  backgroundColor:
-                    hoveredId === id ? theme.colors.backgroundSecondary : 'transparent',
-                }}
-              >
-                <td className={tableCellStyle}>
-                  <div className={domainLabelStyle}>
-                    <div className="flex flex-row items-center gap-2">
-                      <Favicon domain={_domainName || label} />
-                      <span>{label}</span>
-                    </div>
-                    {Boolean(children?.length) && (
-                      <div>
-                        <button
-                          onClick={() => onDomainFocus(id)}
-                          className="flex items-center gap-2 border-2 border-gray-100 rounded px-1 text-12 text-gray-700 hover:bg-blue-200 transition-colors duration-150"
-                        >
-                          Focus
-                          <BsEyeFill title="Focus on domain" size={18} className="text-gray-600" />
-                        </button>
+          {data.map(
+            ({label, value, id, lastSession, sessionCount, children, domainsTags, _domainName}) => {
+              const {shareWidth, sharePercentage} = getTimeShare({
+                totalActivityTime: totalTime,
+                value,
+              });
+              return (
+                <tr
+                  key={id}
+                  className={tableRowStyle}
+                  onMouseEnter={() => onHover(id)}
+                  onMouseLeave={() => onHover(null)}
+                  style={{
+                    backgroundColor:
+                      hoveredId === id ? theme.colors.backgroundSecondary : 'transparent',
+                  }}
+                >
+                  <td className={tableCellStyle}>
+                    <div className={domainLabelStyle}>
+                      <div className="flex flex-row items-center gap-2">
+                        <Favicon domain={_domainName || label} />
+                        <span>{label}</span>
                       </div>
-                    )}
-                  </div>
-                </td>
-                <td className={tableCellStyle}>{getWebsiteCategory(label)}</td>
-                <td className={tableCellStyle}>{children?.length ?? '-'}</td>
-                <td className={tableCellStyle}>
-                  <div className={domainShareBarStyle} style={{width: shareWidth}} />
-                  {formatTimeDuration(value)} ({sharePercentage})
-                </td>
-                <td className={tableCellStyle}>{sessionCount}</td>
-                <td className={tableCellStyle}>
-                  {lastSession ? formatDistanceToNow(new Date(lastSession)) : '-'}
-                </td>
-              </tr>
-            );
-          })}
+                      {Boolean(children?.length) && (
+                        <div>
+                          <button
+                            onClick={() => onDomainFocus(id)}
+                            className="flex items-center gap-2 border-2 border-gray-100 rounded px-1 text-12 text-gray-700 hover:bg-blue-200 transition-colors duration-150"
+                          >
+                            Focus
+                            <BsEyeFill
+                              title="Focus on domain"
+                              size={18}
+                              className="text-gray-600"
+                            />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                  <td className={tableCellStyle}>{getBestTag(domainsTags)}</td>
+                  <td className={tableCellStyle}>{children?.length ?? '-'}</td>
+                  <td className={tableCellStyle}>
+                    <div className={domainShareBarStyle} style={{width: shareWidth}} />
+                    {formatTimeDuration(value)} ({sharePercentage})
+                  </td>
+                  <td className={tableCellStyle}>{sessionCount}</td>
+                  <td className={tableCellStyle}>
+                    {lastSession ? formatDistanceToNow(new Date(lastSession)) : '-'}
+                  </td>
+                </tr>
+              );
+            }
+          )}
         </tbody>
       </table>
     </div>
