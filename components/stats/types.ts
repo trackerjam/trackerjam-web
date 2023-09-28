@@ -8,5 +8,6 @@ export type AggregatedDataType = {
   lastSession?: number | null;
   children?: AggregatedDataType[];
   domainsTags?: DomainTags;
+  productivityScore?: number;
   _domainName?: string; // Appears inside children to show correct domain favicon
 };

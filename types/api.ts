@@ -80,6 +80,7 @@ export type MemberStatisticActivityType = DomainActivity & {
   sessionActivities: SessionActivityOptionalUrl[];
   domainName: string;
   domainsTags: DomainTags;
+  productivityScore: number;
 };
 
 export type MemberDataType = Member & {

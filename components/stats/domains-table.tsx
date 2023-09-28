@@ -2,8 +2,7 @@ import {formatDistanceToNow} from 'date-fns';
 import {useStyletron} from 'baseui';
 import {BsEyeFill, BsBackspace} from 'react-icons/bs';
 import {formatTimeDuration} from '../../utils/format-time-duration';
-import {DomainTags} from '../../types/api';
-import {TAG} from '../../utils/classification/tags';
+import {getBestTag} from '../../utils/best-tag';
 import {AggregatedDataType} from './types';
 import {Favicon} from './favicon';
 
@@ -19,6 +18,7 @@ interface DomainTableProps {
 const TABLE_HEADER = [
   'Domain',
   'Category',
+  'Productivity',
   'Pages',
   'Activity Time',
   'Sessions Count',
@@ -42,13 +42,6 @@ function getTimeShare({
   }
 
   return {timeShare, sharePercentage, shareWidth};
-}
-
-function getBestTag(tags: DomainTags): string {
-  if (!tags) return TAG.Other;
-
-  const sortedTags = Object.entries(tags).sort((a, b) => b[1] - a[1]);
-  return sortedTags?.[0]?.[0] || TAG.Other;
 }
 
 export function DomainsTable({
@@ -145,6 +138,7 @@ export function DomainsTable({
               sessionCount,
               children,
               domainsTags = {},
+              productivityScore,
               _domainName,
             }) => {
               const {shareWidth, sharePercentage} = getTimeShare({
@@ -186,6 +180,7 @@ export function DomainsTable({
                     </div>
                   </td>
                   <td className={tableCellStyle}>{getBestTag(domainsTags)}</td>
+                  <td className={tableCellStyle}>{productivityScore ?? '-'}</td>
                   <td className={tableCellStyle}>{children?.length ?? '-'}</td>
                   <td className={tableCellStyle}>
                     <div className={domainShareBarStyle} style={{width: shareWidth}} />

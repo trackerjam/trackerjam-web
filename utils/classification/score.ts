@@ -1,4 +1,4 @@
-export const TAG_PRODUCTIVITY_SCORE = {
+export const TAG_PRODUCTIVITY_SCORE: {[tag: string]: number} = {
   Advertisement: 0.1, // Ads can be a distraction.
   Adult: 0, // Not appropriate for a generic office environment.
   AudioStreaming: 0.3, // Can be background music or white noise.
