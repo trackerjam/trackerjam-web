@@ -34,6 +34,8 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
   const chartSettingsStyle = css({
     padding: theme.sizing.scale600,
     display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '-36px',
   });
 
   const {chartData = [], domains = []} = useMemo(() => {
@@ -57,6 +59,8 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
 
   return (
     <div className={wrapperStyle}>
+      <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity Timeline</h3>
+
       <div className={chartSettingsStyle}>
         <Checkbox
           checked={isDetailsEnabled}
@@ -124,6 +128,15 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
               id: 'dots',
             },
           ]}
+          theme={{
+            grid: {
+              line: {
+                stroke: '#eee',
+                strokeWidth: 1,
+                // strokeDasharray: '14 4',
+              },
+            },
+          }}
           tooltip={({data, id, formattedValue}) => {
             if (isDetailsEnabled) {
               return (

@@ -5,7 +5,6 @@ import {useStyletron} from 'baseui';
 import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
 import {Button} from 'baseui/button';
 import {format} from 'date-fns';
-import {Checkbox} from 'baseui/checkbox';
 import {Drawer} from 'baseui/drawer';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
