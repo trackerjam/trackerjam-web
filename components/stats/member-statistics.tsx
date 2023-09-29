@@ -158,10 +158,18 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
           {Boolean(currentDayData) && (
             <>
-              <div className="mt-6 hidden">
-                <Checkbox checked={showIdle} onChange={(e) => setShowIdle(e.target.checked)}>
-                  Show Idle Time
-                </Checkbox>
+              <div className="mt-6 flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  className="w-5 h-5"
+                  checked={showIdle}
+                  onChange={(e) => setShowIdle(e.target.checked)}
+                  id="show-idle-time"
+                />
+                <label htmlFor="show-idle-time">Show Idle Time</label>
+                <span className="text-xs bg-slate-400 text-white px-1 rounded -mt-2 text-10">
+                  Beta
+                </span>
               </div>
               <div className="mt-8">
                 <DomainsTable
