@@ -19,6 +19,7 @@ import {StatCards} from './stat-cards/stat-cards';
 import {UserStatus} from './user-status/user-status';
 import {getMostRecentData} from './utils/get-most-recent-data';
 import {EventsList} from './events-list';
+import {RadarChart} from './radar-chart';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
@@ -169,6 +170,9 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               <div className="flex mt-5 gap-4">
                 <div className={pieChartBlockStyle}>
                   <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
+                </div>
+                <div className={pieChartBlockStyle}>
+                  <RadarChart data={currentDayData?.activities} />
                 </div>
                 <DomainsTable
                   data={aggregatedData}
