@@ -1,3 +1,5 @@
+import {DomainTags} from '../../types/api';
+
 export type AggregatedDataType = {
   id: string;
   label: string;
@@ -5,5 +7,7 @@ export type AggregatedDataType = {
   sessionCount: number;
   lastSession?: number | null;
   children?: AggregatedDataType[];
+  domainsTags?: DomainTags;
+  productivityScore?: number;
   _domainName?: string; // Appears inside children to show correct domain favicon
 };

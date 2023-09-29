@@ -35,7 +35,7 @@ export function PieChart({data, hoveredId, onHover}: PieDataProps) {
       valueFormat={(value) => formatTimeDuration(value)}
       margin={{top: 40, right: 80, bottom: 80, left: 80}}
       colors={{scheme: 'set2'}}
-      innerRadius={0.5}
+      innerRadius={0.3}
       padAngle={0.7}
       cornerRadius={3}
       activeOuterRadiusOffset={8}

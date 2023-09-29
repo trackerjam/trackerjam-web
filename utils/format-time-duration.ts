@@ -1,6 +1,9 @@
 import {normalize} from 'duration-fns';
 
-export function formatTimeDuration(durationMs: number): string {
+type FormatDurationOptions = {
+  skipSeconds?: boolean;
+};
+export function formatTimeDuration(durationMs: number, options?: FormatDurationOptions): string {
   const normalized = normalize({milliseconds: durationMs});
   const res = [];
 
@@ -20,7 +23,7 @@ export function formatTimeDuration(durationMs: number): string {
     res.push(`${normalized.minutes}m`);
   }
 
-  if (normalized.seconds) {
+  if (normalized.seconds && !options?.skipSeconds) {
     res.push(`${normalized.seconds}s`);
   }
 

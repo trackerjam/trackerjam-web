@@ -1,6 +1,7 @@
 import {Session} from 'next-auth';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {DomainActivity, Member, MemberEvent, SessionActivity, TAB_TYPE, Team} from '@prisma/client';
+import {TAG} from '../utils/classification/tags';
 import {SettingsType} from './member';
 
 export interface SessionId extends Session {
@@ -78,6 +79,8 @@ export type SessionActivityOptionalUrl = SessionActivity & {url?: string};
 export type MemberStatisticActivityType = DomainActivity & {
   sessionActivities: SessionActivityOptionalUrl[];
   domainName: string;
+  domainsTags: DomainTags;
+  productivityScore: number;
 };
 
 export type MemberDataType = Member & {
@@ -105,3 +108,5 @@ export type CreateMemberEventInput = {
   event: string;
   date: string;
 };
+
+export type DomainTags = {[key in keyof typeof TAG]?: number};

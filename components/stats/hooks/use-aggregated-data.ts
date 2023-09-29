@@ -47,7 +47,7 @@ export function useAggregatedData({
 
 export function aggregateByDomain(data: DateActivityData) {
   return data.activities.reduce(
-    (mem, {timeSpent, domainName, sessionActivities}) => {
+    (mem, {timeSpent, domainName, sessionActivities, domainsTags, productivityScore}) => {
       const aggregatedSessions = aggregateSessionsByTitle({sessionActivities, domainName});
 
       if (!mem[domainName]) {
@@ -58,6 +58,8 @@ export function aggregateByDomain(data: DateActivityData) {
           sessionCount: 0,
           lastSession: null,
           children: aggregatedSessions,
+          domainsTags,
+          productivityScore,
         };
       }
 

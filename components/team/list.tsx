@@ -3,7 +3,7 @@
 import {useMemo} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useRouter} from 'next/navigation';
-import {toaster} from 'baseui/toast';
+
 import {useGetData} from '../hooks/use-get-data';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
@@ -16,6 +16,7 @@ export const GRID_TEMPLATE = 'repeat(auto-fit, minmax(250px, 350px))';
 
 export function Team() {
   const {data, isLoading, error, update} = useGetData<GetTeamResponse>('/api/team');
+
   const router = useRouter();
 
   const teamData = useMemo(() => {
@@ -33,14 +34,6 @@ export function Team() {
     update();
   };
 
-  const handleCopyClick = (shortToken: string) => {
-    toaster.info(
-      <span>
-        Key &quot;<code>{shortToken}</code>&quot; copied
-      </span>
-    );
-  };
-
   return (
     <>
       {error && <ErrorDetails error={error} />}
@@ -56,14 +49,7 @@ export function Team() {
       {!isLoading && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-5 mb-7">
           {teamData?.map((userData) => {
-            return (
-              <MemberCard
-                key={userData.id}
-                data={userData}
-                onDelete={handleCardDelete}
-                onCopy={handleCopyClick}
-              />
-            );
+            return <MemberCard key={userData.id} data={userData} onDelete={handleCardDelete} />;
           })}
         </div>
       )}

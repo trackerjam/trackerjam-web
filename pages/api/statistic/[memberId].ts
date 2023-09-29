@@ -16,6 +16,8 @@ import {
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
 import {calculateIdleTime} from '../../../utils/api/calculate-idle';
 import {SettingsType} from '../../../types/member';
+import {classifyDomain} from '../../../utils/classification/classification';
+import {getProductivityScore} from '../../../utils/classification/get-score';
 
 // TODO Limit response by time window
 
@@ -96,9 +98,15 @@ async function get({req, res}: AuthMethodContext) {
         }),
       };
 
+      // Get domains tags
+      const domainsTags = classifyDomain(domainName);
+      const score = getProductivityScore(domainsTags);
+
       return {
         ...activityNoUrl,
         domainName,
+        domainsTags,
+        productivityScore: score,
       };
     });
 

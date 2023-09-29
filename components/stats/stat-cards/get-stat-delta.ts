@@ -14,7 +14,7 @@ export function getStatDelta({value, prevValue, formatFn, type = 'value'}: GetSt
 
   const delta = type === 'value' ? value - prevValue : ((value - prevValue) / prevValue) * 100;
   let deltaIncline = DELTA_INCLINE.SAME;
-  let deltaValue = '';
+  let deltaValue = delta.toFixed(0);
 
   if (delta > 0) {
     deltaIncline = DELTA_INCLINE.POSITIVE;
