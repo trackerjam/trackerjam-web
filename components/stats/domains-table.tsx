@@ -57,6 +57,7 @@ export function DomainsTable({
   const totalTime = data.reduce((acc, {value}) => acc + value, 0);
 
   const tableWrapperStyle = css({
+    width: '100%',
     maxHeight: height,
     overflow: 'scroll',
     borderRadius: theme.borders.radius200,

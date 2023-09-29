@@ -1,6 +1,7 @@
 import {BiCaretDown, BiCaretUp, BiCaretLeft} from 'react-icons/bi';
 import cx from 'classnames';
 import {DELTA_INCLINE} from './stat-cards';
+import {CardElement} from './card';
 
 interface SingleCards {
   stat: StatDelta | undefined;
@@ -13,7 +14,7 @@ export type StatDelta = {
   deltaIncline?: DELTA_INCLINE;
 };
 
-export function SingleCard({title, stat}: SingleCards) {
+export function SingleValue({title, stat}: SingleCards) {
   const {value, deltaValue, deltaIncline} = stat || {};
   let finalValue = value;
   if (
@@ -41,7 +42,7 @@ export function SingleCard({title, stat}: SingleCards) {
       : BiCaretDown;
 
   return (
-    <div className="flex flex-col items-center justify-center border-2 shadow p-4 rounded-xl gap-2 min-w-[160px]">
+    <CardElement>
       <div className="text-sm text-gray-400">{title}</div>
       <div className="flex items-center gap-3">
         <span className="text-gray-600 text-22 font-bold">{finalValue}</span>
@@ -51,6 +52,6 @@ export function SingleCard({title, stat}: SingleCards) {
           </span>
         )}
       </div>
-    </div>
+    </CardElement>
   );
 }

@@ -3,6 +3,7 @@ import cx from 'classnames';
 import {formatDistanceToNow} from 'date-fns';
 import {DateActivityData} from '../../../types/api';
 import {SettingsType} from '../../../types/member';
+import {sortDays} from '../../../utils/sort-days';
 import {getMostRecentSessionTime} from './get-most-recent-session-time';
 
 interface UserStatusProps {
@@ -62,20 +63,22 @@ export function UserStatus({data, settings}: UserStatusProps) {
     };
   }, [data, currentTimeMs]);
 
-  const workTimeStr = useMemo(() => {
+  const {days: workDays, time: workTime} = useMemo(() => {
     if (
       settings?.workHours?.days &&
       settings?.workHours?.time?.startTime &&
       settings?.workHours?.time?.endTime
     ) {
-      const daysStr = Object.entries(settings.workHours.days)
+      const days = Object.entries(settings.workHours.days)
         .filter(([, val]) => !!val)
-        .map(([key]) => capitalize(key))
-        .join(', ');
-      const timeStr = `From ${settings.workHours.time.startTime} to ${settings.workHours.time.endTime}.`;
-      return daysStr + '. ' + timeStr;
+        .map(([key]) => capitalize(key));
+
+      return {
+        days: sortDays(days),
+        time: `${settings.workHours.time.startTime} to ${settings.workHours.time.endTime}`,
+      };
     }
-    return null;
+    return {};
   }, [settings]);
 
   useEffect(() => {
@@ -102,7 +105,19 @@ export function UserStatus({data, settings}: UserStatusProps) {
         <div className={cx('text-20 font-bold', textColor)}>{status ?? 'Unknown'}</div>
         <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
       </div>
-      {Boolean(workTimeStr) && <div>Work time: {workTimeStr}</div>}
+      {Boolean(workDays && workTime) && (
+        <div
+          className="flex justify-end items-center text-gray-400 text-12"
+          title="Tracking days & time"
+        >
+          {workDays?.map((day) => (
+            <span key={day} className="text-sm py-0.5 px-1 rounded border text-gray-400 mr-1">
+              {day}
+            </span>
+          ))}
+          <span>{workTime}</span>
+        </div>
+      )}
     </div>
   );
 }

@@ -87,19 +87,15 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   };
 
   const pieChartBlockStyle = css({
-    width: 'min(50%, 600px)',
     height: PIE_CHART_AND_TABLE_HEIGHT,
+    flexGrow: 1,
     flexShrink: 0,
     borderRadius: theme.borders.radius300,
     ...theme.borders.border200,
   });
 
-  const chartSettingsStyle = css({
-    marginTop: theme.sizing.scale800,
-  });
-
   return (
-    <>
+    <div className="min-w-[1100px] max-w-[1300px]">
       <div className="flex flex-col mb-4">
         <div className="flex flex-row justify-between items-center">
           <h1 className="font-bold text-28 leading-tight flex flex-row gap-1 items-center">
@@ -126,7 +122,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
       {hasData && (
         <>
-          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-4">
+          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-6">
             {Boolean(availableDates?.length) && (
               <ButtonGroup
                 size={SIZE.compact}
@@ -162,18 +158,12 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
           {Boolean(currentDayData) && (
             <>
-              <div className={chartSettingsStyle}>
+              <div className="mt-6 hidden">
                 <Checkbox checked={showIdle} onChange={(e) => setShowIdle(e.target.checked)}>
                   Show Idle Time
                 </Checkbox>
               </div>
-              <div className="flex mt-5 gap-4">
-                <div className={pieChartBlockStyle}>
-                  <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
-                </div>
-                <div className={pieChartBlockStyle}>
-                  <RadarChart data={currentDayData?.activities} />
-                </div>
+              <div className="mt-8">
                 <DomainsTable
                   data={aggregatedData}
                   height={PIE_CHART_AND_TABLE_HEIGHT}
@@ -183,12 +173,22 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   onDomainFocus={setFocusedDomainId}
                 />
               </div>
+              <div className="flex mt-5 gap-4">
+                <div className={pieChartBlockStyle}>
+                  <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Top domains</h3>
+                  <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
+                </div>
+                <div className={pieChartBlockStyle}>
+                  <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Top categories</h3>
+                  <RadarChart data={currentDayData?.activities} />
+                </div>
+              </div>
 
               <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
             </>
           )}
         </>
       )}
-    </>
+    </div>
   );
 }

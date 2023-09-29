@@ -4,7 +4,6 @@ import {useStyletron} from 'baseui';
 import {Checkbox} from 'baseui/checkbox';
 import {MemberStatisticActivityType} from '../../../types/api';
 import {OTHER_BUCKET_STR} from '../../../const/string';
-import {PIE_CHART_AND_TABLE_HEIGHT} from '../member-statistics';
 import {getHourlyData, TOTAL_KEY} from './get-hourly-data';
 import {getDomainNamesFromData} from './get-domain-names-from-data';
 import {TimeLineTooltip} from './tooltip';
@@ -23,14 +22,13 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
   const [css, theme] = useStyletron();
 
   const wrapperStyle = css({
-    flexGrow: 1,
     borderRadius: theme.borders.radius300,
     marginTop: theme.sizing.scale600,
     ...theme.borders.border200,
   });
 
   const timelineChartStyle = css({
-    height: PIE_CHART_AND_TABLE_HEIGHT,
+    height: '300px',
   });
 
   const chartSettingsStyle = css({

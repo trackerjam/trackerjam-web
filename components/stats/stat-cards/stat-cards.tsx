@@ -1,11 +1,13 @@
 import {useMemo} from 'react';
 import {DateActivityData} from '../../../types/api';
 import {formatTimeDuration} from '../../../utils/format-time-duration';
-import {SingleCard} from './single-card';
+import {SingleValue} from './single-value';
 import {countUniqueDomains} from './count-unique-domains';
 import {calcHttpsPercentage} from './calc-https-percentage';
 import {getDomainWithLongestSession} from './get-domain-with-logest-sessions';
 import {getStatDelta} from './get-stat-delta';
+import {calcProductivityPercentages} from './calc-productivity-stat';
+import {ProductivityBar} from './productivity-bar';
 
 type ActivityDataType = DateActivityData | null | undefined;
 interface StatCardProps {
@@ -44,7 +46,7 @@ function useStatData(data: ActivityDataType, previousDayData: ActivityDataType) 
 
     return {
       activityTime: {
-        value: formatTimeDuration(data.totalActivityTime),
+        value: formatTimeDuration(data.totalActivityTime, {skipSeconds: true}),
         ...getStatDelta({
           value: data.totalActivityTime,
           prevValue: previousDayData?.totalActivityTime,
@@ -76,20 +78,30 @@ function useStatData(data: ActivityDataType, previousDayData: ActivityDataType) 
       mostVisitedDomain: {
         value: getDomainWithLongestSession(data.activities),
       },
+      productivityScore: {
+        value: calcProductivityPercentages(data.activities),
+      },
     };
   }, [data, previousDayData]);
 }
 export function StatCards({data, previousDayData}: StatCardProps) {
-  const {activityTime, sessionCount, totalDomainsCount, httpsPercentage, mostVisitedDomain} =
-    useStatData(data, previousDayData);
+  const {
+    activityTime,
+    sessionCount,
+    totalDomainsCount,
+    httpsPercentage,
+    mostVisitedDomain,
+    productivityScore,
+  } = useStatData(data, previousDayData);
 
   return (
-    <div className="flex gap-8 mt-4">
-      <SingleCard stat={activityTime} title="Activity Time" />
-      <SingleCard stat={mostVisitedDomain} title="Most Time Spent On" />
-      <SingleCard stat={totalDomainsCount} title="Domains Count" />
-      <SingleCard stat={sessionCount} title="Session Count" />
-      <SingleCard stat={httpsPercentage} title="HTTPS Percentage" />
+    <div className="flex gap-4 mt-4">
+      <SingleValue stat={activityTime} title="Activity Time" />
+      <SingleValue stat={mostVisitedDomain} title="Most Time Spent On" />
+      <SingleValue stat={totalDomainsCount} title="Domains Count" />
+      <SingleValue stat={sessionCount} title="Session Count" />
+      <SingleValue stat={httpsPercentage} title="HTTPS Percentage" />
+      <ProductivityBar stat={productivityScore} />
     </div>
   );
 }
