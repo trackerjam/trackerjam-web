@@ -32,7 +32,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState<boolean>(false);
   const [hoveredId, setHoveredId] = useState<null | string>(null);
-  const [focusedDomainId, setFocusedDomainId] = useState<null | string>(null);
+  const [focusedDomainName, setFocusedDomainName] = useState<string | null>(null);
   const [isEventsOpen, setIsEventsOpen] = useState<boolean>(false);
 
   const availableDates = useMemo(() => {
@@ -78,7 +78,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const aggregatedData = useAggregatedData({
     currentDayData,
     showIdle,
-    focusOnDomain: focusedDomainId,
+    focusOnDomain: focusedDomainName,
   });
 
   const handleChangeDate = (idx: number) => {
@@ -176,13 +176,16 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   height={PIE_CHART_AND_TABLE_HEIGHT}
                   hoveredId={hoveredId}
                   onHover={setHoveredId}
-                  focusedDomainId={focusedDomainId}
-                  onDomainFocus={setFocusedDomainId}
+                  focusedDomainName={focusedDomainName}
+                  onDomainFocus={setFocusedDomainName}
                 />
               </div>
               <div className="flex mt-5 gap-4">
                 <div className={pieChartBlockStyle}>
-                  <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Top domains</h3>
+                  <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">
+                    Top {focusedDomainName ? 'pages' : 'domains'}
+                    {Boolean(focusedDomainName) && ` for ${focusedDomainName}`}
+                  </h3>
                   <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
                 </div>
                 <div className={pieChartBlockStyle}>
@@ -191,7 +194,10 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 </div>
               </div>
 
-              <TimelineChart data={currentDayData?.activities} focusedDomainId={focusedDomainId} />
+              <TimelineChart
+                data={currentDayData?.activities}
+                focusedDomainName={focusedDomainName}
+              />
             </>
           )}
         </>

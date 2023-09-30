@@ -11,6 +11,12 @@ describe('createOtherBucket', () => {
       value: idx * 10,
       sessionCount: idx,
       lastSession: idx === 5 ? null : Date.now() - idx * 1000, // making the 6th item null for variation
+      domainName: `domain-${idx}`,
+      domainsTags: {
+        Productivity: 1,
+        Other: 0.5,
+      },
+      productivityScore: 0.75,
     }));
   };
 

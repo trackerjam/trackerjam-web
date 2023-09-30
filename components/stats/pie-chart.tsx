@@ -16,6 +16,14 @@ interface PieDataProps {
   onHover: (domainId: string | null) => void;
 }
 
+function truncateLongLabels(label: string) {
+  const LIMIT = 20;
+  if (label.length > LIMIT) {
+    return label.slice(0, LIMIT) + '...';
+  }
+  return label;
+}
+
 export function PieChart({data, hoveredId, onHover}: PieDataProps) {
   const dataWithOther = useMemo(() => {
     return createOtherBucket(data);
@@ -35,6 +43,10 @@ export function PieChart({data, hoveredId, onHover}: PieDataProps) {
       valueFormat={(value) => formatTimeDuration(value)}
       margin={{top: 40, right: 80, bottom: 80, left: 80}}
       colors={{scheme: 'set2'}}
+      id="label"
+      arcLinkLabel={({label}) => {
+        return truncateLongLabels(label as string);
+      }}
       innerRadius={0.3}
       padAngle={0.7}
       cornerRadius={3}

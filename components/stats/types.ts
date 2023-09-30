@@ -9,5 +9,5 @@ export type AggregatedDataType = {
   children?: AggregatedDataType[];
   domainsTags?: DomainTags;
   productivityScore?: number;
-  _domainName?: string; // Appears inside children to show correct domain favicon
+  domainName: string | null; // Appears inside children to show correct domain favicon
 };

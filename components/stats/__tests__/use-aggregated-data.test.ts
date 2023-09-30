@@ -40,21 +40,21 @@ describe('aggregateSessionsByTitle', () => {
         label: 'Activity 1',
         value: 3 * 60 * 60 * 1000, // 3 hours in ms
         sessionCount: 2,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
       {
         id: 'Activity 2',
         label: 'Activity 2',
         value: 2 * 60 * 60 * 1000, // 2 hours in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
       {
         id: '<Unknown>',
         label: '<Unknown>',
         value: 1 * 60 * 60 * 1000, // 1 hour in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
     ];
 
@@ -95,7 +95,7 @@ describe('aggregateSessionsByTitle', () => {
         label: '<Unknown>',
         value: 2 * 60 * 60 * 1000, // 2 hours in ms
         sessionCount: 2,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
     ];
 
@@ -130,14 +130,14 @@ describe('aggregateSessionsByTitle', () => {
         label: 'A',
         value: 1 * 60 * 60 * 1000, // 1 hour in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
       {
         id: 'B',
         label: 'B',
         value: 1 * 60 * 60 * 1000, // 1 hour in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
     ];
 
@@ -171,14 +171,14 @@ describe('aggregateSessionsByTitle', () => {
         label: 'B',
         value: 2 * 60 * 60 * 1000, // 1 hour in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
       {
         id: '<Unknown>',
         label: '<Unknown>',
         value: 1 * 60 * 60 * 1000, // 1 hour in ms
         sessionCount: 1,
-        _domainName: 'example.com',
+        domainName: 'example.com',
       },
     ];
 
@@ -195,6 +195,7 @@ describe('aggregateByDomain', () => {
         {
           timeSpent: 1200000,
           domainName: 'example.com',
+          id: '00000000-0000-0000-0000-000000000000',
           sessionActivities: [
             {
               startDatetime: new Date('2023-08-26T10:00:00Z'),
@@ -212,18 +213,19 @@ describe('aggregateByDomain', () => {
 
     expect(result).toEqual({
       'example.com': {
-        id: 'example.com',
+        id: '00000000-0000-0000-0000-000000000000',
         label: 'example.com',
         value: 1200000,
         sessionCount: 1,
         lastSession: new Date('2023-08-26T10:20:00Z').getTime(),
+        domainName: 'example.com',
         children: [
           {
             id: 'Page A',
             label: 'Page A',
             value: 1200000,
             sessionCount: 1,
-            _domainName: 'example.com',
+            domainName: 'example.com',
           },
         ],
       },
@@ -238,6 +240,7 @@ describe('aggregateByDomain', () => {
         {
           timeSpent: 1800000,
           domainName: 'example.com',
+          id: '00000000-0000-0000-0000-000000000000',
           sessionActivities: [
             {
               startDatetime: new Date('2023-08-26T10:00:00Z'),
@@ -256,6 +259,7 @@ describe('aggregateByDomain', () => {
         {
           timeSpent: 3000000,
           domainName: 'another.com',
+          id: '00000000-0000-0000-0000-000000000001',
           sessionActivities: [
             {
               startDatetime: new Date('2023-08-26T11:00:00Z'),
@@ -278,8 +282,9 @@ describe('aggregateByDomain', () => {
 
     expect(result).toEqual({
       'example.com': {
-        id: 'example.com',
+        id: '00000000-0000-0000-0000-000000000000',
         label: 'example.com',
+        domainName: 'example.com',
         value: 1800000,
         sessionCount: 2,
         lastSession: new Date('2023-08-26T10:50:00Z').getTime(),
@@ -289,13 +294,14 @@ describe('aggregateByDomain', () => {
             label: 'Page A on example.com',
             value: 2400000, // 20 minutes + 20 minutes
             sessionCount: 2,
-            _domainName: 'example.com',
+            domainName: 'example.com',
           },
         ],
       },
       'another.com': {
-        id: 'another.com',
+        id: '00000000-0000-0000-0000-000000000001',
         label: 'another.com',
+        domainName: 'another.com',
         value: 3000000,
         sessionCount: 2,
         lastSession: new Date('2023-08-26T12:10:00Z').getTime(),
@@ -305,14 +311,14 @@ describe('aggregateByDomain', () => {
             label: 'Page B on another.com',
             value: 2400000, // 40 minutes
             sessionCount: 1,
-            _domainName: 'another.com',
+            domainName: 'another.com',
           },
           {
             id: 'Page C on another.com',
             label: 'Page C on another.com',
             value: 600000, // 10 minutes
             sessionCount: 1,
-            _domainName: 'another.com',
+            domainName: 'another.com',
           },
         ],
       },

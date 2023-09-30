@@ -12,7 +12,7 @@ interface DomainTableProps {
   onHover: (domainId: string | null) => void;
   hoveredId?: null | string;
   onDomainFocus: (domainId: string | null) => void;
-  focusedDomainId?: null | string;
+  focusedDomainName?: null | string;
 }
 
 const TABLE_HEADER = [
@@ -50,7 +50,7 @@ export function DomainsTable({
   height = 'auto',
   hoveredId,
   onDomainFocus,
-  focusedDomainId,
+  focusedDomainName,
 }: DomainTableProps) {
   const [css, theme] = useStyletron();
 
@@ -115,7 +115,7 @@ export function DomainsTable({
           </tr>
         </thead>
         <tbody>
-          {Boolean(focusedDomainId) && (
+          {Boolean(focusedDomainName) && (
             <>
               <tr>
                 <td colSpan={5}>
@@ -140,7 +140,7 @@ export function DomainsTable({
               children,
               domainsTags = {},
               productivityScore,
-              _domainName,
+              domainName,
             }) => {
               const {shareWidth, sharePercentage} = getTimeShare({
                 totalActivityTime: totalTime,
@@ -160,13 +160,13 @@ export function DomainsTable({
                   <td className={tableCellStyle}>
                     <div className={domainLabelStyle}>
                       <div className="flex flex-row items-center gap-2">
-                        <Favicon domain={_domainName || label} />
+                        <Favicon domain={domainName || label} />
                         <span>{label}</span>
                       </div>
                       {Boolean(children?.length) && (
                         <div>
                           <button
-                            onClick={() => onDomainFocus(id)}
+                            onClick={() => onDomainFocus(domainName)}
                             className="flex items-center gap-2 border-2 border-gray-100 rounded px-1 text-12 text-gray-700 hover:bg-blue-200 transition-colors duration-150"
                           >
                             Focus

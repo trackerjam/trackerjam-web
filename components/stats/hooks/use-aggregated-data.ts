@@ -28,11 +28,12 @@ export function useAggregatedData({
           lastSession: null,
           sessionCount: 0,
           children: [],
+          domainName: null,
         });
       }
 
       if (focusOnDomain) {
-        const focusedDomain = dataValues.find((domain) => domain.id === focusOnDomain);
+        const focusedDomain = dataValues.find((domain) => domain.domainName === focusOnDomain);
         if (focusedDomain?.children) {
           dataValues = focusedDomain.children;
         }
@@ -47,17 +48,18 @@ export function useAggregatedData({
 
 export function aggregateByDomain(data: DateActivityData) {
   return data.activities.reduce(
-    (mem, {timeSpent, domainName, sessionActivities, domainsTags, productivityScore}) => {
+    (mem, {timeSpent, domainName, sessionActivities, domainsTags, productivityScore, id}) => {
       const aggregatedSessions = aggregateSessionsByTitle({sessionActivities, domainName});
 
       if (!mem[domainName]) {
         mem[domainName] = {
-          id: domainName,
+          id,
           label: domainName,
           value: 0,
           sessionCount: 0,
           lastSession: null,
           children: aggregatedSessions,
+          domainName,
           domainsTags,
           productivityScore,
         };
@@ -116,6 +118,6 @@ export function aggregateSessionsByTitle({
       label: title,
       value: totalLength,
       sessionCount: count,
-      _domainName: domainName,
+      domainName,
     }));
 }

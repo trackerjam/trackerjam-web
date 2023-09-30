@@ -14,10 +14,10 @@ const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.Responsive
 
 interface TimelineChartProps {
   data: MemberStatisticActivityType[] | null | undefined;
-  focusedDomainId?: string | null;
+  focusedDomainName?: string | null;
 }
 
-export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
+export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
   const [isDetailsEnabled, setIsDetailsEnabled] = useState<boolean>(false);
   const [css, theme] = useStyletron();
 
@@ -41,8 +41,8 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
   const {chartData = [], domains = []} = useMemo(() => {
     if (data?.length) {
       let filteredData = data;
-      if (focusedDomainId) {
-        filteredData = data.filter((d) => d.domainName === focusedDomainId);
+      if (focusedDomainName) {
+        filteredData = data.filter((d) => d.domainName === focusedDomainName);
       }
       const chartData = getHourlyData(filteredData);
       const domains = getDomainNamesFromData(chartData);
@@ -53,13 +53,16 @@ export function TimelineChart({data, focusedDomainId}: TimelineChartProps) {
       };
     }
     return {};
-  }, [data, focusedDomainId]);
+  }, [data, focusedDomainName]);
 
   const chartKeys = isDetailsEnabled ? domains : [TOTAL_KEY];
 
   return (
     <div className={wrapperStyle}>
-      <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity Timeline</h3>
+      <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">
+        Activity Timeline
+        {Boolean(focusedDomainName) && ` for ${focusedDomainName}`}
+      </h3>
 
       <div className={chartSettingsStyle}>
         <Checkbox
