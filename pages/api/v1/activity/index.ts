@@ -150,6 +150,11 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const endTime = new Date(session.endTime).getTime();
 
       if (endTime <= lastSessionEndTime) {
+        // TODO: Filter out sessions that attempt to occupy non-empty spaces: specifically, where startTime or endTime overlaps with an existing session.
+        // TODO: Query these overlapping sessions.
+        // The reasoning is that I was working for several days and sessions accumulated but didn't synchronize for some reason.
+        // Also, investigate why the extension attempts to backfill something that occurred 3 hours ago, even though we have newer
+        // sessions that has already been processed.
         const msg = 'Session inconsistency detected';
         const data = JSON.stringify({
           payloadSession: session,
@@ -201,7 +206,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
-    console.warn('SessionActivity was not created: sessionRecords is empty filtering');
+    console.warn('SessionActivity was not created: sessionRecords is empty after filtering');
     return;
   }
 
@@ -284,7 +289,7 @@ async function create({req, res}: PublicMethodContext) {
     }
 
     const endTime = performance.now();
-    console.debug(
+    console.log(
       `Activity processing time: ${(endTime - startTime).toFixed(0)}ms. Payload size: ${
         payload.sessions.length
       }`

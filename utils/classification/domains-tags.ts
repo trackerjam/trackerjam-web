@@ -51309,5 +51309,10 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Development": 1,
     "WebApp": 0.8,
     "Technology": 0.2,
+  },
+  "trackerjam.com": {
+    "Productivity": 1,
+    "WebApp": 0.7,
+    "Technology": 0.3,
   }
 }
