@@ -150,8 +150,11 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const endTime = new Date(session.endTime).getTime();
 
       if (endTime <= lastSessionEndTime) {
-        const msg = 'Duplicate session detected';
-        const data = JSON.stringify(session);
+        const msg = 'Session inconsistency detected';
+        const data = JSON.stringify({
+          payloadSession: session,
+          existingSession: lastSession,
+        });
         sentryCatchMessage({data, msg, token});
         console.error(msg, data);
         return;
@@ -198,7 +201,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
-    console.log('SessionActivity was not created');
+    console.warn('SessionActivity was not created: sessionRecords is empty filtering');
     return;
   }
 
@@ -267,14 +270,25 @@ async function create({req, res}: PublicMethodContext) {
     return res.status(400).json(buildError('bad sessions format'));
   }
 
+  // Early status return to avoid HTTP 504 Gateway Timeout in case of large payloads
+  // TODO - consider moving this to a background job and informing a client separately
+  res.status(201).end();
+
   try {
+    // Count processing time
+    const startTime = performance.now();
+
     const {activities} = translatePayloadToInternalStructure(payload);
     for (let i = 0; i < activities.length; i++) {
       await handleRecordActivity(activities[i], payload.token);
     }
 
-    // Early status return
-    res.status(201).end();
+    const endTime = performance.now();
+    console.debug(
+      `Activity processing time: ${(endTime - startTime).toFixed(0)}ms. Payload size: ${
+        payload.sessions.length
+      }`
+    );
 
     // Check & update status in background
     await prismadb.member.update({
