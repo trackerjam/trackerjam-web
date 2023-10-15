@@ -15,7 +15,7 @@ import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
 import {DomainsTable} from './domains-table';
 import {StatCards} from './stat-cards/stat-cards';
-import {UserStatus} from './user-status/user-status';
+import {UserDetails} from './user-details/user-details';
 import {getMostRecentData} from './utils/get-most-recent-data';
 import {EventsList} from './events-list';
 import {RadarChart} from './radar-chart';
@@ -113,7 +113,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             </div>
           )}
         </div>
-        {hasData && <UserStatus data={mostRecentDateData} settings={data?.member?.settings} />}
+        {hasData && <UserDetails data={mostRecentDateData} settings={data?.member?.settings} />}
       </div>
 
       {isLoading && <span>Loading...</span>}

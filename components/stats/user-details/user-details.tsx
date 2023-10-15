@@ -38,7 +38,7 @@ function capitalize(text: string) {
   return text[0].toUpperCase() + text.substring(1);
 }
 
-export function UserStatus({data, settings}: UserStatusProps) {
+export function UserDetails({data, settings}: UserStatusProps) {
   const [currentTimeMs, setCurrentTimeMs] = useState<number>(Date.now());
 
   const {mostRecentSessionTimeFormatted, status} = useMemo(() => {
@@ -102,8 +102,10 @@ export function UserStatus({data, settings}: UserStatusProps) {
             isOnline ? 'animate-pulsate-border' : null
           )}
         ></div>
-        <div className={cx('text-20 font-bold', textColor)}>{status ?? 'Unknown'}</div>
-        <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
+        <div className={cx('text-20 font-bold', textColor)}>{status ?? 'New'}</div>
+        {Boolean(status) && (
+          <div>Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago</div>
+        )}
       </div>
       {Boolean(workDays && workTime) && (
         <div

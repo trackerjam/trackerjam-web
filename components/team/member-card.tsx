@@ -3,7 +3,7 @@ import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import {LuCopyCheck} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {BiCopy, BiTrash, BiTime, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
@@ -13,7 +13,6 @@ import {formatDistanceToNow} from 'date-fns';
 import clsx from 'clsx';
 
 import * as Toast from '@radix-ui/react-toast';
-import {formatTimeDuration} from '../../utils/format-time-duration';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
 import {MemberAndSummary} from '../../types/api';
@@ -171,17 +170,6 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
       <div className="flex justify-between">
         <div className={statsColumnStyle}>
           <StatusTag status={status} />
-        </div>
-
-        <div className={statsColumnStyle}>
-          <StatefulTooltip content="Last reported summary" showArrow placement={PLACEMENT.bottom}>
-            <div className={statsContentStyle}>
-              <BiTime className="text-gray-130" title="" />{' '}
-              {summaryData?.activityTime
-                ? formatTimeDuration(summaryData.activityTime)
-                : emptySummaryText}
-            </div>
-          </StatefulTooltip>
         </div>
 
         <div className={clsx(statsColumnStyle, 'border-r-0')}>

@@ -30363,8 +30363,8 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Other": 0.2
   },
   "openai.com": {
-    "Technology": 0.7,
-    "Educational": 0.2,
+    "Technology": 1,
+    "Educational": 0.3,
     "Other": 0.1
   },
   "openbittorrent.com": {
