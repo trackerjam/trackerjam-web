@@ -4,6 +4,15 @@ import {formatDistanceToNowStrict} from 'date-fns';
 interface EventsListProps {
   events: MemberEvent[];
 }
+
+// See https://github.com/Deliaz/trackerjam-extension/blob/main/src/types/userEvent.ts
+const STATUS_TEXT: {[key: string]: string} = {
+  Auth: 'User activated the key',
+  Logout: 'User signed out from the extension',
+  EnabledExtension: 'Extension is enabled',
+  PausedTracker: 'Tracking has been paused',
+  StartedTracker: 'Tracking has been started',
+};
 export function EventsList({events}: EventsListProps) {
   return (
     <div>
@@ -12,9 +21,11 @@ export function EventsList({events}: EventsListProps) {
 
       {events?.map((eventRecord) => {
         const dateObj = new Date(eventRecord.date);
+        const readableText: string = STATUS_TEXT[eventRecord.event] ?? eventRecord.event;
+
         return (
           <div key={eventRecord.id} className="p-4 border border-gray-400 rounded-md mb-1">
-            <strong>{eventRecord.event}</strong>
+            <strong>{readableText}</strong>
             <div className="text-gray-500">
               {dateObj.toLocaleDateString()} {dateObj.toLocaleTimeString()}{' '}
               <span className="text-gray-400">
