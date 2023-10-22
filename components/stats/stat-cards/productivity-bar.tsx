@@ -32,7 +32,7 @@ export function ProductivityBar({stat}: ProductivityBarProps) {
 
   return (
     <CardElement>
-      <div className="text-sm text-gray-400">Productivity Score</div>
+      <div className="text-12 text-gray-400">Productivity Score</div>
       <div
         className="flex items-center gap-3 justify-center"
         style={{width: '160px', height: '32px'}}
@@ -47,7 +47,7 @@ export function ProductivityBar({stat}: ProductivityBarProps) {
             margin={{top: 0, right: 0, bottom: 0, left: 0}}
             axisBottom={null}
             valueFormat={(val) => val.toFixed(0) + '%'}
-            labelSkipWidth={18}
+            labelSkipWidth={21}
             colors={['#ff746f', '#ffc95c', '#1ec460']}
           />
         )}

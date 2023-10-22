@@ -18,15 +18,16 @@ import {UserDetails} from './user-details/user-details';
 import {getMostRecentData} from './utils/get-most-recent-data';
 import {EventsList} from './events-list';
 import {RadarChart} from './radar-chart';
+import {Trends} from './trends/trends';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
 export function MemberStatistics({memberId}: {memberId: string}) {
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
 
-  const hasData = Boolean(!isLoading && data);
+  const hasDataResponse = Boolean(!isLoading && data);
 
-  const itemsRef = useRef<HTMLDivElement>(null);
+  const datesListRef = useRef<HTMLDivElement>(null);
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState<boolean>(false);
@@ -85,12 +86,14 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   };
 
   useLayoutEffect(() => {
-    itemsRef.current?.lastElementChild?.scrollIntoView({
-      behavior: 'smooth',
+    datesListRef.current?.lastElementChild?.scrollIntoView({
+      behavior: 'instant',
       block: 'nearest',
       inline: 'center',
     });
   }, [currentDate]);
+
+  const hasCurrentDayData = Boolean(currentDayData);
 
   return (
     <div className="min-w-[1100px] max-w-[1300px]">
@@ -101,7 +104,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             <span className="text-black">{data?.member ? `${data?.member?.name}` : '...'}</span>
           </h1>
 
-          {hasData && (
+          {hasDataResponse && (
             <div>
               <button
                 className="text-gray-300 border-dashed border-b-2 border-gray-300"
@@ -112,23 +115,33 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             </div>
           )}
         </div>
-        {hasData && <UserDetails data={mostRecentDateData} settings={data?.member?.settings} />}
+        {hasDataResponse && (
+          <UserDetails data={mostRecentDateData} settings={data?.member?.settings} />
+        )}
       </div>
 
       {isLoading && <span>Loading...</span>}
+
+      {!hasCurrentDayData && hasDataResponse && (
+        <div className="flex flex-row justify-between items-center">
+          <h3 className="text-gray-500 text-20">No data available yet</h3>
+        </div>
+      )}
+
       {error && <ErrorDetails error={error} />}
 
-      {hasData && (
+      {hasCurrentDayData && (
         <>
-          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-6 overflow-x-auto">
+          <Trends data={data?.activitiesByDate} />
+          <div className="my-5 border-t-2 border-b-2 border-gray-100 py-8 overflow-x-auto">
             {Boolean(availableDates?.length) && (
-              <div className="flex gap-x-2" ref={itemsRef}>
+              <div className="flex gap-x-1" ref={datesListRef}>
                 {
                   availableDates?.map((dateStr, idx) => {
                     return (
                       <Button
                         className="whitespace-nowrap"
-                        size="sm"
+                        size="md"
                         kind={selectedDateIdx === idx ? 'black' : 'gray'}
                         key={dateStr}
                         onClick={() => handleChangeDate(idx)}
@@ -142,7 +155,9 @@ export function MemberStatistics({memberId}: {memberId: string}) {
             )}
           </div>
 
-          <StatCards data={currentDayData} previousDayData={previousDayData} />
+          {Boolean(currentDayData) && (
+            <StatCards data={currentDayData} previousDayData={previousDayData} />
+          )}
 
           <Drawer
             isOpen={isEventsOpen}

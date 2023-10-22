@@ -43,7 +43,7 @@ export function SingleValue({title, stat}: SingleCards) {
 
   return (
     <CardElement>
-      <div className="text-sm text-gray-400">{title}</div>
+      <div className="text-12 text-gray-400">{title}</div>
       <div className="flex items-center gap-3">
         <span className="text-gray-600 text-22 font-bold">{finalValue}</span>
         {hasDelta && (
