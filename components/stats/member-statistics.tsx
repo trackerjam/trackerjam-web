@@ -31,7 +31,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState<boolean>(false);
-  const [hoveredId, setHoveredId] = useState<null | string>(null);
+  const [hoveredLabel, setHoveredLabel] = useState<null | string>(null);
   const [focusedDomainName, setFocusedDomainName] = useState<string | null>(null);
   const [isEventsOpen, setIsEventsOpen] = useState<boolean>(false);
 
@@ -193,8 +193,8 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 <DomainsTable
                   data={aggregatedData}
                   height={PIE_CHART_AND_TABLE_HEIGHT}
-                  hoveredId={hoveredId}
-                  onHover={setHoveredId}
+                  hoveredLabel={hoveredLabel}
+                  onHover={setHoveredLabel}
                   focusedDomainName={focusedDomainName}
                   onDomainFocus={setFocusedDomainName}
                 />
@@ -210,7 +210,11 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                     Top {focusedDomainName ? 'pages' : 'domains'}
                     {Boolean(focusedDomainName) && ` for ${focusedDomainName}`}
                   </h3>
-                  <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
+                  <PieChart
+                    data={aggregatedData}
+                    hoveredLabel={hoveredLabel}
+                    onHover={setHoveredLabel}
+                  />
                 </div>
                 <div
                   className="grow shrink-0 rounded-lg border border-gray-200"

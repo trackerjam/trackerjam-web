@@ -12,7 +12,7 @@ const ResponsivePie = dynamic(() => import('@nivo/pie').then((m) => m.Responsive
 
 interface PieDataProps {
   data: AggregatedDataType[];
-  hoveredId?: null | string;
+  hoveredLabel?: null | string;
   onHover: (domainId: string | null) => void;
 }
 
@@ -24,18 +24,18 @@ function truncateLongLabels(label: string) {
   return label;
 }
 
-export function PieChart({data, hoveredId, onHover}: PieDataProps) {
+export function PieChart({data, hoveredLabel, onHover}: PieDataProps) {
   const dataWithOther = useMemo(() => {
     return createOtherBucket(data);
   }, [data]);
 
   const hoveredBucketId = useMemo(() => {
-    if (hoveredId) {
-      const isTopDomain = dataWithOther.some(({id}) => id === hoveredId);
-      return isTopDomain ? hoveredId : OTHER_BUCKET_STR;
+    if (hoveredLabel) {
+      const isTopDomain = dataWithOther.some(({label}) => label === hoveredLabel);
+      return isTopDomain ? hoveredLabel : OTHER_BUCKET_STR;
     }
-    return hoveredId;
-  }, [dataWithOther, hoveredId]);
+    return hoveredLabel;
+  }, [dataWithOther, hoveredLabel]);
 
   return (
     <ResponsivePie

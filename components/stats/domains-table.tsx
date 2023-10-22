@@ -10,7 +10,7 @@ interface DomainTableProps {
   data: AggregatedDataType[];
   height?: string;
   onHover: (domainId: string | null) => void;
-  hoveredId?: null | string;
+  hoveredLabel?: null | string;
   onDomainFocus: (domainId: string | null) => void;
   focusedDomainName?: null | string;
 }
@@ -48,7 +48,7 @@ export function DomainsTable({
   data,
   onHover,
   height = 'auto',
-  hoveredId,
+  hoveredLabel,
   onDomainFocus,
   focusedDomainName,
 }: DomainTableProps) {
@@ -150,11 +150,11 @@ export function DomainsTable({
                 <tr
                   key={id}
                   className={tableRowStyle}
-                  onMouseEnter={() => onHover(id)}
+                  onMouseEnter={() => onHover(label)}
                   onMouseLeave={() => onHover(null)}
                   style={{
                     backgroundColor:
-                      hoveredId === id ? theme.colors.backgroundSecondary : 'transparent',
+                      hoveredLabel === label ? theme.colors.backgroundSecondary : 'transparent',
                   }}
                 >
                   <td className={tableCellStyle}>
