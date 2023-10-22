@@ -60,6 +60,7 @@ module.exports = {
     'baseui/deprecated-component-api': 'warn',
     'baseui/no-deep-imports': 'warn',
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
   settings: {
     'import/resolver': {

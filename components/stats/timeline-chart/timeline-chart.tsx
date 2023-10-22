@@ -88,7 +88,7 @@ export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
           axisTop={null}
           axisRight={null}
           groupMode="stacked"
-          maxValue={60}
+          maxValue="auto"
           axisBottom={{
             tickSize: 5,
             tickPadding: 5,
