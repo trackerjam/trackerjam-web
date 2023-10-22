@@ -1,15 +1,14 @@
 'use client';
 
-import {useEffect, useMemo, useState} from 'react';
-import {useStyletron} from 'baseui';
-import {ButtonGroup, MODE, SIZE} from 'baseui/button-group';
-import {Button} from 'baseui/button';
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+
 import {format} from 'date-fns';
 import {Drawer} from 'baseui/drawer';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
 
+import {Button} from '../common/button';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
@@ -23,11 +22,11 @@ import {RadarChart} from './radar-chart';
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
 export function MemberStatistics({memberId}: {memberId: string}) {
-  const [css, theme] = useStyletron();
-
   const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
 
   const hasData = Boolean(!isLoading && data);
+
+  const itemsRef = useRef<HTMLDivElement>(null);
 
   const [currentDate, setCurrentDate] = useState<string | null>(null);
   const [showIdle, setShowIdle] = useState<boolean>(false);
@@ -85,13 +84,13 @@ export function MemberStatistics({memberId}: {memberId: string}) {
     setCurrentDate(availableDates?.[idx] || null);
   };
 
-  const pieChartBlockStyle = css({
-    height: PIE_CHART_AND_TABLE_HEIGHT,
-    flexGrow: 1,
-    flexShrink: 0,
-    borderRadius: theme.borders.radius300,
-    ...theme.borders.border200,
-  });
+  useLayoutEffect(() => {
+    itemsRef.current?.lastElementChild?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  }, [currentDate]);
 
   return (
     <div className="min-w-[1100px] max-w-[1300px]">
@@ -121,20 +120,25 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
       {hasData && (
         <>
-          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-6">
+          <div className="my-4 border-t-2 border-b-2 border-gray-100 py-6 overflow-x-auto">
             {Boolean(availableDates?.length) && (
-              <ButtonGroup
-                size={SIZE.compact}
-                mode={MODE.radio}
-                selected={selectedDateIdx}
-                onClick={(_, idx) => handleChangeDate(idx)}
-              >
+              <div className="flex gap-x-2" ref={itemsRef}>
                 {
-                  availableDates?.map((dateStr) => {
-                    return <Button key={dateStr}>{format(new Date(dateStr), 'E, dd MMM')}</Button>;
+                  availableDates?.map((dateStr, idx) => {
+                    return (
+                      <Button
+                        className="whitespace-nowrap"
+                        size="sm"
+                        kind={selectedDateIdx === idx ? 'black' : 'gray'}
+                        key={dateStr}
+                        onClick={() => handleChangeDate(idx)}
+                      >
+                        {format(new Date(dateStr), 'E, dd MMM')}
+                      </Button>
+                    );
                   }) as React.ReactNode[]
                 }
-              </ButtonGroup>
+              </div>
             )}
           </div>
 
@@ -181,14 +185,24 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 />
               </div>
               <div className="flex mt-5 gap-4">
-                <div className={pieChartBlockStyle}>
+                <div
+                  className="grow shrink-0 rounded-lg border border-gray-200"
+                  style={{
+                    height: PIE_CHART_AND_TABLE_HEIGHT,
+                  }}
+                >
                   <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">
                     Top {focusedDomainName ? 'pages' : 'domains'}
                     {Boolean(focusedDomainName) && ` for ${focusedDomainName}`}
                   </h3>
                   <PieChart data={aggregatedData} hoveredId={hoveredId} onHover={setHoveredId} />
                 </div>
-                <div className={pieChartBlockStyle}>
+                <div
+                  className="grow shrink-0 rounded-lg border border-gray-200"
+                  style={{
+                    height: PIE_CHART_AND_TABLE_HEIGHT,
+                  }}
+                >
                   <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Top categories</h3>
                   <RadarChart data={currentDayData?.activities} />
                 </div>
