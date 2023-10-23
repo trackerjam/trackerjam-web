@@ -5,6 +5,7 @@ import {formatTimeDuration} from '../../utils/format-time-duration';
 import {getBestTag} from '../../utils/best-tag';
 import {AggregatedDataType} from './types';
 import {Favicon} from './favicon';
+import {ScoreTag} from './score-tag';
 
 interface DomainTableProps {
   data: AggregatedDataType[];
@@ -59,6 +60,7 @@ export function DomainsTable({
   const tableWrapperStyle = css({
     width: '100%',
     maxHeight: height,
+    minHeight: height,
     overflow: 'scroll',
     borderRadius: theme.borders.radius200,
     ...theme.borders.border200,
@@ -181,7 +183,9 @@ export function DomainsTable({
                     </div>
                   </td>
                   <td className={tableCellStyle}>{getBestTag(domainsTags)}</td>
-                  <td className={tableCellStyle}>{productivityScore ?? '-'}</td>
+                  <td className={tableCellStyle}>
+                    {productivityScore ? <ScoreTag score={productivityScore} /> : <span>-</span>}
+                  </td>
                   <td className={tableCellStyle}>{children?.length ?? '-'}</td>
                   <td className={tableCellStyle}>
                     <div className={domainShareBarStyle} style={{width: shareWidth}} />

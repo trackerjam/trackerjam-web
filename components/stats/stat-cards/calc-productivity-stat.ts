@@ -1,4 +1,5 @@
 import {MemberStatisticActivityType} from '../../../types/api';
+import {SCORE_LEVEL} from '../../../const/productivity';
 import {ProductivityScoreType} from './types';
 
 export function calcProductivityPercentages(
@@ -17,9 +18,9 @@ export function calcProductivityPercentages(
     const weightedValue = item.timeSpent * item.productivityScore;
     weightedTotal += weightedValue;
 
-    if (item.productivityScore > 0.7) {
+    if (item.productivityScore > SCORE_LEVEL.GOOD) {
       productiveWeightedValue += weightedValue;
-    } else if (item.productivityScore >= 0.5) {
+    } else if (item.productivityScore >= SCORE_LEVEL.NEUTRAL) {
       neutralWeightedValue += weightedValue;
     } else {
       lowWeightedValue += weightedValue;
