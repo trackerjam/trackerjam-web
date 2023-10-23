@@ -21,7 +21,7 @@ export const TAG_PRODUCTIVITY_SCORE: {[tag: string]: number} = {
   Government: 0.5, // For official documentation and related activities.
   HealthFitness: 0.4, // Wellness can improve productivity.
   Media: 0.4, // Relevant for media-related tasks.
-  News: 0.5, // Staying updated, but can be a distraction.
+  News: 0.3, // Staying updated, but can be a distraction.
   NonProfitCharity: 0.4, // Depends on the nature of the job.
   OnlineGaming: 0.1, // Mostly a distraction.
   PersonalBlog: 0.3, // Depends on content, mostly personal.
