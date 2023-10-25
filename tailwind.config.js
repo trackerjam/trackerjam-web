@@ -12,8 +12,8 @@ module.exports = {
       // sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
     },
     screens: {
-      '3xl': {max: '1919px'},
-      '2xl': {max: '1599px'},
+      '3xl': {max: '1599px'},
+      '2xl': {max: '1439px'},
       xl: {max: '1279px'},
       lg: {max: '1023px'},
       md: {max: '767px'},

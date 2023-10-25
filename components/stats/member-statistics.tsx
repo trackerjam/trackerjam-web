@@ -96,7 +96,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const hasCurrentDayData = Boolean(currentDayData);
 
   return (
-    <div className="min-w-[1100px] max-w-[1300px]">
+    <div className="max-w-[calc(100vw-250px-65px)]">
       <div className="flex flex-col mb-4">
         <div className="flex flex-row justify-between items-center">
           <h1 className="font-bold text-28 leading-tight flex flex-row gap-1 items-center">
@@ -133,26 +133,28 @@ export function MemberStatistics({memberId}: {memberId: string}) {
       {hasCurrentDayData && (
         <>
           <Trends data={data?.activitiesByDate} />
-          <div className="my-5 border-t-2 border-b-2 border-gray-100 py-8 overflow-x-auto">
-            {Boolean(availableDates?.length) && (
-              <div className="flex gap-x-1" ref={datesListRef}>
-                {
-                  availableDates?.map((dateStr, idx) => {
-                    return (
-                      <Button
-                        className="whitespace-nowrap"
-                        size="md"
-                        kind={selectedDateIdx === idx ? 'black' : 'gray'}
-                        key={dateStr}
-                        onClick={() => handleChangeDate(idx)}
-                      >
-                        {format(new Date(dateStr), 'E, dd MMM')}
-                      </Button>
-                    );
-                  }) as React.ReactNode[]
-                }
-              </div>
-            )}
+          <div className="relative my-5 border-t-2 border-b-2 border-gray-100 before:h-full before:w-12 before:left-0 before:absolute before:bg-[linear-gradient(90deg,rgba(255,255,255,1)0%,rgba(255,255,255,0)100%)]">
+            <div className="py-8 overflow-x-auto">
+              {Boolean(availableDates?.length) && (
+                <div className="flex gap-x-1" ref={datesListRef}>
+                  {
+                    availableDates?.map((dateStr, idx) => {
+                      return (
+                        <Button
+                          className="whitespace-nowrap"
+                          size="md"
+                          kind={selectedDateIdx === idx ? 'black' : 'gray'}
+                          key={dateStr}
+                          onClick={() => handleChangeDate(idx)}
+                        >
+                          {format(new Date(dateStr), 'E, dd MMM')}
+                        </Button>
+                      );
+                    }) as React.ReactNode[]
+                  }
+                </div>
+              )}
+            </div>
           </div>
 
           {Boolean(currentDayData) && (
@@ -199,7 +201,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   onDomainFocus={setFocusedDomainName}
                 />
               </div>
-              <div className="flex mt-5 gap-4">
+              <div className="flex mt-5 gap-4 2xl:flex-col">
                 <div
                   className="grow shrink-0 rounded-lg border border-gray-200"
                   style={{

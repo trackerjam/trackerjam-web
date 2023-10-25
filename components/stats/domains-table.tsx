@@ -59,6 +59,7 @@ export function DomainsTable({
 
   const tableWrapperStyle = css({
     width: '100%',
+    minWidth: '800px',
     maxHeight: height,
     minHeight: height,
     overflow: 'scroll',

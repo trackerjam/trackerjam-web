@@ -56,8 +56,8 @@ export function Trends({data}: TrendsProps) {
   const hasData = Boolean(chartData.length);
 
   return (
-    <div className="flex flex-row gap-3">
-      <div className="w-[70%] h-[160px]">
+    <div className="flex flex-row gap-3 xl:flex-col xl:gap-y-6">
+      <div className="w-[70%] h-[160px] xl:w-full">
         <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity by days</h3>
         {!hasData && (
           <div className="flex items-center justify-center h-full text-gray-400">
@@ -119,14 +119,14 @@ export function Trends({data}: TrendsProps) {
           />
         )}
       </div>
-      <div className="flex flex-row gap-2 items-end pb-5">
-        <CardElement>
+      <div className="flex flex-row gap-2 items-end pb-5 xl:max-w-md">
+        <CardElement className="flex-1">
           <div className="text-12 text-gray-400">All time average</div>
           <span className="text-gray-600 font-bold">
             {formatTimeDuration(averageAllTime, {skipSeconds: true})}
           </span>
         </CardElement>
-        <CardElement>
+        <CardElement className="flex-1">
           <div className="text-12 text-gray-400">7-day time average</div>
           <span className="text-gray-600 font-bold">
             {formatTimeDuration(averageLast7Days, {skipSeconds: true})}
