@@ -95,7 +95,7 @@ export function StatCards({data, previousDayData}: StatCardProps) {
   } = useStatData(data, previousDayData);
 
   return (
-    <div className="flex gap-4 mt-4">
+    <div className="flex gap-4 mt-4 2xl:grid 2xl:grid-cols-3">
       <SingleValue stat={activityTime} title="Activity Time" />
       <SingleValue stat={mostVisitedDomain} title="Most Time Spent On" />
       <SingleValue stat={totalDomainsCount} title="Domains Count" />
