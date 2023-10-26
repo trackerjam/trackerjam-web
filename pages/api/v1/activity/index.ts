@@ -13,8 +13,9 @@ import {
 } from '../../../../types/api';
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 import {translatePayloadToInternalStructure} from '../../../../utils/api/translate-payload';
+import {humanizeDates} from '../../../../utils/api/humanize-dates';
 
-const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
+const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
 
 async function upsertDomain(domain: string) {
   return prismadb.domain.upsert({
@@ -156,28 +157,28 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
         // Also, investigate why the extension attempts to backfill something that occurred 3 hours ago, even though we have newer
         // sessions that has already been processed.
         const msg = 'Session inconsistency detected';
-        const data = JSON.stringify({
-          payloadSession: session,
+        const logData = JSON.stringify({
+          payloadSession: humanizeDates(session),
           existingSession: lastSession,
         });
-        sentryCatchMessage({data, msg, token});
-        console.error(msg, data);
+        sentryCatchMessage({data: logData, msg, token});
+        console.error(msg, logData);
         return;
       }
 
       if (startTime > currentTime || endTime > currentTime) {
         const msg = 'Future session detected';
-        const data = JSON.stringify(session);
-        sentryCatchMessage({data, msg, token});
-        console.error(msg);
+        const logData = JSON.stringify(humanizeDates(session));
+        sentryCatchMessage({data: logData, msg, token});
+        console.error(msg, logData);
         return;
       }
 
-      if (currentTime - endTime > twentyFourHoursInMilliseconds) {
+      if (currentTime - endTime > OLD_SESSION_THRESHOLD) {
         const msg = 'Old session detected';
-        const data = JSON.stringify(session);
-        sentryCatchMessage({data, msg, token});
-        console.error(msg);
+        const logData = JSON.stringify(humanizeDates(session));
+        sentryCatchMessage({data: logData, msg, token});
+        console.error(msg, logData);
         return;
       }
 
