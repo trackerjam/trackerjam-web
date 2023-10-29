@@ -57,7 +57,7 @@ export function Trends({data}: TrendsProps) {
 
   return (
     <div className="flex flex-row gap-3 xl:flex-col xl:gap-y-6">
-      <div className="w-[70%] h-[160px] xl:w-full">
+      <div className="w-[70%] h-[260px] xl:w-full">
         <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity by days</h3>
         {!hasData && (
           <div className="flex items-center justify-center h-full text-gray-400">
