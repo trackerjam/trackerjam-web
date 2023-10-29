@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import {DateActivityData} from '../../../types/api';
 import {formatTimeDuration} from '../../../utils/format-time-duration';
+import {Favicon} from '../favicon';
 import {SingleValue} from './single-value';
 import {countUniqueDomains} from './count-unique-domains';
 import {calcHttpsPercentage} from './calc-https-percentage';
@@ -97,7 +98,16 @@ export function StatCards({data, previousDayData}: StatCardProps) {
   return (
     <div className="flex gap-4 mt-4 2xl:grid 2xl:grid-cols-3">
       <SingleValue stat={activityTime} title="Activity Time" />
-      <SingleValue stat={mostVisitedDomain} title="Most Time Spent On" />
+      <SingleValue
+        stat={mostVisitedDomain}
+        title="Most Time Spent On"
+        icon={() => {
+          if (!mostVisitedDomain?.value) {
+            return null;
+          }
+          return <Favicon domain={mostVisitedDomain.value} />;
+        }}
+      />
       <SingleValue stat={totalDomainsCount} title="Domains Count" />
       <SingleValue stat={sessionCount} title="Session Count" />
       <SingleValue stat={httpsPercentage} title="HTTPS Percentage" />

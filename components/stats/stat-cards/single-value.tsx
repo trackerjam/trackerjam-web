@@ -1,11 +1,13 @@
 import {BiCaretDown, BiCaretUp, BiCaretLeft} from 'react-icons/bi';
 import cx from 'classnames';
+import React from 'react';
 import {DELTA_INCLINE} from './stat-cards';
 import {CardElement} from './card';
 
 interface SingleCards {
   stat: StatDelta | undefined;
   title: string;
+  icon?: React.ComponentType;
 }
 
 export type StatDelta = {
@@ -14,7 +16,7 @@ export type StatDelta = {
   deltaIncline?: DELTA_INCLINE;
 };
 
-export function SingleValue({title, stat}: SingleCards) {
+export function SingleValue({title, stat, icon}: SingleCards) {
   const {value, deltaValue, deltaIncline} = stat || {};
   let finalValue = value;
   if (
@@ -41,11 +43,16 @@ export function SingleValue({title, stat}: SingleCards) {
       ? BiCaretUp
       : BiCaretDown;
 
+  const CardIcon = icon || null;
+
   return (
     <CardElement>
       <div className="text-12 text-gray-400">{title}</div>
       <div className="flex items-center gap-3">
-        <span className="text-gray-600 text-22 font-bold">{finalValue}</span>
+        <div className="flex gap-2 items-center">
+          <span>{CardIcon && <CardIcon />}</span>
+          <span className="text-gray-600 text-22 font-bold leading-none">{finalValue}</span>
+        </div>
         {hasDelta && (
           <span className={cx('flex gap-0 items-center text-12 -mr-2', deltaColor)}>
             {deltaValue} <DeltaIcon />
