@@ -41,6 +41,8 @@ function capitalize(text: string) {
 export function UserDetails({data, settings}: UserStatusProps) {
   const [currentTimeMs, setCurrentTimeMs] = useState<number>(Date.now());
 
+  // TODO Maybe show Update page button?
+
   const {mostRecentSessionTimeFormatted, status} = useMemo(() => {
     if (!data) {
       return {};

@@ -3,6 +3,7 @@ import {useStyletron} from 'baseui';
 import {HeadingXXLarge, HeadingSmall} from 'baseui/typography';
 import {Notification, KIND} from 'baseui/notification';
 import {Button, SIZE, KIND as BUTTON_KIND} from 'baseui/button';
+import * as Sentry from '@sentry/react';
 
 interface ErrorDetailsProps {
   error: Error | string;
@@ -10,6 +11,12 @@ interface ErrorDetailsProps {
 }
 
 const IS_DEV = process.env.NODE_ENV === 'development';
+
+// TODO Test other DB
+// TODO User member cards
+// TODO Check Privacy Policy generator
+// TODO Scroll to selected day in the day range
+// TODO Do not allow to see other users' data in Prod, but allow in Dev
 
 export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.ReactElement {
   const [stacktraceShown, setStacktraceShown] = useState<boolean>(false);
@@ -20,6 +27,9 @@ export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.Reac
   const errorStack = isErrorType ? error.stack : null;
 
   useEffect(() => {
+    if (!IS_DEV) {
+      Sentry.captureException(error);
+    }
     console.error(error);
   }, [error]);
 
@@ -63,27 +73,27 @@ export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.Reac
         Something went wrong :(
       </HeadingSmall>
 
-      <div className={errorMessageStyle}>
-        <div onClick={() => setStacktraceShown(!stacktraceShown)}>
-          <Notification
-            kind={KIND.negative}
-            overrides={{
-              Body: {
-                style: () => ({
-                  flexGrow: 1,
-                  width: 'auto',
-                }),
-              },
-            }}
-          >
-            {errorMessage}
-          </Notification>
-        </div>
+      {Boolean(IS_DEV) && (
+        <div className={errorMessageStyle}>
+          <div onClick={() => setStacktraceShown(!stacktraceShown)}>
+            <Notification
+              kind={KIND.negative}
+              overrides={{
+                Body: {
+                  style: () => ({
+                    flexGrow: 1,
+                    width: 'auto',
+                  }),
+                },
+              }}
+            >
+              {errorMessage}
+            </Notification>
+          </div>
 
-        {isErrorType && IS_DEV && stacktraceShown && (
-          <pre className={stacktraceStyle}>{errorStack}</pre>
-        )}
-      </div>
+          {isErrorType && stacktraceShown && <pre className={stacktraceStyle}>{errorStack}</pre>}
+        </div>
+      )}
 
       {resetError && (
         <div className={buttonWrapperStyle}>

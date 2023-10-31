@@ -1,4 +1,4 @@
-import {CiSettings, CiViewBoard, CiPizza} from 'react-icons/ci';
+import {CiSettings, CiPizza} from 'react-icons/ci';
 import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
@@ -26,10 +26,6 @@ const topItems = [
     itemId: '/team',
   },
   {
-    title: <IconTitle title="Statistics" icon={CiViewBoard} />,
-    itemId: '/statistics',
-  },
-  {
     title: <IconTitle title="Settings" icon={CiSettings} />,
     itemId: '/settings',
   },
@@ -40,10 +36,13 @@ const bottomItems = [
     title: <IconTitle title="Feature Request" icon={PiLightbulbLight} />,
     itemId: FEEDBACK_URL,
     isTargetBlank: true,
+    isExternal: true,
   },
   {
     title: <IconTitle title="Support" icon={PiQuestionLight} />,
     itemId: `mailto:${SUPPORT_EMAIL}`,
+    isTargetBlank: true,
+    isExternal: true,
   },
 ];
 
@@ -63,10 +62,15 @@ export function SideNav() {
       </nav>
 
       <ul>
-        {bottomItems.map(({title, itemId, isTargetBlank}, index) => {
+        {bottomItems.map(({title, itemId, isTargetBlank, isExternal}, index) => {
           return (
             <li key={index}>
-              <SideNavLink title={title} itemId={itemId} isTargetBlank={isTargetBlank ?? false} />
+              <SideNavLink
+                title={title}
+                itemId={itemId}
+                isTargetBlank={isTargetBlank ?? false}
+                isExternal={isExternal}
+              />
             </li>
           );
         })}

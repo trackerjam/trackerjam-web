@@ -201,7 +201,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
           kind="gray"
           size="xs"
           onClick={async () => {
-            await push(`/statistics/${memberId}`);
+            await push(`/team/${memberId}`);
           }}
         >
           Statistics
