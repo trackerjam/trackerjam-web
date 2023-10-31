@@ -9,15 +9,16 @@ import {buildError} from '../../../utils/build-error';
 import {
   ActivitiesByDate,
   AuthMethodContext,
+  MemberDataType,
   MemberStatisticActivityType,
   MemberStatisticType,
   SessionId,
 } from '../../../types/api';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
 import {calculateIdleTime} from '../../../utils/api/calculate-idle';
-import {SettingsType} from '../../../types/member';
 import {classifyDomain} from '../../../utils/classification/classification';
 import {getProductivityScore} from '../../../utils/classification/get-score';
+import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 
 // TODO Limit response by time window
 
@@ -40,13 +41,7 @@ async function get({req, res}: AuthMethodContext) {
       },
     });
 
-    const memberResponse = {
-      ...member,
-      settings:
-        typeof member?.settings?.settings === 'object'
-          ? (member.settings.settings as SettingsType)
-          : null,
-    };
+    const memberResponse = unwrapSettings(member);
 
     // Find domain and session activities for that user just by user ID
     // TODO: Consider limiting this to last 7/30 days only
@@ -135,7 +130,7 @@ async function get({req, res}: AuthMethodContext) {
     }, {} as ActivitiesByDate);
 
     const result: MemberStatisticType = {
-      member: memberResponse,
+      member: memberResponse as MemberDataType,
       activitiesByDate: resultActivities,
     };
 

@@ -3,7 +3,7 @@ import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import {LuCopyCheck} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {BiCopy, BiTrash, BiRightArrowAlt, BiCheckShield} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiRightArrowAlt, BiCheckShield, BiEdit} from 'react-icons/bi';
 import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
@@ -34,6 +34,12 @@ const menuItems = [
     iconColor: '',
   },
   {
+    id: 'edit',
+    icon: BiEdit,
+    label: 'Edit member',
+    iconColor: '',
+  },
+  {
     id: 'delete',
     icon: BiTrash,
     label: 'Delete',
@@ -57,6 +63,9 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         copy(token);
         setIsToastOpen(true);
         setShortToken(shortenUUID(token));
+        break;
+      case 'edit':
+        push(`/team/edit-member/${memberId}`);
         break;
       case 'delete':
         setDeleteShown(true);

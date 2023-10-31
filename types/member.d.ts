@@ -23,7 +23,7 @@ export type WorkHoursTimeType = {
   endTime: string;
 };
 
-export type CreateMemberDataType = Pick<Member, 'name' | 'email' | 'title'> & {
+export type CreateMemberDataType = Partial<Member> & {
   settings: SettingsType;
 };
-export type EditMemberDataType = Partial<CreateMemberDataType> & {id?: string};
+export type EditMemberDataType = Omit<CreateMemberDataType, 'token', 'id'>;

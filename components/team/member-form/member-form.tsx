@@ -24,7 +24,7 @@ import {RadioTrackMode} from './form/radio-track-mode';
 import {TIME_PRESETS, WorkHours} from './form/work-hours';
 
 type CreateMemberProps = {
-  editingMember?: undefined | EditMemberDataType;
+  editingMember?: undefined | null | EditMemberDataType;
 };
 
 const defaultValues: CreateMemberDataType = {
@@ -43,13 +43,11 @@ const defaultValues: CreateMemberDataType = {
   },
 };
 
-export function AddMember({editingMember}: CreateMemberProps) {
+export function MemberForm({editingMember}: CreateMemberProps) {
   const isEditing = Boolean(editingMember);
   const router = useRouter();
 
-  const {send, isLoading, error} = useSendData<EditMemberDataType>(
-    `/api/member/${isEditing ? editingMember?.id : ''}`
-  );
+  const {send, isLoading, error} = useSendData<EditMemberDataType>('/api/member/');
   const {handleSubmit, control, setValue, watch, getValues} = useForm({
     reValidateMode: 'onBlur',
     defaultValues: editingMember || defaultValues,
@@ -209,7 +207,7 @@ export function AddMember({editingMember}: CreateMemberProps) {
 
       <div className={formSectionStyle}>
         <WorkHours
-          value={settings.workHours}
+          value={settings?.workHours}
           onDaysChange={handleWorkHoursDaySet}
           onTimeChange={handleWorkHoursTimeSet}
         />

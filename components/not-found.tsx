@@ -11,7 +11,7 @@ export function NotFound() {
         <title>Page Not Found</title>
       </Head>
       <LabelLarge marginBottom="15px">404 :: Page not found</LabelLarge>
-      <Link href="/dashboard">Got to Home</Link>
+      <Link href="/">Got to Home</Link>
     </Block>
   );
 }

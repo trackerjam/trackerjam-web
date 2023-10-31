@@ -1,18 +1,39 @@
 import * as Sentry from '@sentry/nextjs';
 import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
-import type {Team} from '@prisma/client';
+import type {Member, Team} from '@prisma/client';
 import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, SessionId} from '../../../types/api';
+import {AuthMethodContext, PublicMethodContext, SessionId} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
-import {EditMemberDataType} from '../../../types/member';
+import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {sendTokenMail} from '../../../utils/api/send-mail';
+import {unwrapSettings} from '../../../utils/api/unwrap-settings';
+
+async function get({req, res}: AuthMethodContext) {
+  const id = req.query?.token as string;
+
+  const member = await prismadb.member.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      settings: true,
+    },
+  });
+
+  try {
+    const memberResponse = unwrapSettings(member as Member);
+    res.json(memberResponse);
+  } catch (e) {
+    res.status(500).json(buildError(getErrorMessage(e)));
+  }
+}
 
 async function create({req, res, session}: AuthMethodContext) {
-  const data: EditMemberDataType = req.body;
+  const data: CreateMemberDataType = req.body;
   const managerId = session.user.id;
 
   try {
@@ -91,6 +112,59 @@ async function deleteMember({req, res, session}: AuthMethodContext) {
   }
 }
 
+const ALLOWED_MEMBER_FIELDS = ['name', 'email', 'title', 'settings'];
+async function update({req, res}: PublicMethodContext) {
+  const {token, ...memberFields}: EditMemberDataType = req.body;
+  const fieldKeys = Object.keys(memberFields);
+  if (!token || fieldKeys.length === 0) {
+    return res.status(400).json(buildError('bad params'));
+  }
+
+  const updateData = fieldKeys.reduce((acc, key) => {
+    if (ALLOWED_MEMBER_FIELDS.includes(key)) {
+      acc[key as keyof EditMemberDataType] = memberFields[key as keyof EditMemberDataType];
+    }
+    return acc;
+  }, {} as Partial<EditMemberDataType>);
+
+  try {
+    const member = await prismadb.member.findUnique({
+      where: {
+        token,
+      },
+      include: {
+        settings: true,
+      },
+    });
+
+    if (!member) {
+      return res.status(204).json(buildError('user not found'));
+    }
+
+    const updatedMember = await prismadb.member.update({
+      where: {
+        id: member.id,
+      },
+      data: {
+        ...updateData,
+        settings: {
+          update: {
+            settings: {
+              ...member.settings,
+              ...(updateData?.settings || {}),
+            },
+          },
+        },
+      },
+    });
+
+    return res.status(200).json(updatedMember);
+  } catch (e) {
+    res.status(500).json(buildError(getErrorMessage(e)));
+    Sentry.captureException(e);
+  }
+}
+
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const session = (await getServerSession(req, res, authOptions)) as SessionId;
   const {method} = req;
@@ -102,8 +176,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const context: AuthMethodContext = {req, res, session};
 
   switch (method) {
+    case 'GET':
+      return get(context);
     case 'POST':
       return create(context);
+    case 'PUT':
+      return update(context);
     case 'DELETE':
       return deleteMember(context);
     default:

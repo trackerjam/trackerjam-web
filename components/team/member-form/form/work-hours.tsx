@@ -5,7 +5,7 @@ import {convertTo24HourFormat} from '../../../../utils/convert-to-24hour';
 const DAYS = Object.values(DAY);
 
 interface WorkHoursProps {
-  value: WorkHoursType;
+  value: WorkHoursType | undefined | null;
   onDaysChange: (day: DAY, value: boolean) => void;
   onTimeChange: (label: 'startTime' | 'endTime', value: string) => void;
 }
@@ -126,12 +126,12 @@ export function WorkHours({value, onDaysChange, onTimeChange}: WorkHoursProps) {
         <div>
           <div className="flex gap-12 mb-2">
             <TimeInput
-              value={value.time.startTime}
+              value={value?.time.startTime || ''}
               label="Start Time"
               onChange={(val: string) => onTimeChange('startTime', val)}
             />
             <TimeInput
-              value={value.time.endTime}
+              value={value?.time.endTime || ''}
               label="End Time"
               onChange={(val: string) => onTimeChange('endTime', val)}
             />
