@@ -2,7 +2,6 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import {TAB_TYPE} from '.prisma/client';
 import {STATUS} from '@prisma/client';
 import * as Sentry from '@sentry/nextjs';
-import {Severity} from '@sentry/nextjs';
 import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
