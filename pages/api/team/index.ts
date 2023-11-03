@@ -1,14 +1,13 @@
-import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {GetTeamResponse, SessionId} from '../../../types/api';
+import {AuthMethodContext, GetTeamResponse} from '../../../types/api';
+import {endpointHandler} from '../../../utils/api/handler';
 
 // TODO Limit response by time window
 
-async function get(res: NextApiResponse, session: SessionId) {
+async function get({res, session}: AuthMethodContext) {
   const response = await prismadb.team.findMany({
     where: {
       ownerUserId: session.user.id,
@@ -44,17 +43,5 @@ async function get(res: NextApiResponse, session: SessionId) {
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const session = (await getServerSession(req, res, authOptions)) as SessionId;
-  const {method} = req;
-
-  if (!session?.user?.id) {
-    return res.status(400).json(buildError('not auth'));
-  }
-
-  switch (method) {
-    case 'GET':
-      return get(res, session);
-    default:
-      return res.status(405).json(buildError('not allowed'));
-  }
+  return endpointHandler({req, res, handlers: {get}});
 }

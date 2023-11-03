@@ -1,8 +1,6 @@
-import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {DomainActivity} from '@prisma/client';
 import * as Sentry from '@sentry/node';
-import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -12,13 +10,13 @@ import {
   MemberDataType,
   MemberStatisticActivityType,
   MemberStatisticType,
-  SessionId,
 } from '../../../types/api';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
 import {calculateIdleTime} from '../../../utils/api/calculate-idle';
 import {classifyDomain} from '../../../utils/classification/classification';
 import {getProductivityScore} from '../../../utils/classification/get-score';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
+import {endpointHandler} from '../../../utils/api/handler';
 
 // TODO Limit response by time window
 
@@ -35,6 +33,7 @@ async function get({req, res}: AuthMethodContext) {
         memberEvent: {
           orderBy: {
             date: 'desc',
+            // TODO(Optimize): select count only
           },
         },
         settings: true,
@@ -142,17 +141,5 @@ async function get({req, res}: AuthMethodContext) {
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const session = (await getServerSession(req, res, authOptions)) as SessionId;
-  const {method} = req;
-
-  if (!session?.user?.id) {
-    return res.status(400).json(buildError('not auth'));
-  }
-
-  switch (method) {
-    case 'GET':
-      return get({req, res, session});
-    default:
-      return res.status(405).json(buildError('not allowed'));
-  }
+  return endpointHandler({req, res, handlers: {get}});
 }

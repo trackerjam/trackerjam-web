@@ -1,16 +1,15 @@
 import * as Sentry from '@sentry/nextjs';
-import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import type {Member, Team} from '@prisma/client';
-import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, PublicMethodContext, SessionId} from '../../../types/api';
+import {AuthMethodContext, PublicMethodContext} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {sendTokenMail} from '../../../utils/api/send-mail';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
+import {endpointHandler} from '../../../utils/api/handler';
 
 async function get({req, res}: AuthMethodContext) {
   const id = req.query?.token as string;
@@ -166,25 +165,14 @@ async function update({req, res}: PublicMethodContext) {
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const session = (await getServerSession(req, res, authOptions)) as SessionId;
-  const {method} = req;
-
-  if (!session?.user?.id) {
-    return res.status(400).json(buildError('not auth'));
-  }
-
-  const context: AuthMethodContext = {req, res, session};
-
-  switch (method) {
-    case 'GET':
-      return get(context);
-    case 'POST':
-      return create(context);
-    case 'PUT':
-      return update(context);
-    case 'DELETE':
-      return deleteMember(context);
-    default:
-      return res.status(405).json(buildError('not allowed'));
-  }
+  return endpointHandler({
+    req,
+    res,
+    handlers: {
+      get,
+      post: create,
+      put: update,
+      delete: deleteMember,
+    },
+  });
 }

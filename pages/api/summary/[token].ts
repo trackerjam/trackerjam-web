@@ -1,11 +1,10 @@
-import {getServerSession} from 'next-auth/next';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import * as Sentry from '@sentry/nextjs';
-import {authOptions} from '../../../app/api/auth/[...nextauth]/route';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, SessionId, SummaryResponse} from '../../../types/api';
+import {AuthMethodContext, SummaryResponse} from '../../../types/api';
+import {endpointHandler} from '../../../utils/api/handler';
 
 async function get({req, res}: AuthMethodContext) {
   const {token} = req.query as {token: string};
@@ -41,21 +40,7 @@ async function get({req, res}: AuthMethodContext) {
   }
 }
 
-// TODO unify API interface
+// TODO Do not allow to see other users' data in Prod, but allow in Dev
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const session = (await getServerSession(req, res, authOptions)) as SessionId;
-  const {method} = req;
-
-  if (!session?.user?.id) {
-    return res.status(400).json(buildError('not auth'));
-  }
-
-  const context: AuthMethodContext = {req, res, session};
-
-  switch (method) {
-    case 'GET':
-      return get(context);
-    default:
-      return res.status(405).json(buildError('not allowed'));
-  }
+  return endpointHandler({req, res, handlers: {get}});
 }
