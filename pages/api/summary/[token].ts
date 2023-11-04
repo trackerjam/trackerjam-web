@@ -4,7 +4,7 @@ import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SummaryResponse} from '../../../types/api';
-import {endpointHandler} from '../../../utils/api/handler';
+import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 async function get({req, res}: AuthMethodContext) {
   const {token} = req.query as {token: string};
@@ -40,7 +40,21 @@ async function get({req, res}: AuthMethodContext) {
   }
 }
 
-// TODO Do not allow to see other users' data in Prod, but allow in Dev
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  return endpointHandler({req, res, handlers: {get}});
+  return endpointHandler({
+    req,
+    res,
+    handlers: {get},
+    checkPermission: async ({req, session}) => {
+      const token = req.query?.token as string;
+
+      const requestedMember = await prismadb.member.findUnique({
+        where: {
+          token,
+        },
+      });
+
+      return Boolean(requestedMember && requestedMember.mangerId === session.user.id);
+    },
+  });
 }

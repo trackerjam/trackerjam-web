@@ -5,7 +5,7 @@ import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, DashboardResponse} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
-import {endpointHandler} from '../../../utils/api/handler';
+import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 async function get({res, session}: AuthMethodContext) {
   try {

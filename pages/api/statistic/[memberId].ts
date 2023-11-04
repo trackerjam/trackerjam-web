@@ -16,7 +16,7 @@ import {calculateIdleTime} from '../../../utils/api/calculate-idle';
 import {classifyDomain} from '../../../utils/classification/classification';
 import {getProductivityScore} from '../../../utils/classification/get-score';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
-import {endpointHandler} from '../../../utils/api/handler';
+import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 // TODO Limit response by time window
 
@@ -141,5 +141,21 @@ async function get({req, res}: AuthMethodContext) {
 }
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  return endpointHandler({req, res, handlers: {get}});
+  return endpointHandler({
+    req,
+    res,
+    handlers: {
+      get,
+    },
+    checkPermission: async ({req, session}) => {
+      const memberId = req.query?.memberId as string;
+      const requestedMember = await prismadb.member.findUnique({
+        where: {
+          id: memberId,
+        },
+      });
+
+      return Boolean(requestedMember && requestedMember.mangerId === session.user.id);
+    },
+  });
 }

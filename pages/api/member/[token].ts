@@ -9,7 +9,7 @@ import {DEFAULT_TEAM_NAME} from '../../../const/team';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {sendTokenMail} from '../../../utils/api/send-mail';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
-import {endpointHandler} from '../../../utils/api/handler';
+import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 async function get({req, res}: AuthMethodContext) {
   const id = req.query?.token as string;
@@ -173,6 +173,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       post: create,
       put: update,
       delete: deleteMember,
+    },
+    checkPermission: async ({req, session}) => {
+      const token = req.query?.token as string;
+      const requestedMember = await prismadb.member.findUnique({
+        where: {
+          token,
+        },
+      });
+
+      return Boolean(requestedMember && requestedMember.mangerId === session.user.id);
     },
   });
 }

@@ -3,9 +3,7 @@ import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, GetTeamResponse} from '../../../types/api';
-import {endpointHandler} from '../../../utils/api/handler';
-
-// TODO Limit response by time window
+import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 async function get({res, session}: AuthMethodContext) {
   const response = await prismadb.team.findMany({
