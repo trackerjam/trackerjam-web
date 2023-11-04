@@ -20,6 +20,7 @@ async function get({res, session}: AuthMethodContext) {
             orderBy: {
               date: 'desc',
             },
+            take: 1, // Only take the last record
             select: {
               activityTime: true,
               domainsCount: true,
