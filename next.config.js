@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   images: {
     remotePatterns: [
       {
@@ -11,6 +11,9 @@ module.exports = {
       },
     ],
   },
+  // https://github.com/getsentry/sentry-javascript/issues/9450
+  // https://github.com/getsentry/sentry-javascript/issues/5351
+  transpilePackages: ['@sentry/utils'],
 };
 
 // Injected Content via Sentry Wizard Below
@@ -18,7 +21,7 @@ module.exports = {
 const {withSentryConfig} = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(
-  module.exports,
+  config,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
@@ -37,7 +40,7 @@ module.exports = withSentryConfig(
     widenClientFileUpload: true,
 
     // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
+    transpileClientSDK: false,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
     tunnelRoute: '/monitoring',
