@@ -36,6 +36,8 @@ export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.Reac
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    border: `3px solid ${theme.colors.backgroundNegativeLight}`,
+    borderRadius: theme.borders.radius300,
   });
 
   const errorMessageStyle = css({

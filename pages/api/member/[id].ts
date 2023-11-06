@@ -12,7 +12,7 @@ import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 
 async function get({req, res}: AuthMethodContext) {
-  const id = req.query?.token as string;
+  const id = req.query?.id as string;
 
   const member = await prismadb.member.findUnique({
     where: {
@@ -81,10 +81,10 @@ async function create({req, res, session}: AuthMethodContext) {
 }
 
 async function deleteMember({req, res, session}: AuthMethodContext) {
-  const token = req.query?.token as string;
+  const id = req.query?.id as string;
   const managerId = session.user.id;
 
-  if (!token) {
+  if (!id) {
     return res.status(400).json(buildError('bad params'));
   }
 
@@ -93,13 +93,13 @@ async function deleteMember({req, res, session}: AuthMethodContext) {
     await prismadb.member.findFirstOrThrow({
       where: {
         mangerId: managerId,
-        token,
+        id,
       },
     });
 
     await prismadb.member.delete({
       where: {
-        token,
+        id,
       },
     });
 
@@ -175,10 +175,16 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       delete: deleteMember,
     },
     checkPermission: async ({req, session}) => {
-      const token = req.query?.token as string;
+      const id = req.query?.id as string;
+
+      if (req.method === 'POST' && !id) {
+        // Allow creating new member
+        return true;
+      }
+
       const requestedMember = await prismadb.member.findUnique({
         where: {
-          token,
+          id,
         },
       });
 

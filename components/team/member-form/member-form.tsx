@@ -47,7 +47,9 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const isEditing = Boolean(editingMember);
   const router = useRouter();
 
-  const {send, isLoading, error} = useSendData<EditMemberDataType>('/api/member/');
+  const {send, isLoading, error} = useSendData<EditMemberDataType>(
+    isEditing ? `/api/member/${editingMember?.id}` : '/api/member'
+  );
   const {handleSubmit, control, setValue, watch, getValues} = useForm({
     reValidateMode: 'onBlur',
     defaultValues: editingMember || defaultValues,

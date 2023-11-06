@@ -54,7 +54,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [shortToken, setShortToken] = useState('');
 
-  const {send} = useSendData(`/api/member/${token}`);
+  const {send} = useSendData(`/api/member/${memberId}`);
   const {push} = useRouter();
 
   const handleMenuClick = async (id: string) => {
