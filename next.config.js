@@ -14,6 +14,7 @@ const config = {
   // https://github.com/getsentry/sentry-javascript/issues/9450
   // https://github.com/getsentry/sentry-javascript/issues/5351
   transpilePackages: ['@sentry/utils'],
+  reactStrictMode: false, // disable strict mode to avoid double-rendering
 };
 
 // Injected Content via Sentry Wizard Below

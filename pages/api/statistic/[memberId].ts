@@ -54,7 +54,15 @@ async function get({req, res}: AuthMethodContext) {
         date: 'desc',
       },
       include: {
-        sessionActivities: true,
+        sessionActivities: {
+          select: {
+            id: true,
+            startDatetime: true,
+            endDatetime: true,
+            title: true,
+            isHTTPS: true,
+          },
+        },
       },
     });
 
@@ -65,6 +73,10 @@ async function get({req, res}: AuthMethodContext) {
         id: {
           in: uniqueDomainIds,
         },
+      },
+      select: {
+        domain: true,
+        id: true,
       },
     });
 
@@ -82,22 +94,12 @@ async function get({req, res}: AuthMethodContext) {
         Sentry.captureException(error);
       }
 
-      // TODO An option to include URL for Admin View
-      const activityNoUrl = {
-        ...activity,
-        sessionActivities: activity.sessionActivities.map((sessionActivity) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const {url, ...rest} = sessionActivity;
-          return rest;
-        }),
-      };
-
       // Get domains tags
       const domainsTags = classifyDomain(domainName);
       const score = getProductivityScore(domainsTags);
 
       return {
-        ...activityNoUrl,
+        ...activity,
         domainName,
         domainsTags,
         productivityScore: score,
@@ -133,7 +135,7 @@ async function get({req, res}: AuthMethodContext) {
       activitiesByDate: resultActivities,
     };
 
-    res.json(result);
+    return res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
     throw e;
