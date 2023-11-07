@@ -3,28 +3,24 @@ import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import {LuCopyCheck} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {BiCopy, BiTrash, BiRightArrowAlt, BiCheckShield, BiEdit} from 'react-icons/bi';
-import {StatefulTooltip, PLACEMENT} from 'baseui/tooltip';
+import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
 import {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {useRouter} from 'next/navigation';
-import {formatDistanceToNow} from 'date-fns';
-import clsx from 'clsx';
 
 import * as Toast from '@radix-ui/react-toast';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
-import {MemberAndSummary} from '../../types/api';
+import {TeamMembersType} from '../../types/api';
 import {Button} from '../common/button';
-import {StatusTag} from './status-tag';
+import {WorkHours} from '../common/work-hours';
+import {UserStatusDot} from '../common/user-status-dot';
 
 interface MemberCardProps {
-  data: MemberAndSummary;
+  data: TeamMembersType;
   onDelete: () => void;
 }
-
-const emptySummaryText = '-';
 
 const menuItems = [
   {
@@ -48,7 +44,7 @@ const menuItems = [
 ];
 
 export function MemberCard({data, onDelete}: MemberCardProps) {
-  const {name, title, status, token, summary, id: memberId} = data;
+  const {name, title, token, summary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
@@ -81,14 +77,11 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   };
 
   const hrStyle = 'border-t border-black border-opacity-[0.08]';
-
-  const statsColumnStyle =
-    'border-r border-black border-opacity-[0.08] grow flex justify-center p-2.5';
-
-  const statsContentStyle = 'flex items-center justify-center gap-x-1.5 text-gray-120 font-12';
+  const statsColumnStyle = 'border-black border-opacity-[0.08] grow flex justify-start py-2.5';
 
   const avatarSeed = name + token;
   const summaryData = summary?.[0] || {}; // should be ordered desc
+  const lastUpdateTs = summaryData?.updatedAt ? new Date(summaryData?.updatedAt).getTime() : null;
 
   return (
     <div className="relative rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
@@ -176,20 +169,12 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
 
       <hr className={hrStyle} />
 
-      <div className="flex justify-between">
+      <div className="flex flex-col">
         <div className={statsColumnStyle}>
-          <StatusTag status={status} />
+          <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} />
         </div>
-
-        <div className={clsx(statsColumnStyle, 'border-r-0')}>
-          <StatefulTooltip content="Last reported activity" showArrow placement={PLACEMENT.bottom}>
-            <div className={statsContentStyle}>
-              <BiCheckShield className="text-gray-130" title="" />{' '}
-              {summaryData?.updatedAt
-                ? formatDistanceToNow(new Date(summaryData?.updatedAt)) + ' ago'
-                : emptySummaryText}
-            </div>
-          </StatefulTooltip>
+        <div className={statsColumnStyle}>
+          <WorkHours workHours={data?.settings?.workHours} isCompact={true} />
         </div>
       </div>
 
@@ -199,7 +184,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         <Button
           type="button"
           kind="gray"
-          size="xs"
+          size="md"
           onClick={async () => {
             await push(`/team/${memberId}`);
           }}

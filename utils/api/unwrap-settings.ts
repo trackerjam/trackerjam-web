@@ -1,7 +1,7 @@
 import {Member, MemberSettings} from '@prisma/client';
 import {SettingsType} from '../../types/member';
 
-type MemberWithOptionalSettings<T extends Member> = T & {
+export type MemberWithOptionalSettings<T extends Member> = T & {
   settings?: MemberSettings | null;
 };
 

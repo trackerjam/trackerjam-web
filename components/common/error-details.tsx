@@ -12,9 +12,7 @@ interface ErrorDetailsProps {
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-// TODO User member cards
 // TODO Check Privacy Policy generator
-// TODO Scroll to selected day in the day range
 
 export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.ReactElement {
   const [stacktraceShown, setStacktraceShown] = useState<boolean>(false);

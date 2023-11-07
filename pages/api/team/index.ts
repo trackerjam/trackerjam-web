@@ -1,9 +1,11 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
+import {Member} from '@prisma/client';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext, GetTeamResponse} from '../../../types/api';
+import {AuthMethodContext} from '../../../types/api';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
+import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 
 async function get({res, session}: AuthMethodContext) {
   const response = await prismadb.team.findMany({
@@ -28,13 +30,20 @@ async function get({res, session}: AuthMethodContext) {
               updatedAt: true,
             },
           },
+          settings: true,
         },
       },
     },
   });
 
   try {
-    const result: GetTeamResponse = response;
+    const result = response.map((team) => {
+      return {
+        ...team,
+        members: team.members.map((member) => unwrapSettings(member as Member)),
+      };
+    });
+
     res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));

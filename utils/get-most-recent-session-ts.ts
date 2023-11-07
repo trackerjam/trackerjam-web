@@ -1,6 +1,6 @@
-import {MemberStatisticActivityType} from '../../../types/api';
+import {MemberStatisticActivityType} from '../types/api';
 
-export function getMostRecentSessionTime(activities: MemberStatisticActivityType[]) {
+export function getMostRecentSessionTs(activities: MemberStatisticActivityType[]) {
   let latestTime = new Date(0); // initialize with a very early date for comparison
 
   // Iterate through the data
@@ -13,9 +13,5 @@ export function getMostRecentSessionTime(activities: MemberStatisticActivityType
     }
   }
 
-  // Get the current UTC time
-  const currentUTC = new Date();
-
-  // Calculate the difference in milliseconds
-  return currentUTC.getTime() - latestTime.getTime();
+  return latestTime.getTime();
 }

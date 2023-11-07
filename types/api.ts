@@ -63,16 +63,17 @@ export interface SummaryResponse {
 }
 
 export type GetTeamResponse = (Team & {
-  members: MemberAndSummary[];
+  members: TeamMembersType[];
 })[];
 
-export type MemberAndSummary = Member & {
+export type TeamMembersType = Member & {
   summary: {
     activityTime: number | null;
     domainsCount: number | null;
     sessionCount: number | null;
     updatedAt: Date | null;
   }[];
+  settings: SettingsType | null;
 };
 
 export type SessionActivityOptionalUrl = SessionActivity & {url?: string};
