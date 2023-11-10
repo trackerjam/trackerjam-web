@@ -7,6 +7,7 @@ interface UserStatusDotProps {
   isCompact?: boolean;
 }
 enum ONLINE_STATUS {
+  NEW = 'New',
   ONLINE = 'Online',
   AWAY = 'Away',
   OFFLINE = 'Offline',
@@ -18,27 +19,34 @@ const TIMEOUT = {
 };
 
 const DOT_COLOR = {
+  [ONLINE_STATUS.NEW]: 'bg-indigo-400',
   [ONLINE_STATUS.ONLINE]: 'bg-green-500',
   [ONLINE_STATUS.AWAY]: 'bg-yellow-500',
   [ONLINE_STATUS.OFFLINE]: 'bg-gray-500',
 };
 
 const TEXT_COLOR = {
+  [ONLINE_STATUS.NEW]: 'text-indigo-400',
   [ONLINE_STATUS.ONLINE]: 'text-green-500',
   [ONLINE_STATUS.AWAY]: 'text-yellow-500',
   [ONLINE_STATUS.OFFLINE]: 'text-gray-500',
 };
 
 export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
-  const {mostRecentSessionTimeFormatted, status} = useMemo(() => {
+  const {lastUpdateFormatted, status} = useMemo(() => {
+    let status = ONLINE_STATUS.NEW;
+
     if (!lastUpdateTs) {
-      return {};
+      return {
+        status,
+        lastUpdateFormatted: null,
+      };
     }
 
     const now = Date.now();
     const timeDistance = now - lastUpdateTs;
 
-    let status = ONLINE_STATUS.ONLINE;
+    status = ONLINE_STATUS.ONLINE;
     if (timeDistance > TIMEOUT.AWAY) {
       status = ONLINE_STATUS.AWAY;
     }
@@ -47,8 +55,8 @@ export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
     }
 
     return {
-      mostRecentSessionTimeFormatted: formatDistanceToNow(new Date(lastUpdateTs)),
       status,
+      lastUpdateFormatted: formatDistanceToNow(new Date(lastUpdateTs)),
     };
   }, [lastUpdateTs]);
 
@@ -60,6 +68,8 @@ export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
     'text-12': isCompact,
   });
 
+  const hasEverBeenOnline = Boolean(lastUpdateFormatted);
+
   return (
     <div className="flex gap-2 items-center">
       <div className="flex gap-2 items-center">
@@ -70,11 +80,12 @@ export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
             isOnline ? 'animate-pulsate-border' : null
           )}
         ></div>
-        <div className={cx('text-20 font-bold', textColor)}>{status ?? 'New'}</div>
+        <div className={cx('text-20 font-bold', textColor)}>{status}</div>
       </div>
       {Boolean(status) && (
         <div className={textClass}>
-          (Last seen {mostRecentSessionTimeFormatted ?? 'unknown time'} ago)
+          {hasEverBeenOnline && <>(Last seen {lastUpdateFormatted} ago)</>}
+          {!hasEverBeenOnline && <>(No reported data yet)</>}
         </div>
       )}
     </div>
