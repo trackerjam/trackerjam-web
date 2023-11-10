@@ -25,7 +25,7 @@ export function RadarChart({data}: RadarDataProps) {
             if (!acc[bestTag]) {
               acc[bestTag] = 0;
             }
-            // Make Other less dominant by -20%
+            // Make "Other" less dominant by -20%
             const sumValue = bestTag === TAG.Other ? timeSpent * 0.8 : timeSpent;
 
             acc[bestTag] = acc[bestTag] + sumValue;

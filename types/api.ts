@@ -71,7 +71,8 @@ export type TeamMembersType = Member & {
     activityTime: number | null;
     domainsCount: number | null;
     sessionCount: number | null;
-    updatedAt: Date | null;
+    lastSessionEndDatetime: Date | null;
+    updatedAt?: Date | null;
   }[];
   settings: SettingsType | null;
 };

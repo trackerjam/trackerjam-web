@@ -141,14 +141,15 @@ enum TAB_TYPE {
 }
 
 model Summary {
-  id           String   @id @default(uuid())
-  date         DateTime @db.Date
-  updatedAt    DateTime @updatedAt
-  activityTime Int?
-  domainsCount Int?
-  sessionCount Int?
-  memberToken  String
-  member       Member   @relation(fields: [memberToken], references: [token], onDelete: Cascade)
+  id                     String    @id @default(uuid())
+  date                   DateTime  @db.Date
+  updatedAt              DateTime
+  lastSessionEndDatetime DateTime?
+  activityTime           Int?
+  domainsCount           Int?
+  sessionCount           Int?
+  memberToken            String
+  member                 Member    @relation(fields: [memberToken], references: [token], onDelete: Cascade)
 
   @@unique([date, memberToken])
 }

@@ -27,7 +27,7 @@ async function get({res, session}: AuthMethodContext) {
               activityTime: true,
               domainsCount: true,
               sessionCount: true,
-              updatedAt: true,
+              lastSessionEndDatetime: true,
             },
           },
           settings: true,

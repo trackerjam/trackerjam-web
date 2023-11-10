@@ -79,9 +79,11 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   const hrStyle = 'border-t border-black border-opacity-[0.08]';
   const statsColumnStyle = 'border-black border-opacity-[0.08] grow flex justify-start py-2.5';
 
-  const avatarSeed = name + token;
+  const avatarSeed = token;
   const summaryData = summary?.[0] || {}; // should be ordered desc
-  const lastUpdateTs = summaryData?.updatedAt ? new Date(summaryData?.updatedAt).getTime() : null;
+  const lastUpdateTs = summaryData?.lastSessionEndDatetime
+    ? new Date(summaryData?.lastSessionEndDatetime).getTime()
+    : null;
 
   return (
     <div className="relative rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
@@ -106,7 +108,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         </ModalFooter>
       </Modal>
 
-      <div className="flex items-start gap-x-3 mb-2">
+      <div className="flex items-start gap-x-3 mb-4">
         <div className="shrink-0">
           <Avatar
             size={40}
@@ -119,7 +121,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
           <div className="flex">
             <span className="mr-2 font-bold">{name}</span>
           </div>
-          <div>
+          <div className="leading-none">
             <span className="text-gray-120 text-12">{title}</span>
           </div>
         </div>

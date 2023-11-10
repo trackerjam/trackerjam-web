@@ -60,50 +60,6 @@ async function upsertDomainActivity({
   });
 }
 
-/**
- * 1. **Domain Extraction:** Extract the domain from the activity URL using the `extractDomain()` function.
- *
- * 2. **Domain Upsert:** Fetch or create a record in the `domain` table for the extracted domain.
- * This is accomplished with the `upsertDomain()` function, which calls the `prisma.domain.upsert()` method.
- *
- * 3. **Date Conversion:** Convert the activity date to an hour-based index value using the `getHourBasedDate()` function.
- *
- * 4. **Domain Activity Upsert:** Fetch or create a record in the `domainActivity` table using the `upsertDomainActivity()`
- * function. This function calls the `prisma.domainActivity.upsert()` method. The record is initially empty as we need
- * to filter the incoming session data first.
- *
- * 5. **Domain Activity Check:** An error is thrown if a `domainActivityRecord` is not found.
- *
- * 6. **Fetch Last Session:** Retrieve the most recent session activity for the `domainActivity` record using the
- * `prisma.sessionActivity.findFirst()` method.
- *
- * 7. **Last Session End Time:** Obtain the end time of the last session. If no previous session exists,
- * a default value of 0 is used.
- *
- * 8. **Session Filtering:** For each session in the activity, check if its start time is after the end time of the
- * last session. If true, it's considered a new session and added to the `newSessions` array. If not, it's considered
- * a duplicate session and a log message is printed. We also filter out everything that is older than 24 hours or in
- * the future.
- *
- * 9. **Time Calculation:** Compute the total time spent on the activity by summing the duration of each new session.
- *
- * 10. **Session Creation:** Create a record for each new session in the `sessionActivity` table using the
- * `prisma.sessionActivity.createMany()` method.
- *
- * 11. **Session Validation:** If no session activity records were created, log a message and return early.
- *
- * 12. **Domain Activity Update:** Update the `domainActivity` record, incrementing the total time spent and the count
- * of new sessions.
- *
- * 13. **Summary Upsert:** Upsert a summary record. If a record with the same date and member token exists, increment its
- * `activityTime` and `sessionCount` fields. If it doesn't exist, create a new record with the respective data.
- *
- *
- * This algorithm avoids duplicate session entries and properly updates associated records in a chronological order of the
- * activities. It assumes that the sessions are sent in chronological order, so a late arriving session could be
- * considered as a duplicate.
- */
-
 async function handleRecordActivity(activity: CreateActivityInputInternal, token: string) {
   // We expect the translate-payload.ts to handle domain extraction
   const domain = activity.domain;
@@ -142,6 +98,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // - Ended more than 24 hours ago.
   // Log any filtered sessions.
   const newSessions: CreateSessionActivityInput[] = [];
+  let mostRecentSessionEndTimeTs = 0;
 
   if (activity.sessions) {
     const currentTime = Date.now();
@@ -149,6 +106,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     activity.sessions.forEach((session) => {
       const startTime = new Date(session.startTime).getTime();
       const endTime = new Date(session.endTime).getTime();
+      mostRecentSessionEndTimeTs = Math.max(mostRecentSessionEndTimeTs, endTime);
 
       if (endTime <= lastSessionEndTime) {
         // TODO: Filter out sessions that attempt to occupy non-empty spaces: specifically, where startTime or endTime overlaps with an existing session.
@@ -208,6 +166,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
     console.warn('SessionActivity was not created: sessionRecords is empty after filtering');
+    sentryCatchException({msg: 'sessionRecords is empty after filtering', token});
     return;
   }
 
@@ -230,29 +189,11 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     },
   });
 
-  // Upsert a summary record.
-  await prismadb.summary.upsert({
-    where: {
-      date_memberToken: {
-        date,
-        memberToken: token,
-      },
-    },
-    update: {
-      activityTime: {
-        increment: timeSpentInc,
-      },
-      sessionCount: {
-        increment: sessionRecords.count,
-      },
-    },
-    create: {
-      date,
-      activityTime: timeSpentInc,
-      sessionCount: sessionRecords.count,
-      memberToken: token,
-    },
-  });
+  return {
+    timeSpent: timeSpentInc,
+    sessionCount: sessionRecords.count,
+    endTime: new Date(mostRecentSessionEndTimeTs),
+  };
 }
 
 async function create({req, res}: PublicMethodContext) {
@@ -280,13 +221,70 @@ async function create({req, res}: PublicMethodContext) {
   // TODO - consider moving this to a background job and informing a client separately
   res.status(201).end();
 
+  const {token} = payload;
+
   try {
     // Count processing time
     const startTime = performance.now();
 
     const {activities} = translatePayloadToInternalStructure(payload);
+    const summaryUpdates: {
+      [date: string]: {
+        timeSpentInc: number;
+        sessionCountInc: number;
+        lastSessionEndDatetime: Date;
+      };
+    } = {};
     for (let i = 0; i < activities.length; i++) {
-      await handleRecordActivity(activities[i], payload.token);
+      const activityStats = await handleRecordActivity(activities[i], token);
+      const {timeSpent, sessionCount, endTime} = activityStats || {};
+
+      if (endTime) {
+        const dateIndex = getHourBasedDate(endTime)?.toISOString();
+        if (!summaryUpdates[dateIndex]) {
+          summaryUpdates[dateIndex] = {
+            timeSpentInc: 0,
+            sessionCountInc: 0,
+            lastSessionEndDatetime: endTime,
+          };
+        }
+        if (typeof timeSpent === 'number') {
+          summaryUpdates[dateIndex].timeSpentInc += timeSpent;
+        }
+        if (typeof sessionCount === 'number') {
+          summaryUpdates[dateIndex].sessionCountInc += sessionCount;
+        }
+      }
+    }
+
+    for (const dateIndex in summaryUpdates) {
+      const {timeSpentInc, sessionCountInc, lastSessionEndDatetime} = summaryUpdates[dateIndex];
+      await prismadb.summary.upsert({
+        where: {
+          date_memberToken: {
+            date: dateIndex,
+            memberToken: token,
+          },
+        },
+        update: {
+          activityTime: {
+            increment: timeSpentInc,
+          },
+          sessionCount: {
+            increment: sessionCountInc,
+          },
+          updatedAt: new Date(),
+          lastSessionEndDatetime,
+        },
+        create: {
+          date: dateIndex,
+          updatedAt: new Date(),
+          lastSessionEndDatetime,
+          activityTime: timeSpentInc,
+          sessionCount: sessionCountInc,
+          memberToken: token,
+        },
+      });
     }
 
     const endTime = performance.now();
@@ -299,7 +297,7 @@ async function create({req, res}: PublicMethodContext) {
     // Check & update status in background
     await prismadb.member.update({
       where: {
-        token: payload.token,
+        token,
       },
       data: {
         status: STATUS.ACTIVE,
@@ -312,7 +310,7 @@ async function create({req, res}: PublicMethodContext) {
   }
 }
 
-function sentryCatchException({data, msg, token}: {data: string; msg: string; token: string}) {
+function sentryCatchException({data, msg, token}: {data?: string; msg: string; token: string}) {
   Sentry.captureMessage(msg, {
     user: {
       id: token,
