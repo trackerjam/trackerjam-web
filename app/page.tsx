@@ -4,7 +4,7 @@ import {redirect} from 'next/navigation';
 import {Metadata} from 'next';
 
 import {Button} from '../components/common/button';
-import {DEFAULT_PAGE} from '../const/url';
+import {AUTH_PAGE, DEFAULT_PAGE} from '../const/url';
 import {authOptions} from './api/auth/[...nextauth]/route';
 
 export const metadata: Metadata = {
@@ -23,14 +23,18 @@ const Home = async () => {
     redirect(DEFAULT_PAGE);
   }
 
+  if (!session?.user) {
+    redirect(AUTH_PAGE);
+  }
+
   return (
-    <div className="min-h-screen flex flex-col text-white bg-black justify-center">
+    <div className="min-h-screen flex flex-col justify-center">
       <main className="flex grow flex-col justify-start items-center mt-[15%]">
-        <h1 className="my-8 text-gradient text-36 leading-tight font-bold">Trackerjam</h1>
+        <h1 className="my-8 text-36 leading-tight font-bold">Trackerjam</h1>
 
         {!hasSession && (
-          <Button className="mt-6" href="/api/auth/signin" type="button" kind="secondary">
-            Sign In To Try
+          <Button className="mt-6" href={AUTH_PAGE} type="button" kind="gray">
+            Sign In
           </Button>
         )}
 

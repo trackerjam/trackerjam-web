@@ -1,3 +1,5 @@
 export const FEEDBACK_URL = 'https://trackerjam.canny.io/features';
 export const SUPPORT_EMAIL = 'hi@trackerjam.com';
 export const DEFAULT_PAGE = '/team';
+
+export const AUTH_PAGE = '/api/auth/signin';
