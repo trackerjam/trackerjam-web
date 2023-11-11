@@ -166,7 +166,13 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
     console.warn('SessionActivity was not created: sessionRecords is empty after filtering');
-    sentryCatchException({msg: 'sessionRecords is empty after filtering', token});
+    sentryCatchException({
+      msg: 'sessionRecords is empty after filtering',
+      token,
+      data: JSON.stringify({
+        newSessionsLength: newSessions.length,
+      }),
+    });
     return;
   }
 
@@ -235,8 +241,8 @@ async function create({req, res}: PublicMethodContext) {
         lastSessionEndDatetime: Date;
       };
     } = {};
-    for (let i = 0; i < activities.length; i++) {
-      const activityStats = await handleRecordActivity(activities[i], token);
+    for (const activity of activities) {
+      const activityStats = await handleRecordActivity(activity, token);
       const {timeSpent, sessionCount, endTime} = activityStats || {};
 
       if (endTime) {
@@ -257,7 +263,7 @@ async function create({req, res}: PublicMethodContext) {
       }
     }
 
-    for (const dateIndex in summaryUpdates) {
+    for (const dateIndex of Object.keys(summaryUpdates)) {
       const {timeSpentInc, sessionCountInc, lastSessionEndDatetime} = summaryUpdates[dateIndex];
       await prismadb.summary.upsert({
         where: {
