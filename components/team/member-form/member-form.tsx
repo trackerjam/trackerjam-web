@@ -1,13 +1,11 @@
 'use client';
 
-import {FormControl} from 'baseui/form-control';
 import {useForm} from 'react-hook-form';
 import React, {useCallback, useState} from 'react';
 import {KIND, Notification} from 'baseui/notification';
 
 import {useRouter} from 'next/navigation';
-import {Textarea} from 'baseui/textarea';
-import {BiCaretDown, BiCaretRight, BiHide} from 'react-icons/bi';
+import {BiCaretDown, BiCaretRight, BiHide, BiMinusCircle} from 'react-icons/bi';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
 import {extractDomains} from '../../../utils/extract-domains';
@@ -50,11 +48,13 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
     isEditing ? `/api/member/${editingMember?.id}` : '/api/member'
   );
-  const {handleSubmit, control, setValue, watch, getValues} = useForm({
+  const {handleSubmit, control, setValue, watch, getValues, register} = useForm({
     reValidateMode: 'onBlur',
     defaultValues: editingMember || defaultValues,
   });
-  const [excludedListShown, setExcludedListShown] = useState(false);
+  const [excludedListShown, setExcludedListShown] = useState(
+    Boolean(editingMember?.settings.excludeDomains?.length)
+  );
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const onSubmit = useCallback(
@@ -70,6 +70,14 @@ export function MemberForm({editingMember}: CreateMemberProps) {
         };
       }
 
+      if (dataToSend.settings?.includeDomains) {
+        dataToSend.settings.includeDomains = extractDomains(dataToSend.settings.includeDomains);
+      }
+
+      if (dataToSend.settings?.excludeDomains) {
+        dataToSend.settings.excludeDomains = extractDomains(dataToSend.settings.excludeDomains);
+      }
+
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
       if (!res || (res as ErrorResponse)?.error) {
         console.error('Unknown error', res);
@@ -79,11 +87,6 @@ export function MemberForm({editingMember}: CreateMemberProps) {
     },
     [isEditing, router, send]
   );
-
-  const handleDomainInput = (key: 'includeDomains' | 'excludeDomains', value: string) => {
-    const domains = extractDomains(value);
-    setValue(`settings.${key}`, domains);
-  };
 
   const handleWorkHoursDaySet = (day: DAY, value: boolean) => {
     const newVal: WorkHoursDaysType = getValues('settings.workHours.days');
@@ -108,13 +111,7 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const domainListsDisabled = trackMode === 'ALL';
   const AdvancedCaredIcon = showAdvanced ? BiCaretDown : BiCaretRight;
 
-  const radioControlOverrides = {
-    Caption: {
-      style: {
-        opacity: domainListsDisabled ? 0.2 : 1,
-      },
-    },
-  };
+  const textAreaClass = 'bg-gray-100 rounded-lg p-4 w-full';
 
   return (
     <form className="flex flex-col gap-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -162,15 +159,14 @@ export function MemberForm({editingMember}: CreateMemberProps) {
       <div className={formSectionStyle}>
         <RadioTrackMode control={control} name="settings.trackMode" />
         <div>
-          <FormControl
-            caption="List of domains, separated by comma (i.e. google.com, amazon.com, bbc.co.uk)"
+          <textarea
+            {...register('settings.includeDomains')}
+            className={textAreaClass}
             disabled={domainListsDisabled}
-            overrides={radioControlOverrides}
-          >
-            <Textarea
-              onChange={(e) => handleDomainInput('includeDomains', e.target.value)}
-            ></Textarea>
-          </FormControl>
+          />
+          <span className="text-12 text-gray-400">
+            List of domains, separated by comma (i.e. google.com, amazon.com, bbc.co.uk)
+          </span>
         </div>
       </div>
 
@@ -183,22 +179,33 @@ export function MemberForm({editingMember}: CreateMemberProps) {
             onClick={() => setExcludedListShown(true)}
           >
             <BiHide className="mr-2" />
-            Exclude some domains
+            Exclude domains
           </Button>
         )}
         {excludedListShown && (
           <div className={formSectionStyle}>
-            <FormControl
-              label="Exclude domains"
-              caption="Excluded domains and subdomains separated by comma (i.e. mail.google.com)"
-            >
-              <Textarea
-                onChange={(e) => handleDomainInput('excludeDomains', e.target.value)}
-              ></Textarea>
-            </FormControl>
+            <label htmlFor="textarea-exclude-domains" className="font-medium mb-3 block">
+              Excluded domains
+            </label>
+            <textarea
+              {...register('settings.excludeDomains')}
+              className={textAreaClass}
+              id="textarea-exclude-domains"
+            />
+            <span className="text-12 text-gray-400">
+              Excluded domains and subdomains separated by comma (i.e. mail.google.com)
+            </span>
             <div className="text-right">
-              <Button type="button" onClick={() => setExcludedListShown(false)}>
-                Hide field
+              <Button
+                type="button"
+                kind="transparent"
+                onClick={() => {
+                  setValue('settings.excludeDomains', []);
+                  setExcludedListShown(false);
+                }}
+                title="Don't use this field"
+              >
+                <BiMinusCircle title="" className="mr-1" /> Remove
               </Button>
             </div>
           </div>

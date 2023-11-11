@@ -29,6 +29,7 @@ type ButtonType = {
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   isLoading?: boolean;
+  title?: string;
 };
 
 export function Button({
@@ -40,6 +41,7 @@ export function Button({
   disabled,
   onClick,
   isLoading,
+  title,
   ...rest
 }: ButtonType) {
   const Tag = href ? Link : 'button';
@@ -58,6 +60,7 @@ export function Button({
       href={href}
       disabled={disabled || isLoading}
       onClick={onClick}
+      title={title}
       {...rest}
     >
       {children}
