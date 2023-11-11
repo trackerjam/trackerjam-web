@@ -66,14 +66,16 @@ export type GetTeamResponse = (Team & {
   members: TeamMembersType[];
 })[];
 
+export type MemberSummaryType = {
+  activityTime: number | null;
+  domainsCount: number | null;
+  sessionCount: number | null;
+  lastSessionEndDatetime: Date | null;
+  updatedAt?: Date | null;
+};
+
 export type TeamMembersType = Member & {
-  summary: {
-    activityTime: number | null;
-    domainsCount: number | null;
-    sessionCount: number | null;
-    lastSessionEndDatetime: Date | null;
-    updatedAt?: Date | null;
-  }[];
+  summary: MemberSummaryType[];
   settings: SettingsType | null;
 };
 

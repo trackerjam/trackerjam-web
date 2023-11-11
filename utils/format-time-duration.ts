@@ -2,6 +2,7 @@ import {normalize} from 'duration-fns';
 
 type FormatDurationOptions = {
   skipSeconds?: boolean;
+  longUnits?: boolean;
 };
 
 export function formatTimeDuration(durationMs: number, options?: FormatDurationOptions): string {
@@ -13,17 +14,30 @@ export function formatTimeDuration(durationMs: number, options?: FormatDurationO
     }
   }
 
+  const longUnits = options?.longUnits ?? false;
+  const UNITS = {
+    week: longUnits ? ' week' : 'w',
+    day: longUnits ? ' day' : 'd',
+    hour: longUnits ? ' hour' : 'h',
+    minute: longUnits ? ' min' : 'm',
+    second: longUnits ? ' sec' : 's',
+  };
+
   // Normalize after potentially adjusting for seconds
   const normalized = normalize({milliseconds: durationMs});
 
   // Construct the result array in one go, filtering out any zero values
   const res = [
-    normalized.weeks ? `${normalized.weeks}w` : '',
-    normalized.days ? `${normalized.days}d` : '',
-    normalized.hours ? `${normalized.hours}h` : '',
-    normalized.minutes ? `${normalized.minutes}m` : '',
+    normalized.weeks ? `${normalized.weeks}${UNITS.week}${normalized.weeks > 1 ? 's' : ''}` : '',
+    normalized.days ? `${normalized.days}${UNITS.day}${normalized.days > 1 ? 's' : ''}` : '',
+    normalized.hours ? `${normalized.hours}${UNITS.hour}${normalized.hours > 1 ? 's' : ''}` : '',
+    normalized.minutes
+      ? `${normalized.minutes}${UNITS.minute}${normalized.minutes > 1 ? 's' : ''}`
+      : '',
     // Add seconds string only if skipSeconds is not true
-    !options?.skipSeconds && normalized.seconds ? `${normalized.seconds}s` : '',
+    !options?.skipSeconds && normalized.seconds
+      ? `${normalized.seconds}${UNITS.second}${normalized.seconds > 1 ? 's' : ''}`
+      : '',
   ].filter((str) => str); // Remove any empty strings
 
   return res.join(' ').trim();

@@ -1,7 +1,7 @@
 import Avatar from 'boring-avatars';
 import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
-import {LuCopyCheck} from 'react-icons/lu';
+import {LuCopyCheck, LuTimer, LuAppWindow} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
@@ -12,10 +12,11 @@ import {useRouter} from 'next/navigation';
 import * as Toast from '@radix-ui/react-toast';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
-import {TeamMembersType} from '../../types/api';
+import {MemberSummaryType, TeamMembersType} from '../../types/api';
 import {Button} from '../common/button';
 import {WorkHours} from '../common/work-hours';
 import {UserStatusDot} from '../common/user-status-dot';
+import {formatTimeDuration} from '../../utils/format-time-duration';
 
 interface MemberCardProps {
   data: TeamMembersType;
@@ -42,6 +43,8 @@ const menuItems = [
     iconColor: 'text-red-600',
   },
 ];
+
+const NO_DATA_STR = '-';
 
 export function MemberCard({data, onDelete}: MemberCardProps) {
   const {name, title, token, summary, id: memberId} = data;
@@ -77,13 +80,22 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   };
 
   const hrStyle = 'border-t border-black border-opacity-[0.08]';
-  const statsColumnStyle = 'border-black border-opacity-[0.08] grow flex justify-start py-2.5';
+  const infoColumnStyle = 'flex py-2.5';
+  const statsColumnStyle = 'flex';
+  const statsLabel = 'text-gray-700 text-12 mr-2 flex gap-1 items-center';
+  const statsValue = 'text-16 font-bold';
 
   const avatarSeed = token;
-  const summaryData = summary?.[0] || {}; // should be ordered desc
+  const summaryData: MemberSummaryType = summary?.[0] || {}; // should be ordered desc
   const lastUpdateTs = summaryData?.lastSessionEndDatetime
     ? new Date(summaryData?.lastSessionEndDatetime).getTime()
     : null;
+  const activityTime = summaryData?.activityTime ?? 0;
+  const activityTimeFormatted = formatTimeDuration(activityTime, {
+    skipSeconds: true,
+    longUnits: true,
+  });
+  const sessionCount = summaryData?.sessionCount ?? 0;
 
   return (
     <div className="relative rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
@@ -108,7 +120,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         </ModalFooter>
       </Modal>
 
-      <div className="flex items-start gap-x-3 mb-4">
+      <div className="flex items-start gap-x-3 mb-2">
         <div className="shrink-0">
           <Avatar
             size={40}
@@ -169,15 +181,30 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         </div>
       </div>
 
-      <hr className={hrStyle} />
+      <div className={infoColumnStyle}>
+        <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} />
+      </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-3 content-evenly py-4 border-t border-b border-gray-200 my-2">
         <div className={statsColumnStyle}>
-          <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} />
+          <span className={statsLabel}>
+            <LuTimer title="" />
+            Time today (UTC)
+          </span>
+          <span className={statsValue}>{activityTimeFormatted || NO_DATA_STR}</span>
         </div>
+
         <div className={statsColumnStyle}>
-          <WorkHours workHours={data?.settings?.workHours} isCompact={true} />
+          <span className={statsLabel}>
+            <LuAppWindow title="" />
+            Tab sessions
+          </span>
+          <span className={statsValue}>{sessionCount || NO_DATA_STR}</span>
         </div>
+      </div>
+
+      <div className={infoColumnStyle}>
+        <WorkHours workHours={data?.settings?.workHours} isCompact={true} />
       </div>
 
       <hr className={hrStyle} />
