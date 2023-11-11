@@ -132,7 +132,11 @@ export function MemberStatistics({memberId}: {memberId: string}) {
 
       {hasCurrentDayData && (
         <>
-          <Trends data={data?.activitiesByDate} />
+          <Trends
+            data={data?.activitiesByDate}
+            selectedDate={currentDate}
+            onDateSelect={(dateStr) => setCurrentDate(dateStr)}
+          />
           <div className="relative my-5 border-t-2 border-b-2 border-gray-100 before:h-full before:w-12 before:left-0 before:absolute before:bg-[linear-gradient(90deg,rgba(255,255,255,1)0%,rgba(255,255,255,0)100%)]">
             <div className="py-8 overflow-x-auto">
               {Boolean(availableDates?.length) && (

@@ -1,11 +1,12 @@
 import {useMemo} from 'react';
 import dynamic from 'next/dynamic';
 import {format} from 'date-fns';
+import * as React from 'react';
+import {ComputedBarDatum, BarDatum} from '@nivo/bar';
 import {ActivitiesByDate} from '../../../types/api';
 import {formatTimeDuration} from '../../../utils/format-time-duration';
 import {CardElement} from '../stat-cards/card';
 import {generateDateRangeKeys} from './generate-date-range';
-import {Tooltip} from './tooltip';
 
 const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.ResponsiveBar), {
   ssr: false,
@@ -13,9 +14,71 @@ const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.Responsive
 
 interface TrendsProps {
   data: ActivitiesByDate | undefined;
+  selectedDate: string | null | undefined;
+  onDateSelect: (date: string) => void;
 }
 
-export function Trends({data}: TrendsProps) {
+type Props = {
+  bars: ComputedBarDatum<BarDatum>[];
+  hoveredIndex: string | null;
+};
+
+const TICK_WIDTH = 1;
+const LABEL_Y_OFFSET = 35;
+const LABEL_WIDTH = 80;
+const LABEL_HEIGHT = 30;
+
+// Should render a total above the hovered bar columns.
+const BarTotal = ({bars, hoveredIndex}: Props): React.ReactNode => {
+  if (!hoveredIndex) {
+    return null;
+  }
+
+  const bar = bars.find((bar) => bar.data.indexValue === hoveredIndex);
+  if (!bar) {
+    return null;
+  }
+  const {data} = bar;
+  const {x, y, width} = bar;
+  if (!data?.value) {
+    return null;
+  }
+  const label = formatTimeDuration(data.value, {skipSeconds: true});
+  const borderColor = '#e0e0e0';
+
+  return (
+    <g transform={`translate(${x}, ${y - LABEL_Y_OFFSET})`}>
+      <rect
+        x={width / 2 - LABEL_WIDTH / 2}
+        y={0}
+        height={LABEL_HEIGHT}
+        width={LABEL_WIDTH}
+        fill="#fff"
+        rx={4}
+        style={{strokeWidth: 1, stroke: borderColor}}
+      />
+      <text
+        transform={`translate(${width / 2}, ${LABEL_HEIGHT - 10})`}
+        textAnchor="middle"
+        fontSize="12px"
+        fontFamily="sans-serif"
+        fill="#000"
+      >
+        {label}
+      </text>
+      <rect
+        x={width / 2 - TICK_WIDTH / 2}
+        y={LABEL_HEIGHT}
+        width={TICK_WIDTH}
+        height={LABEL_Y_OFFSET - LABEL_HEIGHT}
+        fill={borderColor}
+      />
+    </g>
+  );
+};
+
+export function Trends({data, selectedDate, onDateSelect}: TrendsProps) {
+  const [hoveredIndexValue, setHoveredIndexValue] = React.useState<string | null>(null);
   const {chartData, averageAllTime, averageLast7Days} = useMemo(() => {
     if (!data) {
       return {
@@ -58,7 +121,7 @@ export function Trends({data}: TrendsProps) {
   return (
     <div className="flex flex-row gap-3 xl:flex-col xl:gap-y-6">
       <div className="w-[70%] h-[260px] xl:w-full">
-        <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity by days</h3>
+        <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity time by days</h3>
         {!hasData && (
           <div className="flex items-center justify-center h-full text-gray-400">
             No data available yet, check back later.
@@ -72,7 +135,10 @@ export function Trends({data}: TrendsProps) {
             enableLabel={false}
             valueFormat="0.0f"
             margin={{top: 15, right: 10, bottom: 65, left: 10}}
-            colors={{scheme: 'paired'}}
+            colors={(datum) => {
+              if (datum?.indexValue === selectedDate && selectedDate) return '#589ec2';
+              return '#a6cee3';
+            }}
             padding={0.3}
             valueScale={{type: 'linear'}}
             indexScale={{type: 'band', round: true}}
@@ -100,7 +166,17 @@ export function Trends({data}: TrendsProps) {
               modifiers: [['darker', 1.6]],
             }}
             role="application"
-            tooltip={({indexValue, value}) => <Tooltip indexValue={indexValue} value={value} />}
+            tooltip={() => null}
+            onClick={(datum) => {
+              if (datum.indexValue) {
+                onDateSelect(datum.indexValue as string);
+              }
+            }}
+            onMouseEnter={(datum, event) => {
+              setHoveredIndexValue(datum?.indexValue as string);
+              event.currentTarget.style.cursor = 'pointer';
+            }}
+            onMouseLeave={() => setHoveredIndexValue(null)}
             theme={{
               grid: {
                 line: {
@@ -116,6 +192,16 @@ export function Trends({data}: TrendsProps) {
                 },
               },
             }}
+            isInteractive
+            layers={[
+              'grid',
+              'axes',
+              'bars',
+              'markers',
+              'legends',
+              'annotations',
+              (props) => <BarTotal bars={props.bars} hoveredIndex={hoveredIndexValue} />,
+            ]}
           />
         )}
       </div>
