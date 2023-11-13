@@ -1,8 +1,6 @@
 import {getServerSession} from 'next-auth/next';
-
 import {redirect} from 'next/navigation';
 import {Metadata} from 'next';
-
 import {Button} from '../components/common/button';
 import {AUTH_PAGE, DEFAULT_PAGE} from '../const/url';
 import {authOptions} from './api/auth/[...nextauth]/route';

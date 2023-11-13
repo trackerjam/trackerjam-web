@@ -32,6 +32,8 @@
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^2.30.0",
     "duration-fns": "^3.0.2",
+    "flowbite": "^2.1.1",
+    "flowbite-react": "^0.6.4",
     "next": "14.0.2",
     "next-auth": "^4.24.4",
     "next-plausible": "^3.11.3",
@@ -48,7 +50,8 @@
     "request-ip": "^3.3.0",
     "string-to-color": "^2.2.2",
     "styletron-engine-atomic": "^1.6.2",
-    "styletron-react": "^6.1.1"
+    "styletron-react": "^6.1.1",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",

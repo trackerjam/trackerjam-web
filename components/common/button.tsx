@@ -6,9 +6,9 @@ const kindClassNames = {
     'text-white bg-green-700 flex hover:bg-slate-950 font-medium items-center py-3.5 px-4 rounded-lg hover:disabled:bg-green-700',
   secondary:
     'text-black bg-white px-4 py-3.5 rounded-lg hover:bg-[#E2E2E2] disabled:bg-[#292929] disabled:text-[#6b6b6b] hover:disabled:bg-white',
-  gray: 'px-2 py-1.5 text-12 text-black bg-gray-80 rounded hover:bg-gray-90 hover:disabled:bg-gray-80',
+  gray: 'px-2 py-1.5 text-12 text-black bg-gray-80 rounded-lg hover:bg-gray-90 hover:disabled:bg-gray-80',
   black:
-    'px-2 py-1.5 text-12 text-white bg-black rounded hover:bg-gray-900 hover:disabled:bg-black',
+    'px-2 py-1.5 text-12 text-white bg-black rounded-lg hover:bg-gray-900 hover:disabled:bg-black',
   transparent:
     'px-3 py-2.5 bg-transparent text-black hover:bg-gray-100 rounded-lg hover:disabled:bg-transparent',
 };

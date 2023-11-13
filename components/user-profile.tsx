@@ -2,12 +2,18 @@
 import Avatar from 'react-avatar';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {BsThreeDots} from 'react-icons/bs';
+import {BsThreeDots, BsInfoCircle, BsArrowLeftSquare} from 'react-icons/bs';
 import {signOut} from 'next-auth/react';
 import {Session} from 'next-auth';
+import {useRouter} from 'next/navigation';
+import {WELCOME_URL_HASH} from '../const/url';
 
 export function UserProfile({session}: {session?: Session | null}) {
   const user = session?.user;
+  const router = useRouter();
+
+  const dropDownItemClass =
+    'group py-4 my-1 px-3 text-14 leading-none flex items-center h-[25px] relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200';
 
   return (
     <div className="flex items-center justify-between mx-2.5 mt-8 mb-2.5 rounded-xl border border-black/10 p-2">
@@ -40,10 +46,18 @@ export function UserProfile({session}: {session?: Session | null}) {
             sideOffset={5}
           >
             <DropdownMenu.Item
-              className="group py-2 px-3 text-14 leading-none flex items-center h-[25px] relative select-none outline-none data-[disabled]:text-gray-50 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-100 cursor-pointer transition-colors duration-200"
+              className={dropDownItemClass}
+              onSelect={() => router.push(`/team${WELCOME_URL_HASH}`)}
+            >
+              <BsInfoCircle title="" className="mr-1" />
+              Welcome Page
+            </DropdownMenu.Item>
+            <hr />
+            <DropdownMenu.Item
+              className={dropDownItemClass}
               onSelect={() => signOut({callbackUrl: '/'})}
             >
-              Sign Out
+              <BsArrowLeftSquare title="" className="mr-1" color="red" /> Sign Out
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
