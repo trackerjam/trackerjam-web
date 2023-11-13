@@ -28,15 +28,21 @@ export function formatTimeDuration(durationMs: number, options?: FormatDurationO
 
   // Construct the result array in one go, filtering out any zero values
   const res = [
-    normalized.weeks ? `${normalized.weeks}${UNITS.week}${normalized.weeks > 1 ? 's' : ''}` : '',
-    normalized.days ? `${normalized.days}${UNITS.day}${normalized.days > 1 ? 's' : ''}` : '',
-    normalized.hours ? `${normalized.hours}${UNITS.hour}${normalized.hours > 1 ? 's' : ''}` : '',
+    normalized.weeks
+      ? `${normalized.weeks}${UNITS.week}${normalized.weeks > 1 && longUnits ? 's' : ''}`
+      : '',
+    normalized.days
+      ? `${normalized.days}${UNITS.day}${normalized.days > 1 && longUnits ? 's' : ''}`
+      : '',
+    normalized.hours
+      ? `${normalized.hours}${UNITS.hour}${normalized.hours > 1 && longUnits ? 's' : ''}`
+      : '',
     normalized.minutes
-      ? `${normalized.minutes}${UNITS.minute}${normalized.minutes > 1 ? 's' : ''}`
+      ? `${normalized.minutes}${UNITS.minute}${normalized.minutes > 1 && longUnits ? 's' : ''}`
       : '',
     // Add seconds string only if skipSeconds is not true
     !options?.skipSeconds && normalized.seconds
-      ? `${normalized.seconds}${UNITS.second}${normalized.seconds > 1 ? 's' : ''}`
+      ? `${normalized.seconds}${UNITS.second}${normalized.seconds > 1 && longUnits ? 's' : ''}`
       : '',
   ].filter((str) => str); // Remove any empty strings
 

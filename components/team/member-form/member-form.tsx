@@ -70,12 +70,13 @@ export function MemberForm({editingMember}: CreateMemberProps) {
         };
       }
 
-      if (dataToSend.settings?.includeDomains) {
-        dataToSend.settings.includeDomains = extractDomains(dataToSend.settings.includeDomains);
+      const {includeDomains, excludeDomains} = dataToSend.settings || {};
+      if (typeof includeDomains === 'string' && includeDomains) {
+        dataToSend.settings.includeDomains = extractDomains(includeDomains);
       }
 
-      if (dataToSend.settings?.excludeDomains) {
-        dataToSend.settings.excludeDomains = extractDomains(dataToSend.settings.excludeDomains);
+      if (typeof excludeDomains === 'string' && excludeDomains) {
+        dataToSend.settings.excludeDomains = extractDomains(excludeDomains);
       }
 
       const res = await send(dataToSend, isEditing ? 'PUT' : 'POST');
