@@ -5,7 +5,7 @@ export function ListSkeleton() {
   return (
     <Skeleton
       animation={true}
-      rows={6}
+      rows={3}
       overrides={{
         Root: {
           style: ({$theme}) => ({
@@ -16,7 +16,7 @@ export function ListSkeleton() {
         },
         Row: {
           style: {
-            height: '145px',
+            height: '350px',
             marginBottom: 0,
           },
         },

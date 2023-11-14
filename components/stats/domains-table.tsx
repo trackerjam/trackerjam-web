@@ -22,8 +22,8 @@ const TABLE_HEADER = [
   'Productivity',
   'Pages',
   'Activity Time',
-  'Sessions Count',
-  'Last Session',
+  'Sessions',
+  'Last Visit',
 ];
 
 function getTimeShare({
@@ -194,7 +194,9 @@ export function DomainsTable({
                   </td>
                   <td className={tableCellStyle}>{sessionCount}</td>
                   <td className={tableCellStyle}>
-                    {lastSession ? formatDistanceToNow(new Date(lastSession)) : '-'}
+                    {lastSession
+                      ? formatDistanceToNow(new Date(lastSession), {addSuffix: true})
+                      : '-'}
                   </td>
                 </tr>
               );
