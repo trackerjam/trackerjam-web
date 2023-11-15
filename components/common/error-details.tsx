@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {useStyletron} from 'baseui';
-import {HeadingXXLarge, HeadingSmall} from 'baseui/typography';
-import {Notification, KIND} from 'baseui/notification';
-import {Button, SIZE, KIND as BUTTON_KIND} from 'baseui/button';
+
 import * as Sentry from '@sentry/react';
+
+import {Button} from './button';
 
 interface ErrorDetailsProps {
   error: Error | string;
@@ -16,7 +15,6 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 
 export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.ReactElement {
   const [stacktraceShown, setStacktraceShown] = useState<boolean>(false);
-  const [css, theme] = useStyletron();
 
   const isErrorType = error instanceof Error;
   const errorMessage = isErrorType ? error.message : error;
@@ -29,73 +27,33 @@ export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.Reac
     console.error(error);
   }, [error]);
 
-  const wrapperStyle = css({
-    paddingTop: theme.sizing.scale1200,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    border: `3px solid ${theme.colors.backgroundNegativeLight}`,
-    borderRadius: theme.borders.radius300,
-  });
-
-  const errorMessageStyle = css({
-    maxWidth: '80%',
-    marginTop: theme.sizing.scale400,
-  });
-
-  const stacktraceStyle = css({
-    overflowX: 'auto',
-    paddingTop: theme.sizing.scale400,
-    paddingBottom: theme.sizing.scale400,
-    paddingRight: theme.sizing.scale400,
-    paddingLeft: theme.sizing.scale400,
-    fontSize: theme.typography.LabelXSmall.fontSize,
-    borderTopRightRadius: theme.borders.radius300,
-    borderTopLeftRadius: theme.borders.radius300,
-    borderBottomRightRadius: theme.borders.radius300,
-    borderBottomLeftRadius: theme.borders.radius300,
-    backgroundColor: theme.colors.backgroundNegativeLight,
-    color: theme.colors.contentNegative,
-  });
-
-  const buttonWrapperStyle = css({
-    marginTop: theme.sizing.scale600,
-  });
-
   return (
-    <div role="alert" className={wrapperStyle}>
-      <HeadingXXLarge color={theme.colors.contentTertiary} margin={0}>
-        Oh, snap!
-      </HeadingXXLarge>
-      <HeadingSmall color={theme.colors.contentTertiary} margin={0}>
-        Something went wrong :(
-      </HeadingSmall>
+    <div
+      role="alert"
+      className="py-12 flex flex-col items-center border-[3px] border-red-100 rounded-lg"
+    >
+      <h2 className="text-40 font-bold leading-tight text-gray-600">Oh, snap!</h2>
+      <h3 className="text-24 font-bold leading-tight text-gray-600">Something went wrong :(</h3>
 
       {Boolean(IS_DEV) && (
-        <div className={errorMessageStyle}>
+        <div className="max-w-[80%] mt-2.5">
           <div onClick={() => setStacktraceShown(!stacktraceShown)}>
-            <Notification
-              kind={KIND.negative}
-              overrides={{
-                Body: {
-                  style: () => ({
-                    flexGrow: 1,
-                    width: 'auto',
-                  }),
-                },
-              }}
-            >
+            <span className="flex p-4 mt-4 bg-red-100 text-red-700 font-medium leading-snug rounded-lg">
               {errorMessage}
-            </Notification>
+            </span>
           </div>
 
-          {isErrorType && stacktraceShown && <pre className={stacktraceStyle}>{errorStack}</pre>}
+          {isErrorType && stacktraceShown && (
+            <pre className="overflow-x-auto mt-4 mb-8 w-full p-2.5 text-12 font-medium leading-snug rounded-lg bg-red-100 text-red-700">
+              {errorStack}
+            </pre>
+          )}
         </div>
       )}
 
       {resetError && (
-        <div className={buttonWrapperStyle}>
-          <Button size={SIZE.compact} onClick={resetError} kind={BUTTON_KIND.secondary}>
+        <div className="mt-2.5">
+          <Button size="md" kind="black">
             Try Again
           </Button>
         </div>
