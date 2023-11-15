@@ -10,6 +10,7 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'bas
 import {useRouter} from 'next/navigation';
 
 import * as Toast from '@radix-ui/react-toast';
+import clsx from 'clsx';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
 import {MemberSummaryType, TeamMembersType} from '../../types/api';
@@ -98,7 +99,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   const sessionCount = summaryData?.sessionCount ?? 0;
 
   return (
-    <div className="relative rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
+    <div className="relative flex flex-col rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
       <Modal
         onClose={() => setDeleteShown(false)}
         closeable
@@ -207,7 +208,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
         <WorkHours workHours={data?.settings?.workHours} isCompact={true} />
       </div>
 
-      <hr className={hrStyle} />
+      <hr className={clsx(hrStyle, 'mt-auto')} />
 
       <div className="flex justify-end mt-2">
         <Button
