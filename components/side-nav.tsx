@@ -1,4 +1,5 @@
 import {CiSettings, CiPizza} from 'react-icons/ci';
+import {HiOutlineExclamationCircle} from 'react-icons/hi2';
 import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
@@ -28,6 +29,10 @@ const topItems = [
   {
     title: <IconTitle title="Settings" icon={CiSettings} />,
     itemId: '/settings',
+  },
+  {
+    title: <IconTitle title="Feedback form" icon={HiOutlineExclamationCircle} />,
+    itemId: '/feedback',
   },
 ];
 
