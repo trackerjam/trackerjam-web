@@ -149,7 +149,7 @@ async function update({req, res}: PublicMethodContext) {
         settings: {
           update: {
             settings: {
-              ...member.settings,
+              ...((member?.settings?.settings as object) || {}),
               ...(updateData?.settings || {}),
             },
           },
