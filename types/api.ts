@@ -71,11 +71,12 @@ export type MemberSummaryType = {
   domainsCount: number | null;
   sessionCount: number | null;
   lastSessionEndDatetime: Date | null;
+  isToday: boolean;
   updatedAt?: Date | null;
 };
 
 export type TeamMembersType = Member & {
-  summary: MemberSummaryType[];
+  lastSummary: MemberSummaryType;
   settings: SettingsType | null;
 };
 

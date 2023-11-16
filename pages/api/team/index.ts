@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {Member} from '@prisma/client';
+import {isToday} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -38,9 +38,24 @@ async function get({res, session}: AuthMethodContext) {
 
   try {
     const result = response.map((team) => {
+      const {id} = team;
       return {
-        ...team,
-        members: team.members.map((member) => unwrapSettings(member as Member)),
+        id,
+        members: team.members.map((member) => {
+          const memberWithSettings = unwrapSettings(member);
+          const {summary: summaryArr} = memberWithSettings;
+          const summary = summaryArr[0];
+
+          return {
+            ...memberWithSettings,
+            lastSummary: {
+              isToday:
+                summary?.lastSessionEndDatetime &&
+                isToday(new Date(summary?.lastSessionEndDatetime)),
+              ...summary,
+            },
+          };
+        }),
       };
     });
 

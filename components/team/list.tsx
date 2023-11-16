@@ -25,13 +25,7 @@ export function Team() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const router = useRouter();
   const params = useParams();
-
-  const teamData = useMemo(() => {
-    if (data) {
-      // We currently support the default team only
-      return data.find(({name}) => name === DEFAULT_TEAM_NAME)?.members;
-    }
-  }, [data]);
+  const teamData = data?.[0]?.members || [];
 
   useEffect(() => {
     if (!haveSeenWelcomeModal || window.location.hash === WELCOME_URL_HASH) {

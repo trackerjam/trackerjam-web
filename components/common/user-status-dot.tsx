@@ -1,10 +1,12 @@
 import cx from 'classnames';
 import {useMemo} from 'react';
 import {formatDistanceToNow} from 'date-fns';
+import {STATUS} from '@prisma/client';
 
 interface UserStatusDotProps {
   lastUpdateTs: number | null | undefined;
   isCompact?: boolean;
+  memberStatus: STATUS;
 }
 enum ONLINE_STATUS {
   NEW = 'New',
@@ -32,13 +34,13 @@ const TEXT_COLOR = {
   [ONLINE_STATUS.OFFLINE]: 'text-gray-500',
 };
 
-export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
-  const {lastUpdateFormatted, status} = useMemo(() => {
-    let status = ONLINE_STATUS.NEW;
+export function UserStatusDot({lastUpdateTs, isCompact, memberStatus}: UserStatusDotProps) {
+  const {lastUpdateFormatted, displayStatus} = useMemo(() => {
+    let displayStatus = memberStatus === 'NEW' ? ONLINE_STATUS.NEW : ONLINE_STATUS.OFFLINE;
 
     if (!lastUpdateTs) {
       return {
-        status,
+        displayStatus,
         lastUpdateFormatted: null,
       };
     }
@@ -46,23 +48,23 @@ export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
     const now = Date.now();
     const timeDistance = now - lastUpdateTs;
 
-    status = ONLINE_STATUS.ONLINE;
+    displayStatus = ONLINE_STATUS.ONLINE;
     if (timeDistance > TIMEOUT.AWAY) {
-      status = ONLINE_STATUS.AWAY;
+      displayStatus = ONLINE_STATUS.AWAY;
     }
     if (timeDistance > TIMEOUT.OFFLINE) {
-      status = ONLINE_STATUS.OFFLINE;
+      displayStatus = ONLINE_STATUS.OFFLINE;
     }
 
     return {
-      status,
+      displayStatus,
       lastUpdateFormatted: formatDistanceToNow(new Date(lastUpdateTs)),
     };
   }, [lastUpdateTs]);
 
-  const dotColor = DOT_COLOR[status ?? ONLINE_STATUS.OFFLINE];
-  const textColor = TEXT_COLOR[status ?? ONLINE_STATUS.OFFLINE];
-  const isOnline = status === ONLINE_STATUS.ONLINE;
+  const dotColor = DOT_COLOR[displayStatus ?? ONLINE_STATUS.OFFLINE];
+  const textColor = TEXT_COLOR[displayStatus ?? ONLINE_STATUS.OFFLINE];
+  const isOnline = displayStatus === ONLINE_STATUS.ONLINE;
 
   const textClass = cx('text-gray-500', {
     'text-12': isCompact,
@@ -80,9 +82,9 @@ export function UserStatusDot({lastUpdateTs, isCompact}: UserStatusDotProps) {
             isOnline ? 'animate-pulsate-border' : null
           )}
         ></div>
-        <div className={cx('text-20 font-bold', textColor)}>{status}</div>
+        <div className={cx('text-20 font-bold', textColor)}>{displayStatus}</div>
       </div>
-      {Boolean(status) && (
+      {Boolean(displayStatus) && (
         <div className={textClass}>
           {hasEverBeenOnline && <>(Last seen {lastUpdateFormatted} ago)</>}
           {!hasEverBeenOnline && <>(No reported data yet)</>}

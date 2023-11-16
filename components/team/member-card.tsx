@@ -5,7 +5,7 @@ import {LuCopyCheck, LuTimer, LuAppWindow} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
 import {useRouter} from 'next/navigation';
 
@@ -13,7 +13,7 @@ import * as Toast from '@radix-ui/react-toast';
 import clsx from 'clsx';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
-import {MemberSummaryType, TeamMembersType} from '../../types/api';
+import {TeamMembersType} from '../../types/api';
 import {Button} from '../common/button';
 import {WorkHours} from '../common/work-hours';
 import {UserStatusDot} from '../common/user-status-dot';
@@ -48,7 +48,7 @@ const menuItems = [
 const NO_DATA_STR = '-';
 
 export function MemberCard({data, onDelete}: MemberCardProps) {
-  const {name, title, token, summary, id: memberId} = data;
+  const {name, title, token, lastSummary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
@@ -87,16 +87,26 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
   const statsValue = 'text-16 font-bold';
 
   const avatarSeed = token;
-  const summaryData: MemberSummaryType = summary?.[0] || {}; // should be ordered desc
-  const lastUpdateTs = summaryData?.lastSessionEndDatetime
-    ? new Date(summaryData?.lastSessionEndDatetime).getTime()
+  const lastUpdateTs = lastSummary?.lastSessionEndDatetime
+    ? new Date(lastSummary?.lastSessionEndDatetime).getTime()
     : null;
-  const activityTime = summaryData?.activityTime ?? 0;
-  const activityTimeFormatted = formatTimeDuration(activityTime, {
-    skipSeconds: true,
-    longUnits: true,
-  });
-  const sessionCount = summaryData?.sessionCount ?? 0;
+
+  const {activityTimeFormatted, sessionCount} = useMemo(() => {
+    if (!lastSummary?.isToday) {
+      return {
+        activityTimeFormatted: null,
+        sessionCount: null,
+      };
+    }
+    return {
+      activityTimeFormatted: formatTimeDuration(lastSummary.activityTime ?? 0, {
+        skipSeconds: true,
+        longUnits: true,
+      }),
+      sessionCount: lastSummary.sessionCount ?? 0,
+    };
+  }, [lastSummary]);
+  const memberStatus = data?.status;
 
   return (
     <div className="relative flex flex-col rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
@@ -183,7 +193,7 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
       </div>
 
       <div className={infoColumnStyle}>
-        <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} />
+        <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} memberStatus={memberStatus} />
       </div>
 
       <div className="flex flex-col gap-3 content-evenly py-4 border-t border-b border-gray-200 my-2">
