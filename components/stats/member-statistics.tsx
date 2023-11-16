@@ -116,7 +116,11 @@ export function MemberStatistics({memberId}: {memberId: string}) {
           )}
         </div>
         {hasDataResponse && (
-          <UserDetails data={mostRecentDateData} settings={data?.member?.settings} />
+          <UserDetails
+            data={mostRecentDateData}
+            settings={data?.member?.settings}
+            member={data?.member}
+          />
         )}
       </div>
 

@@ -1,11 +1,10 @@
 'use client';
 
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useParams, useRouter} from 'next/navigation';
 import {useLocalStorage} from 'usehooks-ts';
 import {useGetData} from '../hooks/use-get-data';
-import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
 import {Button} from '../common/button';

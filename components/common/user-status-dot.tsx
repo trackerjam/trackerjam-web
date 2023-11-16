@@ -6,7 +6,7 @@ import {STATUS} from '@prisma/client';
 interface UserStatusDotProps {
   lastUpdateTs: number | null | undefined;
   isCompact?: boolean;
-  memberStatus: STATUS;
+  memberStatus: STATUS | null | undefined;
 }
 enum ONLINE_STATUS {
   NEW = 'New',

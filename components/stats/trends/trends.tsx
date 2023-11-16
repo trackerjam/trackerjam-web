@@ -26,7 +26,7 @@ type Props = {
 const TICK_WIDTH = 1;
 const LABEL_Y_OFFSET = 35;
 const LABEL_WIDTH = 80;
-const LABEL_HEIGHT = 30;
+const LABEL_HEIGHT = 28;
 
 // Should render a total above the hovered bar columns.
 const BarTotal = ({bars, hoveredIndex}: Props): React.ReactNode => {
@@ -120,7 +120,7 @@ export function Trends({data, selectedDate, onDateSelect}: TrendsProps) {
 
   return (
     <div className="flex flex-row gap-3 xl:flex-col xl:gap-y-6">
-      <div className="w-[70%] h-[260px] xl:w-full">
+      <div className="w-[70%] h-[270px] xl:w-full">
         <h3 className="mt-4 ml-4 text-gray-600 text-12 font-bold">Activity time by days</h3>
         {!hasData && (
           <div className="flex items-center justify-center h-full text-gray-400">
@@ -134,7 +134,7 @@ export function Trends({data, selectedDate, onDateSelect}: TrendsProps) {
             indexBy="id"
             enableLabel={false}
             valueFormat="0.0f"
-            margin={{top: 15, right: 10, bottom: 65, left: 10}}
+            margin={{top: 37, right: 10, bottom: 65, left: 10}}
             colors={(datum) => {
               if (datum?.indexValue === selectedDate && selectedDate) return '#589ec2';
               return '#a6cee3';
