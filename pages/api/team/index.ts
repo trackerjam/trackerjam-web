@@ -43,15 +43,15 @@ async function get({res, session}: AuthMethodContext) {
         id,
         members: team.members.map((member) => {
           const memberWithSettings = unwrapSettings(member);
-          const {summary: summaryArr} = memberWithSettings;
+          const {summary: summaryArr, ...resetMemberData} = memberWithSettings;
           const summary = summaryArr[0];
 
           return {
-            ...memberWithSettings,
+            ...resetMemberData,
             lastSummary: {
-              isToday:
-                summary?.lastSessionEndDatetime &&
-                isToday(new Date(summary?.lastSessionEndDatetime)),
+              isToday: summary?.lastSessionEndDatetime
+                ? isToday(new Date(summary?.lastSessionEndDatetime))
+                : false,
               ...summary,
             },
           };

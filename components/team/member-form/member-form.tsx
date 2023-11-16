@@ -3,9 +3,11 @@
 import {useForm} from 'react-hook-form';
 import React, {useCallback, useState} from 'react';
 import {KIND, Notification} from 'baseui/notification';
+import {Tooltip} from 'flowbite-react';
 
 import {useRouter} from 'next/navigation';
 import {BiCaretDown, BiCaretRight, BiHide, BiMinusCircle} from 'react-icons/bi';
+import {BsInfoCircle} from 'react-icons/bs';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
 import {extractDomains} from '../../../utils/extract-domains';
@@ -113,6 +115,8 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const AdvancedCaredIcon = showAdvanced ? BiCaretDown : BiCaretRight;
 
   const textAreaClass = 'bg-gray-100 rounded-lg p-4 w-full';
+
+  const hasTimeMetadata = Boolean(editingMember?.createdAt || editingMember?.updatedAt);
 
   return (
     <form className="flex flex-col gap-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -244,8 +248,24 @@ export function MemberForm({editingMember}: CreateMemberProps) {
         </div>
       )}
 
-      <div className="mt-4 flex justify-end">
-        <Button type="submit" kind="primary" isLoading={isLoading}>
+      <div className="mt-4 flex justify-between">
+        {hasTimeMetadata && (
+          <Tooltip
+            content={
+              <div className="text-12">
+                {Boolean(editingMember?.createdAt) && (
+                  <div>Created at {editingMember.createdAt}</div>
+                )}
+                {Boolean(editingMember?.updatedAt) && (
+                  <div>Updated at {editingMember.updatedAt}</div>
+                )}
+              </div>
+            }
+          >
+            <BsInfoCircle title="Member metadata" />
+          </Tooltip>
+        )}
+        <Button type="submit" kind="primary" isLoading={isLoading} className="self-end ml-auto">
           {!isEditing && 'Add member'}
           {isEditing && 'Update member'}
         </Button>

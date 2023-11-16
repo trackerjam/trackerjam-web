@@ -87,7 +87,6 @@ export function UserStatusDot({lastUpdateTs, isCompact, memberStatus}: UserStatu
       {Boolean(displayStatus) && (
         <div className={textClass}>
           {hasEverBeenOnline && <>(Last seen {lastUpdateFormatted} ago)</>}
-          {!hasEverBeenOnline && <>(No reported data yet)</>}
         </div>
       )}
     </div>
