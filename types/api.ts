@@ -48,11 +48,18 @@ export type CreateSessionActivityInput = {
   endTime: number;
 };
 
+export type CreateSessionActivityInternalInput = {
+  url: string;
+  title?: string;
+  startTime: string;
+  endTime: string;
+};
+
 export type CreateActivityInputInternal = {
   date: string;
   type: TAB_TYPE;
   domain: string;
-  sessions: CreateSessionActivityInput[];
+  sessions: CreateSessionActivityInternalInput[];
 };
 
 export interface SummaryResponse {

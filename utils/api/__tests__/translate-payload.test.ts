@@ -1,9 +1,5 @@
 import {TAB_TYPE} from '@prisma/client';
-import {
-  CreateDomainActivityInput,
-  CreateSessionActivityInput,
-  CreateActivityInputInternal,
-} from '../../../types/api';
+import {CreateDomainActivityInput, CreateActivityInputInternal} from '../../../types/api';
 import {translatePayloadToInternalStructure} from '../translate-payload';
 
 describe('translatePayloadToInternalStructure', () => {
@@ -35,8 +31,8 @@ describe('translatePayloadToInternalStructure', () => {
           {
             url: 'https://www.google.com/search?q=test',
             title: 'Google Test',
-            startTime: 1690976523695,
-            endTime: 1690976524693,
+            startTime: new Date(1690976523695).toISOString(),
+            endTime: new Date(1690976524693).toISOString(),
           },
         ],
       },
@@ -48,8 +44,8 @@ describe('translatePayloadToInternalStructure', () => {
           {
             url: 'https://news.ycombinator.com/',
             title: 'Hacker News',
-            startTime: 1690976523700,
-            endTime: 1690976524800,
+            startTime: new Date(1690976523700).toISOString(),
+            endTime: new Date(1690976524800).toISOString(),
           },
         ],
       },
@@ -96,18 +92,18 @@ describe('translatePayloadToInternalStructure', () => {
       ],
     };
 
-    const expectedSession1: CreateSessionActivityInput = {
+    const expectedSession1 = {
       url: 'https://www.google.com/search?q=test',
       title: 'Google Test 1',
-      startTime: 1690976523695,
-      endTime: 1690976524693,
+      startTime: new Date(1690976523695).toISOString(),
+      endTime: new Date(1690976524693).toISOString(),
     };
 
-    const expectedSession2: CreateSessionActivityInput = {
+    const expectedSession2 = {
       url: 'https://www.google.com/search?q=test2',
       title: 'Google Test 2',
-      startTime: 1690976523700,
-      endTime: 1690976524800,
+      startTime: new Date(1690976523700).toISOString(),
+      endTime: new Date(1690976524800).toISOString(),
     };
 
     const result = translatePayloadToInternalStructure(input);
@@ -136,14 +132,22 @@ describe('translatePayloadToInternalStructure', () => {
     // Validate the first session (Jan 1st)
     const firstActivity = result.activities.find((activity) => activity.date === '2023-01-01');
     expect(firstActivity).toBeDefined();
-    expect(firstActivity?.sessions[0].startTime).toBe(Date.UTC(2023, 0, 1, 23, 30, 0));
-    expect(firstActivity?.sessions[0].endTime).toBe(Date.UTC(2023, 0, 1, 23, 59, 59, 999));
+    expect(firstActivity?.sessions[0].startTime).toBe(
+      new Date(Date.UTC(2023, 0, 1, 23, 30, 0)).toISOString()
+    );
+    expect(firstActivity?.sessions[0].endTime).toBe(
+      new Date(Date.UTC(2023, 0, 1, 23, 59, 59, 999)).toISOString()
+    );
 
     // Validate the second session (Jan 2nd)
     const secondActivity = result.activities.find((activity) => activity.date === '2023-01-02');
     expect(secondActivity).toBeDefined();
-    expect(secondActivity?.sessions[0].startTime).toBe(Date.UTC(2023, 0, 2, 0, 0, 0));
-    expect(secondActivity?.sessions[0].endTime).toBe(Date.UTC(2023, 0, 2, 0, 30, 0));
+    expect(secondActivity?.sessions[0].startTime).toBe(
+      new Date(Date.UTC(2023, 0, 2, 0, 0, 0)).toISOString()
+    );
+    expect(secondActivity?.sessions[0].endTime).toBe(
+      new Date(Date.UTC(2023, 0, 2, 0, 30, 0)).toISOString()
+    );
   });
 
   it('should handle multiple sessions for the same domain on different days', () => {
@@ -177,8 +181,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page1',
               title: 'Page 1',
-              startTime: new Date('2023-01-01T12:00:00Z').getTime(),
-              endTime: new Date('2023-01-01T13:00:00Z').getTime(),
+              startTime: new Date('2023-01-01T12:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T13:00:00Z').toISOString(),
             },
           ],
         },
@@ -190,8 +194,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page2',
               title: 'Page 2',
-              startTime: new Date('2023-01-02T14:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T15:00:00Z').getTime(),
+              startTime: new Date('2023-01-02T14:00:00Z').toISOString(),
+              endTime: new Date('2023-01-02T15:00:00Z').toISOString(),
             },
           ],
         },
@@ -226,8 +230,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page1',
               title: 'Page 1',
-              startTime: new Date('2023-01-01T22:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T00:00:00Z').getTime() - 1,
+              startTime: new Date('2023-01-01T22:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T23:59:59.999Z').toISOString(),
             },
           ],
         },
@@ -239,8 +243,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page1',
               title: 'Page 1',
-              startTime: new Date('2023-01-02T00:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T02:00:00Z').getTime(),
+              startTime: new Date('2023-01-02T00:00:00Z').toISOString(),
+              endTime: new Date('2023-01-02T02:00:00Z').toISOString(),
             },
           ],
         },
@@ -287,8 +291,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page1',
               title: 'Example Page 1',
-              startTime: new Date('2023-01-01T10:00:00Z').getTime(),
-              endTime: new Date('2023-01-01T11:00:00Z').getTime(),
+              startTime: new Date('2023-01-01T10:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T11:00:00Z').toISOString(),
             },
           ],
         },
@@ -300,8 +304,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page2',
               title: 'Example Page 2',
-              startTime: new Date('2023-01-02T10:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T11:00:00Z').getTime(),
+              startTime: new Date('2023-01-02T10:00:00Z').toISOString(),
+              endTime: new Date('2023-01-02T11:00:00Z').toISOString(),
             },
           ],
         },
@@ -313,8 +317,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://anotherdomain.com/pageA',
               title: 'Another Domain Page A',
-              startTime: new Date('2023-01-01T12:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T00:00:00Z').getTime() - 1, // End of the day time for '2023-01-01'
+              startTime: new Date('2023-01-01T12:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T23:59:59.999Z').toISOString(),
             },
           ],
         },
@@ -326,8 +330,8 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://anotherdomain.com/pageA',
               title: 'Another Domain Page A',
-              startTime: new Date('2023-01-02T00:00:00Z').getTime(),
-              endTime: new Date('2023-01-02T13:00:00Z').getTime(),
+              startTime: new Date('2023-01-02T00:00:00Z').toISOString(),
+              endTime: new Date('2023-01-02T13:00:00Z').toISOString(),
             },
           ],
         },
@@ -375,20 +379,20 @@ describe('translatePayloadToInternalStructure', () => {
             {
               url: 'http://example.com/page1',
               title: 'Example Page 1',
-              startTime: new Date('2023-01-01T10:00:00Z').getTime(),
-              endTime: new Date('2023-01-01T11:00:00Z').getTime(),
+              startTime: new Date('2023-01-01T10:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T11:00:00Z').toISOString(),
             },
             {
               url: 'http://example.com/page2',
               title: 'Example Page 2',
-              startTime: new Date('2023-01-01T12:00:00Z').getTime(),
-              endTime: new Date('2023-01-01T13:00:00Z').getTime(),
+              startTime: new Date('2023-01-01T12:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T13:00:00Z').toISOString(),
             },
             {
               url: 'http://example.com/page3',
               title: 'Example Page 3',
-              startTime: new Date('2023-01-01T14:00:00Z').getTime(),
-              endTime: new Date('2023-01-01T15:00:00Z').getTime(),
+              startTime: new Date('2023-01-01T14:00:00Z').toISOString(),
+              endTime: new Date('2023-01-01T15:00:00Z').toISOString(),
             },
           ],
         },

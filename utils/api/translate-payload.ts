@@ -3,7 +3,7 @@ import {
   CreateActivityInputInternal,
   CreateDomainActivityInput,
   CreateDomainActivityInputInternal,
-  CreateSessionActivityInput,
+  CreateSessionActivityInternalInput,
 } from '../../types/api';
 import {getIsoDateString} from '../get-iso-date-string';
 import {extractDomain} from './extract-domain';
@@ -23,9 +23,14 @@ export function translatePayloadToInternalStructure(
     const endDay = getIsoDateString(new Date(session.endTime));
 
     if (startDay === endDay) {
-      addToActivitiesMap({domain, date: startDay, sessionToAdd: session});
+      const isoSession: CreateSessionActivityInternalInput = {
+        ...session,
+        startTime: new Date(session.startTime).toISOString(),
+        endTime: new Date(session.endTime).toISOString(),
+      };
+      addToActivitiesMap({domain, date: startDay, sessionToAdd: isoSession});
     } else {
-      let currentStartTime = session.startTime;
+      const currentStartTime = new Date(session.startTime);
 
       // UTC compliant end of day
       const endOfDay = new Date(
@@ -46,8 +51,8 @@ export function translatePayloadToInternalStructure(
         sessionToAdd: {
           url: session.url,
           title: session.title,
-          startTime: currentStartTime,
-          endTime: endOfDay.getTime(),
+          startTime: currentStartTime.toISOString(),
+          endTime: endOfDay.toISOString(),
         },
       });
 
@@ -63,7 +68,7 @@ export function translatePayloadToInternalStructure(
           0
         )
       );
-      currentStartTime = startOfNextDay.getTime();
+      const endTime = new Date(session.endTime);
 
       addToActivitiesMap({
         domain,
@@ -71,8 +76,8 @@ export function translatePayloadToInternalStructure(
         sessionToAdd: {
           url: session.url,
           title: session.title,
-          startTime: currentStartTime,
-          endTime: session.endTime,
+          startTime: startOfNextDay.toISOString(),
+          endTime: endTime.toISOString(),
         },
       });
     }
@@ -90,7 +95,7 @@ export function translatePayloadToInternalStructure(
   }: {
     domain: string;
     date: string;
-    sessionToAdd: CreateSessionActivityInput;
+    sessionToAdd: CreateSessionActivityInternalInput;
   }) {
     const key = `${domain}-${date}`;
 

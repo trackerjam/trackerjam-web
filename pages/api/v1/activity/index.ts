@@ -8,7 +8,7 @@ import {buildError} from '../../../../utils/build-error';
 import {
   CreateActivityInputInternal,
   CreateDomainActivityInput,
-  CreateSessionActivityInput,
+  CreateSessionActivityInternalInput,
   PublicMethodContext,
 } from '../../../../types/api';
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
@@ -91,13 +91,14 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
 
   // Get the end time of the last session, or 0 if there is no previous session.
   const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
+  const lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
 
   // Filter out any sessions from the activity that:
   // - Start before or at the same time as the end of the last session (considered duplicates).
   // - Start or end in the future.
   // - Ended more than 24 hours ago.
   // Log any filtered sessions.
-  const newSessions: CreateSessionActivityInput[] = [];
+  const newSessions: CreateSessionActivityInternalInput[] = [];
   let mostRecentSessionEndTimeTs = 0;
 
   if (activity.sessions) {
@@ -108,7 +109,18 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       const endTime = new Date(session.endTime).getTime();
       mostRecentSessionEndTimeTs = Math.max(mostRecentSessionEndTimeTs, endTime);
 
-      if (endTime <= lastSessionEndTime) {
+      if (endTime === lastSessionEndTime && startTime === lastSessionStartTime) {
+        const msg = 'Exactly the same session detected';
+        const logData = JSON.stringify({
+          payloadSession: humanizeDates(session),
+          existingSession: lastSession,
+        });
+        sentryCatchException({data: logData, msg, token});
+        console.error(msg, logData);
+        return;
+      }
+
+      if (endTime < lastSessionEndTime) {
         // TODO: Filter out sessions that attempt to occupy non-empty spaces: specifically, where startTime or endTime overlaps with an existing session.
         // TODO: Query these overlapping sessions.
         // The reasoning is that I was working for several days and sessions accumulated but didn't synchronize for some reason.
@@ -146,7 +158,11 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
 
   // Compute the total time spent on the activity.
   const timeSpentInc =
-    newSessions.reduce((mem, {startTime, endTime}) => mem + (endTime - startTime), 0) || 0;
+    newSessions.reduce(
+      (mem, {startTime, endTime}) =>
+        mem + (new Date(endTime).getTime() - new Date(startTime).getTime()),
+      0
+    ) || 0;
 
   // Create session activity records for the new sessions.
   const sessionRecords = await prismadb.sessionActivity.createMany({
@@ -161,6 +177,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
         isHTTPS,
       };
     }),
+    skipDuplicates: true,
   });
 
   // Throw an error if no session activity records were created.
@@ -232,6 +249,8 @@ async function create({req, res}: PublicMethodContext) {
   try {
     // Count processing time
     const startTime = performance.now();
+
+    // TODO Add Winston logger and Transport to Datadog
 
     const {activities} = translatePayloadToInternalStructure(payload);
     const summaryUpdates: {

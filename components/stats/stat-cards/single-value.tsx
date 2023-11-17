@@ -33,15 +33,15 @@ export function SingleValue({title, stat, icon}: SingleCards) {
     deltaIncline === DELTA_INCLINE.SAME
       ? 'text-gray-500'
       : deltaIncline === DELTA_INCLINE.POSITIVE
-      ? 'text-green-500'
-      : 'text-red-500';
+        ? 'text-green-500'
+        : 'text-red-500';
 
   const DeltaIcon =
     deltaIncline === DELTA_INCLINE.SAME
       ? BiCaretLeft
       : deltaIncline === DELTA_INCLINE.POSITIVE
-      ? BiCaretUp
-      : BiCaretDown;
+        ? BiCaretUp
+        : BiCaretDown;
 
   const CardIcon = icon || null;
 
