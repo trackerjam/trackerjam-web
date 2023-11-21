@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {createPortal} from 'react-dom';
 import {IoClose} from 'react-icons/io5';
 
@@ -30,6 +30,7 @@ export function Drawer({
   className?: string;
   position?: 'left' | 'right';
 }) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -37,6 +38,17 @@ export function Drawer({
       document.body.style.overflow = '';
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      if (buttonRef && buttonRef.current) {
+        buttonRef.current.focus();
+      }
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isOpen, buttonRef]);
 
   return createPortal(
     <div className={className} aria-hidden={isOpen ? 'false' : 'true'} {...props}>
@@ -57,6 +69,7 @@ export function Drawer({
           onClick={onClose}
           aria-label="Close"
           type="button"
+          ref={buttonRef}
         >
           <IoClose size={24} />
         </button>
