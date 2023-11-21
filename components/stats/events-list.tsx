@@ -24,7 +24,7 @@ export function EventsList({events}: EventsListProps) {
         const readableText: string = STATUS_TEXT[eventRecord.event] ?? eventRecord.event;
 
         return (
-          <div key={eventRecord.id} className="p-4 border border-gray-400 rounded-md mb-1">
+          <div key={eventRecord.id} className="p-4 border border-gray-300 rounded-md mb-2">
             <strong>{readableText}</strong>
             <div className="text-gray-500">
               {dateObj.toLocaleDateString()} {dateObj.toLocaleTimeString()}{' '}
