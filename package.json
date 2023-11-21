@@ -19,6 +19,7 @@
     "@nivo/core": "^0.83.1",
     "@nivo/pie": "^0.83.1",
     "@nivo/radar": "^0.83.1",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.6.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-toast": "^1.1.5",

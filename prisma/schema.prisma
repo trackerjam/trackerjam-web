@@ -121,6 +121,7 @@ model DomainActivity {
   activitiesCount   Int
 
   @@unique([date, domainId, memberToken])
+  @@index([date, domainId, memberToken])
 }
 
 model SessionActivity {
@@ -132,8 +133,6 @@ model SessionActivity {
   url              String         @db.Text
   title            String?        @db.Text
   isHTTPS          Boolean?
-
-  @@unique([url, startDatetime, endDatetime]) // To fail on hard duplicates
 }
 
 enum TAB_TYPE {
@@ -153,6 +152,7 @@ model Summary {
   member                 Member    @relation(fields: [memberToken], references: [token], onDelete: Cascade)
 
   @@unique([date, memberToken])
+  @@index([date, memberToken])
 }
 
 model Domain {

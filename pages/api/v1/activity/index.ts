@@ -15,8 +15,11 @@ import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 import {translatePayloadToInternalStructure} from '../../../../utils/api/translate-payload';
 import {humanizeDates} from '../../../../utils/api/humanize-dates';
 import {logger} from '../../../../lib/logger';
+import {assignRequestId} from '../../../../utils/api/request-id';
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
+
+type LogReportType = {[eventName: string]: number | string | LogReportType | LogReportType[]};
 
 async function upsertDomain(domain: string) {
   return prismadb.domain.upsert({
@@ -45,8 +48,8 @@ async function upsertDomainActivity({
     where: {
       date_domainId_memberToken: {
         domainId,
-        date,
         memberToken: token,
+        date,
       },
     },
     update: {},
@@ -61,12 +64,23 @@ async function upsertDomainActivity({
   });
 }
 
-async function handleRecordActivity(activity: CreateActivityInputInternal, token: string) {
+interface HandleRecordActivityInput {
+  activity: CreateActivityInputInternal;
+  token: string;
+}
+async function handleRecordActivity({activity, token}: HandleRecordActivityInput) {
   // We expect the translate-payload.ts to handle domain extraction
   const domain = activity.domain;
 
+  const logReportArr: LogReportType[] = [];
+  const startTime = performance.now();
+  const logReport: LogReportType = {
+    _domain: domain,
+  };
+
   // Fetch or create a domain record based on the domain from the activity.
   const domainRecord = await upsertDomain(domain);
+  logReport.upsertDomain1 = performance.now() - startTime;
 
   // Convert the activity date to an hour-based index value.
   const date = getHourBasedDate(activity.date);
@@ -79,6 +93,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     domainId: domainRecord.id,
     activityType: activity.type,
   });
+  logReport.initDomainActivity2 = performance.now() - startTime;
 
   if (!domainActivityRecord) {
     throw new Error('domainActivityRecord not found');
@@ -89,6 +104,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     where: {domainActivityId: domainActivityRecord.id},
     orderBy: {endDatetime: 'desc'},
   });
+  logReport.findLastSession3 = performance.now() - startTime;
 
   // Get the end time of the last session, or 0 if there is no previous session.
   const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
@@ -157,6 +173,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
       newSessions.push(session);
     });
   }
+  logReport.filterSessions4 = performance.now() - startTime;
 
   // Throw an error if no session activity records were created.
   if (!newSessions.length) {
@@ -169,6 +186,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
         newSessionsLength: newSessions.length,
       }),
     });
+    logReportArr.push(logReport);
     return;
   }
 
@@ -195,6 +213,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     }),
     skipDuplicates: true,
   });
+  logReport.createSessionActivity5 = performance.now() - startTime;
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
@@ -207,6 +226,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
         newSessionsLength: newSessions.length,
       }),
     });
+    logReportArr.push(logReport);
     return;
   }
 
@@ -229,15 +249,28 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     },
   });
 
+  logReport.upsertDomainActivity6 = performance.now() - startTime;
+  logReportArr.push(logReport);
+
   return {
     timeSpent: timeSpentInc,
     sessionCount: sessionRecords.count,
     endTime: new Date(mostRecentSessionEndTimeTs),
+    logReportArr,
   };
 }
 
 async function create({req, res}: PublicMethodContext) {
   const payload: CreateDomainActivityInput = req.body;
+
+  // Assign a request id for logging and debug purposes
+  const requestId = assignRequestId(req);
+
+  // Log performance report
+  const logReport: LogReportType = {
+    _requestId: requestId,
+  };
+  const startTime = performance.now();
 
   if (!payload?.token) {
     return res.status(400).json(buildError('not auth'));
@@ -248,6 +281,7 @@ async function create({req, res}: PublicMethodContext) {
       token: payload.token,
     },
   });
+  logReport.countMembers1 = performance.now() - startTime;
 
   if (!member) {
     return res.status(400).json(buildError('bad token'));
@@ -260,16 +294,19 @@ async function create({req, res}: PublicMethodContext) {
   // Early status return to avoid HTTP 504 Gateway Timeout in case of large payloads
   // TODO - consider moving this to a background job and informing a client separately
   res.status(201).end();
+  logReport.responseSent2 = performance.now() - startTime;
 
   const {token} = payload;
 
   try {
-    // Count processing time
-    const startTime = performance.now();
-
-    // TODO Add Winston logger and Transport to Datadog
-
     const {activities} = translatePayloadToInternalStructure(payload);
+    logger.debug('Payload translated', {
+      requestId,
+      payload,
+      activities,
+    });
+    logReport.translatePayload3 = performance.now() - startTime;
+
     const summaryUpdates: {
       [date: string]: {
         timeSpentInc: number;
@@ -277,9 +314,17 @@ async function create({req, res}: PublicMethodContext) {
         lastSessionEndDatetime: Date;
       };
     } = {};
+
+    logReport._activities = [];
     for (const activity of activities) {
-      const activityStats = await handleRecordActivity(activity, token);
-      const {timeSpent, sessionCount, endTime} = activityStats || {};
+      const activityStats = await handleRecordActivity({
+        activity,
+        token,
+      });
+      const {timeSpent, sessionCount, endTime, logReportArr} = activityStats || {};
+      if (logReportArr) {
+        logReport._activities = logReport._activities.concat(logReportArr);
+      }
 
       if (endTime) {
         const dateIndex = getHourBasedDate(endTime)?.toISOString();
@@ -298,6 +343,7 @@ async function create({req, res}: PublicMethodContext) {
         }
       }
     }
+    logReport.handleRecordActivities4 = performance.now() - startTime;
 
     for (const dateIndex of Object.keys(summaryUpdates)) {
       const {timeSpentInc, sessionCountInc, lastSessionEndDatetime} = summaryUpdates[dateIndex];
@@ -328,12 +374,7 @@ async function create({req, res}: PublicMethodContext) {
         },
       });
     }
-
-    const endTime = performance.now();
-    logger.info('Activity processing time', {
-      timeMs: endTime - startTime,
-      payloadSize: payload.sessions.length,
-    });
+    logReport.upsertSummary5 = performance.now() - startTime;
 
     // Check & update status in background
     await prismadb.member.update({
@@ -343,6 +384,13 @@ async function create({req, res}: PublicMethodContext) {
       data: {
         status: STATUS.ACTIVE,
       },
+    });
+    logReport.updateMemberStatus6 = performance.now() - startTime;
+
+    logger.debug('Activity processing', {
+      _totalTimeMs: performance.now() - startTime,
+      _payloadSize: payload.sessions.length,
+      ...logReport,
     });
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));

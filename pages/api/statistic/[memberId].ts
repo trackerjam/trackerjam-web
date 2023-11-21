@@ -24,8 +24,7 @@ import {logger} from '../../../lib/logger';
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
 
-  logger.info('[api/statistic/[memberId]] get stast', {memberId});
-
+  const startTime = performance.now();
   try {
     // Find user
     const member = await prismadb.member.findUniqueOrThrow({
@@ -139,6 +138,11 @@ async function get({req, res}: AuthMethodContext) {
       activitiesByDate: resultActivities,
     };
 
+    logger.debug('Get member stats', {
+      memberId: member.id,
+      duration: performance.now() - startTime,
+    });
+
     return res.json(result);
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
@@ -165,3 +169,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     },
   });
 }
+
+export const config = {
+  api: {
+    responseLimit: false,
+  },
+};

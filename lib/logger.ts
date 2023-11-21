@@ -8,7 +8,7 @@ if (typeof DATADOG_API_KEY !== 'string') {
 }
 
 const logger = createLogger({
-  level: 'info',
+  level: 'debug',
   defaultMeta: {},
   format: format.json(),
   transports: [
