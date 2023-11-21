@@ -22,15 +22,24 @@ const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
 type LogReportType = {[eventName: string]: number | string | LogReportType | LogReportType[]};
 
 async function upsertDomain(domain: string) {
-  return prismadb.domain.upsert({
+  // Check if the domain already exists
+  const existingDomain = await prismadb.domain.findUnique({
     where: {
       domain,
     },
-    update: {},
-    create: {
-      domain,
-    },
   });
+
+  // If the domain does not exist, create it
+  if (!existingDomain) {
+    return prismadb.domain.create({
+      data: {
+        domain,
+      },
+    });
+  }
+
+  // If the domain already exists, return the existing record (or handle as needed)
+  return existingDomain;
 }
 
 async function upsertDomainActivity({
@@ -44,24 +53,34 @@ async function upsertDomainActivity({
   activityType: TAB_TYPE;
   token: string;
 }) {
-  return prismadb.domainActivity.upsert({
+  // Check if the domain activity already exists
+  const existingDomainActivity = await prismadb.domainActivity.findUnique({
     where: {
       date_domainId_memberToken: {
+        date,
         domainId,
         memberToken: token,
-        date,
       },
     },
-    update: {},
-    create: {
-      date,
-      domainId,
-      type: activityType || TAB_TYPE.WEBSITE,
-      timeSpent: 0,
-      activitiesCount: 0,
-      memberToken: token,
-    },
   });
+
+  // If the domain activity does not exist, create it
+  if (!existingDomainActivity) {
+    return prismadb.domainActivity.create({
+      data: {
+        date,
+        domainId,
+        type: activityType || TAB_TYPE.WEBSITE,
+        timeSpent: 0,
+        activitiesCount: 0,
+        memberToken: token,
+      },
+    });
+  }
+
+  // If the domain activity already exists, return the existing record
+  // Optionally, you can handle any update logic here if needed
+  return existingDomainActivity;
 }
 
 interface HandleRecordActivityInput {
@@ -93,6 +112,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     domainId: domainRecord.id,
     activityType: activity.type,
   });
+  // TODO Consider saving lastSessionEndDatetime and lastSessionStartDatetime in the domainActivityRecord
   logReport.initDomainActivity2 = performance.now() - startTime;
 
   if (!domainActivityRecord) {
@@ -109,12 +129,12 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   // Get the end time of the last session, or 0 if there is no previous session.
   const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
   const lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
-  // TODO Check it we have false positive with zeroes
 
   // Filter out any sessions from the activity that:
-  // - Start before or at the same time as the end of the last session (considered duplicates).
+  // - Exactly match the last session (considered duplicates).
+  // - Start before or at the same time as the end of the last session (considered inconsistent).
   // - Start or end in the future.
-  // - Ended more than 24 hours ago.
+  // - Ended more than OLD_SESSION_THRESHOLD hours ago.
   // Log any filtered sessions.
   const newSessions: CreateSessionActivityInternalInput[] = [];
   let mostRecentSessionEndTimeTs = 0; // TODO Check if latest among other domains
@@ -139,11 +159,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
       }
 
       if (endTime < lastSessionEndTime) {
-        // TODO: Filter out sessions that attempt to occupy non-empty spaces: specifically, where startTime or endTime overlaps with an existing session.
-        // TODO: Query these overlapping sessions.
-        // The reasoning is that I was working for several days and sessions accumulated but didn't synchronize for some reason.
-        // Also, investigate why the extension attempts to backfill something that occurred 3 hours ago, even though we have newer
-        // sessions that has already been processed.
         const msg = 'Session inconsistency detected';
         const logData = JSON.stringify({
           payloadSession: humanizeDates(session),
@@ -230,7 +245,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     return;
   }
 
-  // Upsert a domain activity record.
+  // Update a domain activity record.
   await prismadb.domainActivity.update({
     where: {
       date_domainId_memberToken: {
