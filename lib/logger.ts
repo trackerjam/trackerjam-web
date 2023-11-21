@@ -16,7 +16,7 @@ const logger = createLogger({
       apiKey: DATADOG_API_KEY,
       hostname: IS_DEV ? 'localhost' : 'app.trackerjam.com',
       ddsource: 'next.js',
-      ddtags: 'env:process.env.NODE_ENV',
+      ddtags: `env:${process.env.NODE_ENV}`,
     }),
     new transports.Console({
       format: format.combine(
