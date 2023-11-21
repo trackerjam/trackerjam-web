@@ -14,6 +14,7 @@ import {
 import {getHourBasedDate} from '../../../../utils/api/get-time-index';
 import {translatePayloadToInternalStructure} from '../../../../utils/api/translate-payload';
 import {humanizeDates} from '../../../../utils/api/humanize-dates';
+import {logger} from '../../../../lib/logger';
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
 
@@ -92,6 +93,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // Get the end time of the last session, or 0 if there is no previous session.
   const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
   const lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
+  // TODO Check it we have false positive with zeroes
 
   // Filter out any sessions from the activity that:
   // - Start before or at the same time as the end of the last session (considered duplicates).
@@ -99,7 +101,7 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
   // - Ended more than 24 hours ago.
   // Log any filtered sessions.
   const newSessions: CreateSessionActivityInternalInput[] = [];
-  let mostRecentSessionEndTimeTs = 0;
+  let mostRecentSessionEndTimeTs = 0; // TODO Check if latest among other domains
 
   if (activity.sessions) {
     const currentTime = Date.now();
@@ -156,6 +158,20 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
     });
   }
 
+  // Throw an error if no session activity records were created.
+  if (!newSessions.length) {
+    const msg = 'Skip sessionActivity creation: newSessions is empty after filtering';
+    logger.warn(msg);
+    sentryCatchException({
+      msg,
+      token,
+      data: JSON.stringify({
+        newSessionsLength: newSessions.length,
+      }),
+    });
+    return;
+  }
+
   // Compute the total time spent on the activity.
   const timeSpentInc =
     newSessions.reduce(
@@ -182,9 +198,10 @@ async function handleRecordActivity(activity: CreateActivityInputInternal, token
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
-    console.warn('SessionActivity was not created: sessionRecords is empty after filtering');
+    const msg = 'SessionActivity was not created: sessionRecords is empty after query';
+    logger.error(msg);
     sentryCatchException({
-      msg: 'sessionRecords is empty after filtering',
+      msg,
       token,
       data: JSON.stringify({
         newSessionsLength: newSessions.length,
@@ -313,11 +330,10 @@ async function create({req, res}: PublicMethodContext) {
     }
 
     const endTime = performance.now();
-    console.log(
-      `Activity processing time: ${(endTime - startTime).toFixed(0)}ms. Payload size: ${
-        payload.sessions.length
-      }`
-    );
+    logger.info('Activity processing time', {
+      timeMs: endTime - startTime,
+      payloadSize: payload.sessions.length,
+    });
 
     // Check & update status in background
     await prismadb.member.update({

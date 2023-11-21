@@ -17,11 +17,14 @@ import {classifyDomain} from '../../../utils/classification/classification';
 import {getProductivityScore} from '../../../utils/classification/get-score';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
+import {logger} from '../../../lib/logger';
 
 // TODO Limit response by time window
 
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
+
+  logger.info('[api/statistic/[memberId]] get stast', {memberId});
 
   try {
     // Find user
@@ -44,6 +47,7 @@ async function get({req, res}: AuthMethodContext) {
 
     // Find domain and session activities for that user just by user ID
     // TODO: Consider limiting this to last 7/30 days only
+    // TODO: Request only today with all details and request summary for trends & average
     const activities = await prismadb.domainActivity.findMany({
       where: {
         member: {

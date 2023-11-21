@@ -30,6 +30,7 @@
     "classnames": "^2.3.2",
     "clsx": "^2.0.0",
     "copy-to-clipboard": "^3.3.3",
+    "datadog-winston": "^1.5.1",
     "date-fns": "^2.30.0",
     "duration-fns": "^3.0.2",
     "flowbite": "^2.1.1",
@@ -51,9 +52,11 @@
     "string-to-color": "^2.2.2",
     "styletron-engine-atomic": "^1.6.2",
     "styletron-react": "^6.1.1",
-    "usehooks-ts": "^2.9.1"
+    "usehooks-ts": "^2.9.1",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
+    "@types/datadog-winston": "^1.0.7",
     "@types/jest": "^29.5.8",
     "@types/node": "20.9.0",
     "@types/nodemailer": "^6.4.14",
