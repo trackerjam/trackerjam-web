@@ -3,12 +3,13 @@
 import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {format} from 'date-fns';
-import {Drawer} from 'baseui/drawer';
+
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
 
 import {Button} from '../common/button';
+import {Drawer} from '../common/drawer';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
@@ -109,6 +110,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
               <button
                 className="text-gray-300 border-dashed border-b-2 border-gray-300"
                 onClick={() => setIsEventsOpen(true)}
+                aria-controls="events-drawer-list"
               >
                 Events ({data?.member?.memberEvent?.length ?? 0})
               </button>
@@ -170,16 +172,9 @@ export function MemberStatistics({memberId}: {memberId: string}) {
           )}
 
           <Drawer
+            id="events-drawer-list"
             isOpen={isEventsOpen}
-            autoFocus
             onClose={() => setIsEventsOpen(false)}
-            overrides={{
-              Root: {
-                style: {
-                  zIndex: 11,
-                },
-              },
-            }}
           >
             <EventsList events={data?.member?.memberEvent ?? []} />
           </Drawer>
