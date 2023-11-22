@@ -1,5 +1,5 @@
 import {MemberEvent} from '@prisma/client';
-import {formatDistanceToNowStrict} from 'date-fns';
+import {format, formatDistanceToNowStrict} from 'date-fns';
 
 interface EventsListProps {
   events: MemberEvent[];
@@ -13,31 +13,54 @@ const STATUS_TEXT: {[key: string]: string} = {
   PausedTracker: 'Tracking has been paused',
   StartedTracker: 'Tracking has been started',
 };
+
+const groupEventsByDate = (events: MemberEvent[]) => {
+  const groupedEvents: {
+    [dateStr: string]: MemberEvent[];
+  } = {};
+
+  events.forEach((event) => {
+    const eventDate = format(new Date(event.date), 'dd MMMM, yyyy');
+    if (!groupedEvents[eventDate]) {
+      groupedEvents[eventDate] = [];
+    }
+    groupedEvents[eventDate].push(event);
+  });
+
+  return groupedEvents;
+};
+
 export function EventsList({events}: EventsListProps) {
+  const groupedEvents = groupEventsByDate(events);
+
   return (
     <div>
       <h2 className="text-24 font-bold mb-4">Events</h2>
-      <div className="text-gray-500 mb-2">Most recent shown at the top</div>
+      <div className="text-gray-500 mb-2 text-12">Displayed in local browser time</div>
 
-      {events?.map((eventRecord) => {
-        const dateObj = new Date(eventRecord.date);
-        const readableText: string = STATUS_TEXT[eventRecord.event] ?? eventRecord.event;
+      {Object.keys(groupedEvents).map((date) => (
+        <div key={date}>
+          <h3 className="py-1 bg-blue-100 px-2 mb-2 rounded-md text-16 font-bold">{date}</h3>
+          {groupedEvents[date].map((eventRecord) => {
+            const readableText = STATUS_TEXT[eventRecord.event] ?? eventRecord.event;
 
-        return (
-          <div key={eventRecord.id} className="p-4 border border-gray-300 rounded-md mb-2">
-            <strong>{readableText}</strong>
-            <div className="text-gray-500">
-              {dateObj.toLocaleDateString()} {dateObj.toLocaleTimeString()}{' '}
-              <span className="text-gray-400">
-                ({formatDistanceToNowStrict(dateObj, {addSuffix: true})})
-              </span>
-            </div>
-            {Boolean(eventRecord.ipAddress) && (
-              <div className="text-gray-400">From IP {eventRecord.ipAddress}</div>
-            )}
-          </div>
-        );
-      })}
+            return (
+              <div key={eventRecord.id} className="p-2 border border-gray-300 rounded-md mb-2">
+                <i>{readableText}</i>
+                <div className="text-gray-500 text-14">
+                  {new Date(eventRecord.date).toLocaleTimeString()}{' '}
+                  <span className="text-gray-400">
+                    ({formatDistanceToNowStrict(new Date(eventRecord.date), {addSuffix: true})})
+                  </span>
+                </div>
+                {Boolean(eventRecord.ipAddress) && (
+                  <div className="text-gray-300 text-14">From IP {eventRecord.ipAddress}</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }
