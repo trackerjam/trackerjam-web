@@ -94,7 +94,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   const logReportArr: LogReportType[] = [];
   const startTime = performance.now();
   const logReport: LogReportType = {
-    _domain: domain,
+    domain,
   };
 
   // Fetch or create a domain record based on the domain from the activity.
@@ -283,7 +283,8 @@ async function create({req, res}: PublicMethodContext) {
 
   // Log performance report
   const logReport: LogReportType = {
-    _requestId: requestId,
+    token: payload?.token,
+    requestId,
   };
   const startTime = performance.now();
 
@@ -317,8 +318,6 @@ async function create({req, res}: PublicMethodContext) {
     const {activities} = translatePayloadToInternalStructure(payload);
     logger.debug('Payload translated', {
       requestId,
-      payload,
-      activities,
     });
     logReport.translatePayload3 = performance.now() - startTime;
 
@@ -330,7 +329,7 @@ async function create({req, res}: PublicMethodContext) {
       };
     } = {};
 
-    logReport._activities = [];
+    logReport.activities = [];
     for (const activity of activities) {
       const activityStats = await handleRecordActivity({
         activity,
@@ -338,7 +337,7 @@ async function create({req, res}: PublicMethodContext) {
       });
       const {timeSpent, sessionCount, endTime, logReportArr} = activityStats || {};
       if (logReportArr) {
-        logReport._activities = logReport._activities.concat(logReportArr);
+        logReport.activities = logReport.activities.concat(logReportArr);
       }
 
       if (endTime) {
@@ -356,10 +355,26 @@ async function create({req, res}: PublicMethodContext) {
         if (typeof sessionCount === 'number') {
           summaryUpdates[dateIndex].sessionCountInc += sessionCount;
         }
+        if (summaryUpdates[dateIndex].lastSessionEndDatetime < endTime) {
+          logger.warn('summaryUpdates.lastSessionEndDatetime is not the latest', {
+            requestId,
+            dateIndex,
+            endTime,
+            lastSessionEndDatetime: summaryUpdates[dateIndex].lastSessionEndDatetime,
+          });
+
+          // Save last session end time
+          summaryUpdates[dateIndex].lastSessionEndDatetime = endTime;
+        }
       }
     }
     logReport.handleRecordActivities4 = performance.now() - startTime;
 
+    logger.debug('Summary updates', {
+      requestId,
+      token,
+      summaryUpdates,
+    });
     for (const dateIndex of Object.keys(summaryUpdates)) {
       const {timeSpentInc, sessionCountInc, lastSessionEndDatetime} = summaryUpdates[dateIndex];
       await prismadb.summary.upsert({
@@ -403,8 +418,9 @@ async function create({req, res}: PublicMethodContext) {
     logReport.updateMemberStatus6 = performance.now() - startTime;
 
     logger.debug('Activity processing', {
-      _totalTimeMs: performance.now() - startTime,
-      _payloadSize: payload.sessions.length,
+      totalTimeMs: performance.now() - startTime,
+      payloadSize: payload.sessions.length,
+      domainCount: logReport?.activities?.length,
       ...logReport,
     });
   } catch (e) {
