@@ -110,15 +110,17 @@ model MemberEvent {
 }
 
 model DomainActivity {
-  id                String            @id @default(uuid())
-  type              TAB_TYPE          @default(WEBSITE)
-  date              DateTime          @db.Timestamptz()
-  domainId          String
-  memberToken       String
-  member            Member            @relation(fields: [memberToken], references: [token], onDelete: Cascade)
-  timeSpent         Int
-  sessionActivities SessionActivity[]
-  activitiesCount   Int
+  id                       String            @id @default(uuid())
+  type                     TAB_TYPE          @default(WEBSITE)
+  date                     DateTime          @db.Timestamptz()
+  domainId                 String
+  memberToken              String
+  member                   Member            @relation(fields: [memberToken], references: [token], onDelete: Cascade)
+  timeSpent                Int
+  sessionActivities        SessionActivity[]
+  activitiesCount          Int
+  lastSessionEndDatetime   DateTime?
+  lastSessionStartDatetime DateTime?
 
   @@unique([date, domainId, memberToken])
   @@index([date, domainId, memberToken])

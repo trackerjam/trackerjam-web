@@ -16,6 +16,7 @@ import {translatePayloadToInternalStructure} from '../../../../utils/api/transla
 import {humanizeDates} from '../../../../utils/api/humanize-dates';
 import {logger} from '../../../../lib/logger';
 import {assignRequestId} from '../../../../utils/api/request-id';
+import {PerfMark, PerformanceMeasure} from '../../../../utils/perf';
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
 
@@ -97,9 +98,13 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     domain,
   };
 
+  const perf = new PerformanceMeasure();
+  perf.start();
+
   // Fetch or create a domain record based on the domain from the activity.
   const domainRecord = await upsertDomain(domain);
   logReport.upsertDomain1 = performance.now() - startTime;
+  perf.mark('upsertDomain', {domain});
 
   // Convert the activity date to an hour-based index value.
   const date = getHourBasedDate(activity.date);
@@ -112,23 +117,35 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     domainId: domainRecord.id,
     activityType: activity.type,
   });
-  // TODO Consider saving lastSessionEndDatetime and lastSessionStartDatetime in the domainActivityRecord
   logReport.initDomainActivity2 = performance.now() - startTime;
+  perf.mark('initDomainActivity', {domain});
 
   if (!domainActivityRecord) {
     throw new Error('domainActivityRecord not found');
   }
 
-  // Fetch the most recent session activity for this domain activity.
-  const lastSession = await prismadb.sessionActivity.findFirst({
-    where: {domainActivityId: domainActivityRecord.id},
-    orderBy: {endDatetime: 'desc'},
-  });
-  logReport.findLastSession3 = performance.now() - startTime;
-
   // Get the end time of the last session, or 0 if there is no previous session.
-  const lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
-  const lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
+  let lastSessionEndTime = 0;
+  let lastSessionStartTime = 0;
+
+  if (
+    domainActivityRecord.lastSessionEndDatetime &&
+    domainActivityRecord.lastSessionStartDatetime
+  ) {
+    lastSessionEndTime = domainActivityRecord.lastSessionEndDatetime.getTime();
+    lastSessionStartTime = domainActivityRecord.lastSessionStartDatetime.getTime();
+    perf.mark('findLastSession', {domain});
+  } else {
+    // Fetch the most recent session activity for this domain activity.
+    const lastSession = await prismadb.sessionActivity.findFirst({
+      where: {domainActivityId: domainActivityRecord.id},
+      orderBy: {endDatetime: 'desc'},
+    });
+    lastSessionEndTime = lastSession ? lastSession.endDatetime.getTime() : 0;
+    lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
+    perf.mark('findLastSession', {domain, madeQuery: true});
+  }
+  logReport.findLastSession3 = performance.now() - startTime;
 
   // Filter out any sessions from the activity that:
   // - Exactly match the last session (considered duplicates).
@@ -137,7 +154,8 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   // - Ended more than OLD_SESSION_THRESHOLD hours ago.
   // Log any filtered sessions.
   const newSessions: CreateSessionActivityInternalInput[] = [];
-  let mostRecentSessionEndTimeTs = 0; // TODO Check if latest among other domains
+  let lastSessionEndTimeTs = 0;
+  let lastSessionStartTimeTs = 0;
 
   if (activity.sessions) {
     const currentTime = Date.now();
@@ -145,13 +163,11 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     activity.sessions.forEach((session) => {
       const startTime = new Date(session.startTime).getTime();
       const endTime = new Date(session.endTime).getTime();
-      mostRecentSessionEndTimeTs = Math.max(mostRecentSessionEndTimeTs, endTime);
 
       if (endTime === lastSessionEndTime && startTime === lastSessionStartTime) {
         const msg = 'Exactly the same session detected';
         const logData = JSON.stringify({
           payloadSession: humanizeDates(session),
-          existingSession: lastSession,
         });
         sentryCatchException({data: logData, msg, token});
         console.error(msg, logData);
@@ -162,7 +178,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         const msg = 'Session inconsistency detected';
         const logData = JSON.stringify({
           payloadSession: humanizeDates(session),
-          existingSession: lastSession,
         });
         sentryCatchException({data: logData, msg, token});
         console.error(msg, logData);
@@ -185,10 +200,13 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         return;
       }
 
+      lastSessionEndTimeTs = Math.max(lastSessionEndTimeTs, endTime);
+      lastSessionStartTimeTs = Math.max(lastSessionStartTimeTs, startTime);
       newSessions.push(session);
     });
   }
   logReport.filterSessions4 = performance.now() - startTime;
+  perf.mark('filterSessions', {domain});
 
   // Throw an error if no session activity records were created.
   if (!newSessions.length) {
@@ -229,6 +247,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     skipDuplicates: true,
   });
   logReport.createSessionActivity5 = performance.now() - startTime;
+  perf.mark('createSessionActivity', {domain});
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
@@ -261,17 +280,21 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
       activitiesCount: {
         increment: sessionRecords.count,
       },
+      lastSessionEndDatetime: new Date(lastSessionEndTimeTs),
+      lastSessionStartDatetime: new Date(lastSessionStartTimeTs),
     },
   });
 
   logReport.upsertDomainActivity6 = performance.now() - startTime;
   logReportArr.push(logReport);
+  perf.mark('upsertDomainActivity', {domain});
 
   return {
     timeSpent: timeSpentInc,
     sessionCount: sessionRecords.count,
-    endTime: new Date(mostRecentSessionEndTimeTs),
+    endTime: new Date(lastSessionEndTimeTs),
     logReportArr,
+    perf: perf.getLogs(),
   };
 }
 
@@ -287,6 +310,8 @@ async function create({req, res}: PublicMethodContext) {
     requestId,
   };
   const startTime = performance.now();
+  const perf = new PerformanceMeasure();
+  perf.start();
 
   if (!payload?.token) {
     return res.status(400).json(buildError('not auth'));
@@ -298,6 +323,7 @@ async function create({req, res}: PublicMethodContext) {
     },
   });
   logReport.countMembers1 = performance.now() - startTime;
+  perf.mark('countMembers');
 
   if (!member) {
     return res.status(400).json(buildError('bad token'));
@@ -311,6 +337,7 @@ async function create({req, res}: PublicMethodContext) {
   // TODO - consider moving this to a background job and informing a client separately
   res.status(201).end();
   logReport.responseSent2 = performance.now() - startTime;
+  perf.mark('responseSent');
 
   const {token} = payload;
 
@@ -320,6 +347,7 @@ async function create({req, res}: PublicMethodContext) {
       requestId,
     });
     logReport.translatePayload3 = performance.now() - startTime;
+    perf.mark('translatePayload');
 
     const summaryUpdates: {
       [date: string]: {
@@ -330,14 +358,24 @@ async function create({req, res}: PublicMethodContext) {
     } = {};
 
     logReport.activities = [];
+    let activitiesPerfArr: PerfMark[] = [];
     for (const activity of activities) {
       const activityStats = await handleRecordActivity({
         activity,
         token,
       });
-      const {timeSpent, sessionCount, endTime, logReportArr} = activityStats || {};
+      const {
+        timeSpent,
+        sessionCount,
+        endTime,
+        logReportArr,
+        perf: activitiesPerf,
+      } = activityStats || {};
       if (logReportArr) {
         logReport.activities = logReport.activities.concat(logReportArr);
+      }
+      if (activitiesPerf) {
+        activitiesPerfArr = activitiesPerfArr.concat(activitiesPerf);
       }
 
       if (endTime) {
@@ -369,6 +407,7 @@ async function create({req, res}: PublicMethodContext) {
       }
     }
     logReport.handleRecordActivities4 = performance.now() - startTime;
+    perf.mark('handleRecordActivities');
 
     logger.debug('Summary updates', {
       requestId,
@@ -405,6 +444,7 @@ async function create({req, res}: PublicMethodContext) {
       });
     }
     logReport.upsertSummary5 = performance.now() - startTime;
+    perf.mark('upsertSummary');
 
     // Check & update status in background
     await prismadb.member.update({
@@ -416,12 +456,22 @@ async function create({req, res}: PublicMethodContext) {
       },
     });
     logReport.updateMemberStatus6 = performance.now() - startTime;
+    perf.mark('updateMemberStatus');
 
     logger.debug('Activity processing', {
       totalTimeMs: performance.now() - startTime,
       payloadSize: payload.sessions.length,
       domainCount: logReport?.activities?.length,
       ...logReport,
+    });
+
+    logger.debug('Activity Processing Performance', {
+      requestId,
+      totalTimeMs: performance.now() - startTime,
+      payloadSize: payload.sessions.length,
+      domainCount: logReport?.activities?.length,
+      perfMarks: perf.getLogs(),
+      activitiesPerf: activitiesPerfArr,
     });
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
