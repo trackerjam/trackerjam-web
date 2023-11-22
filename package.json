@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
+    "build:start": "npm run build && npm run start",
     "lint": "next lint --fix",
     "tsc": "tsc",
     "test": "jest",

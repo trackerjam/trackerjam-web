@@ -379,11 +379,6 @@ async function create({req, res}: PublicMethodContext) {
     }
     perf.mark('handleRecordActivities');
 
-    logger.debug('Summary updates', {
-      requestId,
-      token,
-      summaryUpdates,
-    });
     for (const dateIndex of Object.keys(summaryUpdates)) {
       const {timeSpentInc, sessionCountInc, lastSessionEndDatetime} = summaryUpdates[dateIndex];
       await prismadb.summary.upsert({
@@ -428,6 +423,8 @@ async function create({req, res}: PublicMethodContext) {
 
     logger.debug('Activity Processing Performance', {
       requestId,
+      token,
+      summaryUpdates,
       totalTimeMs: performance.now() - perf.startTime,
       payloadSize: payload.sessions.length,
       domainCount: activitiesPerfArr.length,

@@ -146,7 +146,7 @@ async function get({req, res}: AuthMethodContext) {
 
     perf.mark('processDomainData');
 
-    logger.debug('Get member stats', {
+    logger.debug('Get Member Stats Performance', {
       memberId: member.id,
       totalTimeMs: performance.now() - perf.startTime,
       perfMarks: perf.getObjectLogs(),
