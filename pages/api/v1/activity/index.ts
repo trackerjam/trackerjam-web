@@ -276,7 +276,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     },
   });
 
-  perf.mark('upsertDomainActivity', {domain});
+  perf.mark('updateDomainActivity', {domain});
 
   return {
     timeSpent: timeSpentInc,
