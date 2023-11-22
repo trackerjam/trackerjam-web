@@ -1,11 +1,12 @@
 import {format, transports, createLogger} from 'winston';
 import DatadogWinston from 'datadog-winston';
 
-const IS_DEV = process.env.NODE_ENV === 'development';
 const DATADOG_API_KEY = process.env.DATADOG_API_KEY;
 if (typeof DATADOG_API_KEY !== 'string') {
   throw new Error('DATADOG_API_KEY is not defined');
 }
+
+const hostname = process.env?.NEXTAUTH_URL?.replace(/https?:\/\//, '') || 'unknown';
 
 const logger = createLogger({
   level: 'debug',
@@ -14,7 +15,7 @@ const logger = createLogger({
   transports: [
     new DatadogWinston({
       apiKey: DATADOG_API_KEY,
-      hostname: IS_DEV ? 'localhost' : 'app.trackerjam.com',
+      hostname,
       ddsource: 'next.js',
       ddtags: `env:${process.env.NODE_ENV}`,
     }),
