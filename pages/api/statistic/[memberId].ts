@@ -18,13 +18,16 @@ import {getProductivityScore} from '../../../utils/classification/get-score';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {logger} from '../../../lib/logger';
+import {PerfMarks} from '../../../utils/perf';
 
 // TODO Limit response by time window
 
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
 
-  const startTime = performance.now();
+  const perf = new PerfMarks();
+  perf.start();
+
   try {
     // Find user
     const member = await prismadb.member.findUniqueOrThrow({
@@ -41,6 +44,7 @@ async function get({req, res}: AuthMethodContext) {
         settings: true,
       },
     });
+    perf.mark('findMember');
 
     const memberResponse = unwrapSettings(member);
 
@@ -68,6 +72,7 @@ async function get({req, res}: AuthMethodContext) {
         },
       },
     });
+    perf.mark('getDomainActivities');
 
     // Batch query for domain names
     const uniqueDomainIds = [...new Set(activities.map((activity) => activity.domainId))];
@@ -82,6 +87,7 @@ async function get({req, res}: AuthMethodContext) {
         id: true,
       },
     });
+    perf.mark('getDomains');
 
     const domainMap: {[id: string]: string} = {};
     domainRecords.forEach((record) => {
@@ -138,9 +144,12 @@ async function get({req, res}: AuthMethodContext) {
       activitiesByDate: resultActivities,
     };
 
+    perf.mark('processDomainData');
+
     logger.debug('Get member stats', {
       memberId: member.id,
-      duration: performance.now() - startTime,
+      totalTimeMs: performance.now() - perf.startTime,
+      perfMarks: perf.getObjectLogs(),
     });
 
     return res.json(result);

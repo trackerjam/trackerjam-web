@@ -1,17 +1,24 @@
-export type PerfMark = {
+export type PerfMarkType = {
   markName: string;
   durationMs: number;
   totalMs: number;
+  [key: string]: string | number | boolean;
 };
-export class PerformanceMeasure {
+
+export type ObjectPerfMarkType = Record<string, number | string | boolean>;
+
+type TagsType = Record<string, string | number | boolean>;
+export class PerfMarks {
   startTime: number;
   lastMarkTime: number;
-  logs: PerfMark[];
+  logs: PerfMarkType[];
+  tags: TagsType | undefined;
 
-  constructor() {
+  constructor(tags?: TagsType) {
     this.startTime = 0;
     this.lastMarkTime = 0;
     this.logs = [];
+    this.tags = tags;
   }
 
   start() {
@@ -29,5 +36,21 @@ export class PerformanceMeasure {
 
   getLogs() {
     return this.logs;
+  }
+
+  getObjectLogs() {
+    let res = this.logs.reduce((acc, log) => {
+      acc[log.markName] = log.durationMs;
+      return acc;
+    }, {} as ObjectPerfMarkType);
+
+    if (this.tags) {
+      res = {
+        ...res,
+        ...this.tags,
+      };
+    }
+
+    return res;
   }
 }

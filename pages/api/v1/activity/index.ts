@@ -16,11 +16,14 @@ import {translatePayloadToInternalStructure} from '../../../../utils/api/transla
 import {humanizeDates} from '../../../../utils/api/humanize-dates';
 import {logger} from '../../../../lib/logger';
 import {assignRequestId} from '../../../../utils/api/request-id';
-import {PerfMark, PerformanceMeasure} from '../../../../utils/perf';
+import {ObjectPerfMarkType, PerfMarks} from '../../../../utils/perf';
+
+type ActivityPerfReport = {
+  domain: string;
+  perfMarks: ObjectPerfMarkType;
+};
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
-
-type LogReportType = {[eventName: string]: number | string | LogReportType | LogReportType[]};
 
 async function upsertDomain(domain: string) {
   // Check if the domain already exists
@@ -92,18 +95,11 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   // We expect the translate-payload.ts to handle domain extraction
   const domain = activity.domain;
 
-  const logReportArr: LogReportType[] = [];
-  const startTime = performance.now();
-  const logReport: LogReportType = {
-    domain,
-  };
-
-  const perf = new PerformanceMeasure();
+  const perf = new PerfMarks();
   perf.start();
 
   // Fetch or create a domain record based on the domain from the activity.
   const domainRecord = await upsertDomain(domain);
-  logReport.upsertDomain1 = performance.now() - startTime;
   perf.mark('upsertDomain', {domain});
 
   // Convert the activity date to an hour-based index value.
@@ -117,7 +113,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     domainId: domainRecord.id,
     activityType: activity.type,
   });
-  logReport.initDomainActivity2 = performance.now() - startTime;
   perf.mark('initDomainActivity', {domain});
 
   if (!domainActivityRecord) {
@@ -131,6 +126,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   if (
     domainActivityRecord.lastSessionEndDatetime &&
     domainActivityRecord.lastSessionStartDatetime
+    // TODO Also check if a record is a newly created one
   ) {
     lastSessionEndTime = domainActivityRecord.lastSessionEndDatetime.getTime();
     lastSessionStartTime = domainActivityRecord.lastSessionStartDatetime.getTime();
@@ -145,7 +141,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     lastSessionStartTime = lastSession ? lastSession.startDatetime.getTime() : 0;
     perf.mark('findLastSession', {domain, madeQuery: true});
   }
-  logReport.findLastSession3 = performance.now() - startTime;
 
   // Filter out any sessions from the activity that:
   // - Exactly match the last session (considered duplicates).
@@ -205,7 +200,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
       newSessions.push(session);
     });
   }
-  logReport.filterSessions4 = performance.now() - startTime;
   perf.mark('filterSessions', {domain});
 
   // Throw an error if no session activity records were created.
@@ -219,7 +213,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         newSessionsLength: newSessions.length,
       }),
     });
-    logReportArr.push(logReport);
     return;
   }
 
@@ -232,22 +225,21 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     ) || 0;
 
   // Create session activity records for the new sessions.
-  const sessionRecords = await prismadb.sessionActivity.createMany({
-    data: newSessions.map(({url, title, startTime, endTime}) => {
-      const isHTTPS = url?.toLowerCase().startsWith('https');
-      return {
-        url,
-        domainActivityId: domainActivityRecord.id,
-        startDatetime: new Date(startTime),
-        endDatetime: new Date(endTime),
-        title: title ?? undefined,
-        isHTTPS,
-      };
-    }),
-    skipDuplicates: true,
+  const sessionData = newSessions.map(({url, title, startTime, endTime}) => {
+    const isHTTPS = url?.toLowerCase().startsWith('https');
+    return {
+      url,
+      domainActivityId: domainActivityRecord.id,
+      startDatetime: new Date(startTime),
+      endDatetime: new Date(endTime),
+      title: title ?? undefined,
+      isHTTPS,
+    };
   });
-  logReport.createSessionActivity5 = performance.now() - startTime;
-  perf.mark('createSessionActivity', {domain});
+  const sessionRecords = await prismadb.sessionActivity.createMany({
+    data: sessionData,
+  });
+  perf.mark('createSessionActivities', {domain});
 
   // Throw an error if no session activity records were created.
   if (!sessionRecords.count) {
@@ -260,7 +252,6 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         newSessionsLength: newSessions.length,
       }),
     });
-    logReportArr.push(logReport);
     return;
   }
 
@@ -285,16 +276,16 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
     },
   });
 
-  logReport.upsertDomainActivity6 = performance.now() - startTime;
-  logReportArr.push(logReport);
   perf.mark('upsertDomainActivity', {domain});
 
   return {
     timeSpent: timeSpentInc,
     sessionCount: sessionRecords.count,
     endTime: new Date(lastSessionEndTimeTs),
-    logReportArr,
-    perf: perf.getLogs(),
+    perfReport: {
+      perfMarks: perf.getObjectLogs(),
+      domain,
+    },
   };
 }
 
@@ -304,13 +295,7 @@ async function create({req, res}: PublicMethodContext) {
   // Assign a request id for logging and debug purposes
   const requestId = assignRequestId(req);
 
-  // Log performance report
-  const logReport: LogReportType = {
-    token: payload?.token,
-    requestId,
-  };
-  const startTime = performance.now();
-  const perf = new PerformanceMeasure();
+  const perf = new PerfMarks();
   perf.start();
 
   if (!payload?.token) {
@@ -322,7 +307,6 @@ async function create({req, res}: PublicMethodContext) {
       token: payload.token,
     },
   });
-  logReport.countMembers1 = performance.now() - startTime;
   perf.mark('countMembers');
 
   if (!member) {
@@ -334,9 +318,7 @@ async function create({req, res}: PublicMethodContext) {
   }
 
   // Early status return to avoid HTTP 504 Gateway Timeout in case of large payloads
-  // TODO - consider moving this to a background job and informing a client separately
   res.status(201).end();
-  logReport.responseSent2 = performance.now() - startTime;
   perf.mark('responseSent');
 
   const {token} = payload;
@@ -346,7 +328,6 @@ async function create({req, res}: PublicMethodContext) {
     logger.debug('Payload translated', {
       requestId,
     });
-    logReport.translatePayload3 = performance.now() - startTime;
     perf.mark('translatePayload');
 
     const summaryUpdates: {
@@ -357,25 +338,15 @@ async function create({req, res}: PublicMethodContext) {
       };
     } = {};
 
-    logReport.activities = [];
-    let activitiesPerfArr: PerfMark[] = [];
+    const activitiesPerfArr: ActivityPerfReport[] = [];
     for (const activity of activities) {
       const activityStats = await handleRecordActivity({
         activity,
         token,
       });
-      const {
-        timeSpent,
-        sessionCount,
-        endTime,
-        logReportArr,
-        perf: activitiesPerf,
-      } = activityStats || {};
-      if (logReportArr) {
-        logReport.activities = logReport.activities.concat(logReportArr);
-      }
-      if (activitiesPerf) {
-        activitiesPerfArr = activitiesPerfArr.concat(activitiesPerf);
+      const {timeSpent, sessionCount, endTime, perfReport} = activityStats || {};
+      if (perfReport) {
+        activitiesPerfArr.push(perfReport);
       }
 
       if (endTime) {
@@ -406,7 +377,6 @@ async function create({req, res}: PublicMethodContext) {
         }
       }
     }
-    logReport.handleRecordActivities4 = performance.now() - startTime;
     perf.mark('handleRecordActivities');
 
     logger.debug('Summary updates', {
@@ -443,7 +413,6 @@ async function create({req, res}: PublicMethodContext) {
         },
       });
     }
-    logReport.upsertSummary5 = performance.now() - startTime;
     perf.mark('upsertSummary');
 
     // Check & update status in background
@@ -455,22 +424,14 @@ async function create({req, res}: PublicMethodContext) {
         status: STATUS.ACTIVE,
       },
     });
-    logReport.updateMemberStatus6 = performance.now() - startTime;
     perf.mark('updateMemberStatus');
-
-    logger.debug('Activity processing', {
-      totalTimeMs: performance.now() - startTime,
-      payloadSize: payload.sessions.length,
-      domainCount: logReport?.activities?.length,
-      ...logReport,
-    });
 
     logger.debug('Activity Processing Performance', {
       requestId,
-      totalTimeMs: performance.now() - startTime,
+      totalTimeMs: performance.now() - perf.startTime,
       payloadSize: payload.sessions.length,
-      domainCount: logReport?.activities?.length,
-      perfMarks: perf.getLogs(),
+      domainCount: activitiesPerfArr.length,
+      perfMarks: perf.getObjectLogs(),
       activitiesPerf: activitiesPerfArr,
     });
   } catch (e) {
