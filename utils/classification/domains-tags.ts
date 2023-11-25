@@ -7779,8 +7779,8 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Community": 0.05
   },
   "eff.org": {
-    "NonProfitCharity": 0.6,
-    "Technology": 0.4
+    "NonProfitCharity": 0.4,
+    "Technology": 0.6
   },
   "snopes.com": {
     "News": 0.7,
