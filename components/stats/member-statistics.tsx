@@ -17,9 +17,9 @@ import {DomainsTable} from './domains-table';
 import {StatCards} from './stat-cards/stat-cards';
 import {UserDetails} from './user-details/user-details';
 import {getMostRecentData} from './utils/get-most-recent-data';
-import {EventsList} from './events-list';
 import {RadarChart} from './radar-chart';
 import {Trends} from './trends/trends';
+import {Events} from './events/events';
 
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
@@ -112,7 +112,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 onClick={() => setIsEventsOpen(true)}
                 aria-controls="events-drawer-list"
               >
-                Events ({data?.member?.memberEvent?.length ?? 0})
+                Events
               </button>
             </div>
           )}
@@ -135,6 +135,10 @@ export function MemberStatistics({memberId}: {memberId: string}) {
       )}
 
       {error && <ErrorDetails error={error} />}
+
+      <Drawer id="events-drawer-list" isOpen={isEventsOpen} onClose={() => setIsEventsOpen(false)}>
+        {isEventsOpen && <Events memberId={data?.member?.token} />}
+      </Drawer>
 
       {hasCurrentDayData && (
         <>
@@ -170,14 +174,6 @@ export function MemberStatistics({memberId}: {memberId: string}) {
           {Boolean(currentDayData) && (
             <StatCards data={currentDayData} previousDayData={previousDayData} />
           )}
-
-          <Drawer
-            id="events-drawer-list"
-            isOpen={isEventsOpen}
-            onClose={() => setIsEventsOpen(false)}
-          >
-            <EventsList events={data?.member?.memberEvent ?? []} />
-          </Drawer>
 
           {Boolean(currentDayData) && (
             <>

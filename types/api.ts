@@ -96,7 +96,6 @@ export type MemberStatisticActivityType = DomainActivity & {
 };
 
 export type MemberDataType = Member & {
-  memberEvent: MemberEvent[];
   settings: SettingsType | null;
 };
 

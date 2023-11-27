@@ -35,7 +35,6 @@ export function EventsList({events}: EventsListProps) {
 
   return (
     <div>
-      <h2 className="text-24 font-bold mb-4">Events</h2>
       <div className="text-gray-500 mb-2 text-12">Displayed in local browser time</div>
 
       {Object.keys(groupedEvents).map((date) => (
@@ -45,8 +44,8 @@ export function EventsList({events}: EventsListProps) {
             const readableText = STATUS_TEXT[eventRecord.event] ?? eventRecord.event;
 
             return (
-              <div key={eventRecord.id} className="p-2 border border-gray-300 rounded-md mb-2">
-                <i>{readableText}</i>
+              <div key={eventRecord.id} className="p-2 border border-gray-200 rounded-md mb-2">
+                <i className="mb-3 inline-flex">{readableText}</i>
                 <div className="text-gray-500 text-14">
                   {new Date(eventRecord.date).toLocaleTimeString()}{' '}
                   <span className="text-gray-400">

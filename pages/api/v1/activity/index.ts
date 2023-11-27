@@ -421,7 +421,7 @@ async function create({req, res}: PublicMethodContext) {
     });
     perf.mark('updateMemberStatus');
 
-    logger.debug('Activity Processing Performance', {
+    logger.debug('Activity Processing', {
       requestId,
       token,
       summaryUpdates,

@@ -35,12 +35,6 @@ async function get({req, res}: AuthMethodContext) {
         id: memberId,
       },
       include: {
-        memberEvent: {
-          orderBy: {
-            date: 'desc',
-            // TODO(Optimize): select count only
-          },
-        },
         settings: true,
       },
     });
@@ -146,7 +140,7 @@ async function get({req, res}: AuthMethodContext) {
 
     perf.mark('processDomainData');
 
-    logger.debug('Get Member Stats Performance', {
+    logger.debug('Get Member Stats', {
       memberId: member.id,
       totalTimeMs: performance.now() - perf.startTime,
       perfMarks: perf.getObjectLogs(),
