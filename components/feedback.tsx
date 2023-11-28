@@ -12,6 +12,7 @@ export function Feedback() {
         marginHeight={0}
         marginWidth={0}
         title="Feedback form"
+        loading="lazy"
       ></iframe>
 
       <Script

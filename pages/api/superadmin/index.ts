@@ -20,9 +20,9 @@ async function get({res, session}: AuthMethodContext) {
         emailVerified: 'desc',
       },
       include: {
-        _count: {
+        member: {
           select: {
-            member: true,
+            _count: true,
           },
         },
       },

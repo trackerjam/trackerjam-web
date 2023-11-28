@@ -122,10 +122,14 @@ export type CreateMemberEventInput = {
 
 export type DomainTags = {[key in keyof typeof TAG]?: number};
 
+export type MemberCountsInfo = {
+  _count: {
+    teams: number;
+    domainActivity: number;
+    summary: number;
+    memberEvent: number;
+  };
+};
 export type SuperadminResponse = {
-  users: (User & {
-    _count: {
-      member: number;
-    };
-  })[];
+  users: (User & {member: MemberCountsInfo[]})[];
 };

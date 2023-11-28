@@ -4,6 +4,7 @@ import {format} from 'date-fns';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse} from '../../types/api';
+import {MemberDots} from './member-dots';
 
 const formatDate = (date: string | Date | null) => {
   if (!date) {
@@ -54,7 +55,9 @@ export function Superadmin() {
                     </Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>{formatDate(user.emailVerified)}</Table.Cell>
-                    <Table.Cell>{user._count?.member}</Table.Cell>
+                    <Table.Cell>
+                      <MemberDots membersInfo={user?.member} />
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
