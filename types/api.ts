@@ -1,6 +1,6 @@
 import {Session} from 'next-auth';
 import {NextApiRequest, NextApiResponse} from 'next';
-import {DomainActivity, Member, MemberEvent, SessionActivity, TAB_TYPE, Team} from '@prisma/client';
+import {DomainActivity, Member, SessionActivity, TAB_TYPE, Team, User} from '@prisma/client';
 import {TAG} from '../utils/classification/tags';
 import {SettingsType} from './member';
 
@@ -121,3 +121,11 @@ export type CreateMemberEventInput = {
 };
 
 export type DomainTags = {[key in keyof typeof TAG]?: number};
+
+export type SuperadminResponse = {
+  users: (User & {
+    _count: {
+      member: number;
+    };
+  })[];
+};

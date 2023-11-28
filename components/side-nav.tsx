@@ -2,19 +2,21 @@ import {CiSettings, CiPizza} from 'react-icons/ci';
 import {HiOutlineExclamationCircle} from 'react-icons/hi2';
 import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
+import {FaShieldCat} from 'react-icons/fa6';
 import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
 import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
   title: string;
   icon: IconType;
+  color?: string;
 };
 
-function IconTitle({title, icon}: IconTitleProps) {
+function IconTitle({title, icon, color}: IconTitleProps) {
   const Icon = icon;
 
   return (
-    <span className="flex items-center gap-x-2">
+    <span className="flex items-center gap-x-2" style={{color: color ?? 'inherit'}}>
       <Icon title="" size={18} />
       {title}
     </span>
@@ -51,7 +53,14 @@ const bottomItems = [
   },
 ];
 
-export function SideNav() {
+const adminLinks = [
+  {
+    title: <IconTitle title="Admin" icon={FaShieldCat} color="darkorange" />,
+    itemId: '/superadmin',
+  },
+];
+
+export function SideNav({hasAdminLink}: {hasAdminLink: boolean}) {
   return (
     <div className="mt-6">
       <nav>
@@ -80,6 +89,21 @@ export function SideNav() {
           );
         })}
       </ul>
+
+      {hasAdminLink && (
+        <>
+          <hr />
+          <ul>
+            {adminLinks.map(({title, itemId}, index) => {
+              return (
+                <li key={index}>
+                  <SideNavLink title={title} itemId={itemId} />
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

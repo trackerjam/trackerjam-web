@@ -44,7 +44,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   teams         Team[]
-  Member        Member[]
+  member        Member[]
 }
 
 model VerificationToken {

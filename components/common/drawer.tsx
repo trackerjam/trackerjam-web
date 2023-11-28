@@ -1,6 +1,6 @@
+'use client';
 import clsx from 'clsx';
 import {useEffect, useRef} from 'react';
-import {createPortal} from 'react-dom';
 import {IoClose} from 'react-icons/io5';
 
 const positionStyles = {
@@ -50,7 +50,7 @@ export function Drawer({
     }
   }, [isOpen, buttonRef]);
 
-  return createPortal(
+  return (
     <div className={className} aria-hidden={isOpen ? 'false' : 'true'} {...props}>
       <div
         className={clsx(
@@ -82,7 +82,6 @@ export function Drawer({
         )}
         onClick={onClose}
       />
-    </div>,
-    document.body
+    </div>
   );
 }
