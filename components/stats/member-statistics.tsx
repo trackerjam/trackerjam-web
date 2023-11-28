@@ -4,6 +4,7 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {format} from 'date-fns';
 
+import {Spinner} from 'flowbite-react';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
@@ -126,7 +127,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
         )}
       </div>
 
-      {isLoading && <span>Loading...</span>}
+      {isLoading && <Spinner size="lg" />}
 
       {!hasCurrentDayData && hasDataResponse && (
         <div className="flex flex-row justify-between items-center">
