@@ -11,8 +11,6 @@ interface ErrorDetailsProps {
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-// TODO Check Privacy Policy generator
-
 export function ErrorDetails({error, resetError}: ErrorDetailsProps): React.ReactElement {
   const [stacktraceShown, setStacktraceShown] = useState<boolean>(false);
 

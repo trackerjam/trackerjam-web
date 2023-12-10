@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 
-// TODO Update button url
 function getHtml(token: string) {
   return `
 <!DOCTYPE html>

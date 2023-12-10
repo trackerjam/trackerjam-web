@@ -17,8 +17,6 @@ const formatDate = (date: string | Date | null) => {
 export function Superadmin() {
   const {data, error, isLoading} = useGetData<SuperadminResponse>('/api/superadmin');
 
-  // TODO Show total members vs active members, or color dots for active/inactive
-
   return (
     <div>
       {error && <ErrorDetails error={error} />}
