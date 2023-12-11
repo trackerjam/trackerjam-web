@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {DomainActivity} from '@prisma/client';
 import * as Sentry from '@sentry/node';
+import {subDays} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -20,10 +21,14 @@ import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {logger} from '../../../lib/logger';
 import {PerfMarks} from '../../../utils/perf';
 
-// TODO Limit response by time window
+const MAX_LIMIT = 30;
 
 async function get({req, res}: AuthMethodContext) {
   const memberId = req.query?.memberId as string;
+  let limit = Number(req.query?.limit) ?? MAX_LIMIT;
+  if (!limit || limit > MAX_LIMIT) {
+    limit = MAX_LIMIT;
+  }
 
   const perf = new PerfMarks();
   perf.start();
@@ -42,13 +47,18 @@ async function get({req, res}: AuthMethodContext) {
 
     const memberResponse = unwrapSettings(member);
 
+    const today = new Date();
+    const limitToDate = subDays(today, limit);
+
     // Find domain and session activities for that user just by user ID
-    // TODO: Consider limiting this to last 7/30 days only
     // TODO: Request only today with all details and request summary for trends & average
     const activities = await prismadb.domainActivity.findMany({
       where: {
         member: {
           id: memberResponse.id,
+        },
+        date: {
+          gte: limitToDate,
         },
       },
       orderBy: {

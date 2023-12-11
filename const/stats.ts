@@ -1,1 +1,1 @@
-export const TAKE_STATS_LIMIT = 7; // a week of data
+export const TAKE_STATS_LIMIT = 30; // a week of data

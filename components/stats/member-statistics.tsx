@@ -11,6 +11,7 @@ import {DateActivityData, MemberStatisticType} from '../../types/api';
 
 import {Button} from '../common/button';
 import {Drawer} from '../common/drawer';
+import {TAKE_STATS_LIMIT} from '../../const/stats';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
@@ -25,7 +26,9 @@ import {Events} from './events/events';
 export const PIE_CHART_AND_TABLE_HEIGHT = '400px';
 
 export function MemberStatistics({memberId}: {memberId: string}) {
-  const {data, isLoading, error} = useGetData<MemberStatisticType>(`/api/statistic/${memberId}`);
+  const {data, isLoading, error} = useGetData<MemberStatisticType>(
+    `/api/statistic/${memberId}?limit=${TAKE_STATS_LIMIT}`
+  );
 
   const hasDataResponse = Boolean(!isLoading && data);
 
