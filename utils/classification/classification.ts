@@ -16,3 +16,7 @@ export function classifyDomain(domain: string) {
     [TAG.Other]: 1,
   };
 }
+
+export function isKnownDomain(domain: string) {
+  return Boolean(DOMAIN_TAGS[domain]);
+}

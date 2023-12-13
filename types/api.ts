@@ -132,4 +132,10 @@ export type MemberCountsInfo = {
 };
 export type SuperadminResponse = {
   users: (User & {member: MemberCountsInfo[]})[];
+  domains: {
+    classified: number;
+    unclassified: number;
+    unknown: number;
+    total: number;
+  };
 };
