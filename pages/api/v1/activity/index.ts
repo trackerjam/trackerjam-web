@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {TAB_TYPE} from '.prisma/client';
-import {STATUS} from '@prisma/client';
+import {SessionActivity, STATUS} from '@prisma/client';
 import * as Sentry from '@sentry/nextjs';
 import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
@@ -123,17 +123,18 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
   let lastSessionEndTime = 0;
   let lastSessionStartTime = 0;
 
+  let lastSession: SessionActivity | null = null;
+
   if (
     domainActivityRecord.lastSessionEndDatetime &&
     domainActivityRecord.lastSessionStartDatetime
-    // TODO Also check if a record is a newly created one
   ) {
     lastSessionEndTime = domainActivityRecord.lastSessionEndDatetime.getTime();
     lastSessionStartTime = domainActivityRecord.lastSessionStartDatetime.getTime();
     perf.mark('findLastSession', {domain});
   } else {
     // Fetch the most recent session activity for this domain activity.
-    const lastSession = await prismadb.sessionActivity.findFirst({
+    lastSession = await prismadb.sessionActivity.findFirst({
       where: {domainActivityId: domainActivityRecord.id},
       orderBy: {endDatetime: 'desc'},
     });
@@ -163,9 +164,10 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         const msg = 'Exactly the same session detected';
         const logData = JSON.stringify({
           payloadSession: humanizeDates(session),
+          lastSession,
         });
         sentryCatchException({data: logData, msg, token});
-        console.error(msg, logData);
+        logger.error(msg, logData);
         return;
       }
 
@@ -173,17 +175,22 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         const msg = 'Session inconsistency detected';
         const logData = JSON.stringify({
           payloadSession: humanizeDates(session),
+          lastSession,
         });
         sentryCatchException({data: logData, msg, token});
-        console.error(msg, logData);
+        logger.error(msg, logData);
         return;
       }
 
       if (startTime > currentTime || endTime > currentTime) {
         const msg = 'Future session detected';
-        const logData = JSON.stringify(humanizeDates(session));
+        const logData = JSON.stringify({
+          payloadSession: humanizeDates(session),
+          currentTime: new Date(currentTime).toISOString(),
+          currentTimeTs: currentTime,
+        });
         sentryCatchException({data: logData, msg, token});
-        console.error(msg, logData);
+        logger.error(msg, logData);
         return;
       }
 
@@ -191,7 +198,7 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
         const msg = 'Old session detected';
         const logData = JSON.stringify(humanizeDates(session));
         sentryCatchException({data: logData, msg, token});
-        console.error(msg, logData);
+        logger.error(msg);
         return;
       }
 
