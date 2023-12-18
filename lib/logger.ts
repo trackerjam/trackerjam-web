@@ -20,6 +20,7 @@ const logger = createLogger({
       ddtags: `env:${process.env.NODE_ENV}`,
     }),
     new transports.Console({
+      stderrLevels: ['error'],
       format: format.combine(
         format.colorize(),
         format.timestamp(),

@@ -90,8 +90,9 @@ async function upsertDomainActivity({
 interface HandleRecordActivityInput {
   activity: CreateActivityInputInternal;
   token: string;
+  requestId: string;
 }
-async function handleRecordActivity({activity, token}: HandleRecordActivityInput) {
+async function handleRecordActivity({activity, token, requestId}: HandleRecordActivityInput) {
   // We expect the translate-payload.ts to handle domain extraction
   const domain = activity.domain;
 
@@ -162,43 +163,48 @@ async function handleRecordActivity({activity, token}: HandleRecordActivityInput
 
       if (endTime === lastSessionEndTime && startTime === lastSessionStartTime) {
         const msg = 'Exactly the same session detected';
-        const logData = JSON.stringify({
+        const logData = {
           payloadSession: humanizeDates(session),
           lastSession,
-        });
-        sentryCatchException({data: logData, msg, token});
+          requestId,
+        };
+        sentryCatchException({msg, token});
         logger.error(msg, logData);
         return;
       }
 
       if (endTime < lastSessionEndTime) {
         const msg = 'Session inconsistency detected';
-        const logData = JSON.stringify({
+        const logData = {
           payloadSession: humanizeDates(session),
           lastSession,
-        });
-        sentryCatchException({data: logData, msg, token});
+          requestId,
+        };
+        sentryCatchException({msg, token});
         logger.error(msg, logData);
         return;
       }
 
       if (startTime > currentTime || endTime > currentTime) {
         const msg = 'Future session detected';
-        const logData = JSON.stringify({
+        const logData = {
           payloadSession: humanizeDates(session),
           currentTime: new Date(currentTime).toISOString(),
           currentTimeTs: currentTime,
-        });
-        sentryCatchException({data: logData, msg, token});
+          requestId,
+        };
+        sentryCatchException({msg, token});
         logger.error(msg, logData);
         return;
       }
 
       if (currentTime - endTime > OLD_SESSION_THRESHOLD) {
         const msg = 'Old session detected';
-        const logData = JSON.stringify(humanizeDates(session));
-        sentryCatchException({data: logData, msg, token});
-        logger.error(msg);
+        const logData = {
+          payloadSession: humanizeDates(session),
+        };
+        sentryCatchException({msg, token});
+        logger.error(msg, logData);
         return;
       }
 
@@ -350,6 +356,7 @@ async function create({req, res}: PublicMethodContext) {
       const activityStats = await handleRecordActivity({
         activity,
         token,
+        requestId,
       });
       const {timeSpent, sessionCount, endTime, perfReport} = activityStats || {};
       if (perfReport) {
