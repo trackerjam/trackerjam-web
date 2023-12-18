@@ -5,3 +5,6 @@ export const DEFAULT_PAGE = '/team';
 export const AUTH_PAGE = '/api/auth/signin';
 
 export const WELCOME_URL_HASH = '#welcome';
+
+export const EXTENSION_URL =
+  'https://chromewebstore.google.com/detail/trackerjam/nelollklgdnjnjofajapomfmogcibema';

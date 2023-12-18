@@ -2,7 +2,9 @@ import Link from 'next/link';
 import {BsSun, BsInfoCircle, BsPlusCircleDotted} from 'react-icons/bs';
 import {TbBeta} from 'react-icons/tb';
 import {Modal} from 'flowbite-react';
+import {FaChrome} from 'react-icons/fa';
 import {Button} from '../common/button';
+import {EXTENSION_URL} from '../../const/url';
 
 interface WelcomeProps {
   isOpen: boolean;
@@ -48,15 +50,28 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
         <div>
           <ol className="list-decimal ml-6">
             <li className="mb-4">
-              <strong>Install the extension</strong>: Add the extension to your Chrome browser
+              <div>
+                <span className="inline-flex gap-1 items-center">
+                  <FaChrome />
+                  <a
+                    href={EXTENSION_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-blue-600 underline"
+                  >
+                    Install the extension
+                  </a>
+                </span>
+                : Ask you team to add the extension to their Chrome browser
+              </div>
             </li>
             <li className="mb-4">
               <strong>Create a team member</strong>: Visit the team page, set up a new member and
-              get a unique tracking key
+              get a unique tracking key for each member
             </li>
             <li className="mb-4">
-              <strong>Share and monitor</strong>: Share the tracking key with team members or use it
-              yourself to start tracking productivity
+              <strong>Share and monitor</strong>: Share individual tracking key with team members.
+              The first data will appear in 5 minutes.
             </li>
           </ol>
         </div>

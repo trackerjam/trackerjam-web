@@ -1,9 +1,9 @@
 import {CiSettings, CiPizza} from 'react-icons/ci';
 import {HiOutlineExclamationCircle} from 'react-icons/hi2';
-import {PiLightbulbLight, PiQuestionLight} from 'react-icons/pi';
+import {PiLightbulbLight, PiQuestionLight, PiGoogleChromeLogoLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FaShieldCat} from 'react-icons/fa6';
-import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
+import {EXTENSION_URL, FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
 import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
@@ -39,6 +39,12 @@ const topItems = [
 ];
 
 const bottomItems = [
+  {
+    title: <IconTitle title="Browser Extension" icon={PiGoogleChromeLogoLight} />,
+    itemId: EXTENSION_URL,
+    isTargetBlank: true,
+    isExternal: true,
+  },
   {
     title: <IconTitle title="Feature Request" icon={PiLightbulbLight} />,
     itemId: FEEDBACK_URL,
