@@ -62,7 +62,7 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
                     Install the extension
                   </a>
                 </span>
-                : Ask you team to add the extension to their Chrome browser
+                : Ask you team to add the extension (the tracker) to their Chrome browser
               </div>
             </li>
             <li className="mb-4">

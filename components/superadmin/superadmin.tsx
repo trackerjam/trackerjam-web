@@ -1,18 +1,10 @@
 'use client';
-import {Spinner, Table} from 'flowbite-react';
-import {format} from 'date-fns';
+import {Table} from 'flowbite-react';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse} from '../../types/api';
+import {Spinner} from '../common/spinner';
 import {MemberDots} from './member-dots';
-
-const formatDate = (date: string | Date | null) => {
-  if (!date) {
-    return '';
-  }
-  const d = new Date(date);
-  return format(d, 'dd MMM yyyy @ HH:mm');
-};
 
 function DomainInfoCard({
   title,
@@ -60,7 +52,7 @@ export function Superadmin() {
                   <Table.HeadCell></Table.HeadCell>
                   <Table.HeadCell>Name</Table.HeadCell>
                   <Table.HeadCell>Email</Table.HeadCell>
-                  <Table.HeadCell>Email Verified</Table.HeadCell>
+                  <Table.HeadCell>Provider</Table.HeadCell>
                   <Table.HeadCell>Members</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
@@ -76,7 +68,7 @@ export function Superadmin() {
                         </div>
                       </Table.Cell>
                       <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>{formatDate(user.emailVerified)}</Table.Cell>
+                      <Table.Cell>{user.provider}</Table.Cell>
                       <Table.Cell>
                         <MemberDots membersInfo={user?.member} />
                       </Table.Cell>

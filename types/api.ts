@@ -129,9 +129,13 @@ export type MemberCountsInfo = {
     summary: number;
     memberEvent: number;
   };
+  lastSessionEndDatetime?: string;
 };
 export type SuperadminResponse = {
-  users: (User & {member: MemberCountsInfo[]})[];
+  users: (User & {
+    member: MemberCountsInfo[];
+    provider: string;
+  })[];
   domains: {
     classified: number;
     unclassified: number;

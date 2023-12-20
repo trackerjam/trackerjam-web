@@ -5,16 +5,16 @@ import {ErrorDetails} from '../../common/error-details';
 import {Spinner} from '../../common/spinner';
 
 interface EventProps {
-  memberId: string | undefined | null;
+  memberToken: string | undefined | null;
 }
 
-export function Events({memberId}: EventProps) {
-  const {data, isLoading, error} = useGetData<MemberEvent[]>(`/api/events/${memberId}`);
+export function Events({memberToken}: EventProps) {
+  const {data, isLoading, error} = useGetData<MemberEvent[]>(`/api/events/${memberToken}`);
 
   return (
     <div>
       <h2 className="text-24 font-bold mb-4">Events</h2>
-      {Boolean(isLoading) && <Spinner />}
+      {isLoading && <Spinner />}
       {error && <ErrorDetails error={error} />}
       {Boolean(data) && <EventsList events={data ?? []} />}
     </div>

@@ -40,7 +40,7 @@ const topItems = [
 
 const bottomItems = [
   {
-    title: <IconTitle title="Browser Extension" icon={PiGoogleChromeLogoLight} />,
+    title: <IconTitle title="Install Tracker" icon={PiGoogleChromeLogoLight} />,
     itemId: EXTENSION_URL,
     isTargetBlank: true,
     isExternal: true,

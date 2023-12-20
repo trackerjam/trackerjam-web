@@ -4,7 +4,6 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {format} from 'date-fns';
 
-import {Spinner} from 'flowbite-react';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
@@ -12,6 +11,7 @@ import {DateActivityData, MemberStatisticType} from '../../types/api';
 import {Button} from '../common/button';
 import {Drawer} from '../common/drawer';
 import {TAKE_STATS_LIMIT} from '../../const/stats';
+import {Spinner} from '../common/spinner';
 import {TimelineChart} from './timeline-chart/timeline-chart';
 import {PieChart} from './pie-chart';
 import {useAggregatedData} from './hooks/use-aggregated-data';
@@ -141,7 +141,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
       {error && <ErrorDetails error={error} />}
 
       <Drawer id="events-drawer-list" isOpen={isEventsOpen} onClose={() => setIsEventsOpen(false)}>
-        {isEventsOpen && <Events memberId={data?.member?.token} />}
+        {isEventsOpen && <Events memberToken={data?.member?.token} />}
       </Drawer>
 
       {hasCurrentDayData && (

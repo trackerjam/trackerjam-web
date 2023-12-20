@@ -1,7 +1,16 @@
 import cx from 'classnames';
 import React, {useMemo} from 'react';
 import {Tooltip} from 'flowbite-react';
+import {format} from 'date-fns';
 import {MemberCountsInfo} from '../../types/api';
+
+const formatDate = (date: string | Date | null) => {
+  if (!date) {
+    return '';
+  }
+  const d = new Date(date);
+  return format(d, 'dd MMM yyyy @ HH:mm');
+};
 
 interface MemberDotsProps {
   membersInfo: MemberCountsInfo[];
@@ -20,7 +29,7 @@ export function MemberDots({membersInfo}: MemberDotsProps) {
 
   return (
     <div className="flex gap-[2px]">
-      {sortedInfo?.map(({_count}, index) => {
+      {sortedInfo?.map(({_count, lastSessionEndDatetime = null}, index) => {
         const {domainActivity, memberEvent, summary} = _count || {};
         const total = domainActivity + memberEvent + summary;
         const active = domainActivity > 0 || memberEvent > 0 || summary > 0;
@@ -34,6 +43,10 @@ export function MemberDots({membersInfo}: MemberDotsProps) {
                 <div>Summary days: {summary}</div>
                 <div>Total domain activities: {domainActivity}</div>
                 <div>Member events: {memberEvent}</div>
+                <div>
+                  Last session:{' '}
+                  {lastSessionEndDatetime ? formatDate(lastSessionEndDatetime) : 'none'}
+                </div>
               </div>
             }
             key={index}

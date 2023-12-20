@@ -1,6 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import * as Sentry from '@sentry/nextjs';
-import {maskEmail2} from 'maskdata';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -10,6 +9,7 @@ import {checkAdminAccess} from '../../../utils/check-admin-access';
 import {PerfMarks} from '../../../utils/perf';
 import {logger} from '../../../lib/logger';
 import {classifyDomain, isKnownDomain} from '../../../utils/classification/classification';
+import {maskEmailAddress} from '../../../utils/mask-email';
 
 async function get({res, session}: AuthMethodContext) {
   const perf = new PerfMarks();
@@ -21,8 +21,18 @@ async function get({res, session}: AuthMethodContext) {
         emailVerified: 'desc',
       },
       include: {
+        accounts: true,
         member: {
-          select: {
+          include: {
+            summary: {
+              orderBy: {
+                date: 'desc',
+              },
+              take: 1,
+              select: {
+                lastSessionEndDatetime: true,
+              },
+            },
             _count: true,
           },
         },
@@ -30,13 +40,17 @@ async function get({res, session}: AuthMethodContext) {
     });
 
     const responseUsers = users.map((user) => {
+      // Make sure extract accounts from user to avoid exposing tokens and secrets
+      const {accounts, member, ...rest} = user;
       return {
-        ...user,
-        email: maskEmail2(user?.email ?? '', {
-          maskWith: '*',
-          unmaskedStartCharactersBeforeAt: 3,
-          unmaskedEndCharactersAfterAt: 4,
-          maskAtTheRate: false,
+        ...rest,
+        provider: accounts[0]?.provider,
+        email: user?.email ? maskEmailAddress(user.email) : '(unknown)',
+        member: member.map(({summary, _count}) => {
+          return {
+            lastSessionEndDatetime: summary[0]?.lastSessionEndDatetime,
+            _count,
+          };
         }),
       };
     });
