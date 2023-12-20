@@ -38,6 +38,7 @@ export function MemberDots({membersInfo}: MemberDotsProps) {
         const textColor = active ? 'text-white' : 'text-gray-500';
         return (
           <Tooltip
+            placement="left"
             content={
               <div className="flex flex-col text-12">
                 <div>Summary days: {summary}</div>
