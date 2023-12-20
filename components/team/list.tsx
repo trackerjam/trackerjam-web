@@ -48,6 +48,8 @@ export function Team() {
     setShowWelcomeModal(false);
   };
 
+  const hasAddFirstButton = !isLoading && teamData.length === 0;
+
   return (
     <>
       {error && <ErrorDetails error={error} />}
@@ -63,6 +65,17 @@ export function Team() {
       {isLoading && <ListSkeleton />}
       {!isLoading && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,350px))] gap-5 mb-7">
+          {hasAddFirstButton && (
+            <div
+              className="relative flex min-h-[300px] flex-col gap-4 rounded-lg shadow border border-black border-opacity-[0.08] items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={addMemberClickHandler}
+            >
+              <span className="text-20 font-bold text-gray-500">Add first team member</span>
+              <span>
+                <BsPlusCircle size={36} title="" className="text-gray-500" />
+              </span>
+            </div>
+          )}
           {teamData?.map((userData) => {
             return <MemberCard key={userData.id} data={userData} onDelete={handleCardDelete} />;
           })}
