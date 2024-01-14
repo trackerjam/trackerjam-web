@@ -1,13 +1,13 @@
 import {useCallback, useState} from 'react';
 import type {ErrorResponse} from '../../types/api';
 
-interface UseSendReturnType<T> {
+interface UseSendReturnType<T, R> {
   isLoading: boolean;
   error: string | null;
-  send: (data: T, method?: string) => Promise<T | ErrorResponse>;
+  send: (data: T, method?: string) => Promise<T | R | ErrorResponse>;
 }
 
-export function useSendData<T>(url: string): UseSendReturnType<T> {
+export function useSendData<T, R = unknown>(url: string): UseSendReturnType<T, R> {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
