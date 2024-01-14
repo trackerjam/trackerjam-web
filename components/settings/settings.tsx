@@ -13,10 +13,10 @@ export function Settings() {
 
   return (
     <div>
+      <PaymentResult />
+
       {error && <ErrorDetails error={error} />}
       {isLoading && <Spinner />}
-
-      <PaymentResult />
 
       {Boolean(data) && (
         <>
