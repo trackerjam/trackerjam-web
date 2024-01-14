@@ -11,6 +11,8 @@ import {ManageButton} from './manage-button';
 export function Settings() {
   const {data, error, isLoading} = useGetData<SettingsResponse>('/api/settings');
 
+  const hasSubscription = Boolean(data?.hasSubscription);
+
   return (
     <div>
       <PaymentResult />
@@ -20,9 +22,9 @@ export function Settings() {
 
       {Boolean(data) && (
         <>
-          <SubscriptionStatus hasSubscription={data?.hasSubscription} />
-          {Boolean(!data?.hasSubscription) && <CheckoutButton />}
-          {Boolean(data?.hasSubscription) && <ManageButton />}
+          <SubscriptionStatus hasSubscription={hasSubscription} />
+          {Boolean(!hasSubscription) && <CheckoutButton />}
+          {Boolean(hasSubscription) && <ManageButton />}
         </>
       )}
     </div>
