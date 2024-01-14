@@ -45,6 +45,22 @@ model User {
   sessions      Session[]
   teams         Team[]
   member        Member[]
+  payment       Payment?
+}
+
+model Payment {
+  id         String        @id @default(uuid())
+  userId     String        @unique
+  user       User          @relation(fields: [userId], references: [id])
+  customerId String?
+  product    String?
+  status     PaymentStatus @default(FREE)
+}
+
+enum PaymentStatus {
+  FREE
+  ACTIVE
+  CANCELLED
 }
 
 model VerificationToken {

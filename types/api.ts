@@ -143,3 +143,11 @@ export type SuperadminResponse = {
     total: number;
   };
 };
+
+export type StripeUrl = {
+  url: string;
+};
+
+export type SettingsResponse = {
+  hasSubscription: boolean;
+};

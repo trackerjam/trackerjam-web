@@ -8,3 +8,5 @@ export const WELCOME_URL_HASH = '#welcome';
 
 export const EXTENSION_URL =
   'https://chromewebstore.google.com/detail/trackerjam/nelollklgdnjnjofajapomfmogcibema';
+
+export const PRICING_URL = 'https://trackerjam.com/pricing';
