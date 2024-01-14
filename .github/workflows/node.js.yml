@@ -24,4 +24,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm test
-    - run: npm run build --if-present
+    - run: DATADOG_API_KEY='FAKE_KEY_FOR_CI' STRIPE_SECRET_KEY='FAKE_KEY_FOR_CI' npm run build --if-present

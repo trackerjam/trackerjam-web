@@ -51,6 +51,7 @@
     "react-query": "^3.39.3",
     "react-transition-group": "^4.4.5",
     "request-ip": "^3.3.0",
+    "sharp": "^0.33.2",
     "string-to-color": "^2.2.2",
     "stripe": "^14.11.0",
     "styletron-engine-atomic": "^1.6.2",
