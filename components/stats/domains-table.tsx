@@ -1,6 +1,7 @@
 import {formatDistanceToNow} from 'date-fns';
 import {useStyletron} from 'baseui';
 import {BsEyeFill, BsBackspace} from 'react-icons/bs';
+import {usePlausible} from 'next-plausible';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {getBestTag} from '../../utils/best-tag';
 import {AggregatedDataType} from './types';
@@ -54,6 +55,7 @@ export function DomainsTable({
   focusedDomainName,
 }: DomainTableProps) {
   const [css, theme] = useStyletron();
+  const plausible = usePlausible();
 
   const totalTime = data.reduce((acc, {value}) => acc + value, 0);
 
@@ -169,7 +171,10 @@ export function DomainsTable({
                       {Boolean(children?.length) && (
                         <div>
                           <button
-                            onClick={() => onDomainFocus(domainName)}
+                            onClick={() => {
+                              onDomainFocus(domainName);
+                              plausible('click-focus-button');
+                            }}
                             className="flex items-center gap-2 border-2 border-gray-100 rounded px-1 text-12 text-gray-700 hover:bg-blue-200 transition-colors duration-150"
                           >
                             Focus

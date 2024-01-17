@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useParams, useRouter} from 'next/navigation';
 import {useLocalStorage} from 'usehooks-ts';
+import {usePlausible} from 'next-plausible';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
@@ -24,6 +25,7 @@ export function Team() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const router = useRouter();
   const params = useParams();
+  const plausible = usePlausible();
   const teamData = data?.[0]?.members || [];
 
   useEffect(() => {
@@ -36,6 +38,12 @@ export function Team() {
   }, [haveSeenWelcomeModal, params, router]);
 
   const addMemberClickHandler = () => {
+    plausible('click-add-member-main-button');
+    router.push('/team/add-member');
+  };
+
+  const addFirstMemberClickHandler = () => {
+    plausible('click-add-first-member-button');
     router.push('/team/add-member');
   };
 
@@ -68,7 +76,7 @@ export function Team() {
           {hasAddFirstButton && (
             <div
               className="relative flex min-h-[300px] flex-col gap-4 rounded-lg shadow border border-black border-opacity-[0.08] items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
-              onClick={addMemberClickHandler}
+              onClick={addFirstMemberClickHandler}
             >
               <span className="text-20 font-bold text-gray-500">Add first team member</span>
               <span>

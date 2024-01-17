@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import {BsSun, BsInfoCircle, BsPlusCircleDotted} from 'react-icons/bs';
+import {FaEdge} from 'react-icons/fa6';
+
 import {TbBeta} from 'react-icons/tb';
 import {Modal} from 'flowbite-react';
 import {FaChrome} from 'react-icons/fa';
+import {usePlausible} from 'next-plausible';
 import {Button} from '../common/button';
-import {CHROME_EXTENSION_URL} from '../../const/url';
+import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../const/url';
 
 interface WelcomeProps {
   isOpen: boolean;
@@ -12,6 +15,8 @@ interface WelcomeProps {
 }
 
 export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
+  const plausible = usePlausible();
+
   return (
     <Modal show={isOpen} onClose={() => onClose?.()} size="5xl">
       <Modal.Body>
@@ -19,12 +24,12 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
           <BsSun title="" />
           Welcome to TrackerJam
         </h1>
-        <p className="mb-4">
+        <p className="mb-1">
           TrackerJam is a browser-based productivity application designed to make you and your
           team&apos;s online time more insightful.
         </p>
-        <p className="mb-4">
-          It has two main components: a Google Chrome extension for tab monitoring and this web
+        <p className="mb-2">
+          It has two main components: a browser extension for tab monitoring and this web
           application for viewing detailed statistics.
         </p>
         <h2 className="text-24 font-bold mb-4 flex items-center gap-2">
@@ -51,18 +56,36 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
           <ol className="list-decimal ml-6">
             <li className="mb-4">
               <div>
-                <span className="inline-flex gap-1 items-center">
-                  <FaChrome />
-                  <a
-                    href={CHROME_EXTENSION_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-bold text-blue-600 underline"
-                  >
-                    Install the extension
-                  </a>
-                </span>
-                : Ask you team to add the extension (the tracker) to their Chrome browser
+                <strong>Install extension</strong>: Ask you team to add the tracker extension to
+                their browser
+                <ul className="mt-2">
+                  <li>
+                    <span className="inline-flex gap-1 items-center">
+                      <FaChrome />
+                      <a
+                        href={CHROME_EXTENSION_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-blue-600 underline"
+                      >
+                        For Chrome
+                      </a>
+                    </span>
+                  </li>
+                  <li>
+                    <span className="inline-flex gap-1 items-center">
+                      <FaEdge />
+                      <a
+                        href={EDGE_EXTENSION_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold text-blue-600 underline"
+                      >
+                        For Edge
+                      </a>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </li>
             <li className="mb-4">
@@ -71,7 +94,7 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
             </li>
             <li className="mb-4">
               <strong>Share and monitor</strong>: Share individual tracking key with team members.
-              The first data will appear in 5 minutes.
+              The first data will appear in about 5 minutes.
             </li>
           </ol>
         </div>
@@ -96,7 +119,14 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
             Close
           </Button>
           <Button className="mt-4" onClick={() => onClose()}>
-            <Link href="/team/add-member">Create a new Member</Link>
+            <Link
+              href="/team/add-member"
+              onClick={() => {
+                plausible('click-create-member-welcome-button');
+              }}
+            >
+              Create a new Member
+            </Link>
           </Button>
         </div>
       </Modal.Body>
