@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../const/url';
 
 function getHtml(token: string) {
   return `
@@ -33,7 +34,8 @@ function getHtml(token: string) {
         }
 
         .cta-button:hover {
-            background-color: #FF4500;
+            background-color: #616196;
+            color: white;
         }
 
         .link, link:hover, link:visited {
@@ -65,7 +67,8 @@ function getHtml(token: string) {
     <code class="token">${token}</code>
 </p>
 
-<button class="cta-button">Install Extension</button>
+<a class="cta-button" href="${CHROME_EXTENSION_URL}" target="_blank">Install Chrome Extension</a>
+<a class="cta-button" href="${EDGE_EXTENSION_URL}" target="_blank">Install Edge Extension</a>
 
 <p>
     <small>

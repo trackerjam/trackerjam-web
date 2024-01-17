@@ -4,7 +4,7 @@ import {TbBeta} from 'react-icons/tb';
 import {Modal} from 'flowbite-react';
 import {FaChrome} from 'react-icons/fa';
 import {Button} from '../common/button';
-import {EXTENSION_URL} from '../../const/url';
+import {CHROME_EXTENSION_URL} from '../../const/url';
 
 interface WelcomeProps {
   isOpen: boolean;
@@ -54,7 +54,7 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
                 <span className="inline-flex gap-1 items-center">
                   <FaChrome />
                   <a
-                    href={EXTENSION_URL}
+                    href={CHROME_EXTENSION_URL}
                     target="_blank"
                     rel="noreferrer"
                     className="font-bold text-blue-600 underline"

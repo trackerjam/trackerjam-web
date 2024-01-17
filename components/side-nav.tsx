@@ -3,7 +3,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi2';
 import {PiLightbulbLight, PiQuestionLight, PiGoogleChromeLogoLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FaShieldCat} from 'react-icons/fa6';
-import {EXTENSION_URL, FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
+import {CHROME_EXTENSION_URL, FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
 import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
@@ -41,7 +41,7 @@ const topItems = [
 const bottomItems = [
   {
     title: <IconTitle title="Install Tracker" icon={PiGoogleChromeLogoLight} />,
-    itemId: EXTENSION_URL,
+    itemId: CHROME_EXTENSION_URL,
     isTargetBlank: true,
     isExternal: true,
   },
