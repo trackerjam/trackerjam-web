@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
 import {useParams, useRouter} from 'next/navigation';
 import {useLocalStorage} from 'usehooks-ts';
-import {usePlausible} from 'next-plausible';
+import {useTrackEvent} from '../hooks/use-track-event';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
@@ -25,7 +25,7 @@ export function Team() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const router = useRouter();
   const params = useParams();
-  const plausible = usePlausible();
+  const trackEvent = useTrackEvent();
   const teamData = data?.[0]?.members || [];
 
   useEffect(() => {
@@ -38,12 +38,12 @@ export function Team() {
   }, [haveSeenWelcomeModal, params, router]);
 
   const addMemberClickHandler = () => {
-    plausible('click-add-member-main-button');
+    trackEvent('click-add-member-main-button');
     router.push('/team/add-member');
   };
 
   const addFirstMemberClickHandler = () => {
-    plausible('click-add-first-member-button');
+    trackEvent('click-add-first-member-button');
     router.push('/team/add-member');
   };
 

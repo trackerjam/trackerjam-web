@@ -5,7 +5,7 @@ import {FaEdge} from 'react-icons/fa6';
 import {TbBeta} from 'react-icons/tb';
 import {Modal} from 'flowbite-react';
 import {FaChrome} from 'react-icons/fa';
-import {usePlausible} from 'next-plausible';
+import {useTrackEvent} from '../hooks/use-track-event';
 import {Button} from '../common/button';
 import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../const/url';
 
@@ -15,7 +15,7 @@ interface WelcomeProps {
 }
 
 export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
-  const plausible = usePlausible();
+  const trackEvent = useTrackEvent();
 
   return (
     <Modal show={isOpen} onClose={() => onClose?.()} size="5xl">
@@ -122,7 +122,7 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
             <Link
               href="/team/add-member"
               onClick={() => {
-                plausible('click-create-member-welcome-button');
+                trackEvent('click-create-member-welcome-button');
               }}
             >
               Create a new Member

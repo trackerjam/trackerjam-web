@@ -4,7 +4,7 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {format} from 'date-fns';
 
-import {usePlausible} from 'next-plausible';
+import {useTrackEvent} from '../hooks/use-track-event';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {DateActivityData, MemberStatisticType} from '../../types/api';
@@ -30,7 +30,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const {data, isLoading, error} = useGetData<MemberStatisticType>(
     `/api/statistic/${memberId}?limit=${TAKE_STATS_LIMIT}`
   );
-  const plausible = usePlausible();
+  const trackEvent = useTrackEvent();
 
   const hasDataResponse = Boolean(!isLoading && data);
 
@@ -117,7 +117,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                 className="text-gray-300 border-dashed border-b-2 border-gray-300"
                 onClick={() => {
                   setIsEventsOpen(true);
-                  plausible('click-events-button');
+                  trackEvent('click-events-button');
                 }}
                 aria-controls="events-drawer-list"
               >
@@ -170,7 +170,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                           key={dateStr}
                           onClick={() => {
                             handleChangeDate(idx);
-                            plausible('click-choose-date-button');
+                            trackEvent('click-choose-date-button');
                           }}
                         >
                           {format(new Date(dateStr), 'E, dd MMM')}
@@ -196,7 +196,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                   checked={showIdle}
                   onChange={(e) => {
                     setShowIdle(e.target.checked);
-                    plausible('click-idle-time-checkbox');
+                    trackEvent('click-idle-time-checkbox');
                   }}
                   id="show-idle-time"
                 />
