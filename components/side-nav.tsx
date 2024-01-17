@@ -1,9 +1,9 @@
 import {CiSettings, CiPizza} from 'react-icons/ci';
 import {HiOutlineExclamationCircle} from 'react-icons/hi2';
-import {PiLightbulbLight, PiQuestionLight, PiGoogleChromeLogoLight} from 'react-icons/pi';
+import {PiLightbulbLight, PiQuestionLight, PiPuzzlePieceLight} from 'react-icons/pi';
 import {type IconType} from 'react-icons';
 import {FaShieldCat} from 'react-icons/fa6';
-import {CHROME_EXTENSION_URL, FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
+import {FEEDBACK_URL, SUPPORT_EMAIL} from '../const/url';
 import {SideNavLink} from './side-nav-link';
 
 type IconTitleProps = {
@@ -29,6 +29,10 @@ const topItems = [
     itemId: '/team',
   },
   {
+    title: <IconTitle title="Install Tracker" icon={PiPuzzlePieceLight} />,
+    itemId: '/install',
+  },
+  {
     title: <IconTitle title="Settings" icon={CiSettings} />,
     itemId: '/settings',
   },
@@ -39,12 +43,6 @@ const topItems = [
 ];
 
 const bottomItems = [
-  {
-    title: <IconTitle title="Install Tracker" icon={PiGoogleChromeLogoLight} />,
-    itemId: CHROME_EXTENSION_URL,
-    isTargetBlank: true,
-    isExternal: true,
-  },
   {
     title: <IconTitle title="Feature Request" icon={PiLightbulbLight} />,
     itemId: FEEDBACK_URL,
