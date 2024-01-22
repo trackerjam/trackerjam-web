@@ -12,4 +12,4 @@ export const CHROME_EXTENSION_URL =
 export const EDGE_EXTENSION_URL =
   'https://microsoftedge.microsoft.com/addons/detail/trackerjam-automatic-we/bgbenkcdbmdoljdbpopgfigmhcdmhlao';
 
-export const PRICING_URL = 'https://trackerjam.com/pricing';
+export const PRICING_URL = 'https://trackerjam.com/pricing#plans';

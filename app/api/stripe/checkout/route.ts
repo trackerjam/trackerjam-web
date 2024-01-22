@@ -5,6 +5,7 @@ import {buildError} from '../../../../utils/build-error';
 import {logger} from '../../../../lib/logger';
 import {authOptions} from '../../auth/[...nextauth]/route';
 import {SessionId} from '../../../../types/api';
+import {PRICE_ID} from '../../../../const/payment';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   typescript: true,
@@ -14,9 +15,14 @@ const SUCCESS_URL = process.env.NEXTAUTH_URL + '/settings?success=true';
 const CANCEL_URL = process.env.NEXTAUTH_URL + '/settings?success=false';
 
 export async function POST(req: NextRequest) {
-  const {priceId} = await req.json();
-  if (!priceId) {
+  const {planId} = await req.json();
+  if (!planId) {
     return NextResponse.json(buildError('bad params'), {status: 400});
+  }
+
+  const priceId = PRICE_ID[planId as string];
+  if (!priceId) {
+    return NextResponse.json(buildError('bad price id'), {status: 400});
   }
 
   try {
