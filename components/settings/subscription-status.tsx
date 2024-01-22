@@ -8,18 +8,18 @@ export const SubscriptionStatus = ({hasSubscription}: SubscriptionStatusProps) =
     <div>
       <div className="mb-6">
         {!hasSubscription && (
-          <>
-            <div className="mt-2 p-6 border border-2 border-amber-500 border-dashed rounded-sm bg-amber-50">
-              Please choose you subscription plan from the{' '}
-              <a href={PRICING_URL} className="underline text-blue-700 font-bold">
-                Pricing page
-              </a>
-              .
-            </div>
-            <div className="text-16 text-gray-500 italic mt-4">
-              You don&apos;t have an active subscription.
-            </div>
-          </>
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 mt-2">
+            <p className="font-bold">You have no active subscription</p>
+            <p>You can start adding members by upgrading your subscription. </p>
+            <a
+              href={PRICING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-2 border border-solid border-yellow-800 p-2 rounded-lg bg-yellow-50 hover:bg-green-200 hover:text-green-800 transition-colors"
+            >
+              Upgrade plan
+            </a>
+          </div>
         )}
 
         {hasSubscription && (

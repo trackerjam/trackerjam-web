@@ -46,6 +46,7 @@ model User {
   teams         Team[]
   member        Member[]
   payment       Payment?
+  createdAt     DateTime? @default(now())
 }
 
 model Payment {

@@ -12,3 +12,13 @@ export const PRICE_ID: {[planId: string]: string} = {
   pro_monthly: 'price_1Ob7cgEoPi5YaDcihpFs8aF0',
   pro_yearly: 'price_1Ob7dhEoPi5YaDcis61mNtME',
 };
+
+const START_LIMIT = 3;
+const PRO_LIMIT = 25;
+export const PRODUCT_LIMITS: {[planName: string]: number} = {
+  // Products from Stripe: https://dashboard.stripe.com/products?active=true
+  prod_PPxQPbhStOBkDb: START_LIMIT,
+  prod_PPxXxfy7HA2SM1: PRO_LIMIT,
+};
+
+export const TRIAL_DAYS = 14;

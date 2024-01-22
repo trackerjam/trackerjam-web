@@ -17,11 +17,15 @@ async function get({res, session}: AuthMethodContext) {
 
   try {
     const users = await prismadb.user.findMany({
-      orderBy: {
-        emailVerified: 'desc',
-      },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+        {
+          emailVerified: 'desc',
+        },
+      ],
       include: {
-        accounts: true,
         member: {
           include: {
             summary: {
@@ -41,10 +45,9 @@ async function get({res, session}: AuthMethodContext) {
 
     const responseUsers = users.map((user) => {
       // Make sure extract accounts from user to avoid exposing tokens and secrets
-      const {accounts, member, ...rest} = user;
+      const {member, ...rest} = user;
       return {
         ...rest,
-        provider: accounts[0]?.provider,
         email: user?.email ? maskEmailAddress(user.email) : '(unknown)',
         member: member.map(({summary, _count}) => {
           return {

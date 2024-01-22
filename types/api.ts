@@ -1,6 +1,14 @@
 import {Session} from 'next-auth';
 import {NextApiRequest, NextApiResponse} from 'next';
-import {DomainActivity, Member, SessionActivity, TAB_TYPE, Team, User} from '@prisma/client';
+import {
+  DomainActivity,
+  Member,
+  PaymentStatus,
+  SessionActivity,
+  TAB_TYPE,
+  Team,
+  User,
+} from '@prisma/client';
 import {TAG} from '../utils/classification/tags';
 import {SettingsType} from './member';
 
@@ -150,4 +158,11 @@ export type StripeUrl = {
 
 export type SettingsResponse = {
   hasSubscription: boolean;
+};
+
+export type SubscriptionStatusResponse = {
+  status: PaymentStatus;
+  canAddMember: boolean;
+  hasTrial: boolean;
+  trialEndsAt?: string;
 };

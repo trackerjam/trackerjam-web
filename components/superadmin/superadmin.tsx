@@ -4,6 +4,7 @@ import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse} from '../../types/api';
 import {Spinner} from '../common/spinner';
+import {formatDateFull} from '../../utils/date';
 import {MemberDots} from './member-dots';
 
 function DomainInfoCard({
@@ -52,7 +53,7 @@ export function Superadmin() {
                   <Table.HeadCell></Table.HeadCell>
                   <Table.HeadCell>Name</Table.HeadCell>
                   <Table.HeadCell>Email</Table.HeadCell>
-                  <Table.HeadCell>Provider</Table.HeadCell>
+                  <Table.HeadCell>CreatedAt</Table.HeadCell>
                   <Table.HeadCell>Members</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
@@ -68,7 +69,7 @@ export function Superadmin() {
                         </div>
                       </Table.Cell>
                       <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>{user.provider}</Table.Cell>
+                      <Table.Cell>{formatDateFull(user.createdAt)}</Table.Cell>
                       <Table.Cell>
                         <MemberDots membersInfo={user?.member} />
                       </Table.Cell>

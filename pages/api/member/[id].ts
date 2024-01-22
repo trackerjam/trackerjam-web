@@ -10,6 +10,7 @@ import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
 import {sendTokenMail} from '../../../utils/api/send-mail';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
+import {getSubscriptionStatus} from '../subs';
 
 async function get({req, res}: AuthMethodContext) {
   const id = req.query?.id as string;
@@ -36,6 +37,13 @@ async function create({req, res, session}: AuthMethodContext) {
   const managerId = session.user.id;
 
   try {
+    const subsStatus = await getSubscriptionStatus(managerId);
+    if (!subsStatus.canAddMember) {
+      return res
+        .status(403)
+        .json(buildError('Member limit reached. Please upgrade your plan to add more members.'));
+    }
+
     const currentTeam = (await prismadb.team.findUniqueOrThrow({
       where: {ownerUserId_name: {ownerUserId: session.user.id, name: DEFAULT_TEAM_NAME}},
     })) as Team;

@@ -7,8 +7,7 @@ export const metadata: Metadata = {
 function TeamPage() {
   return (
     <>
-      <h1 className="font-bold text-28 mb-4 leading-tight">Team</h1>
-      <p className="mt-4 text-14 font-medium">List of your team members & contractors</p>
+      <h1 className="font-bold text-28 mb-2 leading-tight">Team</h1>
       <Team />
     </>
   );
