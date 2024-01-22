@@ -12,13 +12,13 @@ import {PRODUCT_LIMITS, TRIAL_DAYS} from '../../../const/payment';
 // Get user subscription status
 export async function getSubscriptionStatus(userId: string): Promise<SubscriptionStatusResponse> {
   // Check user payment status
-  const payment = await prismadb.payment.findUniqueOrThrow({
+  const payment = await prismadb.payment.findUnique({
     where: {
       userId,
     },
   });
 
-  const hasActiveSubscription = payment.status === PaymentStatus.ACTIVE;
+  const hasActiveSubscription = payment?.status === PaymentStatus.ACTIVE;
 
   if (!hasActiveSubscription) {
     // Check user creation date
@@ -48,9 +48,10 @@ export async function getSubscriptionStatus(userId: string): Promise<Subscriptio
         trialEndsAt: format(trialEndsAt, 'dd MMM yyyy'),
       };
     }
+
     // Early return in case of not active status
     return {
-      status: payment.status,
+      status: payment?.status ?? PaymentStatus.FREE,
       canAddMember: false,
       hasTrial: false,
     };
