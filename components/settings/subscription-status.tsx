@@ -10,7 +10,6 @@ export const SubscriptionStatus = ({hasSubscription}: SubscriptionStatusProps) =
         {!hasSubscription && (
           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 mt-2">
             <p className="font-bold">You have no active subscription</p>
-            <p>You can start adding members by upgrading your subscription. </p>
             <a
               href={PRICING_URL}
               target="_blank"

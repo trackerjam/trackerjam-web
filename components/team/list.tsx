@@ -120,12 +120,10 @@ export function Team() {
       {hasTrial && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 mt-2">
           <p className="font-bold">You are on a trial period</p>
-          <p>
-            You can add more members to your team by upgrading your subscription before the trial
-            ends.
-          </p>
-          <p>
-            Trial ends on <span className="font-bold">{subsStatus?.trialEndsAt}</span>
+          <p className="text-14 text-blue-500">
+            Enjoy all the features of TrackerJam for free.
+            <br /> Do not forget to upgrade your plan before the trial ends on{' '}
+            <span className="font-bold">{subsStatus?.trialEndsAt}</span>.
           </p>
           <a
             href={PRICING_URL}

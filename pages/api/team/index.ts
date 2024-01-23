@@ -6,8 +6,13 @@ import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext} from '../../../types/api';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
+import {PerfMarks} from '../../../utils/perf';
+import {logger} from '../../../lib/logger';
 
 async function get({res, session}: AuthMethodContext) {
+  const perf = new PerfMarks();
+  perf.start();
+
   const response = await prismadb.team.findMany({
     where: {
       ownerUserId: session.user.id,
@@ -36,6 +41,8 @@ async function get({res, session}: AuthMethodContext) {
     },
   });
 
+  perf.mark('findTeams');
+
   try {
     const result = response.map((team) => {
       const {id} = team;
@@ -59,7 +66,15 @@ async function get({res, session}: AuthMethodContext) {
       };
     });
 
+    perf.mark('mapResponse');
+
     res.json(result);
+
+    logger.debug('Get Team View', {
+      userId: session.user.id,
+      totalTimeMs: performance.now() - perf.startTime,
+      perfMarks: perf.getObjectLogs(),
+    });
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
   }
