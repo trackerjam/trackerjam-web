@@ -103,7 +103,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
   const hasCurrentDayData = Boolean(currentDayData);
 
   return (
-    <div className="max-w-[calc(100vw-250px-65px)]">
+    <div className="min-w-[500px] max-w-[calc(100vw-250px-65px)]">
       <div className="flex flex-col mb-4">
         <div className="flex flex-row justify-between items-center">
           <h1 className="font-bold text-28 leading-tight flex flex-row gap-1 items-center">
