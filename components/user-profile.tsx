@@ -6,7 +6,7 @@ import {BsThreeDots, BsInfoCircle, BsArrowLeftSquare} from 'react-icons/bs';
 import {signOut} from 'next-auth/react';
 import {Session} from 'next-auth';
 import {useRouter} from 'next/navigation';
-import {WELCOME_URL_HASH} from '../const/url';
+import {WELCOME_PAGE} from '../const/url';
 
 export function UserProfile({session}: {session?: Session | null}) {
   const user = session?.user;
@@ -47,7 +47,7 @@ export function UserProfile({session}: {session?: Session | null}) {
           >
             <DropdownMenu.Item
               className={dropDownItemClass}
-              onSelect={() => router.push(`/team${WELCOME_URL_HASH}`)}
+              onSelect={() => router.push(WELCOME_PAGE)}
             >
               <BsInfoCircle title="" className="mr-1" />
               Welcome Page

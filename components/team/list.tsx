@@ -2,16 +2,16 @@
 
 import {useEffect, useState} from 'react';
 import {BsPlusCircle} from 'react-icons/bs';
-import {useParams, useRouter} from 'next/navigation';
-import {useLocalStorage} from 'usehooks-ts';
+import {useRouter} from 'next/navigation';
 import {PaymentStatus} from '@prisma/client';
 import {useTrackEvent} from '../hooks/use-track-event';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
 import {Button} from '../common/button';
-import {PRICING_URL, WELCOME_URL_HASH} from '../../const/url';
+import {PRICING_URL} from '../../const/url';
 import {useGetSubStatus} from '../hooks/use-get-sub-status';
+import {useSendData} from '../hooks/use-send-data';
 import {ListSkeleton} from './list-skeleton';
 import {MemberCard} from './member-card';
 import {WelcomeModal} from './welcome-modal';
@@ -20,26 +20,27 @@ export const GRID_TEMPLATE = 'repeat(auto-fit, minmax(250px, 350px))';
 
 export function Team() {
   const {data, isLoading, error, update} = useGetData<GetTeamResponse>('/api/team');
-  const [haveSeenWelcomeModal, setHaveSeenWelcomeModal] = useLocalStorage(
-    'have-seen-welcome-modal',
-    false
+  const {data: notificationData, isLoading: isNotificationLoading} = useGetData<{welcome: string}>(
+    '/api/notifications'
   );
+  const {send: setNotification} = useSendData('/api/notifications');
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const {data: subsStatus, isLoading: isSubsLoading} = useGetSubStatus();
   const router = useRouter();
-  const params = useParams();
   const trackEvent = useTrackEvent();
 
   const teamData = data?.[0]?.members || [];
 
   useEffect(() => {
-    if (!haveSeenWelcomeModal || window.location.hash === WELCOME_URL_HASH) {
-      setShowWelcomeModal(true);
-      const uri = window.location.toString();
-      const cleanUri = uri.substring(0, uri.indexOf('#'));
-      router.replace(cleanUri);
-    }
-  }, [haveSeenWelcomeModal, params, router]);
+    (async () => {
+      const showWelcome = Boolean(!notificationData?.welcome && !isNotificationLoading);
+      if (showWelcome) {
+        setShowWelcomeModal(true);
+        await setNotification({name: 'welcome'}, 'PUT');
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notificationData]);
 
   const addMemberClickHandler = () => {
     trackEvent('click-add-member-main-button');
@@ -56,7 +57,6 @@ export function Team() {
   };
 
   const closeWelcomeModal = () => {
-    setHaveSeenWelcomeModal(true);
     setShowWelcomeModal(false);
   };
 
