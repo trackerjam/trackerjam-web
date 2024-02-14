@@ -187,8 +187,8 @@ async function handleRecordActivity({activity, token, requestId}: HandleRecordAc
       }
 
       if (
-        startTime + FUTURE_SESSION_LIMIT > currentTime ||
-        endTime + FUTURE_SESSION_LIMIT > currentTime
+        startTime > currentTime + FUTURE_SESSION_LIMIT ||
+        endTime > currentTime + FUTURE_SESSION_LIMIT
       ) {
         const msg = 'Future session detected';
         const logData = {
