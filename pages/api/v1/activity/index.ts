@@ -24,6 +24,7 @@ type ActivityPerfReport = {
 };
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
+const FUTURE_SESSION_LIMIT = 30 * 1000; // 30 seconds
 
 async function upsertDomain(domain: string) {
   // Check if the domain already exists
@@ -185,7 +186,10 @@ async function handleRecordActivity({activity, token, requestId}: HandleRecordAc
         return;
       }
 
-      if (startTime > currentTime || endTime > currentTime) {
+      if (
+        startTime + FUTURE_SESSION_LIMIT > currentTime ||
+        endTime + FUTURE_SESSION_LIMIT > currentTime
+      ) {
         const msg = 'Future session detected';
         const logData = {
           payloadSession: humanizeDates(session),
