@@ -338,8 +338,33 @@ async function create({req, res}: PublicMethodContext) {
 
   try {
     const {activities} = translatePayloadToInternalStructure(payload);
+
+    const logPayloadSession = payload?.sessions?.map((session) => {
+      const {startTime, endTime, url} = session || {};
+      return {
+        startTime,
+        endTime,
+        url: url?.slice(0, 50),
+      };
+    });
+    const logActivities = activities?.map((activity) => {
+      return {
+        ...activity,
+        sessions: activity.sessions.map((session) => {
+          const {startTime, endTime, url} = session || {};
+
+          return {
+            startTime,
+            endTime,
+            url: url?.slice(0, 50),
+          };
+        }),
+      };
+    });
     logger.debug('Payload translated', {
       requestId,
+      payload: logPayloadSession,
+      processedActivities: logActivities,
     });
     perf.mark('translatePayload');
 
