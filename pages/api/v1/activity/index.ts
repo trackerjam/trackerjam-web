@@ -367,6 +367,7 @@ async function create({req, res}: PublicMethodContext) {
     });
     logger.debug('Payload translated', {
       requestId,
+      token,
       payload: logPayloadSession,
       processedActivities: logActivities,
     });
