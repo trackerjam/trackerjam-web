@@ -1,4 +1,4 @@
-import {DomainTags} from '../../types/api';
+  import {DomainTags} from '../../types/api';
 
 type DomainTagsStruct = {
   [domain: string]: DomainTags;
@@ -57476,5 +57476,8855 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
   "electric67.ru": {
     "Unknown": 1,
     "Other": 0.3
+  },
+  "auth.alternativeto.net": {
+    "WebApp": 0.8,
+    "Technology": 0.1,
+    "Unknown": 0.1
+  },
+  "megamood.io": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "larainfo.com": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "ga-dev-tools.google": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "ga-dev-tools.web.app": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "console.cloud.google.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "tagmanager.google.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "dictionary.cambridge.org": {
+    "Educational": 0.8,
+    "Media": 0.1,
+    "Other": 0.1
+  },
+  "geekcv.io": {
+    "ProfessionalService": 0.6,
+    "WebApp": 0.3,
+    "Technology": 0.1
+  },
+  "help.littledata.io": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "WebApp": 0.1
+  },
+  "monsterinsights.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "i.stack.imgur.com": {
+    "CDN": 0.6,
+    "Technology": 0.3,
+    "Media": 0.1
+  },
+  "lookerstudio.google.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "firefox-stats.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "myactivity.google.com": {
+    "Productivity": 0.7,
+    "Technology": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "accounts.google.ru": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Email": 0.1
+  },
+  "getbootstrap.su": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "Technology": 0.1
+  },
+  "10web.io": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "metabob.com": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "toolbuilder.ai": {
+    "Development": 0.7,
+    "Technology": 0.1
+  },
+  "blackbox.ai": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "aqara.ru": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "Vehicles": 0.1
+  },
+  "writesonic.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "mintlify.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Development": 0.1
+  },
+  "devgpt.com": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "tc.altx-soft.ru": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Unknown": 0.1
+  },
+  "bonee.net": {
+    "Technology": 0.6,
+    "ECommerce": 0.3,
+    "Unknown": 0.1
+  },
+  "brxs.com": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "hanno.nl": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "regenpower.com": {
+    "Technology": 0.7,
+    "NonProfitCharity": 0.2,
+    "Other": 0.1
+  },
+  "rabobank.com": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.1,
+    "Technology": 0.1
+  },
+  "amsterdam.nl": {
+    "Government": 0.7,
+    "RegionalLocalService": 0.2
+  },
+  "nltimes.nl": {
+    "News": 0.8,
+    "RegionalLocalService": 0.1,
+    "Media": 0.1
+  },
+  "m55.nl": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "Unknown": 0.1
+  },
+  "skyscrapercity.com": {
+    "Forum": 0.7,
+    "Community": 0.2,
+    "Entertainment": 0.1
+  },
+  "lab03.nl": {
+    "Technology": 0.7,
+    "Design": 0.2,
+    "Development": 0.1
+  },
+  "stadscuratorium.nl": {
+    "NonProfitCharity": 0.7,
+    "Community": 0.2,
+    "Government": 0.1
+  },
+  "planviewer.nl": {
+    "RealEstate": 0.7,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "annenieskraaij.com": {
+    "PersonalBlog": 0.6,
+    "Design": 0.3
+  },
+  "nl.wikipedia.org": {
+    "Educational": 0.8,
+    "Media": 0.1,
+    "Community": 0.1
+  },
+  "zja.nl": {
+    "Design": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "alternativeto.net": {
+    "Technology": 0.7,
+    "Media": 0.2,
+    "WebApp": 0.1
+  },
+  "personal.freelbee.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Unknown": 0.1
+  },
+  "carta.com": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "mutinyhq.com": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "bazaraki.com": {
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.2,
+    "Vehicles": 0.1
+  },
+  "help.obsidian.md": {
+    "Technology": 0.6,
+    "Educational": 0.3,
+    "Productivity": 0.1
+  },
+  "order.surfshark.com": {
+    "Technology": 0.7,
+    "FinanceBanking": 0.2,
+    "ECommerce": 0.1
+  },
+  "tronscan.org": {
+    "Cryptocurrency": 0.8,
+    "Technology": 0.1,
+    "FinanceBanking": 0.1
+  },
+  "thomann.de": {
+    "ECommerce": 0.7,
+    "Entertainment": 0.2
+  },
+  "na.redmagic.gg": {
+    "OnlineGaming": 0.9,
+    "Technology": 0.1,
+    "ECommerce": 0.1
+  },
+  "autotrader.co.uk": {
+    "Vehicles": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.4
+  },
+  "biggeek.ru": {
+    "Technology": 0.8,
+    "ECommerce": 0.6,
+    "Other": 0.1
+  },
+  "belovajewellery.com": {
+    "ECommerce": 0.9,
+    "Design": 0.6
+  },
+  "cyprusjobs.com": {
+    "Career": 0.9,
+    "RegionalLocalService": 0.7,
+    "ProfessionalService": 0.4
+  },
+  "my.primetel.com.cy": {
+    "CloudService": 0.8,
+    "RegionalLocalService": 0.6,
+    "Technology": 0.2
+  },
+  "jccpg.jccsecure.com": {
+    "FinanceBanking": 0.8,
+    "Technology": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "cron.com": {
+    "News": 0.8,
+    "RegionalLocalService": 0.6,
+    "Media": 0.4
+  },
+  "3-ik.ru": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.6,
+    "Career": 0.1
+  },
+  "cyprus-mail.com": {
+    "News": 0.9,
+    "RegionalLocalService": 0.7,
+    "Media": 0.4
+  },
+  "rosstat.gov.ru": {
+    "Government": 0.9,
+    "News": 0.6,
+    "RegionalLocalService": 0.4
+  },
+  "iculture.nl": {
+    "Technology": 0.8,
+    "Media": 0.6,
+    "News": 0.4
+  },
+  "macworld.com": {
+    "Technology": 0.9,
+    "Media": 0.7,
+    "News": 0.5
+  },
+  "digitalcameraworld.com": {
+    "Photography": 0.9,
+    "Media": 0.7,
+    "Technology": 0.5
+  },
+  "pitchwall.co": {
+    "Career": 0.7,
+    "ProfessionalService": 0.5,
+    "Other": 0.1
+  },
+  "betalist.com": {
+    "Technology": 0.6,
+    "Community": 0.4
+  },
+  "aaply.app": {
+    "WebApp": 0.8,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "flowmapp.com": {
+    "Design": 0.8,
+    "Development": 0.6,
+    "Productivity": 0.3
+  },
+  "app.flowmapp.com": {
+    "Design": 0.8,
+    "WebApp": 0.6,
+    "Productivity": 0.5
+  },
+  "submit.co": {
+    "ProfessionalService": 0.7,
+    "Media": 0.5,
+    "Other": 0.1
+  },
+  "startup.jobs": {
+    "Career": 0.9,
+    "ProfessionalService": 0.6,
+    "Technology": 0.4
+  },
+  "music.youtube.com": {
+    "AudioStreaming": 0.9,
+    "Entertainment": 0.7,
+    "VideoStreaming": 0.4
+  },
+  "app.orch.so": {
+    "SoftwareDownload": 0.6,
+    "Development": 0.5,
+    "WebApp": 0.4
+  },
+  "orch.so": {
+    "SoftwareDownload": 0.7,
+    "Development": 0.5,
+    "Technology": 0.4
+  },
+  "advertalyze.ru": {
+    "Advertisement": 0.8,
+    "Technology": 0.6,
+    "Other": 0.1
+  },
+  "transak.com": {
+    "FinanceBanking": 0.8,
+    "Cryptocurrency": 0.7,
+    "Technology": 0.5
+  },
+  "1gai.ru": {
+    "Vehicles": 0.8,
+    "ECommerce": 0.6,
+    "Other": 0.1
+  },
+  "ru.wikihow.com": {
+    "Educational": 0.9,
+    "DIYCraft": 0.7,
+    "Community": 0.5
+  },
+  "kurs.am": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.6,
+    "Other": 0.1
+  },
+  "dev.vinteo.ai": {
+    "Development": 0.8,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "storage.bgrem.ai": {
+    "CloudService": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.4
+  },
+  "connectedpapers.com": {
+    "Educational": 0.8,
+    "Technology": 0.4
+  },
+  "support.hp.com": {
+    "Technology": 0.8,
+    "ProfessionalService": 0.6
+  },
+  "gatsbyjs.com": {
+    "Development": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "google.zoom.us": {
+    "WebApp": 0.9,
+    "Collaboration": 0.7,
+    "Productivity": 0.5
+  },
+  "i-filimonov.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.5,
+    "Other": 0.1
+  },
+  "coreapp.ai": {
+    "Technology": 0.8,
+    "Development": 0.7,
+    "WebApp": 0.5
+  },
+  "tutortop.ru": {
+    "Educational": 0.9,
+    "Career": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "list.am": {
+    "ECommerce": 0.9,
+    "RegionalLocalService": 0.7,
+    "Community": 0.5
+  },
+  "skillmapper.com": {
+    "Career": 0.8,
+    "Educational": 0.6,
+    "ProfessionalService": 0.3
+  },
+  "donyad.com": {
+    "News": 0.8,
+    "Media": 0.6,
+    "RegionalLocalService": 0.4
+  },
+  "patent.nalog.ru": {
+    "Government": 0.9,
+    "ProfessionalService": 0.7,
+    "Technology": 0.5
+  },
+  "xn--80apaohbc3aw9e.xn--p1ai": {
+    "Unknown": 0.9,
+    "RegionalLocalService": 0.1,
+    "Other": 0.1
+  },
+  "react.dev": {
+    "Development": 0.9,
+    "Technology": 0.8
+  },
+  "jotapp.tech": {
+    "Technology": 0.8,
+    "WebApp": 0.7,
+    "Productivity": 0.5
+  },
+  "trendhunter.com": {
+    "News": 0.7,
+    "Media": 0.6,
+    "Design": 0.4
+  },
+  "ondoc.me": {
+    "HealthFitness": 0.9,
+    "ProfessionalService": 0.7,
+    "Technology": 0.4
+  },
+  "tapi.neocrypto.net": {
+    "Cryptocurrency": 0.9,
+    "Technology": 0.7,
+    "FinanceBanking": 0.5
+  },
+  "pay.checkout.com": {
+    "ECommerce": 0.9,
+    "FinanceBanking": 0.8,
+    "Technology": 0.6
+  },
+  "i-host.gr": {
+    "Technology": 0.7,
+    "CloudService": 0.5
+  },
+  "curlywolf.com.cy": {
+    "Other": 0.9,
+    "Unknown": 0.1
+  },
+  "scontent.fnic2-2.fna.fbcdn.net": {
+    "CDN": 0.8,
+    "SocialNetwork": 0.1,
+    "Media": 0.1
+  },
+  "changelly.com": {
+    "Cryptocurrency": 0.8,
+    "FinanceBanking": 0.1,
+    "Technology": 0.1
+  },
+  "disk.yandex.ru": {
+    "CloudService": 0.8,
+    "Productivity": 0.1
+  },
+  "act.hoyoverse.com": {
+    "OnlineGaming": 0.8,
+    "Media": 0.1,
+    "Entertainment": 0.1
+  },
+  "app.spatial.chat": {
+    "Collaboration": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "online.bankofcyprus.com": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.1
+  },
+  "go.equals.com": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "take.app": {
+    "ECommerce": 0.6,
+    "WebApp": 0.2,
+    "Technology": 0.2
+  },
+  "betternotworse.tb.ru": {
+    "Unknown": 0.9,
+    "Community": 0.1
+  },
+  "bizon365.com": {
+    "WebApp": 0.7,
+    "Technology": 0.1
+  },
+  "ru.tecno-mobile.com": {
+    "Technology": 0.7,
+    "ECommerce": 0.2,
+    "Media": 0.1
+  },
+  "citilink.ru": {
+    "ECommerce": 0.8,
+    "Technology": 0.1
+  },
+  "wotpack.ru": {
+    "OnlineGaming": 0.8,
+    "Entertainment": 0.1,
+    "Community": 0.1
+  },
+  "teletype.in": {
+    "Technology": 0.2,
+    "Media": 0.1
+  },
+  "37signals.com": {
+    "ProfessionalService": 0.7,
+    "Collaboration": 0.2,
+    "Technology": 0.1
+  },
+  "4pda.to": {
+    "Technology": 0.7,
+    "Forum": 0.2,
+    "Entertainment": 0.1
+  },
+  "support.duolingo.com": {
+    "Educational": 0.8,
+    "Technology": 0.1
+  },
+  "buildamicrosaas.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "haypost.am": {
+    "RegionalLocalService": 0.7,
+    "Government": 0.2,
+    "Other": 0.1
+  },
+  "gdeposylka.ru": {
+    "Productivity": 0.7,
+    "ECommerce": 0.1
+  },
+  "pravilamag.ru": {
+    "Unknown": 0.9,
+    "ECommerce": 0.1
+  },
+  "rtvi.com": {
+    "Media": 0.7,
+    "News": 0.2,
+    "Entertainment": 0.1
+  },
+  "platformaofd.ru": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "FinanceBanking": 0.1
+  },
+  "id.atol.ru": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "Unknown": 0.1
+  },
+  "advancedtoolcorp.com": {
+    "ECommerce": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "mohaveinstrument.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "promocode.pfm.live": {
+    "ECommerce": 0.6,
+    "Technology": 0.1
+  },
+  "tanukifamily.ru": {
+    "Unknown": 0.9,
+    "ECommerce": 0.1
+  },
+  "prfl.me": {
+    "SocialNetwork": 0.7,
+    "Photography": 0.2,
+    "Media": 0.1
+  },
+  "musicgallery.com.cy": {
+    "AudioStreaming": 0.7,
+    "Entertainment": 0.2
+  },
+  "acquire.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "CloudService": 0.1
+  },
+  "streamyard.com": {
+    "VideoStreaming": 0.8,
+    "Technology": 0.1,
+    "Media": 0.1
+  },
+  "tvr.by": {
+    "Media": 0.7,
+    "News": 0.2,
+    "Entertainment": 0.1
+  },
+  "htmlacademy.ru": {
+    "Educational": 0.8,
+    "Technology": 0.1,
+    "Development": 0.1
+  },
+  "t-g.vip": {
+    "Unknown": 0.9,
+    "OnlineGaming": 0.1
+  },
+  "clip.opus.pro": {
+    "Media": 0.6,
+    "VideoStreaming": 0.3,
+    "Entertainment": 0.1
+  },
+  "opus.pro": {
+    "OnlineGaming": 0.7,
+    "Entertainment": 0.2,
+    "Media": 0.1
+  },
+  "wordly.ai": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.1
+  },
+  "auth.opus.pro": {
+    "OnlineGaming": 0.8,
+    "Technology": 0.1
+  },
+  "protonvpn.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2
+  },
+  "freevpnplanet.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2
+  },
+  "opvpn.ru": {
+    "CloudService": 0.7,
+    "Technology": 0.2
+  },
+  "itoprussia.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "Unknown": 0.1
+  },
+  "itopru.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "Unknown": 0.1
+  },
+  "oecdbetterlifeindex.org": {
+    "Educational": 0.6,
+    "NonProfitCharity": 0.3
+  },
+  "ferbox.nl": {
+    "Unknown": 0.9,
+    "ECommerce": 0.1
+  },
+  "parallel.co.uk": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Unknown": 0.1
+  },
+  "fridaynightskate.com": {
+    "Sport": 0.7,
+    "Community": 0.2
+  },
+  "login.ah.nl": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "Productivity": 0.1
+  },
+  "dora.run": {
+    "Development": 0.5,
+    "WebApp": 0.3,
+    "Unknown": 0.2
+  },
+  "bento.me": {
+    "FoodCooking": 0.5,
+    "Other": 0.3,
+    "ECommerce": 0.2
+  },
+  "experience.dropbox.com": {
+    "CloudService": 0.7,
+    "Productivity": 0.2,
+    "Collaboration": 0.1
+  },
+  "teamblind.com": {
+    "ProfessionalService": 0.5,
+    "Community": 0.3,
+    "Forum": 0.2
+  },
+  "consent.yahoo.com": {
+    "Technology": 0.5,
+    "WebApp": 0.3
+  },
+  "coresignal.com": {
+    "Technology": 0.3,
+    "ProfessionalService": 0.2
+  },
+  "lusha.com": {
+    "Technology": 0.5,
+    "ProfessionalService": 0.3,
+    "CloudService": 0.2
+  },
+  "planespotters.net": {
+    "Vehicles": 0.6,
+    "Community": 0.1
+  },
+  "finder.uprotterdam.com": {
+    "RegionalLocalService": 0.6,
+    "Community": 0.2,
+    "Other": 0.2
+  },
+  "seedtable.com": {
+    "FinanceBanking": 0.5,
+    "Technology": 0.3
+  },
+  "web.cut.ac.cy": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "viagogo.com": {
+    "ECommerce": 0.5,
+    "Entertainment": 0.3
+  },
+  "carrefouruae.com": {
+    "ECommerce": 0.6,
+    "FoodCooking": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "jumbo.ae": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "muveacoustics.com": {
+    "ECommerce": 0.5,
+    "Technology": 0.3,
+    "AudioStreaming": 0.2
+  },
+  "arc.net": {
+    "Technology": 0.5,
+    "Development": 0.3,
+    "CloudService": 0.2
+  },
+  "uaedubai.ae": {
+    "RegionalLocalService": 0.7,
+    "TravelTourism": 0.2,
+    "Community": 0.1
+  },
+  "virginmegastore.ae": {
+    "ECommerce": 0.6,
+    "Entertainment": 0.3,
+    "Technology": 0.1
+  },
+  "uae.microless.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2
+  },
+  "busydubai.com": {
+    "News": 0.5,
+    "RegionalLocalService": 0.3,
+    "Other": 0.2
+  },
+  "laptop6.com": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "Other": 0.1
+  },
+  "zoutons.ae": {
+    "ECommerce": 0.5,
+    "Other": 0.1
+  },
+  "picodi.com": {
+    "ECommerce": 0.5,
+    "Other": 0.1
+  },
+  "coupon.ae": {
+    "ECommerce": 0.5,
+    "Other": 0.1
+  },
+  "everysaving.ae": {
+    "ECommerce": 0.5,
+    "Other": 0.1
+  },
+  "cphgrooming.com": {
+    "ECommerce": 0.6,
+    "HealthFitness": 0.3,
+    "Other": 0.1
+  },
+  "app.snov.io": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "snov.io": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "hunter.io": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "faq.postcodeloterij.nl": {
+    "NonProfitCharity": 0.5,
+    "FinanceBanking": 0.3,
+    "RegionalLocalService": 0.2
+  },
+  "papaparse.com": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "x.klarnacdn.net": {
+    "CDN": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "navigator.ibilly.co": {
+    "FinanceBanking": 0.5,
+    "Other": 0.1
+  },
+  "ibilly.co": {
+    "FinanceBanking": 0.5,
+    "Other": 0.1
+  },
+  "budgetbakers.com": {
+    "FinanceBanking": 0.5
+  },
+  "iexgeld.nl": {
+    "FinanceBanking": 0.5,
+    "Educational": 0.3,
+    "RegionalLocalService": 0.2
+  },
+  "dyme.app": {
+    "FinanceBanking": 0.5
+  },
+  "buxfer.com": {
+    "FinanceBanking": 0.5,
+    "Technology": 0.1
+  },
+  "abn-amro-grip.soft112.com": {
+    "FinanceBanking": 0.5,
+    "Technology": 0.4
+  },
+  "mijngeldzaken.nl": {
+    "FinanceBanking": 0.5,
+    "RegionalLocalService": 0.1
+  },
+  "tinyacquisitions.com": {
+    "Technology": 0.5,
+    "Other": 0.1
+  },
+  "everhour.com": {
+    "Technology": 0.5,
+    "Productivity": 0.4,
+    "WebApp": 0.1
+  },
+  "clouddevs.com": {
+    "Technology": 0.5,
+    "Development": 0.4,
+    "ProfessionalService": 0.1
+  },
+  "attrock.com": {
+    "ProfessionalService": 0.5,
+    "Technology": 0.1
+  },
+  "dashboard.mailerlite.com": {
+    "Email": 0.7,
+    "Technology": 0.1
+  },
+  "nasgporech.forum2x2.ru": {
+    "Forum": 0.7,
+    "Community": 0.2,
+    "Unknown": 0.1
+  },
+  "devicegallery.ru": {
+    "Technology": 0.5,
+    "Unknown": 0.1
+  },
+  "dreadhunger.com": {
+    "OnlineGaming": 0.7,
+    "Entertainment": 0.2,
+    "Technology": 0.1
+  },
+  "playground.ru": {
+    "OnlineGaming": 0.7,
+    "Media": 0.2,
+    "Community": 0.1
+  },
+  "mmo13.ru": {
+    "OnlineGaming": 0.7,
+    "Media": 0.2,
+    "Community": 0.1
+  },
+  "bgrem.deelvin.com": {
+    "Unknown": 1,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "home.deal.ai": {
+    "ECommerce": 0.6,
+    "Technology": 0.3
+  },
+  "bsky.app": {
+    "Unknown": 1,
+    "Technology": 0.1,
+    "CloudService": 0.1
+  },
+  "anbernic.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "OnlineGaming": 0.1
+  },
+  "freedaspace.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "contest.com": {
+    "Entertainment": 0.7,
+    "Community": 0.2,
+    "Advertisement": 0.1
+  },
+  "secure.oceanpayment.com": {
+    "FinanceBanking": 0.7,
+    "ECommerce": 0.2,
+    "Technology": 0.1
+  },
+  "eu.redmagic.gg": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "OnlineGaming": 0.1
+  },
+  "bvp.com": {
+    "FinanceBanking": 0.6,
+    "ProfessionalService": 0.1
+  },
+  "promote.telegram.org": {
+    "Advertisement": 0.7,
+    "Technology": 0.2,
+    "SocialNetwork": 0.1
+  },
+  "scandal.sex": {
+    "Adult": 1,
+    "Entertainment": 0.2,
+    "Media": 0.1
+  },
+  "home.nl": {
+    "Unknown": 1,
+    "Technology": 0.1
+  },
+  "i.mi.com": {
+    "Technology": 0.7,
+    "ECommerce": 0.2,
+    "CloudService": 0.1
+  },
+  "belfius.be": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "cdn-dynmedia-1.microsoft.com": {
+    "Technology": 0.6,
+    "CDN": 0.3,
+    "SoftwareDownload": 0.1
+  },
+  "account.microsoft.com": {
+    "Technology": 0.7,
+    "Productivity": 0.2,
+    "WebApp": 0.1
+  },
+  "typhoon-moat-b27.notion.site": {
+    "Productivity": 0.7,
+    "WebApp": 0.3,
+    "Technology": 0.1
+  },
+  "login.mos.ru": {
+    "Government": 0.7,
+    "RegionalLocalService": 0.2,
+    "Technology": 0.1
+  },
+  "my.mos.ru": {
+    "Government": 0.7,
+    "RegionalLocalService": 0.2,
+    "Technology": 0.1
+  },
+  "technical.city": {
+    "Technology": 0.7,
+    "News": 0.2,
+    "Educational": 0.1
+  },
+  "topcpu.net": {
+    "Technology": 0.7,
+    "News": 0.2,
+    "Educational": 0.1
+  },
+  "doks.spiritix.co": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Educational": 0.1
+  },
+  "theasis.cy.net": {
+    "Unknown": 1,
+    "WebApp": 0.1,
+    "Educational": 0.1
+  },
+  "app.lemonsqueezy.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "paulgraham.com": {
+    "PersonalBlog": 0.7,
+    "Educational": 0.2,
+    "Technology": 0.1
+  },
+  "gc.nkorytin.ru": {
+    "Unknown": 1,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "mailreach.co": {
+    "Email": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "lemlist.com": {
+    "Email": 0.7,
+    "Technology": 0.2,
+    "Advertisement": 0.1
+  },
+  "privateequitylist.com": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "us02web.zoom.us": {
+    "VideoStreaming": 0.7,
+    "Collaboration": 0.2,
+    "Technology": 0.1
+  },
+  "blog.privateequitylist.com": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "app.apollo.io": {
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "apollo.io": {
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "withconfetti.com": {
+    "Entertainment": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "community.brevo.com": {
+    "Community": 0.7,
+    "Technology": 0.2,
+    "Collaboration": 0.1
+  },
+  "landing.brevo.com": {
+    "Advertisement": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "disboard.org": {
+    "OnlineGaming": 0.7,
+    "Community": 0.2,
+    "SocialNetwork": 0.1
+  },
+  "etos.nl": {
+    "ECommerce": 0.7,
+    "HealthFitness": 0.2
+  },
+  "bardolino.nl": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2
+  },
+  "information.iherb.com": {
+    "ECommerce": 0.7,
+    "HealthFitness": 0.2
+  },
+  "p-proc-srv.iherb.com": {
+    "ECommerce": 0.7,
+    "HealthFitness": 0.2,
+    "Technology": 0.1
+  },
+  "amsterdamremoval.nl": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "expertsinmoving.com": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "TravelTourism": 0.1
+  },
+  "verhuisoffertes.com": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "dhlecommerce.nl": {
+    "ProfessionalService": 0.7,
+    "ECommerce": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "studentverhuisservice.nl": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "professionalmovingcompany.nl": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "verhuisbedrijfsnellejongens.nl": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "brenger.nl": {
+    "ProfessionalService": 0.7,
+    "RealEstate": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "online.movesolutions.nl": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "RealEstate": 0.1
+  },
+  "oranjemovers.nl": {
+    "ProfessionalService": 0.9,
+    "RegionalLocalService": 0.8,
+    "RealEstate": 0.3
+  },
+  "sultanoveli.medium.com": {
+    "PersonalBlog": 0.9,
+    "News": 0.4,
+    "Community": 0.3
+  },
+  "dashboard.stripe.com": {
+    "WebApp": 0.9,
+    "FinanceBanking": 0.7,
+    "CloudService": 0.4
+  },
+  "support.stripe.com": {
+    "ProfessionalService": 0.8,
+    "CloudService": 0.7,
+    "WebApp": 0.5
+  },
+  "community.shopify.com": {
+    "Community": 0.9,
+    "ECommerce": 0.7
+  },
+  "gethuman.com": {
+    "ProfessionalService": 0.8,
+    "Community": 0.6,
+    "Technology": 0.4
+  },
+  "stripe.pissedconsumer.com": {
+    "Forum": 0.9,
+    "FinanceBanking": 0.7,
+    "Community": 0.5
+  },
+  "zadarma.com": {
+    "CloudService": 0.8,
+    "ProfessionalService": 0.6,
+    "Technology": 0.4
+  },
+  "tardigrada.io": {
+    "CloudService": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "openphone.com": {
+    "CloudService": 0.8,
+    "Technology": 0.7,
+    "ProfessionalService": 0.5
+  },
+  "usechalkboard.com": {
+    "Productivity": 0.8,
+    "Technology": 0.6,
+    "CloudService": 0.4
+  },
+  "connections-auth.stripe.com": {
+    "CloudService": 0.9,
+    "WebApp": 0.8,
+    "FinanceBanking": 0.4
+  },
+  "avoxi.com": {
+    "Technology": 0.8,
+    "CloudService": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "voice.google.com": {
+    "Technology": 0.8,
+    "CloudService": 0.7,
+    "SocialNetwork": 0.4
+  },
+  "hushed.com": {
+    "Technology": 0.8,
+    "CloudService": 0.7,
+    "ProfessionalService": 0.4
+  },
+  "orders.avoxi.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.7,
+    "CloudService": 0.5
+  },
+  "sonetel.com": {
+    "Technology": 0.8,
+    "CloudService": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "voximplant.com": {
+    "Technology": 0.9,
+    "CloudService": 0.7,
+    "Development": 0.5
+  },
+  "cloudtalk.io": {
+    "CloudService": 0.8,
+    "Technology": 0.7,
+    "ProfessionalService": 0.5
+  },
+  "app.sonetel.com": {
+    "WebApp": 0.8,
+    "CloudService": 0.7,
+    "Technology": 0.5
+  },
+  "navattic.com": {
+    "WebApp": 0.8,
+    "Design": 0.6,
+    "Technology": 0.4
+  },
+  "app.navattic.com": {
+    "WebApp": 0.9,
+    "Design": 0.6,
+    "Technology": 0.4
+  },
+  "how.spatial.chat": {
+    "Educational": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "kazpravda.kz": {
+    "News": 0.9,
+    "Media": 0.6,
+    "RegionalLocalService": 0.4
+  },
+  "i.tochka.com": {
+    "FinanceBanking": 0.9,
+    "Technology": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "id.tochka.com": {
+    "FinanceBanking": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "sonder.com": {
+    "TravelTourism": 0.9,
+    "RealEstate": 0.7,
+    "ECommerce": 0.4
+  },
+  "cloudblue.com": {
+    "CloudService": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "comarch.com": {
+    "Technology": 0.8,
+    "CloudService": 0.6,
+    "ProfessionalService": 0.5
+  },
+  "rb.ru": {
+    "News": 0.8,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "nl.hudsonreed.com": {
+    "ECommerce": 0.9,
+    "DIYCraft": 0.6
+  },
+  "27huis.nl": {
+    "RealEstate": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "unsubscribe.mailerlite.io": {
+    "Email": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "group.vattenfall.com": {
+    "ProfessionalService": 0.8,
+    "NonProfitCharity": 0.6,
+    "Technology": 0.4
+  },
+  "waternet.nl": {
+    "Government": 0.9,
+    "RegionalLocalService": 0.8,
+    "NonProfitCharity": 0.5
+  },
+  "wecofilters.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.6
+  },
+  "aquanova.com.ua": {
+    "ECommerce": 0.8,
+    "RegionalLocalService": 0.5
+  },
+  "fitnesshouse.ru": {
+    "ECommerce": 0.8,
+    "HealthFitness": 0.7,
+    "Sport": 0.5
+  },
+  "aeroflot.ru": {
+    "TravelTourism": 0.9,
+    "ECommerce": 0.5
+  },
+  "v5.vue3datepicker.com": {
+    "Technology": 0.8,
+    "Development": 0.7,
+    "WebApp": 0.4
+  },
+  "phonecopy.com": {
+    "CloudService": 0.8,
+    "Technology": 0.6,
+    "Productivity": 0.4
+  },
+  "fuse-t.org": {
+    "Technology": 0.8,
+    "Development": 0.6,
+    "Educational": 0.4
+  },
+  "track.aliexpress.com": {
+    "ECommerce": 0.9,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "jysk.nl": {
+    "ECommerce": 0.9,
+    "RegionalLocalService": 0.5
+  },
+  "cbs.nl": {
+    "Government": 0.9,
+    "Educational": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "pararius.com": {
+    "RealEstate": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "forumhouse.ru": {
+    "Forum": 0.9,
+    "DIYCraft": 0.7
+  },
+  "mastergrad.com": {
+    "Forum": 0.9,
+    "DIYCraft": 0.7,
+    "Educational": 0.5
+  },
+  "business.market.yandex.ru": {
+    "ECommerce": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "vue-chartjs.org": {
+    "Development": 0.9,
+    "Technology": 0.7,
+    "Educational": 0.4
+  },
+  "stackoverflow-com.translate.goog": {
+    "WebApp": 0.6,
+    "Development": 0.3,
+    "Unknown": 0.1
+  },
+  "chartjs.org": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Design": 0.1
+  },
+  "albeebaby.com": {
+    "ECommerce": 0.7,
+    "PersonalBlog": 0.2,
+    "Other": 0.1
+  },
+  "kinderwagon.com": {
+    "ECommerce": 0.7,
+    "PersonalBlog": 0.2,
+    "Other": 0.1
+  },
+  "chartjs-plugin-datalabels.netlify.app": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Design": 0.1
+  },
+  "williamsjettenders.com": {
+    "ECommerce": 0.7,
+    "Vehicles": 0.2,
+    "Other": 0.1
+  },
+  "carrd.co": {
+    "WebApp": 0.6,
+    "Development": 0.3,
+    "Design": 0.1
+  },
+  "card.co": {
+    "Unknown": 0.7,
+    "ECommerce": 0.2,
+    "Technology": 0.1
+  },
+  "getwaitlist.com": {
+    "WebApp": 0.6,
+    "Development": 0.3,
+    "Productivity": 0.1
+  },
+  "mailcoach.app": {
+    "SoftwareDownload": 0.6,
+    "Email": 0.3,
+    "Technology": 0.1
+  },
+  "f35d5d217bdd4ba9.demo.carrd.co": {
+    "Technology": 0.5,
+    "Development": 0.3,
+    "WebApp": 0.2
+  },
+  "8b9af6f758819ace.demo.carrd.co": {
+    "Technology": 0.5,
+    "Development": 0.3,
+    "WebApp": 0.2
+  },
+  "a969dd0f864f2315.demo.carrd.co": {
+    "Technology": 0.5,
+    "Development": 0.3,
+    "WebApp": 0.2
+  },
+  "fastleads.com": {
+    "ProfessionalService": 0.6,
+    "SoftwareDownload": 0.3,
+    "Technology": 0.1
+  },
+  "leadletter.com": {
+    "Email": 0.6,
+    "SoftwareDownload": 0.3,
+    "Technology": 0.1
+  },
+  "leadletter.carrd.co": {
+    "Email": 0.6,
+    "Development": 0.3,
+    "WebApp": 0.1
+  },
+  "unitedkingdom.benelli.com": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "benelli.com": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "hyundai-cyprus.com": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "hyundai.cy": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "hyundai.com.cy": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "core.telegram.org": {
+    "Technology": 0.6,
+    "SocialNetwork": 0.3,
+    "WebApp": 0.1
+  },
+  "web.telegram.org": {
+    "Technology": 0.6,
+    "SocialNetwork": 0.3,
+    "WebApp": 0.1
+  },
+  "thebell.io": {
+    "News": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "pithandstem.com": {
+    "ECommerce": 0.6,
+    "PersonalBlog": 0.3,
+    "DIYCraft": 0.1
+  },
+  "ergotronica.ru": {
+    "Technology": 0.7,
+    "ECommerce": 0.2,
+    "Other": 0.1
+  },
+  "journeyofficial.co.uk": {
+    "Entertainment": 0.6,
+    "PersonalBlog": 0.3
+  },
+  "mikekarnj.com": {
+    "PersonalBlog": 0.6,
+    "ProfessionalService": 0.3,
+    "Design": 0.1
+  },
+  "help.convertkit.com": {
+    "Technology": 0.6,
+    "Email": 0.3,
+    "Productivity": 0.1
+  },
+  "status.convertkit.com": {
+    "Technology": 0.7,
+    "Email": 0.2,
+    "WebApp": 0.1
+  },
+  "help.salesforce.com": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "CloudService": 0.1
+  },
+  "blitz.nalog.nl": {
+    "FinanceBanking": 0.6,
+    "Government": 0.3,
+    "Technology": 0.1
+  },
+  "nalog.nl": {
+    "FinanceBanking": 0.6,
+    "Government": 0.3,
+    "Technology": 0.1
+  },
+  "start.godaddy.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "paymentlink.mollie.com": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "pay.mollie.nl": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "theleadletter.com": {
+    "Email": 0.6,
+    "ProfessionalService": 0.3,
+    "Technology": 0.1
+  },
+  "blairwadman.com": {
+    "PersonalBlog": 0.6,
+    "ProfessionalService": 0.3,
+    "Technology": 0.1
+  },
+  "painkillerideas.com": {
+    "PersonalBlog": 0.6,
+    "Design": 0.3,
+    "Technology": 0.1
+  },
+  "replyguy.com": {
+    "PersonalBlog": 0.6,
+    "SocialNetwork": 0.2,
+    "Technology": 0.2
+  },
+  "anytospeech.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3
+  },
+  "sp.booking.com": {
+    "TravelTourism": 0.7,
+    "ECommerce": 0.2,
+    "Technology": 0.1
+  },
+  "island-conference.com": {
+    "TravelTourism": 0.6,
+    "ProfessionalService": 0.3
+  },
+  "ru.savefrom.net": {
+    "SoftwareDownload": 0.6,
+    "Technology": 0.3,
+    "Productivity": 0.1
+  },
+  "stoiximan.com.cy": {
+    "OnlineGaming": 0.6,
+    "Entertainment": 0.1
+  },
+  "latent.space": {
+    "Technology": 0.6,
+    "Other": 0.2
+  },
+  "headframe.io": {
+    "WebApp": 0.6,
+    "Technology": 0.3
+  },
+  "lkk.quadra.ru": {
+    "ECommerce": 0.6,
+    "PersonalBlog": 0.2,
+    "Other": 0.2
+  },
+  "hf.rowdrowd.ru": {
+    "Unknown": 0.8,
+    "Other": 0.1,
+    "Technology": 0.1
+  },
+  "komus.ru": {
+    "ECommerce": 0.6,
+    "Technology": 0.1
+  },
+  "kuhni3d.leroymerlin.ru": {
+    "ECommerce": 0.7,
+    "Design": 0.2,
+    "DIYCraft": 0.1
+  },
+  "cln.sh": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Other": 0.1
+  },
+  "astonmartin.ru": {
+    "Vehicles": 0.8,
+    "ECommerce": 0.1,
+    "Advertisement": 0.1
+  },
+  "test.tc.altx-soft.ru": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "streamate.com": {
+    "Adult": 1,
+    "VideoStreaming": 0,
+    "Entertainment": 0
+  },
+  "uptimer.online": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Productivity": 0.1
+  },
+  "chakra-ui.com": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "WebApp": 0.1
+  },
+  "turing.com": {
+    "Career": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "semantic-ui.com": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "WebApp": 0.1
+  },
+  "aglowiditsolutions.com": {
+    "ProfessionalService": 0.6,
+    "Development": 0.3,
+    "Design": 0.1
+  },
+  "themeisle.com": {
+    "WebApp": 0.5,
+    "Development": 0.4,
+    "Design": 0.1
+  },
+  "onsen.io": {
+    "Development": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "v2.grommet.io": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "WebApp": 0.1
+  },
+  "react-bootstrap.netlify.app": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "WebApp": 0.1
+  },
+  "visily.ai": {
+    "Design": 0.6,
+    "Technology": 0.3,
+    "Development": 0.1
+  },
+  "uizard.io": {
+    "Technology": 0.5,
+    "Design": 0.4,
+    "Development": 0.1
+  },
+  "uizad.com": {
+    "Unknown": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "docs.bugsnag.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "electronjs.org": {
+    "SoftwareDownload": 0.6,
+    "Development": 0.3,
+    "Technology": 0.1
+  },
+  "raycast.com": {
+    "Productivity": 0.6,
+    "SoftwareDownload": 0.3,
+    "Technology": 0.1
+  },
+  "marketplace.stripe.com": {
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "blog.stackademic.com": {
+    "Technology": 0.6,
+    "PersonalBlog": 0.3,
+    "Development": 0.1
+  },
+  "fettblog.eu": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.3,
+    "Development": 0.1
+  },
+  "kentcdodds.com": {
+    "PersonalBlog": 0.5,
+    "Development": 0.4,
+    "Educational": 0.1
+  },
+  "byby.dev": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "PersonalBlog": 0.1
+  },
+  "csrc.nist.gov": {
+    "Government": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "yearcompass.com": {
+    "PersonalBlog": 0.5,
+    "Productivity": 0.4,
+    "NonProfitCharity": 0.1
+  },
+  "app2top.ru": {
+    "Media": 0.6,
+    "Advertisement": 0.2,
+    "Technology": 0.2
+  },
+  "b832326.alteg.io": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "n832326.alteg.io": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "app.sendgrid.com": {
+    "Email": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "mc.sendgrid.com": {
+    "Email": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "login.sendgrid.com": {
+    "Email": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "resend.com": {
+    "Email": 0.6,
+    "WebApp": 0.3,
+    "Technology": 0.1
+  },
+  "app.mailersend.com": {
+    "Email": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "mailersend.com": {
+    "Email": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "login.mailgun.com": {
+    "Email": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "app.mailgun.com": {
+    "Email": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "us-east-1.console.aws.amazon.com": {
+    "CloudService": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "signin.aws.amazon.com": {
+    "CloudService": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "acs4.sbrf.ru": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "devhub.checkmarx.com": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "Development": 0.1
+  },
+  "docs.avaloniaui.net": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "app.zenhub.com": {
+    "Productivity": 0.6,
+    "Collaboration": 0.3,
+    "Technology": 0.1
+  },
+  "sensortower.okta.com": {
+    "Technology": 0.5,
+    "ProfessionalService": 0.4,
+    "WebApp": 0.1
+  },
+  "private-user-images.githubusercontent.com": {
+    "Media": 0.7,
+    "CloudService": 0.2,
+    "Technology": 0.1
+  },
+  "ru.piliapp.com": {
+    "WebApp": 0.5,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "untrap.app": {
+    "Technology": 0.6,
+    "WebApp": 0.1
+  },
+  "filoe.github.io": {
+    "Development": 0.7,
+    "SoftwareDownload": 0.2,
+    "Technology": 0.1
+  },
+  "pullnotifier.com": {
+    "Productivity": 0.6,
+    "Technology": 0.3,
+    "Collaboration": 0.1
+  },
+  "blog.pullnotifier.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.5,
+    "Development": 0.5
+  },
+  "manta.so": {
+    "Productivity": 1,
+    "Design": 0.5,
+    "WebApp": 0.5
+  },
+  "otterbox.nl": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "RegionalLocalService": 0.1
+  },
+  "nas.ugreen.com": {
+    "Technology": 1,
+    "ECommerce": 0.5,
+    "Productivity": 0.5
+  },
+  "eu.ugreen.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "RegionalLocalService": 0.1
+  },
+  "angellist.com": {
+    "Career": 0.8,
+    "FinanceBanking": 0.1,
+    "SocialNetwork": 0.1
+  },
+  "tedee.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "community.openhab.org": {
+    "Forum": 1,
+    "Technology": 0.5,
+    "DIYCraft": 0.5
+  },
+  "tomsguide.com": {
+    "Technology": 0.8,
+    "Media": 0.1,
+    "News": 0.1
+  },
+  "schlage.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "DIYCraft": 0.1
+  },
+  "wellfound.com": {
+    "Career": 0.8,
+    "Technology": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "jobs.lever.co": {
+    "Career": 0.8,
+    "Technology": 0.1,
+    "Productivity": 0.1
+  },
+  "revolugame.com": {
+    "VideoStreaming": 0.8,
+    "Entertainment": 0.1,
+    "Technology": 0.1
+  },
+  "vente-unique.nl": {
+    "ECommerce": 1,
+    "RegionalLocalService": 0.5
+  },
+  "trackerjam-landing-git-pricing-deliaz.vercel.app": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Development": 0.1
+  },
+  "vercel.live": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Development": 0.1
+  },
+  "kennethreitz.org": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.1,
+    "Development": 0.1
+  },
+  "arditbeluli.com": {
+    "PersonalBlog": 1,
+    "Design": 0.5,
+    "Technology": 0.5
+  },
+  "community.developer.cybersource.com": {
+    "Forum": 0.8,
+    "Technology": 0.1,
+    "FinanceBanking": 0.1
+  },
+  "techcommunity.microsoft.com": {
+    "Forum": 1,
+    "Technology": 0.5,
+    "Educational": 0.5
+  },
+  "sammydigitalocean.typeform.com": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Development": 0.1
+  },
+  "nadezhdin2024.ru": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.1
+  },
+  "pvs-studio.ru": {
+    "Technology": 1,
+    "SoftwareDownload": 0.5,
+    "Development": 0.5
+  },
+  "pvs-studio.com": {
+    "Technology": 1,
+    "SoftwareDownload": 0.5,
+    "Development": 0.5
+  },
+  "admin.typeform.com": {
+    "WebApp": 1,
+    "Productivity": 0.5,
+    "Technology": 0.5
+  },
+  "thena.ai": {
+    "Technology": 1,
+    "HealthFitness": 0.5,
+    "WebApp": 0.5
+  },
+  "thena.fi": {
+    "ECommerce": 0.8,
+    "HealthFitness": 0.1,
+    "Technology": 0.1
+  },
+  "spatial.chat": {
+    "Collaboration": 1,
+    "Technology": 0.5,
+    "WebApp": 0.5
+  },
+  "app.tripactions.com": {
+    "TravelTourism": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "app.navan.com": {
+    "TravelTourism": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "am-pm.nl": {
+    "ECommerce": 0.8,
+    "RegionalLocalService": 0.1,
+    "Technology": 0.1
+  },
+  "thegreenparkankara.com": {
+    "TravelTourism": 1,
+    "RegionalLocalService": 0.5
+  },
+  "ostrovok.ru": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "Technology": 0.1
+  },
+  "visasam.ru": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "Government": 0.1
+  },
+  "onetwotrip.com": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "Technology": 0.1
+  },
+  "app.bugsnag.com": {
+    "Technology": 1,
+    "Development": 0.5,
+    "WebApp": 0.5
+  },
+  "ibe.s7.ru": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "Technology": 0.1
+  },
+  "bard.google.com": {
+    "Technology": 0.8,
+    "Educational": 0.1,
+    "WebApp": 0.1
+  },
+  "jobs.careers.microsoft.com": {
+    "Career": 1,
+    "Technology": 0.5,
+    "ProfessionalService": 0.5
+  },
+  "careers.microsoft.com": {
+    "Career": 1,
+    "Technology": 0.5,
+    "ProfessionalService": 0.5
+  },
+  "downloadcenter.nikonimglib.com": {
+    "Technology": 1,
+    "SoftwareDownload": 0.5,
+    "Photography": 0.5
+  },
+  "dpreview.com": {
+    "Media": 0.8,
+    "Photography": 0.1,
+    "Technology": 0.1
+  },
+  "exif.regex.info": {
+    "Technology": 1,
+    "Photography": 0.5,
+    "Educational": 0.5
+  },
+  "tommys.org": {
+    "NonProfitCharity": 0.8,
+    "HealthFitness": 0.1,
+    "Educational": 0.1
+  },
+  "shademap.app": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Productivity": 0.1
+  },
+  "app.shadowmap.org": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Productivity": 0.1
+  },
+  "shadowmap.org": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Productivity": 0.1
+  },
+  "shadowcalculator.eu": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Productivity": 0.1
+  },
+  "visitingthedutchcountryside.com": {
+    "TravelTourism": 0.8,
+    "RegionalLocalService": 0.1
+  },
+  "darksitefinder.com": {
+    "Technology": 0.8,
+    "WebApp": 0.1,
+    "Educational": 0.1
+  },
+  "teslaminor.nl": {
+    "Community": 0.7,
+    "Educational": 0.2,
+    "Vehicles": 0.1
+  },
+  "codersvalley.co.uk": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "WebApp": 0.1
+  },
+  "indexrusher.com": {
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "partnerstack.com": {
+    "ECommerce": 0.6,
+    "Collaboration": 0.3,
+    "WebApp": 0.1
+  },
+  "fastfounder.ru": {
+    "Career": 0.2,
+    "Community": 0.1
+  },
+  "sboard.online": {
+    "Collaboration": 0.6,
+    "Productivity": 0.3,
+    "Design": 0.1
+  },
+  "ogp.me": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "reactiveui.net": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "boosty.to": {
+    "SocialNetwork": 0.6,
+    "Community": 0.3,
+    "ECommerce": 0.1
+  },
+  "checkout.link.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "Development": 0.1
+  },
+  "manage.kmail-lists.com": {
+    "Email": 0.8,
+    "Technology": 0.1
+  },
+  "fuseenergy.com": {
+    "Technology": 0.2,
+    "NonProfitCharity": 0.1
+  },
+  "tech.eu": {
+    "News": 0.7,
+    "Technology": 0.2,
+    "FinanceBanking": 0.1
+  },
+  "youtrack.jetbrains.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "context.reverso.net": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "cdn.thingiverse.com": {
+    "DIYCraft": 0.7,
+    "Design": 0.2,
+    "Technology": 0.1
+  },
+  "3d4makers.com": {
+    "ECommerce": 0.6,
+    "Technology": 0.2,
+    "DIYCraft": 0.2
+  },
+  "astropix.com": {
+    "Photography": 0.7,
+    "Educational": 0.2,
+    "Community": 0.1
+  },
+  "cloudynights.com": {
+    "Community": 0.7,
+    "Educational": 0.2,
+    "Photography": 0.1
+  },
+  "kentfaith.com": {
+    "ECommerce": 0.7,
+    "Photography": 0.2,
+    "Vehicles": 0.1
+  },
+  "digitalfilmmaker.net": {
+    "Media": 0.6,
+    "Educational": 0.3,
+    "Photography": 0.1
+  },
+  "photographytalk.com": {
+    "Forum": 0.6,
+    "Educational": 0.3,
+    "Photography": 0.1
+  },
+  "primevue.org": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "cli.vuejs.org": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "eu.urth.co": {
+    "ECommerce": 0.7,
+    "Photography": 0.2
+  },
+  "astrobackyard.com": {
+    "Educational": 0.7,
+    "Photography": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "upgradejs.com": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "Technology": 0.1
+  },
+  "bootstrap-vue.ru": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "creative-tim.com": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "ECommerce": 0.1
+  },
+  "coreui.io": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "Technology": 0.1
+  },
+  "docs.gradle.org": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "flsun.community": {
+    "Community": 0.6,
+    "DIYCraft": 0.3,
+    "Technology": 0.1
+  },
+  "studio.youtube.com": {
+    "VideoStreaming": 0.8,
+    "Media": 0.1,
+    "Technology": 0.1
+  },
+  "tonydinh.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "news.tonydinh.com": {
+    "News": 0.7,
+    "Technology": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "cameramemoryspeed.com": {
+    "Technology": 0.6,
+    "Photography": 0.3,
+    "Educational": 0.1
+  },
+  "dataio.nl": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Educational": 0.1
+  },
+  "alikgriffin.com": {
+    "PersonalBlog": 0.7,
+    "Photography": 0.2,
+    "Educational": 0.1
+  },
+  "politie.nl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.1,
+    "Community": 0.1
+  },
+  "at5.nl": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Community": 0.1
+  },
+  "112-nederland.nl": {
+    "News": 0.6,
+    "Government": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "skyandtelescope.org": {
+    "Educational": 0.7,
+    "Photography": 0.2
+  },
+  "skymarvels.com": {
+    "Entertainment": 0.2
+  },
+  "science.nasa.gov": {
+    "Educational": 0.8,
+    "Government": 0.1
+  },
+  "nhnieuws.nl": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Community": 0.1
+  },
+  "parool.nl": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Community": 0.1
+  },
+  "myprivacy.dpgmedia.nl": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2
+  },
+  "streetdir.nl": {
+    "RegionalLocalService": 0.7,
+    "Community": 0.1
+  },
+  "hardnieuws.nl": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Community": 0.1
+  },
+  "typingmind.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "devutils.com": {
+    "Development": 0.9,
+    "SoftwareDownload": 0.1,
+    "Productivity": 0.5
+  },
+  "blackmagic.so": {
+    "Design": 0.6,
+    "Technology": 0.3,
+    "Development": 0.1
+  },
+  "unix.stackexchange.com": {
+    "Forum": 0.8,
+    "Technology": 0.9,
+    "Community": 0.7
+  },
+  "engine.so": {
+    "Productivity": 0.7,
+    "Technology": 0.5,
+    "SoftwareDownload": 0.2
+  },
+  "cyberleads.com": {
+    "ProfessionalService": 0.8,
+    "Technology": 0.4,
+    "Email": 0.2
+  },
+  "stan.store": {
+    "ECommerce": 0.9,
+    "Entertainment": 0.2,
+    "Other": 0.1
+  },
+  "notion.vip": {
+    "Productivity": 0.9,
+    "WebApp": 0.6,
+    "Technology": 0.3
+  },
+  "tourtrans.ru": {
+    "TravelTourism": 0.9,
+    "RegionalLocalService": 0.6,
+    "Other": 0.1
+  },
+  "qr.fo": {
+    "Technology": 0.8,
+    "Productivity": 0.5,
+    "Other": 0.2
+  },
+  "motowarehouse.com.cy": {
+    "ECommerce": 0.9,
+    "Vehicles": 0.7,
+    "Other": 0.1
+  },
+  "cfmoto-motorcycle.eu": {
+    "ECommerce": 0.8,
+    "Vehicles": 0.9,
+    "Other": 0.1
+  },
+  "ibe.cyprusairways.com": {
+    "TravelTourism": 0.9,
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "mybookings.airastana.com": {
+    "TravelTourism": 0.9,
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "old.mipt.ru": {
+    "Educational": 0.9,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "mipt.ru": {
+    "Educational": 0.9,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "dolomitenhuette.at": {
+    "TravelTourism": 0.9,
+    "FoodCooking": 0.6,
+    "Other": 0.1
+  },
+  "tn-vr.mckx.ru": {
+    "Unknown": 0.9,
+    "Technology": 0.1,
+    "Other": 0.5
+  },
+  "api.stayfreeapps.com": {
+    "Technology": 0.7,
+    "HealthFitness": 0.6,
+    "SoftwareDownload": 0.2
+  },
+  "cute-cursors.com": {
+    "SoftwareDownload": 0.7,
+    "Entertainment": 0.5,
+    "Technology": 0.3
+  },
+  "learncpp.com": {
+    "Educational": 0.9,
+    "Development": 0.8,
+    "Technology": 0.2
+  },
+  "sider.ai": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "bonjourr.fr": {
+    "Productivity": 0.8,
+    "SoftwareDownload": 0.6,
+    "Technology": 0.2
+  },
+  "similarsites.com": {
+    "Technology": 0.7,
+    "SearchEngine": 0.6,
+    "Other": 0.3
+  },
+  "wappalyzer.com": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.7,
+    "Development": 0.5
+  },
+  "bflix.sx": {
+    "VideoStreaming": 0.9,
+    "Entertainment": 0.7,
+    "Unknown": 0.1
+  },
+  "animepahe.ru": {
+    "VideoStreaming": 0.9,
+    "Entertainment": 0.7,
+    "Unknown": 0.1
+  },
+  "norvig.com": {
+    "PersonalBlog": 0.7,
+    "Educational": 0.6,
+    "Technology": 0.5
+  },
+  "fulltextarchive.com": {
+    "Educational": 0.7,
+    "Media": 0.6,
+    "Other": 0.2
+  },
+  "mitpress.mit.edu": {
+    "Educational": 0.9,
+    "NonProfitCharity": 0.5,
+    "Technology": 0.4
+  },
+  "news.ycombinator.com": {
+    "News": 0.9,
+    "Technology": 0.8,
+    "Community": 0.7
+  },
+  "google.github.io": {
+    "Development": 0.9,
+    "Technology": 0.8,
+    "Educational": 0.4
+  },
+  "web.mit.edu": {
+    "Educational": 0.9,
+    "Technology": 0.7,
+    "NonProfitCharity": 0.3
+  },
+  "track.toggl.com": {
+    "Productivity": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.4
+  },
+  "wakatime.com": {
+    "Productivity": 0.9,
+    "Technology": 0.7,
+    "Development": 0.6
+  },
+  "accounts.toggl.com": {
+    "Productivity": 0.9,
+    "Technology": 0.5,
+    "WebApp": 0.7
+  },
+  "web.getmatter.com": {
+    "Productivity": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.7
+  },
+  "godbolt.org": {
+    "Development": 0.9,
+    "Technology": 0.7,
+    "Educational": 0.5
+  },
+  "quuxplusone.github.io": {
+    "PersonalBlog": 0.7,
+    "Development": 0.8,
+    "Technology": 0.5
+  },
+  "hyouka.fandom.com": {
+    "Community": 0.9,
+    "Entertainment": 0.6
+  },
+  "logaretm.com": {
+    "Development": 0.8,
+    "PersonalBlog": 0.6,
+    "Technology": 0.4
+  },
+  "router.vuejs.org": {
+    "Development": 0.9,
+    "Technology": 0.8
+  },
+  "basketball-reference.com": {
+    "Sport": 0.9,
+    "Entertainment": 0.7,
+    "Educational": 0.5
+  },
+  "trackerjam-automatic-web-tracker.en.softonic.com": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.9,
+    "Unknown": 0.1
+  },
+  "docs.npmjs.com": {
+    "Development": 0.9,
+    "Educational": 0.7,
+    "Technology": 0.6
+  },
+  "safari.softonic.ru": {
+    "SoftwareDownload": 0.9,
+    "Technology": 0.7,
+    "Unknown": 0.1
+  },
+  "pilot.com": {
+    "ProfessionalService": 0.8,
+    "FinanceBanking": 0.7,
+    "Technology": 0.3
+  },
+  "promptchan.ai": {
+    "Technology": 0.7,
+    "Development": 0.6,
+    "Entertainment": 0.5
+  },
+  "checkout.argpay.io": {
+    "FinanceBanking": 0.8,
+    "Technology": 0.6,
+    "ECommerce": 0.7
+  },
+  "ap.www.namecheap.com": {
+    "ECommerce": 0.9,
+    "Technology": 0.5,
+    "ProfessionalService": 0.6
+  },
+  "carboncostume.com": {
+    "DIYCraft": 0.7,
+    "ECommerce": 0.6,
+    "Entertainment": 0.5
+  },
+  "tgstat.com": {
+    "Technology": 0.1,
+    "Media": 0.1
+  },
+  "login.mts.ru": {
+    "Other": 0.8,
+    "Unknown": 0.1,
+    "Technology": 0.1
+  },
+  "lk.mts.ru": {
+    "Other": 0.8,
+    "Unknown": 0.1,
+    "Technology": 0.1
+  },
+  "spb.mts.ru": {
+    "RegionalLocalService": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "getpaint.net": {
+    "SoftwareDownload": 0.8,
+    "Design": 0.1,
+    "Development": 0.1
+  },
+  "forums.getpaint.net": {
+    "Forum": 0.7,
+    "Design": 0.2,
+    "Development": 0.1
+  },
+  "funcorp.zoom.us": {
+    "WebApp": 0.7,
+    "Collaboration": 0.2,
+    "Productivity": 0.1
+  },
+  "javatpoint.com": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "hive.apache.org": {
+    "Technology": 0.7,
+    "Development": 0.2
+  },
+  "apex.oracle.com": {
+    "WebApp": 0.7,
+    "Development": 0.2
+  },
+  "codeigniter.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "en.cppreference.com": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "isocpp.org": {
+    "NonProfitCharity": 0.6,
+    "Development": 0.2,
+    "Educational": 0.2
+  },
+  "fbb-git.github.io": {
+    "WebApp": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "cplusplus.com": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "cplusplus.github.io": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "funko.com": {
+    "ECommerce": 0.8,
+    "Entertainment": 0.1
+  },
+  "auth.geeksforgeeks.org": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "fishkernba.com": {
+    "Unknown": 0.9,
+    "Entertainment": 0.05,
+    "VideoStreaming": 0.05
+  },
+  "iyfbodn.com": {
+    "Unknown": 0.9,
+    "Other": 0.05,
+    "Technology": 0.05
+  },
+  "ww25.nbahd.net": {
+    "Unknown": 0.9,
+    "VideoStreaming": 0.05
+  },
+  "simplifyanswer.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Forum": 0.1
+  },
+  "ww7.davka.info": {
+    "Unknown": 0.9,
+    "News": 0.05,
+    "Media": 0.05
+  },
+  "feedreader.com": {
+    "Technology": 0.7,
+    "Media": 0.2,
+    "Productivity": 0.1
+  },
+  "forum.wiziwig.eu": {
+    "Forum": 0.7,
+    "OnlineGaming": 0.1
+  },
+  "meatspin.nba": {
+    "Unknown": 0.9,
+    "Adult": 0.05,
+    "Entertainment": 0.05
+  },
+  "reddit1.nflbite.com": {
+    "VideoStreaming": 0.2,
+    "Community": 0.1
+  },
+  "liveonscore.com": {
+    "VideoStreaming": 0.2,
+    "News": 0.1
+  },
+  "nbaall.co": {
+    "VideoStreaming": 0.2,
+    "Entertainment": 0.1
+  },
+  "nball.co": {
+    "VideoStreaming": 0.2,
+    "Entertainment": 0.1
+  },
+  "720pier.ru": {
+    "Forum": 0.7,
+    "VideoStreaming": 0.1
+  },
+  "fishker.com": {
+    "Unknown": 0.9,
+    "ECommerce": 0.05
+  },
+  "savethevideo.com": {
+    "VideoStreaming": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "en.savefrom.net": {
+    "WebApp": 0.7,
+    "VideoStreaming": 0.2,
+    "Productivity": 0.1
+  },
+  "smallseotools.com": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "vsthemes.org": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "SoftwareDownload": 0.1
+  },
+  "apps.microsoft.com": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "990x.top": {
+    "Unknown": 0.9,
+    "Technology": 0.05,
+    "Other": 0.05
+  },
+  "zulu.zscaler.com": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "urlvoid.com": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "sitecheck.sucuri.net": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "antivirus-alarm.ru": {
+    "Technology": 0.7,
+    "WebApp": 0.1
+  },
+  "forum.avast.com": {
+    "Forum": 0.7,
+    "Technology": 0.2
+  },
+  "cloudfour.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "ivliag.github.io": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "react-svgr.com": {
+    "WebApp": 0.7,
+    "Development": 0.2,
+    "Design": 0.1
+  },
+  "daily-dev-tips.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "jsfiddle.net": {
+    "WebApp": 0.7,
+    "Development": 0.2,
+    "Design": 0.1
+  },
+  "cantwell-tom.medium.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "account.hoyoverse.com": {
+    "OnlineGaming": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "genshin.hoyoverse.com": {
+    "VideoStreaming": 0.1,
+    "OnlineGaming": 0.8,
+    "Entertainment": 0.1
+  },
+  "landofgames.ru": {
+    "OnlineGaming": 0.7,
+    "Forum": 0.2,
+    "Entertainment": 0.1
+  },
+  "devpost.com": {
+    "Development": 0.7,
+    "Community": 0.2,
+    "Educational": 0.1
+  },
+  "christabor.github.io": {
+    "Development": 0.7,
+    "PersonalBlog": 0.2,
+    "Technology": 0.1
+  },
+  "p.bdir.in": {
+    "Unknown": 0.8,
+    "Other": 0.1,
+    "Technology": 0.1
+  },
+  "cherami.cards": {
+    "ECommerce": 0.6,
+    "Entertainment": 0.2,
+    "Other": 0.2
+  },
+  "hyp.pt": {
+    "Unknown": 0.8,
+    "Other": 0.1,
+    "Technology": 0.1
+  },
+  "mattketmo.github.io": {
+    "Development": 0.7,
+    "PersonalBlog": 0.2,
+    "Technology": 0.1
+  },
+  "jsbin.com": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Educational": 0.1
+  },
+  "lesnavesna.com": {
+    "TravelTourism": 0.6,
+    "RegionalLocalService": 0.3,
+    "Other": 0.1
+  },
+  "ru.armeniasputnik.am": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Other": 0.1
+  },
+  "eadaily.com": {
+    "News": 0.8,
+    "RegionalLocalService": 0.1,
+    "Other": 0.1
+  },
+  "move2armenia.am": {
+    "RealEstate": 0.6,
+    "RegionalLocalService": 0.3,
+    "TravelTourism": 0.1
+  },
+  "just-interes.ru": {
+    "News": 0.4,
+    "Entertainment": 0.3,
+    "Forum": 0.3
+  },
+  "ayaneo.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "Entertainment": 0.1
+  },
+  "3dnews.ru": {
+    "News": 0.4,
+    "Technology": 0.5,
+    "Entertainment": 0.1
+  },
+  "overclockers.ru": {
+    "Technology": 0.7,
+    "Community": 0.2,
+    "News": 0.1
+  },
+  "community.adobe.com": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "sitemaps.org": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "etihad.com": {
+    "TravelTourism": 0.7,
+    "ECommerce": 0.2,
+    "Other": 0.1
+  },
+  "digital.etihad.com": {
+    "TravelTourism": 0.7,
+    "ECommerce": 0.2,
+    "Other": 0.1
+  },
+  "accounts.binance.com": {
+    "Cryptocurrency": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "p2p.binance.com": {
+    "Cryptocurrency": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "threatcenter.crdf.fr": {
+    "Technology": 0.4,
+    "Other": 0.3,
+    "Educational": 0.3
+  },
+  "docs.virustotal.com": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Other": 0.1
+  },
+  "sso.itopvpn.com": {
+    "Technology": 0.7,
+    "Other": 0.1
+  },
+  "techstrange.com": {
+    "Technology": 0.7,
+    "News": 0.2,
+    "Educational": 0.1
+  },
+  "theipfire.com": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "myidealtricks.com": {
+    "DIYCraft": 0.4,
+    "Educational": 0.3,
+    "Technology": 0.3
+  },
+  "catalog.update.microsoft.com": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "ru.drvhub.net": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.3,
+    "Other": 0.1
+  },
+  "realtek.drivers-download.net": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.3,
+    "Other": 0.1
+  },
+  "gokon.fastlife.su": {
+    "Unknown": 0.8,
+    "Entertainment": 0.1,
+    "Other": 0.1
+  },
+  "pay.tech": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "changelog.zenhub.com": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Collaboration": 0.1
+  },
+  "3dprintgorilla.com": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "DIYCraft": 0.1
+  },
+  "toolsy.bot": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Development": 0.1
+  },
+  "timetracker.hse.ru": {
+    "Productivity": 0.7,
+    "Educational": 0.2,
+    "Technology": 0.1
+  },
+  "store.dreamsofcode.io": {
+    "SoftwareDownload": 0.6,
+    "Technology": 0.3,
+    "Development": 0.1
+  },
+  "dreamsofcode.io": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "editpad.org": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "onlinegdb.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "thirdsouth.capital": {
+    "FinanceBanking": 0.6,
+    "ProfessionalService": 0.3,
+    "Other": 0.1
+  },
+  "manganum.notion.site": {
+    "PersonalBlog": 0.4,
+    "Technology": 0.3,
+    "Other": 0.3
+  },
+  "sso.crunchyroll.com": {
+    "Entertainment": 0.7,
+    "VideoStreaming": 0.2,
+    "Other": 0.1
+  },
+  "community.cloudflare.com": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "openwaygroup.com": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "FinanceBanking": 0.1
+  },
+  "candu.ai": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.2,
+    "Development": 0.2
+  },
+  "krona.ru": {
+    "FinanceBanking": 0.6,
+    "Technology": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "gorenje-ru.ru": {
+    "ECommerce": 0.6,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.2
+  },
+  "svoboda.org": {
+    "News": 0.9,
+    "RegionalLocalService": 0.05,
+    "NonProfitCharity": 0.05
+  },
+  "reactivex.io": {
+    "Development": 0.9,
+    "WebApp": 0.05
+  },
+  "rxmarbles.com": {
+    "Development": 0.6,
+    "WebApp": 0.1
+  },
+  "voprosoff.net": {
+    "Forum": 0.8,
+    "Community": 0.1,
+    "Other": 0.1
+  },
+  "pos.gosuslugi.ru": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.1,
+    "Other": 0.1
+  },
+  "calendar.notion.so": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Collaboration": 0.1
+  },
+  "iz.ru": {
+    "News": 0.9,
+    "Media": 0.05,
+    "RegionalLocalService": 0.05
+  },
+  "hellogc.blog": {
+    "PersonalBlog": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "igora.ru": {
+    "TravelTourism": 0.7,
+    "Sport": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "activica.ru": {
+    "HealthFitness": 0.7,
+    "ECommerce": 0.2,
+    "Other": 0.1
+  },
+  "oudob-afroblacktv.malinext.com": {
+    "Unknown": 0.9,
+    "Entertainment": 0.05,
+    "VideoStreaming": 0.05
+  },
+  "tgbooster.ru": {
+    "Advertisement": 0.7,
+    "OnlineGaming": 0.2,
+    "Technology": 0.1
+  },
+  "career.habr.com": {
+    "Career": 0.8,
+    "Technology": 0.1
+  },
+  "camo.githubusercontent.com": {
+    "Development": 0.7,
+    "CDN": 0.2,
+    "Technology": 0.1
+  },
+  "iso.org": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.1
+  },
+  "webstore.ansi.org": {
+    "ProfessionalService": 0.7,
+    "ECommerce": 0.2
+  },
+  "open-std.org": {
+    "Technology": 0.8,
+    "Development": 0.1
+  },
+  "pdfrock.com": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.2
+  },
+  "ebin.pub": {
+    "ECommerce": 0.7
+  },
+  "one.google.com": {
+    "Technology": 0.7,
+    "CloudService": 0.2,
+    "Productivity": 0.1
+  },
+  "sportdoma.ru": {
+    "ECommerce": 0.7,
+    "Sport": 0.2,
+    "HealthFitness": 0.1
+  },
+  "yamaguchi.ru": {
+    "Unknown": 0.9,
+    "Sport": 0.05,
+    "HealthFitness": 0.05
+  },
+  "sportmaster.ru": {
+    "ECommerce": 0.8,
+    "Sport": 0.1,
+    "HealthFitness": 0.1
+  },
+  "devhunt.org": {
+    "Career": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "store.playstation.com": {
+    "ECommerce": 0.7,
+    "OnlineGaming": 0.2,
+    "Entertainment": 0.1
+  },
+  "maarya.net": {
+    "Unknown": 0.9,
+    "ECommerce": 0.05,
+    "Design": 0.05
+  },
+  "worldsnowday.com": {
+    "Sport": 0.7,
+    "Community": 0.2,
+    "NonProfitCharity": 0.1
+  },
+  "webcammictest.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Other": 0.1
+  },
+  "zuev.io": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "uchet-jkh.ru": {
+    "Technology": 0.7,
+    "RealEstate": 0.2,
+    "Productivity": 0.1
+  },
+  "prodamus.ru": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "anketa.prodamus.ru": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "help.prodamus.ru": {
+    "ECommerce": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "oracle.sensortower.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "Other": 0.1
+  },
+  "naduvi.nl": {
+    "ECommerce": 0.8,
+    "Design": 0.1
+  },
+  "spaceleads.lemonsqueezy.com": {
+    "Unknown": 0.9,
+    "ECommerce": 0.05,
+    "Technology": 0.05
+  },
+  "spaceleads.pro": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "eforms.com": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "fiverr-res.cloudinary.com": {
+    "CDN": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "help.sendowl.com": {
+    "Technology": 0.7,
+    "ECommerce": 0.2,
+    "Other": 0.1
+  },
+  "wattfietsen.nl": {
+    "ECommerce": 0.7,
+    "Sport": 0.2,
+    "HealthFitness": 0.1
+  },
+  "cmake.org": {
+    "Development": 0.7,
+    "Technology": 0.2
+  },
+  "julienjorge.medium.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "cliutils.gitlab.io": {
+    "Development": 0.8,
+    "Technology": 0.1
+  },
+  "clang.llvm.org": {
+    "Development": 0.8,
+    "Technology": 0.1
+  },
+  "ezkel.com": {
+    "Unknown": 0.9,
+    "Technology": 0.05,
+    "Development": 0.05
+  },
+  "clangd.llvm.org": {
+    "Development": 0.8,
+    "Technology": 0.1
+  },
+  "codebrowser.dev": {
+    "Development": 0.7,
+    "Technology": 0.2
+  },
+  "kaercher.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.1
+  },
+  "autocarehq.com": {
+    "ECommerce": 0.8,
+    "Vehicles": 0.1,
+    "Technology": 0.1
+  },
+  "weak_ptr": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "positioniseverything.net": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "Educational": 0.1
+  },
+  "ciat.edu": {
+    "Educational": 0.9,
+    "Career": 0.1,
+    "Technology": 0.1
+  },
+  "cbtnuggets.com": {
+    "Educational": 0.7,
+    "Career": 0.2,
+    "Technology": 0.1
+  },
+  "comptia.org": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "askubuntu.com": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Community": 0.1
+  },
+  "practicalprogrammatic.com": {
+    "Advertisement": 0.6,
+    "Educational": 0.2,
+    "Technology": 0.2
+  },
+  "app.drata.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "sensortower2.ai.emtrain.com": {
+    "Unknown": 1,
+    "Technology": 0.1,
+    "Media": 0.1
+  },
+  "app.sensortower.com": {
+    "Technology": 0.7,
+    "Media": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "process.env.target": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "flitsbezorgd.nl": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "businessinsider.nl": {
+    "News": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "gorillas.io": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "Technology": 0.1
+  },
+  "saasplaybook.com": {
+    "Educational": 0.7,
+    "Technology": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "buildyourfuture.withgoogle.com": {
+    "Career": 0.7,
+    "Educational": 0.2,
+    "Technology": 0.1
+  },
+  "nightshiftmode.com": {
+    "Technology": 0.8,
+    "HealthFitness": 0.1,
+    "Design": 0.1
+  },
+  "what-if.xkcd.com": {
+    "Entertainment": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "fly.io": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "ideasai.com": {},
+  "compress2go.com": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "andrewford.co.nz": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.2,
+    "Photography": 0.2
+  },
+  "calenbar.com": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "buy.stripe.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "FinanceBanking": 0.1
+  },
+  "boltai.com": {
+    "SocialNetwork": 0.7,
+    "Community": 0.2,
+    "Forum": 0.1
+  },
+  "habitsgarden.com": {
+    "HealthFitness": 0.7,
+    "PersonalBlog": 0.2,
+    "Educational": 0.1
+  },
+  "makerbox.club": {
+    "DIYCraft": 0.6,
+    "Community": 0.3,
+    "ECommerce": 0.1
+  },
+  "founderpal.ai": {
+    "Technology": 0.6,
+    "Educational": 0.2
+  },
+  "smooz.co": {
+    "Technology": 0.6,
+    "Design": 0.2,
+    "Productivity": 0.2
+  },
+  "cdek.ru": {
+    "ECommerce": 0.5,
+    "RegionalLocalService": 0.3,
+    "Technology": 0.2
+  },
+  "egalaxy.com.cy": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "plati.market": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "nkorytin.ru": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "vprok.ru": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "meet.nalog.nl": {
+    "FinanceBanking": 0.7,
+    "Government": 0.2,
+    "Technology": 0.1
+  },
+  "my.account.sony.com": {
+    "Technology": 0.7,
+    "ECommerce": 0.2,
+    "Entertainment": 0.1
+  },
+  "c6gj-static.net": {
+    "CDN": 0.7,
+    "Technology": 0.2,
+    "Media": 0.1
+  },
+  "id.sonyentertainmentnetwork.com": {
+    "Entertainment": 0.7,
+    "Technology": 0.2,
+    "OnlineGaming": 0.1
+  },
+  "library.playstation.com": {
+    "Entertainment": 0.7,
+    "OnlineGaming": 0.2,
+    "Technology": 0.1
+  },
+  "gamearenda.ru": {
+    "ECommerce": 0.7,
+    "OnlineGaming": 0.2,
+    "Entertainment": 0.1
+  },
+  "gamester.pro": {
+    "OnlineGaming": 0.7,
+    "Technology": 0.2,
+    "Entertainment": 0.1
+  },
+  "veepn.com": {
+    "Technology": 0.6,
+    "Productivity": 0.1
+  },
+  "open-ps.ru": {
+    "Technology": 0.7,
+    "OnlineGaming": 0.2,
+    "Entertainment": 0.1
+  },
+  "investim.guru": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "eightify.app": {
+    "Productivity": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "stephenscaff.github.io": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "bongsuchoi.github.io": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "plainenglish.io": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "basilarr7.medium.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "pnpm.io": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Development": 0.1
+  },
+  "webplatform.github.io": {
+    "Development": 0.9,
+    "WebApp": 0.1,
+    "Unknown": 0
+  },
+  "codyhouse.co": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "WebApp": 0.1
+  },
+  "verpex.com": {
+    "CloudService": 0.7,
+    "Unknown": 0
+  },
+  "runebook.dev": {
+    "Development": 0.7,
+    "Educational": 0.2,
+    "WebApp": 0.1
+  },
+  "devasking.com": {
+    "Forum": 0.6,
+    "Development": 0.3,
+    "Educational": 0.1
+  },
+  "riverside.fm": {
+    "AudioStreaming": 0.7,
+    "VideoStreaming": 0.2,
+    "Technology": 0.1
+  },
+  "tldraw.com": {
+    "Design": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "lc-tech.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "SoftwareDownload": 0.1
+  },
+  "apply.centraluniversity.ru": {
+    "Educational": 0.8,
+    "Career": 0.1,
+    "Unknown": 0.1
+  },
+  "rask.ai": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.2,
+    "WebApp": 0.2
+  },
+  "segmel.com": {
+    "Technology": 0.5,
+    "SoftwareDownload": 0.3,
+    "Unknown": 0.2
+  },
+  "idss.lordfilm.codes": {
+    "VideoStreaming": 0.9,
+    "Entertainment": 0.1,
+    "Unknown": 0
+  },
+  "hdfilmsurge.com": {
+    "VideoStreaming": 0.8,
+    "Entertainment": 0.2,
+    "Unknown": 0
+  },
+  "listly.io": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Collaboration": 0.1
+  },
+  "vscode.dev": {
+    "Development": 0.9,
+    "Design": 0.05,
+    "WebApp": 0.05
+  },
+  "3-hd.lorfil.net": {
+    "VideoStreaming": 0.9,
+    "Entertainment": 0.1,
+    "Unknown": 0
+  },
+  "new.filmhd1080.quest": {
+    "VideoStreaming": 0.8,
+    "Entertainment": 0.2,
+    "Unknown": 0
+  },
+  "replai.so": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Development": 0.1
+  },
+  "gcc.godbolt.org": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "Technology": 0.1
+  },
+  "yopta.space": {
+    "Unknown": 0.9,
+    "Entertainment": 0.1,
+    "WebApp": 0
+  },
+  "chasingthedonkey.com": {
+    "TravelTourism": 0.6,
+    "Unknown": 0.1
+  },
+  "corendon.nl": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "Unknown": 0.1
+  },
+  "liesofp.fandom.com": {
+    "Community": 0.6,
+    "Entertainment": 0.3,
+    "Forum": 0.1
+  },
+  "pga.gazprombank.ru": {
+    "FinanceBanking": 0.9,
+    "Unknown": 0.1,
+    "Technology": 0
+  },
+  "itecnote.com": {
+    "Educational": 0.6,
+    "Development": 0.3,
+    "Forum": 0.1
+  },
+  "fabricjs.com": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "Technology": 0.1
+  },
+  "oval.mitre.org": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3
+  },
+  "altx-soft.ru": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.2,
+    "Unknown": 0.1
+  },
+  "ovaldbru.altx-soft.ru": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.3,
+    "Unknown": 0.1
+  },
+  "hallaminternet.com": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Unknown": 0.1
+  },
+  "davidsimpson.me": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.1,
+    "Design": 0.1
+  },
+  "issuetracker.google.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "WebApp": 0.1
+  },
+  "trends.google.ru": {
+    "Technology": 0.7,
+    "SearchEngine": 0.2,
+    "WebApp": 0.1
+  },
+  "unhook.app": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "silcnitc.github.io": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "WebApp": 0.1
+  },
+  "codewars.com": {
+    "OnlineGaming": 0.5,
+    "Educational": 0.4,
+    "Development": 0.1
+  },
+  "strandbergguitars.com": {
+    "ECommerce": 0.6,
+    "Vehicles": 0.2,
+    "Design": 0.2
+  },
+  "tribute.tg": {
+    "Unknown": 0.9,
+    "NonProfitCharity": 0.05,
+    "SocialNetwork": 0.05
+  },
+  "timebot.chat": {
+    "WebApp": 0.6,
+    "Productivity": 0.35,
+    "Unknown": 0.05
+  },
+  "karmabot.chat": {
+    "WebApp": 0.6,
+    "Productivity": 0.35,
+    "Unknown": 0.05
+  },
+  "help.timebot.chat": {
+    "WebApp": 0.6,
+    "Productivity": 0.35,
+    "Unknown": 0.05
+  },
+  "app.timebot.chat": {
+    "WebApp": 0.6,
+    "Productivity": 0.35,
+    "Unknown": 0.05
+  },
+  "lavka.market.yandex.ru": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "userguide.stayfreeapps.com": {
+    "Productivity": 0.7,
+    "Educational": 0.2,
+    "WebApp": 0.1
+  },
+  "icon-sets.iconify.design": {
+    "Design": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "v2.vuetifyjs.com": {
+    "Development": 0.8,
+    "Design": 0.1,
+    "WebApp": 0.1
+  },
+  "apexcharts.com": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "Design": 0.1
+  },
+  "malovater.com": {
+    "PersonalBlog": 0.8,
+    "Photography": 0.1,
+    "TravelTourism": 0.1
+  },
+  "mastertolken.nl": {
+    "Technology": 0.5,
+    "Unknown": 0.5
+  },
+  "betterprogramming.pub": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "gitlab.freedesktop.org": {
+    "Development": 0.9,
+    "Collaboration": 0.7,
+    "SoftwareDownload": 0.4
+  },
+  "nitcbase.github.io": {
+    "Unknown": 0.9,
+    "Development": 0.6,
+    "Educational": 0.1
+  },
+  "sqlite.org": {
+    "Development": 0.9,
+    "SoftwareDownload": 0.7,
+    "Technology": 0.4
+  },
+  "private.auth.alfabank.ru": {
+    "FinanceBanking": 0.9,
+    "WebApp": 0.3
+  },
+  "web.alfabank.ru": {
+    "FinanceBanking": 0.9,
+    "WebApp": 0.7,
+    "PersonalBlog": 0.1
+  },
+  "debut-mebel.ru": {
+    "ECommerce": 0.9,
+    "Design": 0.7
+  },
+  "dommino.ua": {
+    "ECommerce": 0.9,
+    "FoodCooking": 0.5,
+    "RegionalLocalService": 0.2
+  },
+  "1cleaning.ru": {
+    "ProfessionalService": 0.9,
+    "RegionalLocalService": 0.6,
+    "ECommerce": 0.4
+  },
+  "metro.cc": {
+    "ECommerce": 0.8,
+    "FoodCooking": 0.6
+  },
+  "newsletter.metro-cc.ru": {
+    "Email": 0.9,
+    "Advertisement": 0.6,
+    "ECommerce": 0.3
+  },
+  "vgtimes.ru": {
+    "Entertainment": 0.9,
+    "OnlineGaming": 0.8,
+    "News": 0.5
+  },
+  "gamertop.ru": {
+    "OnlineGaming": 0.9,
+    "VideoStreaming": 0.6,
+    "Entertainment": 0.5
+  },
+  "wordstream.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.6,
+    "Advertisement": 0.8
+  },
+  "ca.indeed.com": {
+    "Career": 0.9,
+    "WebApp": 0.4
+  },
+  "advertising.amazon.com": {
+    "Advertisement": 0.9,
+    "ECommerce": 0.7
+  },
+  "cloudways.com": {
+    "CloudService": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "rafflepress.com": {
+    "ECommerce": 0.6,
+    "Advertisement": 0.7,
+    "WebApp": 0.5
+  },
+  "podia.com": {
+    "WebApp": 0.8,
+    "ECommerce": 0.7
+  },
+  "optinmonster.com": {
+    "Advertisement": 0.7,
+    "WebApp": 0.6,
+    "ECommerce": 0.3
+  },
+  "shopandmall.ru": {
+    "ECommerce": 0.9,
+    "Design": 0.2
+  },
+  "businessmens.ru": {
+    "Career": 0.7,
+    "Educational": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "samorezik.ru": {
+    "DIYCraft": 0.7,
+    "PersonalBlog": 0.6,
+    "Design": 0.4
+  },
+  "franshiza.ru": {
+    "ECommerce": 0.6,
+    "Advertisement": 0.4
+  },
+  "xn----9sbmheps0abgbmcmc3k.xn--p1ai": {
+    "Unknown": 0.9,
+    "RealEstate": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "topfranchise.ru": {
+    "ECommerce": 0.6,
+    "Advertisement": 0.5
+  },
+  "franchiser.ru": {
+    "ECommerce": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "franchise.vseinstrumenti.ru": {
+    "ECommerce": 0.7
+  },
+  "boost.org": {
+    "Development": 0.9,
+    "Technology": 0.7,
+    "SoftwareDownload": 0.5
+  },
+  "justgetflux.com": {
+    "SoftwareDownload": 0.7,
+    "HealthFitness": 0.6,
+    "Technology": 0.5
+  },
+  "bbs.archlinux.org": {
+    "Forum": 0.9,
+    "Technology": 0.7,
+    "Development": 0.5
+  },
+  "aur.archlinux.org": {
+    "SoftwareDownload": 0.9,
+    "Technology": 0.7,
+    "Development": 0.5
+  },
+  "wiki.archlinux.org": {
+    "Educational": 0.9,
+    "Technology": 0.7,
+    "Development": 0.5
+  },
+  "geonames.org": {
+    "Technology": 0.7,
+    "WebApp": 0.6,
+    "Educational": 0.4
+  },
+  "app3.gadeloitte.com": {
+    "Unknown": 0.9,
+    "ProfessionalService": 0.6
+  },
+  "cisdem.com": {
+    "SoftwareDownload": 0.8,
+    "Technology": 0.6,
+    "Productivity": 0.4
+  },
+  "discussions.apple.com": {
+    "Forum": 0.9,
+    "Technology": 0.7
+  },
+  "airfocus.com": {
+    "Productivity": 0.7,
+    "Technology": 0.5
+  },
+  "agilealliance.org": {
+    "ProfessionalService": 0.6,
+    "Community": 0.7,
+    "Educational": 0.4
+  },
+  "jotnpaste.canny.io": {
+    "Unknown": 0.9,
+    "Collaboration": 0.5,
+    "Development": 0.1
+  },
+  "riptutorial.com": {
+    "Educational": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "grymoire.com": {
+    "Educational": 0.7,
+    "Technology": 0.5,
+    "Development": 0.3
+  },
+  "javascript.info": {
+    "Educational": 0.9,
+    "Development": 0.7,
+    "Technology": 0.5
+  },
+  "tuberanker.com": {
+    "Unknown": 0.9,
+    "VideoStreaming": 0.6,
+    "Advertisement": 0.1
+  },
+  "man.archlinux.org": {
+    "Educational": 0.9,
+    "Development": 0.7,
+    "Technology": 0.5
+  },
+  "opensource.google": {
+    "Development": 0.8,
+    "Technology": 0.7,
+    "Educational": 0.6
+  },
+  "file.pizza": {
+    "WebApp": 0.7,
+    "SoftwareDownload": 0.6,
+    "Collaboration": 0.4
+  },
+  "collinsdictionary.com": {
+    "Educational": 0.8,
+    "WebApp": 0.6,
+    "Technology": 0.4
+  },
+  "rencredit.ru": {
+    "FinanceBanking": 0.9,
+    "WebApp": 0.7,
+    "ProfessionalService": 0.4
+  },
+  "smartprix.com": {
+    "Technology": 0.6
+  },
+  "otvet.mail.ru": {
+    "Forum": 0.8,
+    "Educational": 0.6,
+    "Community": 0.4
+  },
+  "2ip.ru": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "lightrun.com": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "CloudService": 0.1
+  },
+  "craftum.com": {
+    "Design": 0.6,
+    "DIYCraft": 0.3,
+    "ECommerce": 0.1
+  },
+  "x-safe.ru": {
+    "Technology": 0.7,
+    "Unknown": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "myreviews.ru": {
+    "ECommerce": 0.6,
+    "Forum": 0.3,
+    "Unknown": 0.1
+  },
+  "blog.uxfeedback.ru": {
+    "Design": 0.6,
+    "Development": 0.3,
+    "Educational": 0.1
+  },
+  "daylio.net": {
+    "HealthFitness": 0.6,
+    "Productivity": 0.3
+  },
+  "promokod.pikabu.ru": {
+    "ECommerce": 0.6,
+    "Advertisement": 0.3,
+    "Forum": 0.1
+  },
+  "pickpoint.ru": {
+    "ECommerce": 0.6,
+    "Technology": 0.2,
+    "Unknown": 0.2
+  },
+  "rytr.me": {
+    "Productivity": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "morioh.com": {
+    "Technology": 0.6,
+    "Community": 0.3,
+    "Educational": 0.1
+  },
+  "makc.ru": {
+    "Unknown": 1
+  },
+  "emerging.vc": {
+    "FinanceBanking": 0.6,
+    "Cryptocurrency": 0.3,
+    "NonProfitCharity": 0.1
+  },
+  "third-bit.com": {
+    "Development": 0.6,
+    "Educational": 0.3,
+    "Technology": 0.1
+  },
+  "next-auth-docs.vercel.app": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "CloudService": 0.1
+  },
+  "usehooks-ts.com": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "address-market.com": {
+    "RealEstate": 0.7,
+    "ECommerce": 0.2,
+    "Technology": 0.1
+  },
+  "yellow.systems": {
+    "SoftwareDownload": 0.6,
+    "Development": 0.3,
+    "Technology": 0.1
+  },
+  "ochkov.net": {
+    "ECommerce": 0.6,
+    "HealthFitness": 0.2,
+    "Unknown": 0.2
+  },
+  "labs.sucuri.net": {
+    "Technology": 0.6,
+    "CloudService": 0.3
+  },
+  "allaboutvision.com": {
+    "HealthFitness": 0.7,
+    "Educational": 0.2,
+    "Unknown": 0.1
+  },
+  "prostospb.team": {
+    "Unknown": 0.9,
+    "Sport": 0.1
+  },
+  "tome.ru": {
+    "ECommerce": 0.6,
+    "Technology": 0.2,
+    "Unknown": 0.2
+  },
+  "payments.kwork.ru": {
+    "FinanceBanking": 0.6,
+    "ECommerce": 0.3,
+    "Technology": 0.1
+  },
+  "teidebynight.com": {
+    "TravelTourism": 0.7,
+    "Educational": 0.2,
+    "Unknown": 0.1
+  },
+  "volcanoteide.com": {
+    "TravelTourism": 0.7,
+    "Educational": 0.2,
+    "Unknown": 0.1
+  },
+  "nightskiestenerife.com": {
+    "TravelTourism": 0.7,
+    "Educational": 0.2,
+    "Unknown": 0.1
+  },
+  "community.convertkit.com": {
+    "Collaboration": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "updates.convertkit.com": {
+    "Technology": 0.6,
+    "SoftwareDownload": 0.3,
+    "Educational": 0.1
+  },
+  "aosabook.org": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "wikiwand.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Media": 0.1
+  },
+  "vample.com": {
+    "Unknown": 1
+  },
+  "tur.postcodebase.com": {
+    "Technology": 0.5,
+    "Educational": 0.3,
+    "Unknown": 0.2
+  },
+  "acs1.sbrf.ru": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "Unknown": 0.1
+  },
+  "igroray.ru": {
+    "OnlineGaming": 0.7,
+    "Entertainment": 0.2,
+    "Unknown": 0.1
+  },
+  "msk.tele2.ru": {
+    "Technology": 0.6,
+    "RegionalLocalService": 0.3,
+    "Unknown": 0.1
+  },
+  "bashooka.com": {
+    "Design": 0.6,
+    "Development": 0.3,
+    "DIYCraft": 0.1
+  },
+  "exposnitc.github.io": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "xosnitc.github.io": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "login.ohra.nl": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "Unknown": 0.1
+  },
+  "entityframeworktutorial.net": {
+    "Development": 0.7,
+    "Educational": 0.2,
+    "Technology": 0.1
+  },
+  "metanit.com": {
+    "Development": 0.7,
+    "Educational": 0.2,
+    "Technology": 0.1
+  },
+  "weblate.cloud.bgrem.tech": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Collaboration": 0.1
+  },
+  "neon.tech": {
+    "FinanceBanking": 0.5,
+    "Technology": 0.3,
+    "Cryptocurrency": 0.2
+  },
+  "tyapk.ru": {
+    "ECommerce": 0.6,
+    "Unknown": 0.3,
+    "Technology": 0.1
+  },
+  "pixelpoint.io": {
+    "Design": 0.6,
+    "Development": 0.3,
+    "Technology": 0.1
+  },
+  "app.clockify.me": {
+    "Productivity": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "koyeb.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "deploy-preview-435--cilium.netlify.app": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "CloudService": 0.1
+  },
+  "cncf.io": {
+    "Technology": 0.6,
+    "NonProfitCharity": 0.3,
+    "Development": 0.1
+  },
+  "squoosh.app": {
+    "WebApp": 0.9,
+    "Design": 0.1,
+    "Technology": 0.1
+  },
+  "docs.strapi.io": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "WebApp": 0.1
+  },
+  "www-git-article-development-koyeb.vercel.app": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "neon-next-git-home-update-neondatabase.vercel.app": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Unknown": 0.1
+  },
+  "shiki.style": {
+    "Design": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "console.neon.tech": {
+    "CloudService": 0.8,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "neon-next-git-shikiji-migration-neondatabase.vercel.app": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Unknown": 0.1
+  },
+  "ebpf.io": {
+    "Technology": 0.8,
+    "Development": 0.1,
+    "Educational": 0.1
+  },
+  "verloskundigenamsterdamzuid.nl": {
+    "HealthFitness": 0.8,
+    "RegionalLocalService": 0.1,
+    "Other": 0.1
+  },
+  "turbo.build": {
+    "Development": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "connect.mail.ru": {
+    "Email": 0.8,
+    "SocialNetwork": 0.1,
+    "Technology": 0.1
+  },
+  "idgcsmb.com": {
+    "Technology": 0.7,
+    "News": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "formstack.com": {
+    "WebApp": 0.7,
+    "Productivity": 0.2,
+    "Technology": 0.1
+  },
+  "appmodo.com": {
+    "Technology": 0.6,
+    "News": 0.3,
+    "Entertainment": 0.1
+  },
+  "geekli.st": {
+    "Technology": 0.4,
+    "SocialNetwork": 0.3,
+    "ProfessionalService": 0.3
+  },
+  "startupmeme.com": {
+    "News": 0.6,
+    "Technology": 0.3
+  },
+  "splatf.com": {
+    "Technology": 0.5,
+    "News": 0.4,
+    "Entertainment": 0.1
+  },
+  "nextpit.com": {
+    "Technology": 0.6,
+    "News": 0.3,
+    "Community": 0.1
+  },
+  "sociableblog.com": {
+    "News": 0.5,
+    "Technology": 0.4,
+    "ProfessionalService": 0.1
+  },
+  "vieb.dev": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "doc.rust-lang.org": {
+    "Development": 0.8,
+    "Educational": 0.1,
+    "Technology": 0.1
+  },
+  "castlepeak.ru": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "introtorx.com": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "ww7.bluebytesoftware.com": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "shiki.matsu.io": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "WebApp": 0.1
+  },
+  "blog.pariola.dev": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "ru.pinterest.com": {
+    "SocialNetwork": 0.7,
+    "Photography": 0.2,
+    "DIYCraft": 0.1
+  },
+  "observ-iq-next.vercel.app": {
+    "Technology": 0.5,
+    "WebApp": 0.4,
+    "Unknown": 0.1
+  },
+  "coffeelb.ru": {
+    "FoodCooking": 0.8,
+    "ECommerce": 0.1,
+    "Other": 0.1
+  },
+  "kitfort.ru": {
+    "ECommerce": 0.7,
+    "DIYCraft": 0.2,
+    "Other": 0.1
+  },
+  "tenthousandmeters.com": {
+    "PersonalBlog": 0.7,
+    "HealthFitness": 0.2,
+    "TravelTourism": 0.1
+  },
+  "pyhon.net": {
+    "Unknown": 0.8,
+    "Development": 0.1,
+    "Educational": 0.1
+  },
+  "man7.org": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "test-task-pixel-point-dev.vercel.app": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Unknown": 0.1
+  },
+  "vimawesome.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "SoftwareDownload": 0.1
+  },
+  "vimdoc.sourceforge.net": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "vim.fandom.com": {
+    "Community": 0.7,
+    "Development": 0.2,
+    "Educational": 0.1
+  },
+  "usevim.com": {
+    "PersonalBlog": 0.6,
+    "Development": 0.3,
+    "Technology": 0.1
+  },
+  "v8.dev": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "tuckerchapman.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "vi.stackexchange.com": {
+    "Forum": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "micahelliott.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "neovim.discourse.group": {
+    "Forum": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "vimwiki.github.io": {
+    "Development": 0.6,
+    "Educational": 0.3,
+    "Technology": 0.1
+  },
+  "linovox.com": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "alpha2phi.medium.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "blog.chaitanyashahare.com": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "catppuccin-website.vercel.app": {
+    "Design": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "alphacoders.com": {
+    "Photography": 0.6,
+    "Design": 0.3,
+    "Technology": 0.1
+  },
+  "wallpaperflare.com": {
+    "Design": 0.6,
+    "Photography": 0.3,
+    "Technology": 0.1
+  },
+  "wallpaperaccess.com": {
+    "Design": 0.8,
+    "Photography": 0.6,
+    "Entertainment": 0.4
+  },
+  "wallpapercave.com": {
+    "Design": 0.8,
+    "Photography": 0.6,
+    "Entertainment": 0.4
+  },
+  "kevinfeng-cs88.medium.com": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.5,
+    "Educational": 0.3
+  },
+  "neovim.io": {
+    "Development": 0.8,
+    "SoftwareDownload": 0.6,
+    "Technology": 0.4
+  },
+  "appleinsider.ru": {
+    "News": 0.7,
+    "Technology": 0.6,
+    "Other": 0.2
+  },
+  "consulo.app": {
+    "Development": 0.8,
+    "SoftwareDownload": 0.6,
+    "Technology": 0.4
+  },
+  "consulo.io": {
+    "Development": 0.8,
+    "SoftwareDownload": 0.6,
+    "Technology": 0.4
+  },
+  "wunderfund.io": {
+    "FinanceBanking": 0.8,
+    "Cryptocurrency": 0.5,
+    "Technology": 0.3
+  },
+  "knob.design": {
+    "Design": 0.8,
+    "ProfessionalService": 0.5,
+    "Technology": 0.3
+  },
+  "igroshop.com": {
+    "ECommerce": 0.8,
+    "OnlineGaming": 0.6,
+    "Entertainment": 0.4
+  },
+  "wiki.astralinux.ru": {
+    "Technology": 0.8,
+    "Educational": 0.6,
+    "Other": 0.3
+  },
+  "sites.reviews": {
+    "Forum": 0.7,
+    "Technology": 0.6,
+    "Other": 0.4
+  },
+  "bryansk.technopark.ru": {
+    "Technology": 0.7,
+    "Community": 0.5,
+    "Educational": 0.4
+  },
+  "neon-next-git-home-updates-neondatabase.vercel.app": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "plati.io": {
+    "ECommerce": 0.8,
+    "OnlineGaming": 0.6,
+    "Technology": 0.4
+  },
+  "ps-store-tr.ru": {
+    "ECommerce": 0.8,
+    "OnlineGaming": 0.6,
+    "Entertainment": 0.4
+  },
+  "jokercards.store": {
+    "ECommerce": 0.8,
+    "Entertainment": 0.6,
+    "Other": 0.4
+  },
+  "pay.openai.com": {
+    "CloudService": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "gogov.ru": {
+    "ECommerce": 0.8,
+    "TravelTourism": 0.6,
+    "Other": 0.3
+  },
+  "digiseller.market": {
+    "ECommerce": 0.8,
+    "OnlineGaming": 0.6,
+    "Technology": 0.4
+  },
+  "payment.kassa.ai": {
+    "FinanceBanking": 0.8,
+    "Technology": 0.6,
+    "CloudService": 0.4
+  },
+  "tome.ge": {
+    "ECommerce": 0.6,
+    "Other": 0.3
+  },
+  "lorenzobettini.it": {
+    "PersonalBlog": 0.8,
+    "Development": 0.6,
+    "Educational": 0.4
+  },
+  "classic.yarnpkg.com": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "SoftwareDownload": 0.4
+  },
+  "github--wiki--see-page.webpkgcache.com": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "Other": 0.3
+  },
+  "unnovative.net": {
+    "Other": 1,
+    "Unknown": 0.1,
+    "Technology": 0.05
+  },
+  "refspecs.linuxfoundation.org": {
+    "Technology": 0.8,
+    "Educational": 0.7,
+    "Development": 0.5
+  },
+  "microsoft.github.io": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "Educational": 0.4
+  },
+  "beautiful.ai": {
+    "Design": 0.8,
+    "WebApp": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "babeljs.io": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "SoftwareDownload": 0.4
+  },
+  "codingthematrix.com": {
+    "Educational": 0.8,
+    "Technology": 0.6,
+    "Other": 0.3
+  },
+  "llvm.org": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "Educational": 0.4
+  },
+  "chromium.googlesource.com": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "SoftwareDownload": 0.4
+  },
+  "source.chromium.org": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "SoftwareDownload": 0.4
+  },
+  "rust-book.cs.brown.edu": {
+    "Educational": 0.8,
+    "Development": 0.6,
+    "Technology": 0.4
+  },
+  "tej.as": {
+    "PersonalBlog": 0.7,
+    "Technology": 0.5,
+    "Educational": 0.4
+  },
+  "cp-algorithms.com": {
+    "Educational": 0.8,
+    "Development": 0.6,
+    "Technology": 0.4
+  },
+  "dre.vanderbilt.edu": {
+    "Educational": 0.8,
+    "Technology": 0.6,
+    "Other": 0.3
+  },
+  "hobbygames.am": {
+    "ECommerce": 0.8,
+    "OnlineGaming": 0.6,
+    "Entertainment": 0.4
+  },
+  "poletsamolet.ru": {
+    "ECommerce": 0.8,
+    "TravelTourism": 0.6,
+    "Other": 0.3
+  },
+  "vattenfallevent.pti.nl": {
+    "ProfessionalService": 0.8,
+    "Other": 0.6,
+    "Entertainment": 0.4
+  },
+  "burgerzaken.amsterdam.nl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "Other": 0.4
+  },
+  "tma.amsterdam.nl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "Other": 0.4
+  },
+  "online.vtb.ru": {
+    "FinanceBanking": 0.8,
+    "Technology": 0.6,
+    "Other": 0.3
+  },
+  "api.github.com": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "formulate.co": {
+    "Other": 1,
+    "Unknown": 0.1,
+    "Technology": 0.05
+  },
+  "mass-images.pro": {
+    "Photography": 0.8,
+    "Design": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "lym.readthedocs.io": {
+    "Educational": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "hediet.github.io": {
+    "Development": 0.8,
+    "Technology": 0.6,
+    "Educational": 0.4
+  },
+  "myfantv.org": {
+    "VideoStreaming": 0.8,
+    "Entertainment": 0.6,
+    "Media": 0.4
+  },
+  "pythonnet.github.io": {
+    "Development": 1,
+    "WebApp": 0.6
+  },
+  "api.nuget.org": {
+    "Development": 1,
+    "WebApp": 0.6,
+    "SoftwareDownload": 0.4
+  },
+  "lk.kvartplata.info": {
+    "FinanceBanking": 1,
+    "RegionalLocalService": 0.5,
+    "RealEstate": 0.5
+  },
+  "promaticadigital.co.uk": {
+    "ProfessionalService": 1,
+    "Design": 0.6,
+    "Development": 0.4
+  },
+  "payments.google.com": {
+    "FinanceBanking": 1,
+    "ECommerce": 0.6,
+    "WebApp": 0.4
+  },
+  "actitime.com": {
+    "Productivity": 1,
+    "Development": 0.5,
+    "CloudService": 0.5
+  },
+  "savebalance.ru": {
+    "FinanceBanking": 1,
+    "ECommerce": 0.6,
+    "Other": 0.4
+  },
+  "romi.center": {
+    "Other": 1,
+    "ProfessionalService": 0.5
+  },
+  "au-agency.ru": {
+    "ProfessionalService": 1,
+    "Advertisement": 0.6,
+    "Design": 0.4
+  },
+  "elama.ru": {
+    "Advertisement": 1,
+    "ProfessionalService": 0.6,
+    "Technology": 0.4
+  },
+  "avia2.ru": {
+    "TravelTourism": 1,
+    "ECommerce": 0.5,
+    "Vehicles": 0.5
+  },
+  "taxi-ankara-tr.taxigator.ru": {
+    "RegionalLocalService": 1,
+    "Vehicles": 0.6,
+    "TravelTourism": 0.4
+  },
+  "ru.myfin.by": {
+    "FinanceBanking": 1,
+    "RealEstate": 0.5
+  },
+  "webpupil.ru": {
+    "Development": 0.6,
+    "DIYCraft": 0.4
+  },
+  "jsraccoon.ru": {
+    "Development": 1,
+    "Technology": 0.4
+  },
+  "code-basics.com": {
+    "Development": 0.6,
+    "Technology": 0.4
+  },
+  "metapax.io": {
+    "Cryptocurrency": 1,
+    "Technology": 0.5,
+    "FinanceBanking": 0.5
+  },
+  "lu.ma": {
+    "ProfessionalService": 0.6,
+    "ECommerce": 0.4
+  },
+  "visa.vfsglobal.com": {
+    "TravelTourism": 1,
+    "Government": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "bmeia.gv.at": {
+    "Government": 1,
+    "RegionalLocalService": 0.6,
+    "NonProfitCharity": 0.4
+  },
+  "prenotami.esteri.it": {
+    "Government": 1,
+    "TravelTourism": 0.5,
+    "Community": 0.5
+  },
+  "tuganbaev.livejournal.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.5
+  },
+  "kms.kinesis.money": {
+    "Cryptocurrency": 1,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "kdp.amazon.com": {
+    "ProfessionalService": 1,
+    "ECommerce": 0.6,
+    "Media": 0.4
+  },
+  "the-algorithmic-trader.com": {
+    "FinanceBanking": 1,
+    "Educational": 0.6,
+    "Technology": 0.4
+  },
+  "ord.ozon.ru": {
+    "ECommerce": 1,
+    "Technology": 0.5,
+    "RegionalLocalService": 0.5
+  },
+  "geoffreylitt.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.6
+  },
+  "grebenukresulting.ru": {
+    "ProfessionalService": 1,
+    "Technology": 0.6
+  },
+  "kdp-eu.amazon.com": {
+    "ProfessionalService": 1,
+    "ECommerce": 0.6,
+    "Media": 0.4
+  },
+  "eksmo.ru": {
+    "ECommerce": 1,
+    "Media": 0.6
+  },
+  "podcastsconnect.apple.com": {
+    "AudioStreaming": 1,
+    "Media": 0.6,
+    "Technology": 0.4
+  },
+  "centinelapi.cardinalcommerce.com": {
+    "Technology": 1,
+    "FinanceBanking": 0.6
+  },
+  "podcasters.apple.com": {
+    "AudioStreaming": 1,
+    "Media": 0.6,
+    "Technology": 0.4
+  },
+  "app.mave.digital": {
+    "WebApp": 1,
+    "Technology": 0.6,
+    "CloudService": 0.4
+  },
+  "help.mave.digital": {
+    "Technology": 1,
+    "WebApp": 0.6
+  },
+  "cryptomus.com": {
+    "Cryptocurrency": 1,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "podcasters.spotify.com": {
+    "AudioStreaming": 1,
+    "Media": 0.6,
+    "Technology": 0.4
+  },
+  "entersight.ru": {
+    "ProfessionalService": 1,
+    "Technology": 0.6,
+    "Design": 0.4
+  },
+  "framer.com": {
+    "Design": 1,
+    "Development": 0.6,
+    "Technology": 0.4
+  },
+  "community.revolut.com": {
+    "FinanceBanking": 1,
+    "Forum": 0.6,
+    "Technology": 0.4
+  },
+  "kitt.livekit.io": {
+    "Development": 1,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "itunesconnect.apple.com": {
+    "Media": 1,
+    "Technology": 0.6,
+    "ECommerce": 0.4
+  },
+  "app.slack.com": {
+    "Collaboration": 1,
+    "Productivity": 0.6,
+    "Technology": 0.4
+  },
+  "wwwapps.ups.com": {
+    "ProfessionalService": 1,
+    "ECommerce": 0.6,
+    "Technology": 0.4
+  },
+  "appleid.apple.com": {
+    "Technology": 1,
+    "WebApp": 0.4
+  },
+  "smartico.ai": {
+    "Technology": 1,
+    "ProfessionalService": 0.6
+  },
+  "support.spotify.com": {
+    "Media": 0.6,
+    "Technology": 0.4
+  },
+  "ikmultimedia.com": {
+    "ECommerce": 1,
+    "AudioStreaming": 0.6,
+    "Technology": 0.4
+  },
+  "mave.digital": {
+    "Technology": 1,
+    "WebApp": 0.6,
+    "CloudService": 0.4
+  },
+  "songsterr.com": {
+    "ECommerce": 1,
+    "AudioStreaming": 0.6
+  },
+  "autokinito.com.cy": {
+    "Vehicles": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "dashboard.noticeable.io": {
+    "WebApp": 1,
+    "Productivity": 0.7,
+    "Technology": 0.5
+  },
+  "cupraofficial.com.cy": {
+    "Vehicles": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "noticeable.io": {
+    "WebApp": 1,
+    "Productivity": 0.7,
+    "Technology": 0.5
+  },
+  "teleformapp.com": {
+    "WebApp": 1,
+    "Productivity": 0.7,
+    "Technology": 0.5
+  },
+  "unicars.com": {
+    "Vehicles": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "loagoshy.net": {
+    "PersonalBlog": 0.8,
+    "Photography": 0.5,
+    "Other": 0.2
+  },
+  "noticeable-service.firebaseapp.com": {
+    "WebApp": 1,
+    "Technology": 0.7,
+    "Development": 0.5
+  },
+  "orientalexpress.info": {
+    "TravelTourism": 0.8,
+    "FoodCooking": 0.6,
+    "Other": 0.4
+  },
+  "baza.education": {
+    "Educational": 1,
+    "ECommerce": 0.5,
+    "Career": 0.3
+  },
+  "unicornplatform.com": {
+    "Development": 1,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "spatialchat.nolt.io": {
+    "WebApp": 1,
+    "Collaboration": 0.7,
+    "Community": 0.5
+  },
+  "theheart.app": {
+    "HealthFitness": 1,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "rus.delfi.lv": {
+    "News": 1,
+    "RegionalLocalService": 0.7,
+    "Media": 0.5
+  },
+  "support.focusrite.com": {
+    "ProfessionalService": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "teleform.ru": {
+    "WebApp": 1,
+    "Productivity": 0.7,
+    "Technology": 0.5
+  },
+  "coocooschool.ru": {
+    "Educational": 1,
+    "ECommerce": 0.5
+  },
+  "docs.roundtable.eu": {
+    "ProfessionalService": 0.8,
+    "Collaboration": 0.7,
+    "WebApp": 0.5
+  },
+  "dash.partnerstack.com": {
+    "ProfessionalService": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "campaign.aliexpress.com": {
+    "ECommerce": 1,
+    "Advertisement": 0.7,
+    "Technology": 0.5
+  },
+  "computop-paygate.com": {
+    "FinanceBanking": 0.9,
+    "Technology": 0.7,
+    "ECommerce": 0.5
+  },
+  "doodocs.kz": {
+    "ECommerce": 0.8,
+    "Educational": 0.6,
+    "Technology": 0.4
+  },
+  "file.notion.so": {
+    "Productivity": 0.9,
+    "Collaboration": 0.7,
+    "WebApp": 0.5
+  },
+  "ajinkyabhat.com": {
+    "PersonalBlog": 0.9,
+    "Photography": 0.6,
+    "Design": 0.4
+  },
+  "kommersant.uk": {
+    "News": 1,
+    "Media": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "notiondemy.com": {
+    "Educational": 1,
+    "Technology": 0.7,
+    "Productivity": 0.5
+  },
+  "believe.com": {
+    "ProfessionalService": 0.6,
+    "Entertainment": 0.4
+  },
+  "ticket.planeta-neptun.ru": {
+    "Entertainment": 1,
+    "ECommerce": 0.6,
+    "TravelTourism": 0.4
+  },
+  "xn--80aanogqeex5a.xn--p1ai": {
+    "ECommerce": 0.8,
+    "Technology": 0.4
+  },
+  "mijn.overheid.nl": {
+    "Government": 1,
+    "RegionalLocalService": 0.7,
+    "Productivity": 0.5
+  },
+  "01.emailinboundprocessing.eu": {
+    "Technology": 0.9,
+    "Email": 0.7,
+    "WebApp": 0.5
+  },
+  "vattenfallevent-meterstanden.pti.nl": {
+    "Technology": 0.9,
+    "RegionalLocalService": 0.7
+  },
+  "open-electronics.org": {
+    "Technology": 0.9,
+    "DIYCraft": 0.7,
+    "Educational": 0.5
+  },
+  "sravni.ru": {
+    "FinanceBanking": 0.9,
+    "ECommerce": 0.7,
+    "Technology": 0.5
+  },
+  "spiritix.co": {
+    "Development": 0.9,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "signup.heroku.com": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "dashboard.heroku.com": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "verify.salesforce.com": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "id.heroku.com": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "paywall.pw": {
+    "WebApp": 0.9,
+    "Media": 0.7,
+    "Technology": 0.5
+  },
+  "redstore.am": {
+    "ECommerce": 0.9,
+    "Technology": 0.6
+  },
+  "bio.link": {
+    "SocialNetwork": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "biolink.site": {
+    "SocialNetwork": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "biolink.info": {
+    "SocialNetwork": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "biolink.ru": {
+    "SocialNetwork": 0.9,
+    "WebApp": 0.7,
+    "Technology": 0.5
+  },
+  "accounts.mailersend.com": {
+    "Email": 1,
+    "Technology": 0.7,
+    "WebApp": 0.5
+  },
+  "mariusschulz.com": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "baumguitars.com": {
+    "ECommerce": 0.9,
+    "Entertainment": 0.7
+  },
+  "otelika.com": {
+    "TravelTourism": 0.9,
+    "ECommerce": 0.7,
+    "Technology": 0.5
+  },
+  "thegreenparkankara.otelika.com": {
+    "TravelTourism": 0.9,
+    "ECommerce": 0.7,
+    "RegionalLocalService": 0.5
+  },
+  "docs.python.org": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "pixelpointworkspace.slack.com": {
+    "Collaboration": 0.7,
+    "Productivity": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "remote.com": {
+    "Career": 0.7,
+    "ProfessionalService": 0.2,
+    "CloudService": 0.1
+  },
+  "vcity.guide": {
+    "TravelTourism": 0.6,
+    "RegionalLocalService": 0.3,
+    "Technology": 0.1
+  },
+  "support.clubhouse.com": {
+    "WebApp": 0.6,
+    "Productivity": 0.3,
+    "Technology": 0.1
+  },
+  "privacy.clubhouse.com": {
+    "Technology": 0.5,
+    "WebApp": 0.4,
+    "Other": 0.1
+  },
+  "tos.clubhouse.com": {
+    "Technology": 0.5,
+    "WebApp": 0.4,
+    "Other": 0.1
+  },
+  "observ-iq-next-git-partners-page-jj-observ-iqp-ixel-point-team.vercel.app": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "CloudService": 0.1
+  },
+  "neon-next-git-fireship-page-neondatabase.vercel.app": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "CloudService": 0.1
+  },
+  "v2uploads.zopim.io": {
+    "CDN": 0.7,
+    "Technology": 0.2,
+    "CloudService": 0.1
+  },
+  "neondatabase.wpengine.com": {
+    "Technology": 0.7,
+    "CloudService": 0.2,
+    "Development": 0.1
+  },
+  "neondatabase.wpenginepowered.com": {
+    "Technology": 0.7,
+    "CloudService": 0.2,
+    "Development": 0.1
+  },
+  "app.ovice.in": {
+    "WebApp": 0.6,
+    "Collaboration": 0.3,
+    "Technology": 0.1
+  },
+  "ovice.com": {
+    "WebApp": 0.6,
+    "Collaboration": 0.3,
+    "Technology": 0.1
+  },
+  "refactoring.guru": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "vinteo.ai": {
+    "Technology": 0.6,
+    "Collaboration": 0.3,
+    "Design": 0.1
+  },
+  "discourse.mozilla.org": {
+    "Community": 0.7,
+    "Technology": 0.2,
+    "Forum": 0.1
+  },
+  "vtube.net": {
+    "VideoStreaming": 0.7,
+    "Entertainment": 0.2,
+    "Media": 0.1
+  },
+  "upscales.ai": {
+    "Technology": 0.6,
+    "Design": 0.3,
+    "Development": 0.1
+  },
+  "snapedit.app": {
+    "Photography": 0.6,
+    "Design": 0.3,
+    "Technology": 0.1
+  },
+  "polnalyubvi.com": {
+    "PersonalBlog": 0.6,
+    "Community": 0.3,
+    "Other": 0.1
+  },
+  "cypruspost.post": {
+    "RegionalLocalService": 0.7,
+    "Government": 0.2,
+    "Other": 0.1
+  },
+  "cyprusbbq.co.uk": {
+    "FoodCooking": 0.6,
+    "ECommerce": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "cadenceapp.dev": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "iphonelife.com": {
+    "Technology": 0.6,
+    "Media": 0.3,
+    "Educational": 0.1
+  },
+  "ispringsolutions.com": {
+    "Educational": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "vitejs.dev": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "datadog.zendesk.com": {
+    "Technology": 0.6,
+    "CloudService": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "secure-gateway.hipay-tpp.com": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "id.streamlabs.com": {
+    "Technology": 0.6,
+    "VideoStreaming": 0.3
+  },
+  "socialfocus.app": {
+    "Productivity": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "bolshoyvopros.ru": {
+    "Forum": 0.7,
+    "Community": 0.2,
+    "Other": 0.1
+  },
+  "connect.stripe.com": {
+    "FinanceBanking": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "bugs.telegram.org": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Community": 0.1
+  },
+  "translated.turbopages.org": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "WebApp": 0.1
+  },
+  "help.ko-fi.com": {
+    "WebApp": 0.6,
+    "Community": 0.3,
+    "Technology": 0.1
+  },
+  "active-vision.ru": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "Other": 0.1
+  },
+  "cssmatic.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "onlineconvertfree.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Productivity": 0.1
+  },
+  "freeconvert.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Productivity": 0.1
+  },
+  "svgtrace.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "pngtosvg.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "svgoptimizer.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "png2svg.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "codingchallenges.fyi": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "rbclife.ru": {
+    "HealthFitness": 0.6,
+    "ECommerce": 0.3,
+    "Other": 0.1
+  },
+  "spayte.livejournal.com": {
+    "PersonalBlog": 0.7,
+    "Other": 0.2,
+    "Unknown": 0.1
+  },
+  "windows64.net": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.2,
+    "Development": 0.1
+  },
+  "blog.coupler.io": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "Educational": 0.1
+  },
+  "dojovader.github.io": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "jakemiller.net": {
+    "PersonalBlog": 0.9,
+    "Entertainment": 0.05
+  },
+  "ofkatrin.com": {
+    "Design": 0.8,
+    "PersonalBlog": 0.1,
+    "Photography": 0.1
+  },
+  "vcnomicon.notion.site": {
+    "Educational": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "craigrichards.notion.site": {
+    "PersonalBlog": 0.5,
+    "ProfessionalService": 0.3,
+    "Educational": 0.2
+  },
+  "flypgs.com": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1
+  },
+  "web.flypgs.com": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1
+  },
+  "ventilatieland.nl": {
+    "ECommerce": 0.8,
+    "Other": 0.1
+  },
+  "buva.nl": {
+    "ECommerce": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "biz.uber.com": {
+    "ProfessionalService": 0.7,
+    "Other": 0.2,
+    "ECommerce": 0.1
+  },
+  "business.uber.com": {
+    "ProfessionalService": 0.7,
+    "Other": 0.2,
+    "ECommerce": 0.1
+  },
+  "moskva.mts.ru": {
+    "ECommerce": 0.6,
+    "RegionalLocalService": 0.2,
+    "Technology": 0.2
+  },
+  "answers.microsoft.com": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "midearussia.ru": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "midea.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2
+  },
+  "pagespeed.web.dev": {
+    "Development": 0.8,
+    "Technology": 0.1,
+    "Educational": 0.1
+  },
+  "ironpython.net": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "shkolatrekerov.ru": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Forum": 0.1
+  },
+  "opensource.org": {
+    "Technology": 0.6,
+    "Educational": 0.2,
+    "NonProfitCharity": 0.2
+  },
+  "discuss.ardupilot.org": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "ironpython.codeplex.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "tio.rest": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "americanfootball-ift-us-ift.online": {
+    "Sport": 0.8,
+    "Entertainment": 0.1,
+    "Other": 0.1
+  },
+  "dolphin-anty.com": {
+    "Technology": 0.6,
+    "Other": 0.3,
+    "Unknown": 0.1
+  },
+  "music.yandex.com": {
+    "AudioStreaming": 0.1,
+    "Entertainment": 0.1
+  },
+  "saas.mave.digital": {
+    "SoftwareDownload": 0.6,
+    "Technology": 0.2,
+    "CloudService": 0.2
+  },
+  "accounts.spotify.com": {
+    "AudioStreaming": 0.7,
+    "WebApp": 0.1
+  },
+  "powermonitor.co.za": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "ECommerce": 0.1
+  },
+  "kb.parallels.com": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "SoftwareDownload": 0.1
+  },
+  "signup.live.com": {
+    "Email": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "virtualbox.org": {
+    "Technology": 0.7,
+    "SoftwareDownload": 0.2,
+    "Development": 0.1
+  },
+  "dissolutemilfsc.com": {
+    "Adult": 0.9,
+    "Entertainment": 0.05,
+    "Other": 0.05
+  },
+  "followish.io": {
+    "Technology": 0.5,
+    "SocialNetwork": 0.3,
+    "WebApp": 0.2
+  },
+  "app.hellenicbank.com": {
+    "FinanceBanking": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "auth.hellenicbank.com": {
+    "FinanceBanking": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "hellenicbank.com": {
+    "FinanceBanking": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "hellenic.com": {
+    "Unknown": 0.8,
+    "FinanceBanking": 0.1,
+    "Technology": 0.1
+  },
+  "cdn.segment.com": {
+    "CDN": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "neon-hwp.dreamhosters.com": {
+    "Unknown": 0.8,
+    "Technology": 0.1
+  },
+  "phpmyadmin.wpengine.com": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Development": 0.1
+  },
+  "wpengine.blogvault.net": {
+    "Technology": 0.6,
+    "Development": 0.1
+  },
+  "itsfoss.com": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Development": 0.1
+  },
+  "nl.indeed.com": {
+    "Career": 0.8,
+    "SearchEngine": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "jobg8.com": {
+    "Career": 0.8,
+    "Technology": 0.1,
+    "ProfessionalService": 0.1
+  },
+  "blog.jquery.com": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "uw-adres.nl": {
+    "RegionalLocalService": 0.7,
+    "ProfessionalService": 0.2,
+    "Other": 0.1
+  },
+  "keesvanloon.nl": {
+    "ProfessionalService": 0.7,
+    "Design": 0.2,
+    "Other": 0.1
+  },
+  "mdxeditor.dev": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "marinegeo.github.io": {
+    "Educational": 0.6,
+    "Technology": 0.2
+  },
+  "antman-does-software.com": {
+    "PersonalBlog": 0.6,
+    "Technology": 0.3,
+    "Development": 0.1
+  },
+  "getautonoma.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2
+  },
+  "bytevortex.shop": {
+    "ECommerce": 0.9,
+    "Technology": 0.1,
+    "Unknown": 0
+  },
+  "siftrss.com": {
+    "WebApp": 0.8,
+    "Technology": 0.1,
+    "Productivity": 0.1
+  },
+  "neon-next-git-rss-feed-neondatabase.vercel.app": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "jfelix.info": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.1,
+    "DIYCraft": 0.1
+  },
+  "teleform-2.web.app": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "gpay.online.gpb.ru": {
+    "FinanceBanking": 0.8,
+    "Technology": 0.1,
+    "ECommerce": 0.1
+  },
+  "inha.ru": {
+    "Educational": 0.8,
+    "Career": 0.1,
+    "Unknown": 0.1
+  },
+  "acs.vtb.ru": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.1,
+    "Technology": 0.1
+  },
+  "5lad.ru": {
+    "ECommerce": 0.8,
+    "FoodCooking": 0.1,
+    "Technology": 0.1
+  },
+  "s3-figma-videos-production-sig.figma.com": {
+    "CDN": 0.8,
+    "Technology": 0.1,
+    "Design": 0.1
+  },
+  "interiorai.art": {
+    "Design": 0.7,
+    "Technology": 0.2
+  },
+  "photoai.com": {
+    "Photography": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "keukenconcept.nl": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "progsoft.net": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.1,
+    "Development": 0.1
+  },
+  "startupstash.com": {
+    "Career": 0.5,
+    "Technology": 0.3
+  },
+  "haval-clubs.ru": {
+    "Community": 0.7,
+    "Vehicles": 0.2,
+    "Forum": 0.1
+  },
+  "mongemalo.com": {
+    "PersonalBlog": 0.7,
+    "Entertainment": 0.2
+  },
+  "ambnicosia.esteri.it": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.1,
+    "NonProfitCharity": 0.1
+  },
+  "donationalerts.com": {
+    "OnlineGaming": 0.5,
+    "FinanceBanking": 0.3,
+    "Technology": 0.2
+  },
+  "qdzkendi8qqq2-1324239560.cos.ap-singapore.myqcloud.com": {
+    "CloudService": 0.7,
+    "CDN": 0.2,
+    "Technology": 0.1
+  },
+  "acrobat.adobe.com": {
+    "SoftwareDownload": 0.7,
+    "Productivity": 0.2,
+    "Technology": 0.1
+  },
+  "cdn.animaapp.com": {
+    "CDN": 0.7,
+    "Design": 0.1
+  },
+  "securepay.ozon.ru": {
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "mir-elektriki.ru": {
+    "ECommerce": 0.7,
+    "DIYCraft": 0.2,
+    "Technology": 0.1
+  },
+  "eleko.pro": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "community.airtable.com": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "apimonster.ru": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "support.airtable.com": {
+    "Productivity": 0.7,
+    "Technology": 0.2
+  },
+  "convertmonster.ru": {
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "app.clearbit.com": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "cdn.builder.io": {
+    "CDN": 0.8,
+    "Technology": 0.1,
+    "Design": 0.1
+  },
+  "app.baremetrics.com": {
+    "FinanceBanking": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "itchief.ru": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Development": 0.1
+  },
+  "avalara.com": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "app.hibob.com": {
+    "WebApp": 0.7,
+    "Productivity": 0.2,
+    "Technology": 0.1
+  },
+  "albahari.com": {
+    "Educational": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "notionry.com": {
+    "Productivity": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "invictusacademy.kz": {
+    "Educational": 0.8,
+    "Career": 0.1,
+    "Unknown": 0.1
+  },
+  "thegeekblog.co.uk": {
+    "Technology": 0.7,
+    "PersonalBlog": 0.2,
+    "Educational": 0.1
+  },
+  "ddani.notion.site": {
+    "PersonalBlog": 0.7,
+    "Design": 0.2,
+    "Technology": 0.1
+  },
+  "podcasts.ru": {
+    "AudioStreaming": 0.7,
+    "Entertainment": 0.2,
+    "Media": 0.1
+  },
+  "pianochord.org": {
+    "Educational": 0.7,
+    "Technology": 0.1
+  },
+  "join-piano.hellosimply.com": {
+    "Technology": 0.1
+  },
+  "cloud.mave.digital": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "new.filmhd1080.work": {
+    "VideoStreaming": 0.7,
+    "Entertainment": 0.2,
+    "Media": 0.1
+  },
+  "kadikama.com": {
+    "ECommerce": 0.7,
+    "Design": 0.1
+  },
+  "hooijengacvshop.nl": {
+    "ECommerce": 0.7,
+    "Vehicles": 0.2,
+    "Technology": 0.1
+  },
+  "clearance.deepl.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "WebApp": 0.1
+  },
+  "ijburgeats.nl": {
+    "FoodCooking": 0.7,
+    "ECommerce": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "tokoh.ijburgeats.nl": {
+    "FoodCooking": 0.7,
+    "ECommerce": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "simpleanalytics.com": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Other": 0.1
+  },
+  "joinsecret.com": {
+    "Advertisement": 0.7,
+    "ECommerce": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "v3.vite-plugin-web-extension.aklinker1.io": {
+    "Development": 0.7,
+    "SoftwareDownload": 0.2,
+    "WebApp": 0.1
+  },
+  "vite-plugin-web-extension.aklinker1.io": {
+    "Development": 0.7,
+    "SoftwareDownload": 0.2,
+    "WebApp": 0.1
+  },
+  "spatialchat-testing.webflow.io": {
+    "OnlineGaming": 0.4,
+    "WebApp": 0.4,
+    "Other": 0.2
+  },
+  "socialjet.pro": {
+    "Advertisement": 0.6,
+    "SocialNetwork": 0.3,
+    "Technology": 0.1
+  },
+  "aboutcoolblue.com": {
+    "ECommerce": 0.4,
+    "Other": 0.1
+  },
+  "getharvest.com": {
+    "Productivity": 0.6,
+    "WebApp": 0.3,
+    "CloudService": 0.1
+  },
+  "disgustingmen.com": {
+    "Entertainment": 0.6,
+    "News": 0.3,
+    "Forum": 0.1
+  },
+  "forum.ghost.org": {
+    "Forum": 0.7,
+    "Development": 0.2,
+    "Technology": 0.1
+  },
+  "stayfocusd.com": {
+    "Productivity": 0.7,
+    "SoftwareDownload": 0.2,
+    "Technology": 0.1
+  },
+  "teleform.app": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Collaboration": 0.1
+  },
+  "app.usefathom.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3
+  },
+  "mac.getutm.app": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "docs.getutm.app": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "ccarprice.com": {
+    "Vehicles": 0.7,
+    "ECommerce": 0.2,
+    "FinanceBanking": 0.1
+  },
+  "library.phygital.plus": {
+    "Other": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "consumer.1-ofd.ru": {
+    "FinanceBanking": 0.6,
+    "ECommerce": 0.2,
+    "Technology": 0.2
+  },
+  "audio-technica.ru": {
+    "ECommerce": 0.5,
+    "AudioStreaming": 0.4,
+    "Technology": 0.1
+  },
+  "netbox.by": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "tvb-dnw.twinq.nl": {
+    "Other": 1
+  },
+  "vergelijk.nl": {
+    "ECommerce": 0.6,
+    "Technology": 0.2,
+    "FinanceBanking": 0.2
+  },
+  "keukenloods.nl": {
+    "ECommerce": 0.7,
+    "FoodCooking": 0.2
+  },
+  "bemmelenkroon.nl": {
+    "ECommerce": 0.7
+  },
+  "sterkwitgoed.nl": {
+    "ECommerce": 0.7
+  },
+  "sivgaaudio.com": {
+    "AudioStreaming": 0.6,
+    "ECommerce": 0.3,
+    "Technology": 0.1
+  },
+  "audiomania.ru": {
+    "ECommerce": 0.5,
+    "AudioStreaming": 0.4,
+    "Technology": 0.1
+  },
+  "webpills.co": {
+    "ECommerce": 0.6,
+    "HealthFitness": 0.3,
+    "Other": 0.1
+  },
+  "eigenaar.twinq.nl": {
+    "Other": 1
+  },
+  "dnw.twinq.nl": {
+    "Other": 1
+  },
+  "denieuwewereld.com": {
+    "Educational": 0.5,
+    "Technology": 0.3,
+    "News": 0.2
+  },
+  "online.sbis.ru": {
+    "CloudService": 0.6,
+    "Technology": 0.3
+  },
+  "sbis.page.link": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "CloudService": 0.1
+  },
+  "online.saby.ru": {
+    "CloudService": 0.6,
+    "Technology": 0.3
+  },
+  "metta.ru": {
+    "HealthFitness": 0.6,
+    "ECommerce": 0.3,
+    "Other": 0.1
+  },
+  "mssg.me": {
+    "Collaboration": 0.7,
+    "SocialNetwork": 0.2,
+    "Technology": 0.1
+  },
+  "public.cy": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "neon-next-git-ruf-io-pgt-page-neondatabase.vercel.app": {
+    "Development": 0.5,
+    "WebApp": 0.4,
+    "Technology": 0.1
+  },
+  "idp.kvk.nl": {
+    "Government": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "my.wpengine.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "CloudService": 0.1
+  },
+  "identity.wpengine.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "CloudService": 0.1
+  },
+  "neon-next-git-segment-analytics-neondatabase.vercel.app": {
+    "Development": 0.5,
+    "WebApp": 0.4,
+    "Technology": 0.1
+  },
+  "linear.app": {
+    "WebApp": 0.6,
+    "Productivity": 0.3,
+    "Technology": 0.1
+  },
+  "track-en-trace.mediamarkt.nl": {
+    "ECommerce": 0.5,
+    "Technology": 0.1
+  },
+  "observ-iq-next-git-code-bl-4d41da-jj-observ-iqp-ixel-point-team.vercel.app": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "neon-next-git-github-stars-neondatabase.vercel.app": {
+    "Development": 0.5,
+    "Technology": 0.4,
+    "Community": 0.1
+  },
+  "telega.in": {
+    "Technology": 0.6,
+    "SocialNetwork": 0.3
+  },
+  "eutranslationalmedicine.org": {
+    "HealthFitness": 0.6,
+    "NonProfitCharity": 0.3,
+    "Educational": 0.1
+  },
+  "pyrashyut.com": {
+    "Unknown": 0.9,
+    "ECommerce": 0.05,
+    "Entertainment": 0.05
+  },
+  "spatialchat.co": {
+    "OnlineGaming": 0.5,
+    "SocialNetwork": 0.4,
+    "Technology": 0.1
+  },
+  "vesteda.com": {
+    "FinanceBanking": 0.8,
+    "RealEstate": 0.8,
+    "ProfessionalService": 0.4
+  },
+  "sutochno-ru.translate.goog": {
+    "TravelTourism": 0.8,
+    "Technology": 0.6
+  },
+  "stopgame.ru": {
+    "OnlineGaming": 0.9,
+    "Entertainment": 0.7,
+    "Media": 0.4
+  },
+  "wd40.co.uk": {
+    "Vehicles": 0.7,
+    "DIYCraft": 0.6,
+    "ECommerce": 0.5
+  },
+  "removeandreplace.com": {
+    "DIYCraft": 0.8
+  },
+  "howdykitchen.com": {
+    "FoodCooking": 0.9,
+    "DIYCraft": 0.5
+  },
+  "name.com": {
+    "Technology": 0.8,
+    "ProfessionalService": 0.6
+  },
+  "amdm.ru": {
+    "Entertainment": 0.9,
+    "Community": 0.5
+  },
+  "tabs.ultimate-guitar.com": {
+    "Entertainment": 0.9
+  },
+  "sso.sbis.ru": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.6,
+    "ProfessionalService": 0.4
+  },
+  "projects.animaapp.com": {
+    "Design": 0.8,
+    "Development": 0.7,
+    "WebApp": 0.5
+  },
+  "locofy.ai": {
+    "Technology": 0.8,
+    "Design": 0.6
+  },
+  "play.teleporthq.io": {
+    "Development": 0.8,
+    "WebApp": 0.7,
+    "Technology": 0.6
+  },
+  "login.teleporthq.io": {
+    "Technology": 0.8,
+    "WebApp": 0.7,
+    "Development": 0.6
+  },
+  "builder-3b0a2.firebaseapp.com": {
+    "Development": 0.8,
+    "WebApp": 0.7,
+    "Technology": 0.6
+  },
+  "s3-alpha-sig.figma.com": {
+    "Design": 0.9,
+    "Technology": 0.7,
+    "Collaboration": 0.6
+  },
+  "carsdirect.com": {
+    "Vehicles": 0.9,
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.5
+  },
+  "l.instagram.com": {
+    "SocialNetwork": 0.9,
+    "Media": 0.7,
+    "Entertainment": 0.5
+  },
+  "flaviocopes.pages.dev": {
+    "Educational": 0.9,
+    "Technology": 0.7,
+    "Development": 0.6
+  },
+  "api.airtable.com": {
+    "Technology": 0.8,
+    "WebApp": 0.7,
+    "CloudService": 0.6
+  },
+  "workpermit.am": {
+    "Government": 0.8,
+    "ProfessionalService": 0.7
+  },
+  "pureinfotech.com": {
+    "Technology": 0.8,
+    "Educational": 0.7,
+    "Media": 0.5
+  },
+  "pinokio.computer": {
+    "Technology": 0.8,
+    "Entertainment": 0.4
+  },
+  "sourcegraph.com": {
+    "Technology": 0.9,
+    "SoftwareDownload": 0.7,
+    "Development": 0.6
+  },
+  "spatialchathq.slack.com": {
+    "Collaboration": 0.9,
+    "Technology": 0.7,
+    "Community": 0.5
+  },
+  "orch.typeform.com": {
+    "Technology": 0.8,
+    "WebApp": 0.7,
+    "ProfessionalService": 0.6
+  },
+  "reincubate.com": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.7,
+    "CloudService": 0.6
+  },
+  "24ttl.net": {
+    "Advertisement": 0.8,
+    "ProfessionalService": 0.5
+  },
+  "gds.google.com": {
+    "Technology": 0.9,
+    "WebApp": 0.8,
+    "Design": 0.6
+  },
+  "extension.ninja": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.7,
+    "WebApp": 0.5
+  },
+  "zvukogram.com": {
+    "AudioStreaming": 0.9,
+    "Entertainment": 0.7,
+    "Technology": 0.5
+  },
+  "beauty.versetech.app": {
+    "ECommerce": 0.8,
+    "Technology": 0.5
+  },
+  "listingbott.com": {
+    "Technology": 0.8,
+    "RealEstate": 0.7,
+    "WebApp": 0.6
+  },
+  "paybypay.global": {
+    "FinanceBanking": 0.9,
+    "Technology": 0.7,
+    "ECommerce": 0.6
+  },
+  "news.sky.com": {
+    "News": 0.9,
+    "Media": 0.8,
+    "Entertainment": 0.5
+  },
+  "kriadera.kz": {
+    "ECommerce": 0.8,
+    "Technology": 0.5
+  },
+  "nikosia.diplo.de": {
+    "Government": 0.9,
+    "Educational": 0.5
+  },
+  "netherlandsworldwide.nl": {
+    "Government": 0.9,
+    "TravelTourism": 0.7
+  },
+  "esteri.it": {
+    "Government": 0.9
+  },
+  "vistoperitalia.esteri.it": {
+    "Government": 0.9
+  },
+  "careerfactory.ru": {
+    "Career": 0.9,
+    "ProfessionalService": 0.6
+  },
+  "promo.level.travel": {
+    "TravelTourism": 0.9,
+    "Advertisement": 0.7,
+    "ECommerce": 0.6
+  },
+  "jetlend.useresponse.com": {
+    "FinanceBanking": 0.9,
+    "Technology": 0.7,
+    "Community": 0.6
+  },
+  "registry.npmjs.org": {
+    "Technology": 0.9,
+    "Development": 0.8,
+    "SoftwareDownload": 0.7
+  },
+  "sensortower.getoutline.com": {
+    "Technology": 0.8,
+    "ProfessionalService": 0.6
+  },
+  "d-9067bf0ee3.awsapps.com": {
+    "CloudService": 0.9,
+    "Technology": 0.7,
+    "ProfessionalService": 0.6
+  },
+  "eu-north-1.console.aws.amazon.com": {
+    "CloudService": 0.9,
+    "Technology": 0.8,
+    "WebApp": 0.7
+  },
+  "console.aws.amazon.com": {
+    "Technology": 0.9,
+    "CloudService": 0.8,
+    "WebApp": 0.7
+  },
+  "email.vattenfall.nl": {
+    "Email": 0.9,
+    "Technology": 0.5
+  },
+  "track.4px.com": {
+    "ECommerce": 0.8,
+    "Technology": 0.7
+  },
+  "prian.ru": {
+    "RealEstate": 1,
+    "RegionalLocalService": 0.5,
+    "News": 0.5
+  },
+  "roastme.ru": {
+    "Entertainment": 1,
+    "Community": 0.5,
+    "Forum": 0.5
+  },
+  "issues.chromium.org": {
+    "Development": 1,
+    "Technology": 0.5,
+    "SoftwareDownload": 0.5
+  },
+  "sis.redsys.es": {
+    "FinanceBanking": 1,
+    "Technology": 0.5,
+    "ProfessionalService": 0.5
+  },
+  "track.mydynalogic.eu": {
+    "Productivity": 1,
+    "Technology": 0.5,
+    "ECommerce": 0.5
+  },
+  "petitie24.nl": {
+    "NonProfitCharity": 1,
+    "Community": 0.5,
+    "Government": 0.5
+  },
+  "budgetplan.nl": {
+    "ECommerce": 1,
+    "Technology": 0.5
+  },
+  "expert.nl": {
+    "ECommerce": 1,
+    "Technology": 0.5
+  },
+  "drimble.nl": {
+    "News": 1,
+    "RegionalLocalService": 0.5,
+    "Community": 0.5
+  },
+  "wearivierenland.nl": {
+    "NonProfitCharity": 1,
+    "RegionalLocalService": 0.5,
+    "Community": 0.5
+  },
+  "zakelijkforum.kpn.com": {
+    "Forum": 1,
+    "Technology": 0.5,
+    "ProfessionalService": 0.5
+  },
+  "book.cyberyozh.com": {
+    "Technology": 0.5,
+    "Development": 0.5
+  },
+  "modi.ru": {
+    "Unknown": 0.8,
+    "News": 0.1,
+    "Government": 0.1
+  },
+  "angel-rs.github.io": {
+    "PersonalBlog": 1,
+    "Development": 0.5,
+    "Design": 0.5
+  },
+  "payment.mts.ru": {
+    "FinanceBanking": 1,
+    "Technology": 0.5,
+    "ECommerce": 0.5
+  },
+  "qiwi.com": {
+    "FinanceBanking": 1,
+    "Technology": 0.5,
+    "ECommerce": 0.5
+  },
+  "editsvg.online": {
+    "Design": 1,
+    "Development": 0.5,
+    "Technology": 0.5
+  },
+  "newart.ru": {
+    "ECommerce": 0.5,
+    "Design": 0.5
+  },
+  "cssgradient.io": {
+    "Design": 1,
+    "Development": 0.5,
+    "Technology": 0.5
+  },
+  "qr.nspk.ru": {
+    "Technology": 1,
+    "FinanceBanking": 0.5,
+    "ECommerce": 0.5
+  },
+  "megadump.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "tegelfabriek-nederland.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "tegelsinhuis.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "vlagsma.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "tegelinfo.nl": {
+    "DIYCraft": 1,
+    "ECommerce": 0.5
+  },
+  "rbtegels.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "maxaro.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "hornbach.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.5
+  },
+  "home24.nl": {
+    "ECommerce": 1
+  },
+  "beliani.nl": {
+    "ECommerce": 1
+  },
+  "loqed.com": {
+    "Technology": 1,
+    "ECommerce": 0.5
+  },
+  "boldsmartlock.com": {
+    "Technology": 1,
+    "ECommerce": 0.5
+  },
+  "doorax.nl": {
+    "ECommerce": 1,
+    "Technology": 0.5
+  },
+  "desleutelkoning.nl": {
+    "ECommerce": 1,
+    "ProfessionalService": 0.5,
+    "RegionalLocalService": 0.5
+  },
+  "stayfree-5ad97--pr31-update-store-urls-oy15hky7.web.app": {
+    "WebApp": 1,
+    "Technology": 0.5,
+    "ECommerce": 0.5
+  },
+  "gtmdemo.uklad.vc": {
+    "Technology": 1,
+    "Development": 0.5,
+    "WebApp": 0.5
+  },
+  "news.crunchbase.com": {
+    "News": 1,
+    "Technology": 0.5,
+    "FinanceBanking": 0.5
+  },
+  "yamahamotorsports.com": {
+    "Vehicles": 1,
+    "ECommerce": 0.5,
+    "Sport": 0.5
+  },
+  "dansendeberen.be": {
+    "Media": 1,
+    "Entertainment": 0.5
+  },
+  "terzo-git-small-fixes-terzo.vercel.app": {
+    "Development": 1,
+    "Technology": 0.5,
+    "WebApp": 0.5
+  },
+  "rivm.nl": {
+    "HealthFitness": 1,
+    "Government": 0.5
+  },
+  "adsmanager.facebook.com": {
+    "Advertisement": 1,
+    "Technology": 0.5,
+    "SocialNetwork": 0.5
+  },
+  "rdd.design": {
+    "Design": 1,
+    "Technology": 0.5,
+    "Development": 0.5
+  },
+  "plugandplaytechcenter.com": {
+    "Technology": 1,
+    "ProfessionalService": 0.5,
+    "Collaboration": 0.5
+  },
+  "webask.io": {
+    "Technology": 1,
+    "WebApp": 0.5,
+    "Productivity": 0.5
+  },
+  "olimp.vc": {
+    "FinanceBanking": 1,
+    "Technology": 0.5,
+    "ProfessionalService": 0.5
+  },
+  "neputin.org": {
+    "Unknown": 0.8,
+    "NonProfitCharity": 0.1,
+    "Community": 0.1
+  },
+  "trigger.dev": {
+    "Technology": 1,
+    "Development": 0.5,
+    "WebApp": 0.5
+  },
+  "neon-next-git-upd-pricing-page-neondatabase.vercel.app": {
+    "Technology": 1,
+    "WebApp": 0.5,
+    "Development": 0.5
+  },
+  "goflink.com": {
+    "ECommerce": 1,
+    "FoodCooking": 0.5,
+    "Technology": 0.5
+  },
+  "passwords.google.com": {
+    "WebApp": 0.8,
+    "Technology": 0.2
+  },
+  "werkspot.nl": {
+    "ProfessionalService": 0.8,
+    "RegionalLocalService": 0.2
+  },
+  "unikidz1.kindplanner.nl": {
+    "Other": 1,
+    "Unknown": 0,
+    "WebApp": 0
+  },
+  "worldtimebuddy.com": {
+    "Productivity": 1,
+    "Technology": 0.5,
+    "WebApp": 0.5
+  },
+  "belastingbalie.amsterdam.nl": {
+    "Government": 1,
+    "RegionalLocalService": 0.8,
+    "FinanceBanking": 0.2
+  },
+  "leadsbox.biz": {
+    "Advertisement": 1,
+    "ProfessionalService": 0.5,
+    "ECommerce": 0.5
+  },
+  "awkwakura.com": {
+    "Unknown": 1,
+    "Entertainment": 0.1,
+    "Other": 0.1
+  },
+  "winelab.ru": {
+    "ECommerce": 1,
+    "FoodCooking": 0.8,
+    "Other": 0.2
+  },
+  "configu.com": {
+    "Technology": 1,
+    "Development": 0.7,
+    "Unknown": 0.3
+  },
+  "unikidz.nl": {
+    "Educational": 1,
+    "Community": 0.5,
+    "NonProfitCharity": 0.5
+  },
+  "spravportal.ru": {
+    "Unknown": 1,
+    "ProfessionalService": 0.1,
+    "Other": 0.1
+  },
+  "eu.usatoday.com": {
+    "News": 1,
+    "Media": 0.8
+  },
+  "harness-next.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "help.hotjar.com": {
+    "Technology": 1,
+    "WebApp": 0.7,
+    "ProfessionalService": 0.3
+  },
+  "community.koyeb.com": {
+    "Community": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "email.mtsbank.ru": {
+    "Email": 1,
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.3
+  },
+  "www-git-home-dynamic-content-koyeb.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "wombot.space": {
+    "OnlineGaming": 1,
+    "Technology": 0.5,
+    "Entertainment": 0.5
+  },
+  "c.com": {
+    "Unknown": 1,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "codehike.org": {
+    "Educational": 1,
+    "Development": 0.7,
+    "Technology": 0.3
+  },
+  "gsap.com": {
+    "Development": 1,
+    "Design": 0.7,
+    "Technology": 0.3
+  },
+  "www-git-article-fixes-koyeb.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "workestra.ai": {
+    "Productivity": 1,
+    "Technology": 0.7
+  },
+  "manychat.com": {
+    "Technology": 0.7
+  },
+  "status.livekit.io": {
+    "Technology": 1,
+    "WebApp": 0.7,
+    "Development": 0.3
+  },
+  "livekit.io": {
+    "WebApp": 1,
+    "Technology": 0.7
+  },
+  "locahost": {
+    "Other": 1,
+    "Unknown": 0,
+    "WebApp": 0
+  },
+  "neon-next-git-shiki-transformers-neondatabase.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "www-git-article-not-found-koyeb.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "developers.mailersend.com": {
+    "Technology": 1,
+    "WebApp": 0.7,
+    "Email": 0.3
+  },
+  "smartlead.ai": {
+    "Technology": 0.7
+  },
+  "romonitorstats.com": {
+    "OnlineGaming": 1,
+    "Technology": 0.7,
+    "Entertainment": 0.3
+  },
+  "neon-next-git-ruf-io-partner-page-updates-neondatabase.vercel.app": {
+    "Development": 1,
+    "Technology": 0.7,
+    "Unknown": 0.3
+  },
+  "hypotheekshop.nl": {
+    "FinanceBanking": 1,
+    "RealEstate": 0.7,
+    "ProfessionalService": 0.3
+  },
+  "financialfocus.abnamro.nl": {
+    "FinanceBanking": 1,
+    "Educational": 0.7,
+    "News": 0.3
+  },
+  "banyancentrum.nl": {
+    "HealthFitness": 1,
+    "NonProfitCharity": 0.5,
+    "Other": 0.5
+  },
+  "massagepraktijkijzicht.nl": {
+    "HealthFitness": 1,
+    "ProfessionalService": 0.7,
+    "Other": 0.3
+  },
+  "massageaffairs.nl": {
+    "HealthFitness": 1,
+    "ProfessionalService": 0.7,
+    "Adult": 0.3
+  },
+  "maytag.com": {
+    "ECommerce": 1,
+    "Other": 0.3
+  },
+  "towardsthecloud.com": {
+    "Technology": 1,
+    "Educational": 0.7,
+    "WebApp": 0.3
+  },
+  "amirmustafaofficial.medium.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.7,
+    "Educational": 0.3
+  },
+  "stackabuse.com": {
+    "Educational": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "belastingdienst.nl": {
+    "Government": 1,
+    "FinanceBanking": 0.7,
+    "RegionalLocalService": 0.3
+  },
+  "mijn.belastingdienst.nl": {
+    "Government": 1,
+    "FinanceBanking": 0.7,
+    "WebApp": 0.3
+  },
+  "petities.nl": {
+    "Community": 1,
+    "NonProfitCharity": 0.7
+  },
+  "andrewlock.net": {
+    "PersonalBlog": 1,
+    "Technology": 0.7
+  },
+  "ueat.io": {
+    "ECommerce": 1,
+    "FoodCooking": 0.7
+  },
+  "iuzkfye5xfd.typeform.com": {
+    "WebApp": 1,
+    "Technology": 0.7,
+    "ProfessionalService": 0.3
+  },
+  "reforge.com": {
+    "ProfessionalService": 1,
+    "Educational": 0.7
+  },
+  "advcake.com": {
+    "Advertisement": 1,
+    "Technology": 0.7
+  },
+  "assets.koyeb.com": {
+    "CDN": 0.7,
+    "CloudService": 0.2,
+    "WebApp": 0.1
+  },
+  "emojio.ru": {
+    "Design": 0.7,
+    "Entertainment": 0.2,
+    "Other": 0.1
+  },
+  "cgbot.ru": {
+    "Development": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "wbinsights.ru": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Other": 0.1
+  },
+  "pay.yandex.ru": {
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.2,
+    "CloudService": 0.1
+  },
+  "account.mail.ru": {
+    "Email": 0.8,
+    "Productivity": 0.1,
+    "Technology": 0.1
+  },
+  "evilmartians.com": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "Technology": 0.1
+  },
+  "resizepixel.com": {
+    "Design": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "react-slick.neostack.com": {
+    "WebApp": 0.6,
+    "Development": 0.3,
+    "Design": 0.1
+  },
+  "bytebase.com": {
+    "Technology": 0.7,
+    "Development": 0.2
+  },
+  "internet-technologies.ru": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Development": 0.1
+  },
+  "swiperjs.com": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Design": 0.1
+  },
+  "isovalent.com": {
+    "Technology": 0.7,
+    "CloudService": 0.2,
+    "Other": 0.1
+  },
+  "thank.team": {
+    "NonProfitCharity": 0.6,
+    "Community": 0.3,
+    "Other": 0.1
+  },
+  "jam.me": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Entertainment": 0.1
+  },
+  "rebus.tg": {
+    "Entertainment": 0.6,
+    "Community": 0.3,
+    "Other": 0.1
+  },
+  "geekz.ru": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "apinita.ru": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "okoshki.me": {
+    "DIYCraft": 0.6,
+    "Design": 0.2,
+    "ECommerce": 0.1
+  },
+  "itrielt.ru": {
+    "Educational": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "ruweb.net": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "ruvds.com": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "reddock.ru": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "cloud.reg.ru": {
+    "CloudService": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "seo.ru": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "allremote.jobs": {
+    "Career": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "browsertouse.com": {
+    "Technology": 0.7,
+    "Educational": 0.2,
+    "Other": 0.1
+  },
+  "360.yandex.ru": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Other": 0.1
+  },
+  "firstsitesolutions.com": {
+    "WebApp": 0.6,
+    "Technology": 0.3,
+    "Design": 0.1
+  },
+  "biz.mail.ru": {
+    "Email": 0.7,
+    "Productivity": 0.2,
+    "Technology": 0.1
+  },
+  "rembrandthuis.nl": {
+    "TravelTourism": 0.4
+  },
+  "driverjs.com": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "alfastrah.ru": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Other": 0.1
+  },
+  "rgs.ru": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2
+  },
+  "osagopolicy.sravni.ru": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2
+  },
+  "sravni.id": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2
+  },
+  "renins.ru": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2
+  },
+  "kurs.rb.ru": {
+    "Educational": 0.7,
+    "ProfessionalService": 0.2,
+    "FinanceBanking": 0.1
+  },
+  "j0flpxz65bg.typeform.com": {
+    "WebApp": 0.7,
+    "Technology": 0.1
+  },
+  "howie.ai": {
+    "Technology": 0.7,
+    "WebApp": 0.2
+  },
+  "analytics.twitter.com": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Advertisement": 0.1
+  },
+  "chartjs3.com": {
+    "Development": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "appsloveworld.com": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "ultra.streamlabs.com": {
+    "VideoStreaming": 0.7,
+    "Technology": 0.2,
+    "Entertainment": 0.1
+  },
+  "kommo.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "dooly.ai": {
+    "Productivity": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "uneed.best": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "pointai.docsend.com": {
+    "Technology": 0.7,
+    "ProfessionalService": 0.2,
+    "Other": 0.1
+  },
+  "instantlanding.page": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "fontsquirrel.com": {
+    "Design": 0.7,
+    "WebApp": 0.2,
+    "Technology": 0.1
+  },
+  "transfonter.org": {
+    "WebApp": 1,
+    "Design": 0.7,
+    "Development": 0.3
+  },
+  "safetydetectives.com": {
+    "Technology": 1,
+    "News": 0.6,
+    "Educational": 0.4
+  },
+  "gagliardidomenico.medium.com": {
+    "PersonalBlog": 1,
+    "Community": 0.5,
+    "Technology": 0.5
+  },
+  "neon-next-git-noindex-github-page-neondatabase.vercel.app": {
+    "Development": 1,
+    "WebApp": 0.6,
+    "Technology": 0.4
+  },
+  "zastavok.net": {
+    "Photography": 1,
+    "Design": 0.7,
+    "Entertainment": 0.3
+  },
+  "desktopwallpapers.ru": {
+    "Photography": 1,
+    "Design": 0.7,
+    "Entertainment": 0.3
+  },
+  "wallpapers.99px.ru": {
+    "Photography": 1,
+    "Design": 0.7,
+    "Entertainment": 0.3
+  },
+  "animation.99px.ru": {
+    "Design": 1,
+    "VideoStreaming": 0.6,
+    "Entertainment": 0.4
+  },
+  "weinsure.nl": {
+    "ProfessionalService": 1,
+    "FinanceBanking": 0.7,
+    "RegionalLocalService": 0.3
+  },
+  "mijnloonstrook.nl.adp.com": {
+    "ProfessionalService": 1,
+    "Career": 0.6,
+    "FinanceBanking": 0.4
+  },
+  "online.nl.adp.com": {
+    "CloudService": 1,
+    "ProfessionalService": 0.6,
+    "FinanceBanking": 0.4
+  },
+  "online.emea.adp.com": {
+    "CloudService": 1,
+    "ProfessionalService": 0.6,
+    "FinanceBanking": 0.4
+  },
+  "odacare.com": {
+    "HealthFitness": 1,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "intuitibits.com": {
+    "Technology": 1,
+    "ProfessionalService": 0.6,
+    "Development": 0.4
+  },
+  "witt-software.com": {
+    "SoftwareDownload": 1,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "fosshub.com": {
+    "SoftwareDownload": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "elektronicavoorjou.nl": {
+    "ECommerce": 1,
+    "DIYCraft": 0.6,
+    "Technology": 0.4
+  },
+  "raspberrystore.nl": {
+    "ECommerce": 1,
+    "Technology": 0.7,
+    "DIYCraft": 0.3
+  },
+  "exclusief.vattenfall.nl": {
+    "RegionalLocalService": 1,
+    "ECommerce": 0.6,
+    "FinanceBanking": 0.4
+  },
+  "raspberry-pi-geek.com": {
+    "Technology": 1,
+    "Educational": 0.7,
+    "DIYCraft": 0.3
+  },
+  "copperhilltech.com": {
+    "ECommerce": 1,
+    "Technology": 0.7,
+    "Vehicles": 0.3
+  },
+  "cruisersforum.com": {
+    "Forum": 1,
+    "Community": 0.7,
+    "TravelTourism": 0.3
+  },
+  "marinetraffic.com": {
+    "Technology": 1,
+    "Vehicles": 0.7,
+    "TravelTourism": 0.3
+  },
+  "shipxplorer.com": {
+    "Technology": 1,
+    "Vehicles": 0.7,
+    "TravelTourism": 0.3
+  },
+  "ianrenton.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.5,
+    "DIYCraft": 0.5
+  },
+  "routershop.nl": {
+    "ECommerce": 1,
+    "Technology": 0.7,
+    "DIYCraft": 0.3
+  },
+  "wifishop.nl": {
+    "ECommerce": 1,
+    "Technology": 0.7,
+    "DIYCraft": 0.3
+  },
+  "opus-home.ru": {
+    "ECommerce": 1,
+    "DIYCraft": 0.6,
+    "Technology": 0.4
+  },
+  "rostech.info": {
+    "Technology": 1,
+    "Educational": 0.6,
+    "Development": 0.4
+  },
+  "guard.sso.dzen.ru": {
+    "Technology": 1,
+    "WebApp": 0.3
+  },
+  "eds-perm.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "electric-220.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "partner.yandex.ru": {
+    "ProfessionalService": 1,
+    "Technology": 0.7,
+    "Advertisement": 0.3
+  },
+  "wpallimport.com": {
+    "WebApp": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "woo.com": {
+    "FinanceBanking": 1,
+    "Cryptocurrency": 0.6,
+    "ECommerce": 0.4
+  },
+  "okinovo.com": {
+    "ECommerce": 1,
+    "Vehicles": 0.7,
+    "Technology": 0.3
+  },
+  "electrotrade.biz": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "blog.stephencleary.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.7,
+    "Educational": 0.3
+  },
+  "schneider-pro.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "elektro-tovars.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "owen.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "elektrolight.ru": {
+    "ECommerce": 1,
+    "Technology": 0.6,
+    "DIYCraft": 0.4
+  },
+  "adfox.yandex.ru": {
+    "Advertisement": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "iidf.ru": {
+    "FinanceBanking": 1,
+    "Educational": 0.6,
+    "Technology": 0.4
+  },
+  "pfgrowth.com": {
+    "ProfessionalService": 1,
+    "FinanceBanking": 0.7,
+    "Technology": 0.3
+  },
+  "shizune.co": {
+    "Design": 1,
+    "Technology": 0.7,
+    "WebApp": 0.3
+  },
+  "mirror.xyz": {
+    "Cryptocurrency": 1,
+    "Technology": 0.7,
+    "WebApp": 0.3
+  },
+  "oktamsterdam.mijnjgzdossier.nl": {
+    "HealthFitness": 1,
+    "RegionalLocalService": 0.7,
+    "Government": 0.3
+  },
+  "ggd.amsterdam.nl": {
+    "Government": 1,
+    "HealthFitness": 0.7,
+    "RegionalLocalService": 0.3
+  },
+  "rijksvaccinatieprogramma.nl": {
+    "Government": 1,
+    "HealthFitness": 0.7,
+    "RegionalLocalService": 0.3
+  },
+  "profiel.kpn.com": {
+    "WebApp": 0.7,
+    "PersonalBlog": 0.2,
+    "Unknown": 0.1
+  },
+  "mijn.kpn.com": {
+    "WebApp": 0.7,
+    "PersonalBlog": 0.2,
+    "Unknown": 0.1
+  },
+  "inloggen.kpn.com": {
+    "WebApp": 0.7,
+    "PersonalBlog": 0.2,
+    "Unknown": 0.1
+  },
+  "opbnb.friend3.group": {
+    "OnlineGaming": 0.6,
+    "Community": 0.3,
+    "Unknown": 0.1
+  },
+  "instantly.gg": {
+    "OnlineGaming": 0.8,
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "materials.pointai.tech": {
+    "Technology": 0.7,
+    "Development": 0.1
+  },
+  "instantly.ai": {
+    "Technology": 0.7,
+    "WebApp": 0.2
+  },
+  "instanly.ai": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Development": 0.1
+  },
+  "instant.academy": {
+    "Technology": 0.1,
+    "WebApp": 0.1
+  },
+  "media.dev.to": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Educational": 0.1
+  },
+  "wlada.github.io": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "cssscript.com": {
+    "Development": 0.7,
+    "Technology": 0.2
+  },
+  "kruxor.com": {
+    "Development": 0.7,
+    "Technology": 0.2
+  },
+  "kenwheeler.github.io": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "navalsafetycommand.navy.mil": {
+    "Government": 0.7,
+    "ProfessionalService": 0.1
+  },
+  "naval.com": {
+    "Vehicles": 0.5,
+    "Government": 0.3
+  },
+  "uiinitiative.com": {
+    "Design": 0.7,
+    "Development": 0.2
+  },
+  "7etlk.csb.app": {
+    "Unknown": 0.8,
+    "WebApp": 0.1,
+    "Development": 0.1
+  },
+  "livin24.com": {
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "buroenzo.nl": {
+    "ECommerce": 0.7,
+    "ProfessionalService": 0.2,
+    "Design": 0.1
+  },
+  "albeka.nl": {
+    "ECommerce": 0.7,
+    "ProfessionalService": 0.2,
+    "Other": 0.1
+  },
+  "kimray.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "verwarmenperkamer.nl": {
+    "ECommerce": 0.7,
+    "DIYCraft": 0.2
+  },
+  "loodgietshop.nl": {
+    "ECommerce": 0.7,
+    "DIYCraft": 0.2
+  },
+  "sanispecials.nl": {
+    "ECommerce": 0.7,
+    "DIYCraft": 0.2
+  },
+  "vloerverwarmingstore.nl": {
+    "ECommerce": 0.7,
+    "ProfessionalService": 0.1
+  },
+  "usermanuals.au": {
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "youallnew.nl": {
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "consultant.ru": {
+    "ProfessionalService": 0.7,
+    "FinanceBanking": 0.1
+  },
+  "my.kontur.ru": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "michaelnthiessen.com": {
+    "Technology": 0.2,
+    "PersonalBlog": 0.1
+  },
+  "projekty.filip.us": {
+    "Development": 0.7,
+    "PersonalBlog": 0.1
+  },
+  "eobuwie.com.pl": {
+    "ECommerce": 0.7
+  },
+  "thevalveshop.com": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "lenting.nl": {
+    "ProfessionalService": 0.6,
+    "ECommerce": 0.2,
+    "Technology": 0.2
+  },
+  "koppejanwaterservice.nl": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "uniquewaterservice.nl": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "ECommerce": 0.1
+  },
+  "tomopizzeria.projekty.filip.us": {
+    "FoodCooking": 0.7,
+    "Entertainment": 0.1
+  },
+  "filip.nimbusweb.me": {
+    "PersonalBlog": 0.6,
+    "Development": 0.3
+  },
+  "capturecollect.pixieset.com": {
+    "Photography": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "ardura.pl": {
+    "ECommerce": 0.7,
+    "Vehicles": 0.2,
+    "Other": 0.1
+  },
+  "stronyinternetowe.com": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Design": 0.1
+  },
+  "ardura.com": {
+    "ECommerce": 0.7,
+    "Vehicles": 0.2,
+    "Other": 0.1
+  },
+  "eitt.pl": {
+    "Technology": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "my.wpcodebox.com": {
+    "Technology": 0.7,
+    "Development": 0.2
+  },
+  "nflo.pl": {
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "wpcodebox.com": {
+    "Technology": 0.7,
+    "Development": 0.2
+  },
+  "paszport.projekty.filip.us": {
+    "Government": 0.6,
+    "Technology": 0.1
+  },
+  "creativethemes.com": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "Design": 0.1
+  },
+  "paszport-my.sharepoint.com": {
+    "Government": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "zapadliska.gig.eu": {
+    "Unknown": 1,
+    "RegionalLocalService": 0.01,
+    "Other": 0.01
+  },
+  "zabytkitechniki.pl": {
+    "Community": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "fotopolska.eu": {
+    "Photography": 0.7,
+    "Community": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "file-examples.com": {
+    "Development": 0.7,
+    "Design": 0.2
+  },
+  "flixbus.pl": {
+    "TravelTourism": 0.8,
+    "ECommerce": 0.1,
+    "RegionalLocalService": 0.1
+  },
+  "shop.flixbus.pl": {
+    "ECommerce": 0.7,
+    "TravelTourism": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "ddesigny.com": {
+    "Design": 0.7,
+    "PersonalBlog": 0.2,
+    "Development": 0.1
+  },
+  "mediaexpert.pl": {
+    "ECommerce": 0.7,
+    "Technology": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "paypal.syf.com": {
+    "FinanceBanking": 0.8,
+    "ECommerce": 0.1,
+    "Email": 0.1
+  },
+  "siedmiukrasnoludkow.pl": {
+    "Entertainment": 0.3,
+    "Community": 0.1
+  },
+  "stake.us": {
+    "OnlineGaming": 0.8,
+    "Cryptocurrency": 0.1,
+    "Entertainment": 0.1
+  },
+  "sweepslots.com": {
+    "OnlineGaming": 0.8,
+    "Entertainment": 0.1,
+    "ECommerce": 0.1
+  },
+  "wpmigrationtoday.com": {
+    "ProfessionalService": 0.7,
+    "Development": 0.2,
+    "WebApp": 0.1
+  },
+  "appsumo.com": {
+    "ECommerce": 0.6,
+    "ProfessionalService": 0.3,
+    "Technology": 0.1
+  },
+  "gator4246.hostgator.com": {
+    "WebApp": 0.5,
+    "CloudService": 0.4,
+    "CDN": 0.1
+  },
+  "awzware.com": {
+    "Technology": 0.7,
+    "Development": 0.2,
+    "SoftwareDownload": 0.1
+  },
+  "my.pcloud.com": {
+    "CloudService": 0.8,
+    "Productivity": 0.1,
+    "WebApp": 0.1
+  },
+  "my.a2hosting.com": {
+    "WebApp": 0.5,
+    "CloudService": 0.4,
+    "CDN": 0.1
+  },
+  "download.cnet.com": {
+    "SoftwareDownload": 0.8,
+    "Technology": 0.1,
+    "Media": 0.1
+  },
+  "imazing.com": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "taplink.cc": {
+    "Design": 0.6,
+    "WebApp": 0.3
+  },
+  "sberbank.com": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.1,
+    "RegionalLocalService": 0.1
+  },
+  "jointalknow.app": {
+    "SocialNetwork": 0.7,
+    "WebApp": 0.2
+  },
+  "rtd.mcw.gov.cy": {
+    "Government": 0.8,
+    "HealthFitness": 0.1,
+    "RegionalLocalService": 0.1
+  },
+  "mzv.sk": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.1
+  },
+  "cloud.dolphin.tech": {
+    "CloudService": 0.7,
+    "Technology": 0.2,
+    "WebApp": 0.1
+  },
+  "announcements.bybit.com": {
+    "Cryptocurrency": 0.7,
+    "FinanceBanking": 0.2,
+    "News": 0.1
+  },
+  "landing.galera-club.ru": {
+    "Unknown": 1,
+    "Entertainment": 0.01,
+    "Other": 0.01
+  },
+  "ghisler.com": {
+    "SoftwareDownload": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "dnschecker.org": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Development": 0.1
+  },
+  "interactivebrokers.co.uk": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.1,
+    "Technology": 0.1
+  },
+  "workos.com": {
+    "Technology": 0.6,
+    "CloudService": 0.3,
+    "Development": 0.1
+  },
+  "login.xero.com": {
+    "FinanceBanking": 0.7,
+    "CloudService": 0.2,
+    "WebApp": 0.1
+  },
+  "docs.ozon.ru": {
+    "ECommerce": 0.4,
+    "Technology": 0.1
+  },
+  "vdhsafes.nl": {
+    "ECommerce": 0.6,
+    "ProfessionalService": 0.3,
+    "Technology": 0.1
+  },
+  "psso.no": {
+    "Unknown": 1,
+    "Government": 0.01,
+    "Other": 0.01
+  },
+  "go.veeam.com": {
+    "Technology": 0.6,
+    "CloudService": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "fibery.io": {
+    "Productivity": 0.7,
+    "Collaboration": 0.2,
+    "WebApp": 0.1
+  },
+  "atlantis-project.eu": {
+    "Educational": 0.6,
+    "NonProfitCharity": 0.3
+  },
+  "divinectorweb.com": {
+    "Development": 0.7,
+    "Design": 0.2,
+    "Technology": 0.1
+  },
+  "neon-next-git-home-clone-yt-neondatabase.vercel.app": {
+    "Unknown": 1,
+    "Development": 0.01,
+    "Technology": 0.01
+  },
+  "dashboard.algolia.com": {
+    "WebApp": 0.7,
+    "Technology": 0.2,
+    "Productivity": 0.1
+  },
+  "crawler.algolia.com": {
+    "Technology": 0.7,
+    "WebApp": 0.2,
+    "Development": 0.1
+  },
+  "auto.ru": {
+    "Vehicles": 0.7,
+    "ECommerce": 0.2,
+    "RegionalLocalService": 0.1
+  },
+  "hunger-games-maria-git-header-pixel-point-dev.vercel.app": {
+    "Unknown": 1,
+    "Entertainment": 0.01,
+    "Development": 0.01
+  },
+  "suntliv.eu": {
+    "HealthFitness": 0.7,
+    "ECommerce": 0.2
+  },
+  "jarnesjo.com": {
+    "PersonalBlog": 0.6,
+    "Photography": 0.3,
+    "Design": 0.1
+  },
+  "theodorusclarence.com": {
+    "Design": 0.6,
+    "Development": 0.3,
+    "PersonalBlog": 0.1
+  },
+  "blog.nrwl.io": {
+    "Technology": 0.7,
+    "Development": 0.2
+  },
+  "shop.pimoroni.com": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "DIYCraft": 0.1
+  },
+  "m-locks.com": {
+    "Technology": 0.5,
+    "ProfessionalService": 0.4,
+    "Other": 0.1
+  },
+  "raspberrypi.stackexchange.com": {
+    "Community": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "thepihut.com": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "DIYCraft": 0.1
+  },
+  "robots.net": {
+    "Technology": 0.7,
+    "News": 0.2,
+    "Educational": 0.1
+  },
+  "swifdoo.com": {
+    "Technology": 0.5,
+    "SoftwareDownload": 0.4,
+    "Productivity": 0.1
+  },
+  "flexa.cloud": {
+    "Technology": 0.6,
+    "CloudService": 0.3,
+    "Collaboration": 0.1
+  },
+  "gowork.pl": {
+    "Career": 0.6,
+    "Community": 0.3,
+    "Educational": 0.1
+  },
+  "shop.lufthansa.com": {
+    "ECommerce": 0.7,
+    "TravelTourism": 0.2,
+    "Vehicles": 0.1
+  },
+  "lufthansa.com": {
+    "TravelTourism": 0.7,
+    "ECommerce": 0.2,
+    "ProfessionalService": 0.1
+  },
+  "developer.wordpress.org": {
+    "Educational": 0.6,
+    "Development": 0.3,
+    "Technology": 0.1
+  },
+  "dbeaver.io": {
+    "Technology": 0.5,
+    "SoftwareDownload": 0.4,
+    "Development": 0.1
+  },
+  "community.databricks.com": {
+    "Community": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "linqpad.net": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "SoftwareDownload": 0.1
+  },
+  "improvedtube.com": {
+    "Technology": 0.5,
+    "SoftwareDownload": 0.4,
+    "VideoStreaming": 0.1
+  },
+  "warmteservice.nl": {
+    "ECommerce": 0.6,
+    "Technology": 0.3,
+    "Other": 0.1
+  },
+  "sales.jetbrains.com": {
+    "SoftwareDownload": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "ai2sql.io": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "SoftwareDownload": 0.1
+  },
+  "cart.ebay.com": {
+    "ECommerce": 0.7,
+    "Other": 0.1
+  },
+  "asbconsulting.ru": {
+    "ProfessionalService": 0.5,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "kosmi.io": {
+    "OnlineGaming": 0.5,
+    "Community": 0.3,
+    "VideoStreaming": 0.2
+  },
+  "api.telegram.org": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "SocialNetwork": 0.1
+  },
+  "community.blynk.cc": {
+    "Community": 0.6,
+    "Technology": 0.3,
+    "DIYCraft": 0.1
+  },
+  "cfyr23.notion.site": {
+    "Productivity": 0.6,
+    "WebApp": 0.3,
+    "Design": 0.1
+  },
+  "primarygoals.com": {
+    "Career": 0.6,
+    "ProfessionalService": 0.3,
+    "Educational": 0.1
+  },
+  "eu2.make.com": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Productivity": 0.1
+  },
+  "make.com": {
+    "Technology": 0.6,
+    "WebApp": 0.3,
+    "Productivity": 0.1
+  },
+  "sign.kontur.ru": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "Other": 0.1
+  },
+  "blog.close.com": {
+    "ProfessionalService": 0.5,
+    "Technology": 0.4,
+    "PersonalBlog": 0.1
+  },
+  "creativefabrica.com": {
+    "Design": 0.6,
+    "ECommerce": 0.3,
+    "DIYCraft": 0.1
+  },
+  "books-bundle.com": {
+    "ECommerce": 0.6,
+    "Educational": 0.3,
+    "Entertainment": 0.1
+  },
+  "neon-next-git-home-clone-freecodecamp-neondatabase.vercel.app": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Educational": 0.1
+  },
+  "source.android.com": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "Educational": 0.1
+  },
+  "cyberfolks.pl": {
+    "Technology": 0.5,
+    "ProfessionalService": 0.1
+  },
+  "s156.cyber-folks.pl": {
+    "Technology": 0.5,
+    "Unknown": 0.1
+  },
+  "panel.cyberfolks.pl": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.1
+  },
+  "shiflett.org": {
+    "Technology": 0.5,
+    "PersonalBlog": 0.4,
+    "Development": 0.1
+  },
+  "emailsherpa.net": {
+    "Email": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "warez-v3.org": {
+    "Other": 0.8,
+    "Unknown": 0.1,
+    "Technology": 0.1
+  },
+  "warezbook.org": {
+    "Other": 0.8,
+    "Unknown": 0.1,
+    "Technology": 0.1
+  },
+  "react-tooltip.com": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "WebApp": 0.1
+  },
+  "encryptionconsulting.com": {
+    "ProfessionalService": 0.5,
+    "Technology": 0.4,
+    "Other": 0.1
+  },
+  "csoonline.com": {
+    "News": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "adlice.com": {
+    "Technology": 0.5,
+    "SoftwareDownload": 0.4
+  },
+  "capyysomxk.cfolks.pl": {
+    "Unknown": 0.8,
+    "Technology": 0.1,
+    "Other": 0.1
+  },
+  "cryptorank.io": {
+    "Cryptocurrency": 0.6,
+    "FinanceBanking": 0.3,
+    "News": 0.1
+  },
+  "messages.google.com": {
+    "Technology": 0.6,
+    "Email": 0.1
+  },
+  "pancyprianinsurance.com": {
+    "FinanceBanking": 0.5,
+    "ProfessionalService": 0.4,
+    "Other": 0.1
+  },
+  "beoble.io": {
+    "Technology": 0.6,
+    "SocialNetwork": 0.3,
+    "WebApp": 0.1
+  },
+  "azcoinnews.com": {
+    "Cryptocurrency": 0.6,
+    "News": 0.3,
+    "FinanceBanking": 0.1
+  },
+  "greasyfork.org": {
+    "Development": 0.6,
+    "Technology": 0.3,
+    "Community": 0.1
+  },
+  "app.userback.io": {
+    "WebApp": 0.8,
+    "Design": 0.6,
+    "Collaboration": 0.4
+  },
+  "app.thebookie.nl": {
+    "ProfessionalService": 1,
+    "FinanceBanking": 0.8,
+  },
+  "neon-next-git-ruf-io-cookie-banner-neondatabase.vercel.app": {
+    "Development": 0.8,
+    "WebApp": 0.6,
+    "Technology": 0.4
+  },
+  "hunger-games-maria-git-hero-pixel-point-dev.vercel.app": {
+    "WebApp": 0.8,
+    "Entertainment": 0.6,
+    "Development": 0.4
+  },
+  "harness-next-git-adaptive-platforms-pixelpoint.vercel.app": {
+    "WebApp": 0.8,
+    "Development": 0.6,
+    "CloudService": 0.4
+  },
+  "joma-sport.com": {
+    "ECommerce": 0.8,
+    "Sport": 0.6
+  },
+  "serverfault.com": {
+    "Forum": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "conetix.com.au": {
+    "Technology": 0.6,
+    "CloudService": 0.4
+  },
+  "support.cpanel.net": {
+    "ProfessionalService": 0.8,
+    "Technology": 0.6
+  },
+  "acquia.my.site.com": {
+    "CloudService": 0.8,
+    "Technology": 0.6,
+    "WebApp": 0.4
+  },
+  "wordpress.horje.com": {
+    "WebApp": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "forum.directadmin.com": {
+    "Forum": 0.8,
+    "Technology": 0.6
+  },
+  "linuxquestions.org": {
+    "Forum": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "popups1.getresponse.com": {
+    "Email": 0.8,
+    "Advertisement": 0.4
+  },
+  "app.getresponse.com": {
+    "Email": 0.8,
+    "WebApp": 0.4
+  },
+  "pz.gov.pl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "NonProfitCharity": 0.4
+  },
+  "moj.gov.pl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "NonProfitCharity": 0.4
+  },
+  "gov.pl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "NonProfitCharity": 0.4
+  },
+  "forum.zentyal.org": {
+    "Forum": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "scanner.dev": {
+    "Technology": 0.8,
+    "Development": 0.6,
+    "WebApp": 0.4
+  },
+  "coincodex.com": {
+    "Cryptocurrency": 0.8,
+    "FinanceBanking": 0.6,
+    "News": 0.4
+  },
+  "bitscreener.com": {
+    "Cryptocurrency": 0.8,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "once.com": {
+    "ECommerce": 0.8,
+    "Entertainment": 0.6,
+    "Technology": 0.4
+  },
+  "connectxvr.com.au": {
+    "Technology": 0.8,
+    "Entertainment": 0.6,
+    "VideoStreaming": 0.4
+  },
+  "creedoo.com": {
+    "Educational": 0.8,
+    "Collaboration": 0.6,
+    "WebApp": 0.4
+  },
+  "rightsourcing-gmbh.com": {
+    "ProfessionalService": 0.8,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "neon-next-git-blog-layout-neondatabase.vercel.app": {
+    "Development": 0.8,
+    "WebApp": 0.6,
+    "Design": 0.4
+  },
+  "adamj.eu": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "latera.io": {
+    "Technology": 0.8,
+    "FinanceBanking": 0.6,
+    "Cryptocurrency": 0.4
+  },
+  "outreach2day.com": {
+    "ProfessionalService": 0.6,
+    "Email": 0.4
+  },
+  "wpdatatables.com": {
+    "WebApp": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "cursor.us.auth0.com": {
+    "Technology": 0.8,
+    "WebApp": 0.4
+  },
+  "cursor.sh": {
+    "Technology": 0.8,
+    "SoftwareDownload": 0.6,
+    "Development": 0.4
+  },
+  "docer.pl": {
+    "Educational": 0.8,
+    "Community": 0.4
+  },
+  "odrabiamy.pl": {
+    "Educational": 0.8,
+    "Community": 0.4
+  },
+  "studocu.com": {
+    "Educational": 0.8,
+    "Community": 0.4
+  },
+  "brainly.pl": {
+    "Educational": 0.8,
+    "Community": 0.6
+  },
+  "zpe.gov.pl": {
+    "Government": 0.8,
+    "RegionalLocalService": 0.6,
+    "NonProfitCharity": 0.4
+  },
+  "saturncloud.io": {
+    "CloudService": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "neon-next-git-partners-pricing-updates-neondatabase.vercel.app": {
+    "Development": 0.8,
+    "WebApp": 0.6,
+    "Design": 0.4
+  },
+  "pyinstaller.org": {
+    "SoftwareDownload": 0.8,
+    "Development": 0.6,
+    "Technology": 0.4
+  },
+  "mipsmonsta.medium.com": {
+    "PersonalBlog": 0.8,
+    "Technology": 0.6,
+    "Development": 0.4
+  },
+  "bombline.la": {
+    "ECommerce": 0.8,
+    "Design": 0.4
+  },
+  "szkola-edukacja.pl": {
+    "Educational": 0.8,
+    "Community": 0.6
+  },
+  "cloud5.edupage.org": {
+    "Educational": 0.8,
+    "WebApp": 0.6,
+    "Technology": 0.4
+  },
+  "888kicks.ru": {
+    "ECommerce": 0.8,
+    "Sport": 0.4
+  },
+  "pl.webqc.org": {
+    "Educational": 0.8,
+    "Technology": 0.6
+  },
+  "inpost.pl": {
+    "ECommerce": 0.8,
+    "RegionalLocalService": 0.4
+  },
+  "help.revolut.com": {
+    "FinanceBanking": 0.8,
+    "ProfessionalService": 0.6,
+    "Technology": 0.4
+  },
+  "help.crypto.com": {
+    "Cryptocurrency": 0.8,
+    "FinanceBanking": 0.6,
+    "Technology": 0.4
+  },
+  "merchant.binance.com": {
+    "Cryptocurrency": 1,
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.3
+  },
+  "developerboring.studio": {
+    "Development": 1,
+    "Design": 0.5,
+    "WebApp": 0.5
+  },
+  "kosneaker.com": {
+    "ECommerce": 1
+  },
+  "dopesneaker.co": {
+    "ECommerce": 1
+  },
+  "perfectkicks.top": {
+    "ECommerce": 1
+  },
+  "ckshoes.com": {
+    "ECommerce": 1
+  },
+  "riastorewear.ru": {
+    "ECommerce": 1
+  },
+  "dwsneakers9.com": {
+    "ECommerce": 1
+  },
+  "playground.wordpress.net": {
+    "WebApp": 1,
+    "Development": 0.5
+  },
+  "thewpweekly.com": {
+    "Technology": 1,
+    "Community": 0.5,
+    "Educational": 0.5
+  },
+  "tastewp.com": {
+    "WebApp": 1,
+    "Development": 0.5,
+    "Technology": 0.5
+  },
+  "lufthansa.miles-and-more.com": {
+    "TravelTourism": 1,
+    "ECommerce": 0.7
+  },
+  "top.pl": {
+    "ECommerce": 1,
+    "Technology": 0.5,
+    "Other": 0.5
+  },
+  "pasazer.com": {
+    "TravelTourism": 1,
+    "News": 0.6,
+    "Community": 0.4
+  },
+  "ochnik.com": {
+    "ECommerce": 1
+  },
+  "travelkit.ro": {
+    "ECommerce": 1,
+    "TravelTourism": 0.7
+  },
+  "wittchen.com": {
+    "ECommerce": 1
+  },
+  "campingshop.pl": {
+    "ECommerce": 1,
+    "TravelTourism": 0.7
+  },
+  "esky.pl": {
+    "TravelTourism": 1,
+    "ECommerce": 0.7
+  },
+  "esta.cbp.dhs.gov": {
+    "Government": 1,
+    "TravelTourism": 0.7
+  },
+  "cbp.gov": {
+    "Government": 1,
+    "Educational": 0.7,
+    "Other": 0.3
+  },
+  "pl.aliexpress.com": {
+    "ECommerce": 1
+  },
+  "wifi-installatie.nl": {
+    "ProfessionalService": 1,
+    "Technology": 0.7,
+    "ECommerce": 0.3
+  },
+  "pitstop.manageengine.com": {
+    "Technology": 1,
+    "SoftwareDownload": 0.7
+  },
+  "panjeh.medium.com": {
+    "PersonalBlog": 1,
+    "Technology": 0.7
+  },
+  "repost.aws": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "sergazin.notion.site": {
+    "PersonalBlog": 1,
+    "Design": 0.7,
+    "Development": 0.3
+  },
+  "onedrive.live.com": {
+    "CloudService": 1,
+    "Productivity": 0.7,
+    "Collaboration": 0.3
+  },
+  "www-git-shiki-update-koyeb.vercel.app": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "airbyte.prod.anl.specha.co": {
+    "CloudService": 1,
+    "Technology": 0.7,
+    "Development": 0.3
+  },
+  "pg.prod.anl.specha.co": {
+    "Technology": 1,
+    "Development": 0.7,
+    "CloudService": 0.3
+  },
+  "justjoin.it": {
+    "Career": 1,
+    "Technology": 0.7,
+    "ProfessionalService": 0.3
+  },
+  "app.stand1.dev.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.specha.dev": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.dev.spatial.chat": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.spatial.chat": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.dev.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.stand1.dev.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.app.stand1.dev.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "neon-next-git-github-stars-count-neondatabase.vercel.app": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp-dev.spatial.chat": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmpdev.spatial.chat": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "admin.stand1.dev.spa.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "bmp.specha.co": {
+    "Unknown": 1,
+    "Development": 0.1,
+    "Technology": 0.1
+  },
+  "accu-chek.nl": {
+    "HealthFitness": 1,
+    "ECommerce": 0.7,
+    "Educational": 0.3
+  },
+  "nextra.site": {
+    "WebApp": 1,
+    "Development": 0.7,
+    "Technology": 0.3
+  },
+  "accu-chek.com": {
+    "HealthFitness": 1,
+    "ECommerce": 0.7,
+    "Educational": 0.3
+  },
+  "userback.io": {
+    "SoftwareDownload": 1,
+    "Development": 0.7,
+    "Technology": 0.3
+  },
+  "groq.com": {
+    "Technology": 1,
+    "CloudService": 0.7,
+    "Development": 0.3
+  },
+  "out.com": {
+    "News": 0.5,
+    "Entertainment": 0.5,
+    "Other": 0
+  },
+  "app.photoroom.com": {
+    "Photography": 0.7,
+    "WebApp": 0.3,
+    "Design": 0
+  },
+  "zwangerenportaal.nl": {
+    "HealthFitness": 0.6,
+    "Community": 0.3,
+    "RegionalLocalService": 0.1
+  },
+  "id.zwangerenportaal.nl": {
+    "HealthFitness": 0.7,
+    "WebApp": 0.2
+  },
+  "mysugr.com": {
+    "HealthFitness": 0.8,
+    "WebApp": 0.1,
+    "Technology": 0.1
+  },
+  "futbolcup.pl": {
+    "OnlineGaming": 0.7,
+    "Sport": 0.3,
+    "Entertainment": 0
+  },
+  "login.futbolcup.pl": {
+    "OnlineGaming": 0.7,
+    "WebApp": 0.2,
+    "Sport": 0.1
+  },
+  "p23.zdusercontent.com": {
+    "CDN": 0.6,
+    "Media": 0.3,
+    "Other": 0.1
+  },
+  "hygraph.com": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "CloudService": 0.1
+  },
+  "discuss.dgraph.io": {
+    "Forum": 0.7,
+    "Technology": 0.2,
+    "Development": 0.1
+  },
+  "graphql.org": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "sii.org.pl": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.2
+  },
+  "prodel.com.pl": {
+    "Technology": 0.5,
+    "ECommerce": 0.4,
+    "Other": 0.1
+  },
+  "forbot.pl": {
+    "Educational": 0.6,
+    "Technology": 0.3,
+    "Forum": 0.1
+  },
+  "emagserwis.pl": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3,
+    "ECommerce": 0.1
+  },
+  "smd.emagserwis.pl": {
+    "ProfessionalService": 0.7,
+    "Technology": 0.2,
+    "Other": 0.1
+  },
+  "sensortower.slack.com": {
+    "Collaboration": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "nordwindairlines.ru": {
+    "TravelTourism": 0.6,
+    "Vehicles": 0.3,
+    "ECommerce": 0.1
+  },
+  "secure.chase.com": {
+    "FinanceBanking": 0.7,
+    "ECommerce": 0.1
+  },
+  "ultimaterewardspoints.chase.com": {
+    "FinanceBanking": 0.8,
+    "ECommerce": 0.1,
+    "Advertisement": 0.1
+  },
+  "minders.vc": {
+    "FinanceBanking": 0.5,
+    "ProfessionalService": 0.4,
+    "NonProfitCharity": 0.1
+  },
+  "lnkd.in": {
+    "SocialNetwork": 0.6,
+    "ProfessionalService": 0.3,
+    "Career": 0.1
+  },
+  "donate.acf.international": {
+    "NonProfitCharity": 0.8,
+    "Other": 0.1,
+    "FinanceBanking": 0.1
+  },
+  "blockchain.com": {
+    "Cryptocurrency": 0.7,
+    "FinanceBanking": 0.2,
+    "Technology": 0.1
+  },
+  "bscscan.com": {
+    "Cryptocurrency": 0.8,
+    "Technology": 0.1,
+    "FinanceBanking": 0.1
+  },
+  "personnel.com.pl": {
+    "Career": 0.6,
+    "ProfessionalService": 0.3,
+    "Other": 0.1
+  },
+  "tagassistant.google.com": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "WebApp": 0.1
+  },
+  "v3.vitejs.ru": {
+    "Development": 0.7,
+    "Technology": 0.2,
+    "Educational": 0.1
+  },
+  "musicstrive.com": {
+    "AudioStreaming": 0.6,
+    "Entertainment": 0.3
+  },
+  "guitarcompass.com": {
+    "Entertainment": 0.3
+  },
+  "link.alfabank.ru": {
+    "FinanceBanking": 0.7,
+    "ECommerce": 0.2
+  },
+  "id.alfabank.ru": {
+    "FinanceBanking": 0.7,
+    "ECommerce": 0.1
+  },
+  "business.auth.alfabank.ru": {
+    "FinanceBanking": 0.7,
+    "ProfessionalService": 0.2,
+    "Technology": 0.1
+  },
+  "agencyscalingsecrets.com": {
+    "ProfessionalService": 0.5,
+    "Advertisement": 0.3,
+    "OnlineGaming": 0.2
+  },
+  "apicemconsultingltd.co.uk": {
+    "ProfessionalService": 0.6,
+    "Technology": 0.3
+  },
+  "us-east-1.signin.aws.amazon.com": {
+    "CloudService": 0.7,
+    "Technology": 0.1
+  },
+  "ncluster.sharepoint.com": {
+    "Collaboration": 0.6,
+    "CloudService": 0.3,
+    "Productivity": 0.1
+  },
+  "fishkernfl.com": {
+    "PersonalBlog": 0.5,
+    "Unknown": 0.4,
+    "RegionalLocalService": 0.1
+  },
+  "gig.eu": {
+    "FinanceBanking": 0.6,
+    "Technology": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "rp.pl": {
+    "News": 0.7,
+    "RegionalLocalService": 0.2,
+    "Media": 0.1
+  },
+  "rachunkowosc.com.pl": {
+    "ProfessionalService": 0.6,
+    "FinanceBanking": 0.3
+  },
+  "rynekzdrowia.pl": {
+    "HealthFitness": 0.6,
+    "News": 0.3,
+    "ProfessionalService": 0.1
+  },
+  "emojicopy.com": {
+    "Productivity": 0.6,
+    "Entertainment": 0.3,
+    "Technology": 0.1
+  },
+  "deepsolutions.it": {
+    "Technology": 0.6,
+    "ProfessionalService": 0.3,
+    "Development": 0.1
+  },
+  "novu.co": {
+    "Technology": 0.6,
+    "Development": 0.3,
+    "CloudService": 0.1
+  },
+  "vergaderen.twinq.nl": {
+    "Collaboration": 0.6,
+    "ProfessionalService": 0.3,
+    "Technology": 0.1
+  },
+  "track.dyme.app": {
+    "FinanceBanking": 0.6,
+    "Technology": 0.2,
+    "PersonalBlog": 0.2
+  },
+  "accounts.ebay.com": {
+    "ECommerce": 0.7,
+    "FinanceBanking": 0.2,
+    "WebApp": 0.1
+  },
+  "signin.ebay.com": {
+    "ECommerce": 0.7,
+    "WebApp": 0.1
+  },
+  "prescan.activehosted.com": {
+    "Email": 0.6,
+    "Technology": 0.1
   }
 }
