@@ -24,9 +24,12 @@ export type ErrorResponse = {
   errorMsg: string;
 };
 
-export type AuthMethodContext = {
+export type ApiMethodContext = {
   req: NextApiRequest;
   res: NextApiResponse;
+};
+
+export type AuthMethodContext = ApiMethodContext & {
   session: SessionId;
 };
 
