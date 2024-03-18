@@ -2,19 +2,19 @@ import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
 const receivers = [
-  'vannnyle@gmail.com',
-  'almas.abulkhairov@gmail.com',
-  'nompo4ta@gmail.com',
-  'smyk.oa@gmail.com',
-  'kartikeyj123@gmail.com',
-  'msaco.testacc@gmail.com',
-  'td.eliteclass@gmail.com',
-  'ebenezerrahul@gmail.com',
+  // 'vannnyle@gmail.com',
+  // 'almas.abulkhairov@gmail.com',
+  // 'nompo4ta@gmail.com',
+  // 'smyk.oa@gmail.com',
+  // 'kartikeyj123@gmail.com',
+  // 'msaco.testacc@gmail.com',
+  // 'td.eliteclass@gmail.com',
+  // 'ebenezerrahul@gmail.com',
   'd3liaz@gmail.com',
   // 'castlewania.alex@gmail.com',
-  'ahmmburr.rose@gmail.com',
-  'hello@filip.us',
-  'cbuspri@outlook.com',
+  // 'ahmmburr.rose@gmail.com',
+  // 'hello@filip.us',
+  // 'cbuspri@outlook.com',
 ];
 
 function getHtml() {
@@ -42,10 +42,19 @@ function getHtml() {
             font-size: 14px;
             color: #555
         }
+
+        .unsubscribe {
+            font-size: 11px;
+            color: #999
+        }
+
+        .unsubscribe a {
+            color: #999;
+        }
     </style>
 </head>
 <body>
-  <main>
+<main>
     <p class="content">
         Hi,
         <br/> This is Denis from TrackerJam.com ⏰
@@ -53,20 +62,26 @@ function getHtml() {
     </p>
 
     <p class="content">
-        It's been some time now since you joined the TrackerJam and I would love to hear what you think about our web tracker.
+        It's been some time now since you joined the TrackerJam and I would love to hear what you think about our web
+        tracker.
         <br/>Does it help you track your web activity? What features do you miss?
     </p>
     <p class="content">
         Let me know if you want to have a video call to discuss it.
     </p>
-  </main>
+</main>
 
-  <footer class="footer">
+<footer class="footer">
     <p>
         -----<br/>
         Best regards, <br/>
         Denis from <a href="https://trackerjam.com/">TrackerJam.com</a>
     </p>
+    <p class="unsubscribe">
+        You are receiving this email because you signed up for TrackerJam. If you don't want to receive these emails in
+        the future, you can <a href="%unsubscribe_url%">unsubscribe</a>.
+    </p>
+
 </footer>
 </body>
 </html>
