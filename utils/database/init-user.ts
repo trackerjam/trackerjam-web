@@ -1,9 +1,21 @@
+import type {User} from '@prisma/client';
+import * as Sentry from '@sentry/nextjs';
 import prismadb from '../../lib/prismadb';
 import {DEFAULT_TEAM_NAME} from '../../const/team';
-export async function initUserFirstTime(userId: string) {
-  const hasTeams = await userHasTeams(userId);
+import {sendWelcomeEmail} from '../api/email/send-welcome-email';
+import {logger} from '../../lib/logger';
+
+export async function initUserFirstTime(user: User) {
+  const hasTeams = await userHasTeams(user.id);
   if (!hasTeams) {
-    await createDefaultTeam(userId);
+    await createDefaultTeam(user.id);
+
+    if (!user.email) {
+      logger.error('Missing user email server');
+      Sentry.captureMessage('Missing user email server');
+    } else {
+      await sendWelcomeEmail(user.email);
+    }
   }
 }
 

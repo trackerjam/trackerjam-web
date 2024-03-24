@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id;
 
         // Create default records when user signs in first time
-        await initUserFirstTime(user.id);
+        await initUserFirstTime(user);
       }
       return session;
     },

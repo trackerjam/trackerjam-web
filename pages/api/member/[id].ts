@@ -7,7 +7,7 @@ import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, PublicMethodContext} from '../../../types/api';
 import {DEFAULT_TEAM_NAME} from '../../../const/team';
 import {CreateMemberDataType, EditMemberDataType} from '../../../types/member';
-import {sendTokenMail} from '../../../utils/api/send-mail';
+import {sendTokenMail} from '../../../utils/api/email/send-token-email';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {getSubscriptionStatus} from '../subs';

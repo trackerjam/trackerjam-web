@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../const/url';
+import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../../const/url';
 
 function getHtml(token: string) {
   return `
@@ -56,6 +56,15 @@ function getHtml(token: string) {
         .footer a, .footer a:visited {
             color: #ccc
         }
+
+        .unsubscribe {
+            font-size: 11px;
+            color: #999
+        }
+
+        .unsubscribe a {
+            color: #999;
+        }
     </style>
 </head>
 <body>
@@ -70,16 +79,18 @@ function getHtml(token: string) {
 <a class="cta-button" href="${CHROME_EXTENSION_URL}" target="_blank">Install Chrome Extension</a>
 <a class="cta-button" href="${EDGE_EXTENSION_URL}" target="_blank">Install Edge Extension</a>
 
-<p>
-    <small>
-        Ignore this email if you are not expecting any tracking key and do not know what TrackerJam is.
-    </small>
-</p>
-
 <footer class="footer">
     <a href="https://trackerjam.com/">
         TrackerJam.com
     </a>
+
+    <p class="unsubscribe">
+        You are receiving this email because someone added you at Trackerjam.com as a team member.
+        <br/>
+        Please ignore this email if you are not expecting any tracking keys.
+        <br/>
+        If you don't want to receive these emails in the future, you can <a href="%unsubscribe_url%">unsubscribe</a>.
+    </p>
 </footer>
 
 </body>
