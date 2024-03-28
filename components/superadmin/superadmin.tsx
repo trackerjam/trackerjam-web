@@ -1,5 +1,6 @@
 'use client';
 import {Table} from 'flowbite-react';
+import {Sparklines, SparklinesBars} from 'react-sparklines';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse} from '../../types/api';
@@ -55,6 +56,7 @@ export function Superadmin() {
                   <Table.HeadCell>Email</Table.HeadCell>
                   <Table.HeadCell>CreatedAt</Table.HeadCell>
                   <Table.HeadCell>Members</Table.HeadCell>
+                  <Table.HeadCell>7-day Usage</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
                   {data?.users.map((user, index) => (
@@ -72,6 +74,21 @@ export function Superadmin() {
                       <Table.Cell>{formatDateFull(user.createdAt)}</Table.Cell>
                       <Table.Cell>
                         <MemberDots membersInfo={user?.member} />
+                      </Table.Cell>
+                      <Table.Cell>
+                        {user?.member?.map((info, idx) => {
+                          return (
+                            <div key={idx} className="mb-0.5">
+                              <Sparklines
+                                data={info.activityTimeByDates.map((a) => a.activityTime)}
+                                svgHeight={15}
+                                svgWidth={120}
+                              >
+                                <SparklinesBars style={{fill: '#4a9ec2'}} />
+                              </Sparklines>
+                            </div>
+                          );
+                        })}
                       </Table.Cell>
                     </Table.Row>
                   ))}

@@ -141,6 +141,11 @@ export type MemberCountsInfo = {
     memberEvent: number;
   };
   lastSessionEndDatetime?: string;
+  activityTimeByDates: MemberUsageInfo[];
+};
+export type MemberUsageInfo = {
+  date: string;
+  activityTime: number;
 };
 export type SuperadminResponse = {
   users: (User & {

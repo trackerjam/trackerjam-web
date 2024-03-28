@@ -1,15 +1,26 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import * as Sentry from '@sentry/nextjs';
+import {isWithinInterval, subDays} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
-import {AuthMethodContext} from '../../../types/api';
+import {AuthMethodContext, MemberUsageInfo} from '../../../types/api';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {checkAdminAccess} from '../../../utils/check-admin-access';
 import {PerfMarks} from '../../../utils/perf';
 import {logger} from '../../../lib/logger';
 import {classifyDomain, isKnownDomain} from '../../../utils/classification/classification';
 import {maskEmailAddress} from '../../../utils/mask-email';
+import {getIsoDateString} from '../../../utils/get-iso-date-string';
+
+const TIME_WINDOW_DAYS = 7;
+const isWithinTimeWindow = (date: Date | string) => {
+  const now = new Date();
+  const startDate = subDays(now, TIME_WINDOW_DAYS);
+  const checkDate = typeof date === 'string' ? new Date(date) : date;
+
+  return isWithinInterval(checkDate, {start: startDate, end: now});
+};
 
 async function get({res, session}: AuthMethodContext) {
   const perf = new PerfMarks();
@@ -32,9 +43,10 @@ async function get({res, session}: AuthMethodContext) {
               orderBy: {
                 date: 'desc',
               },
-              take: 1,
+              take: TIME_WINDOW_DAYS,
               select: {
                 lastSessionEndDatetime: true,
+                activityTime: true,
               },
             },
             _count: true,
@@ -53,6 +65,16 @@ async function get({res, session}: AuthMethodContext) {
           return {
             lastSessionEndDatetime: summary[0]?.lastSessionEndDatetime,
             _count,
+            activityTimeByDates: summary.reduce((mem, {activityTime, lastSessionEndDatetime}) => {
+              if (!isWithinTimeWindow(lastSessionEndDatetime as Date)) {
+                return mem;
+              }
+              mem.push({
+                date: getIsoDateString(lastSessionEndDatetime as Date),
+                activityTime: activityTime as number,
+              });
+              return mem;
+            }, [] as MemberUsageInfo[]),
           };
         }),
       };
