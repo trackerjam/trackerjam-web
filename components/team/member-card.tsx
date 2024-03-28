@@ -3,7 +3,7 @@ import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
 import {LuCopyCheck, LuTimer, LuAppWindow} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit} from 'react-icons/bi';
+import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit, BiLinkExternal} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
 import {useMemo, useState} from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter, ModalButton, ROLE} from 'baseui/modal';
@@ -18,10 +18,12 @@ import {Button} from '../common/button';
 import {WorkHours} from '../common/work-hours';
 import {UserStatusDot} from '../common/user-status-dot';
 import {formatTimeDuration} from '../../utils/format-time-duration';
+import {PRICING_URL} from '../../const/url';
 
 interface MemberCardProps {
   data: TeamMembersType;
   onDelete: () => void;
+  hasNoSubscription: boolean;
 }
 
 const menuItems = [
@@ -47,7 +49,7 @@ const menuItems = [
 
 const NO_DATA_STR = '-';
 
-export function MemberCard({data, onDelete}: MemberCardProps) {
+export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps) {
   const {name, title, token, lastSummary, id: memberId} = data;
   const [deleteShown, setDeleteShown] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -221,17 +223,32 @@ export function MemberCard({data, onDelete}: MemberCardProps) {
       <hr className={clsx(hrStyle, 'mt-auto')} />
 
       <div className="flex justify-end mt-2">
-        <Button
-          type="button"
-          kind="gray"
-          size="md"
-          onClick={async () => {
-            await push(`/team/${memberId}`);
-          }}
-        >
-          Statistics
-          <BiRightArrowAlt title="" />
-        </Button>
+        {hasNoSubscription && (
+          <a
+            href={PRICING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 border border-solid border-yellow-300 text-yellow-800 p-2 rounded-lg bg-yellow-100 hover:bg-yellow-200 hover:text-green-800 transition-colors"
+          >
+            <span className="inline-flex gap-1 items-center ">
+              Upgrade plan
+              <BiLinkExternal title="" />
+            </span>
+          </a>
+        )}
+        {!hasNoSubscription && (
+          <Button
+            type="button"
+            kind="gray"
+            size="md"
+            onClick={async () => {
+              await push(`/team/${memberId}`);
+            }}
+          >
+            Statistics
+            <BiRightArrowAlt title="" />
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -151,7 +151,14 @@ export function Team() {
             </div>
           )}
           {teamData?.map((userData) => {
-            return <MemberCard key={userData.id} data={userData} onDelete={handleCardDelete} />;
+            return (
+              <MemberCard
+                key={userData.id}
+                data={userData}
+                hasNoSubscription={hasNoSubs}
+                onDelete={handleCardDelete}
+              />
+            );
           })}
         </div>
       )}
