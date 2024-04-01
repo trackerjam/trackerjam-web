@@ -62,9 +62,7 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
   const handleMenuClick = async (id: string) => {
     switch (id) {
       case 'copy':
-        copy(token);
-        setIsToastOpen(true);
-        setShortToken(shortenUUID(token));
+        await copyTrackingKey();
         break;
       case 'edit':
         push(`/team/edit-member/${memberId}`);
@@ -80,6 +78,12 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
     await send(null, 'DELETE');
     onDelete();
     setIsDeleting(false);
+  };
+
+  const copyTrackingKey = async () => {
+    copy(token);
+    setIsToastOpen(true);
+    setShortToken(shortenUUID(token));
   };
 
   const hrStyle = 'border-t border-black border-opacity-[0.08]';
@@ -222,7 +226,17 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
 
       <hr className={clsx(hrStyle, 'mt-auto')} />
 
-      <div className="flex justify-end mt-2">
+      <div className="flex justify-between mt-2">
+        <Button
+          type="button"
+          kind="gray"
+          size="md"
+          onClick={async () => {
+            await copyTrackingKey();
+          }}
+        >
+          Tracking key
+        </Button>
         {hasNoSubscription && (
           <a
             href={PRICING_URL}
