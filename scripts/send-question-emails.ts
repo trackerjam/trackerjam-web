@@ -1,20 +1,47 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
-const receivers = [
-  // 'vannnyle@gmail.com',
-  // 'almas.abulkhairov@gmail.com',
-  // 'nompo4ta@gmail.com',
-  // 'smyk.oa@gmail.com',
-  // 'kartikeyj123@gmail.com',
-  // 'msaco.testacc@gmail.com',
-  // 'td.eliteclass@gmail.com',
-  // 'ebenezerrahul@gmail.com',
+const sent = [
+  'vannnyle@gmail.com',
+  'almas.abulkhairov@gmail.com',
+  'nompo4ta@gmail.com',
+  'smyk.oa@gmail.com',
+  'kartikeyj123@gmail.com',
+  'msaco.testacc@gmail.com',
+  'td.eliteclass@gmail.com',
+  'ebenezerrahul@gmail.com',
+  'castlewania.alex@gmail.com',
+  'ahmmburr.rose@gmail.com',
+  'hello@filip.us',
+  'cbuspri@outlook.com',
+];
+
+const allUsers = [
+  'airobot67@gmail.com',
+  'decorkkmc@gmail.com',
+  'chahalvishal000@gmail.com',
+  'brizhaclaudiaatoch@gmail.com',
+  'qerqt22@gmail.com',
+  'ishii@fmi.co.jp',
+  'lizheng8318@gmail.com',
+  'pawankumaragarwal1782@gmail.com',
+  'vannnyle@gmail.com',
+  'almas.abulkhairov@gmail.com',
+  'nompo4ta@gmail.com',
+  'smyk.oa@gmail.com',
+  'kartikeyj123@gmail.com',
+  'msaco.testacc@gmail.com',
+  'td.eliteclass@gmail.com',
+  'ebenezerrahul@gmail.com',
   'd3liaz@gmail.com',
-  // 'castlewania.alex@gmail.com',
-  // 'ahmmburr.rose@gmail.com',
-  // 'hello@filip.us',
-  // 'cbuspri@outlook.com',
+  'castlewania.alex@gmail.com',
+  'ahmmburr.rose@gmail.com',
+  'hello@filip.us',
+  'cbuspri@outlook.com',
+  'aravindnirmal10@gmail.com',
+  'shradhadalvi3051@gmail.com',
+  'anushreeshekhar120@gmail.com',
+  'iblondin@tink.ca',
 ];
 
 function getHtml() {
@@ -109,7 +136,9 @@ export async function sendEmail(to: string) {
 }
 
 (async () => {
-  for (const receiver of receivers) {
+  const emailsToSend = allUsers.filter((email) => !sent.includes(email));
+
+  for (const receiver of emailsToSend) {
     console.log('Sending email to: ', receiver);
     const res = await sendEmail(receiver);
     console.log('Email sent: ', res.response);
