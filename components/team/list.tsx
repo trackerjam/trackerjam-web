@@ -9,12 +9,12 @@ import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
 import {Button} from '../common/button';
-import {PRICING_URL} from '../../const/url';
 import {useGetSubStatus} from '../hooks/use-get-sub-status';
 import {useSendData} from '../hooks/use-send-data';
 import {ListSkeleton} from './list-skeleton';
 import {MemberCard} from './member-card';
 import {WelcomeModal} from './welcome-modal';
+import {SubscriptionBanners} from './sub-banners';
 
 export const GRID_TEMPLATE = 'repeat(auto-fit, minmax(250px, 350px))';
 
@@ -63,10 +63,7 @@ export function Team() {
   const hasAddFirstButton = !isLoading && teamData.length === 0;
 
   const canAddMember = !isSubsLoading && subsStatus?.canAddMember;
-  const hasReachedLimit =
-    !isSubsLoading && !subsStatus?.canAddMember && subsStatus?.status === PaymentStatus.ACTIVE;
   const hasNoSubs = !isSubsLoading && subsStatus?.status !== PaymentStatus.ACTIVE;
-  const hasTrial = !isSubsLoading && subsStatus?.hasTrial;
 
   return (
     <>
@@ -90,51 +87,7 @@ export function Team() {
         </div>
       </div>
 
-      {(hasReachedLimit || hasNoSubs) && (
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 mt-2">
-          {hasReachedLimit && (
-            <>
-              <p className="font-bold">You have reached the limit of members</p>
-              <p>You can add more members to your team by upgrading your subscription. </p>
-            </>
-          )}
-
-          {hasNoSubs && (
-            <>
-              <p className="font-bold">You have no active subscription</p>
-              <p>You can start adding members by upgrading your subscription. </p>
-            </>
-          )}
-
-          <a
-            href={PRICING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-2 border border-solid border-yellow-800 p-2 rounded-lg bg-yellow-50 hover:bg-green-200 hover:text-green-800 transition-colors"
-          >
-            Upgrade plan
-          </a>
-        </div>
-      )}
-
-      {hasTrial && (
-        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 mt-2">
-          <p className="font-bold">You are on a trial period</p>
-          <p className="text-14 text-blue-500">
-            Enjoy all the features of TrackerJam for free.
-            <br /> Do not forget to upgrade your plan before the trial ends on{' '}
-            <span className="font-bold">{subsStatus?.trialEndsAt}</span>.
-          </p>
-          <a
-            href={PRICING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-2 border border-solid border-blue-800 p-2 rounded-lg bg-blue-50 hover:bg-green-200 hover:text-green-800 transition-colors"
-          >
-            Upgrade plan
-          </a>
-        </div>
-      )}
+      <SubscriptionBanners subsStatus={subsStatus} isSubsLoading={isSubsLoading} />
 
       {isLoading && <ListSkeleton />}
       {!isLoading && (
