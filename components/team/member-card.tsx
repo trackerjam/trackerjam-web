@@ -1,7 +1,7 @@
 import Avatar from 'boring-avatars';
 import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
-import {LuCopyCheck, LuTimer, LuAppWindow} from 'react-icons/lu';
+import {LuCopyCheck, LuTimer, LuAppWindow, LuCopy} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit, BiLinkExternal} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
@@ -235,6 +235,7 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
             await copyTrackingKey();
           }}
         >
+          <LuCopy title="" className="mr-1" />
           Tracking key
         </Button>
         {hasNoSubscription && (
@@ -253,7 +254,7 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
         {!hasNoSubscription && (
           <Button
             type="button"
-            kind="gray"
+            kind="primary"
             size="md"
             onClick={async () => {
               await push(`/team/${memberId}`);

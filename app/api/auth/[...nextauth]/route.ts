@@ -5,7 +5,7 @@ import EmailProvider from 'next-auth/providers/email';
 
 import {User} from '@prisma/client';
 import prisma from '../../../../lib/prismadb';
-import {initUserFirstTime} from '../../../../utils/database/init-user';
+import {initUserFirstTime, shouldInitUser} from '../../../../utils/database/init-user';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -27,7 +27,10 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id;
 
         // Create default records when user signs in first time
-        await initUserFirstTime(user as User);
+        if (await shouldInitUser(user as User)) {
+          session.user.isNewUser = true; // To make the redirect in the page.tsx
+          await initUserFirstTime(user as User);
+        }
       }
       return session;
     },

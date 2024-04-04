@@ -5,17 +5,19 @@ import {DEFAULT_TEAM_NAME} from '../../const/team';
 import {sendWelcomeEmail} from '../api/email/send-welcome-email';
 import {logger} from '../../lib/logger';
 
-export async function initUserFirstTime(user: User) {
+export async function shouldInitUser(user: User) {
   const hasTeams = await userHasTeams(user.id);
-  if (!hasTeams) {
-    await createDefaultTeam(user.id);
+  return !hasTeams;
+}
 
-    if (!user.email) {
-      logger.error('Missing user email server');
-      Sentry.captureMessage('Missing user email server');
-    } else {
-      await sendWelcomeEmail(user.email);
-    }
+export async function initUserFirstTime(user: User) {
+  await createDefaultTeam(user.id);
+
+  if (!user.email) {
+    logger.error('Missing user email server');
+    Sentry.captureMessage('Missing user email server');
+  } else {
+    await sendWelcomeEmail(user.email);
   }
 }
 

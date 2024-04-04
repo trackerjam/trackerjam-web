@@ -10,7 +10,7 @@ import {ErrorDetails} from '../common/error-details';
 import {GetTeamResponse} from '../../types/api';
 import {Button} from '../common/button';
 import {useGetSubStatus} from '../hooks/use-get-sub-status';
-import {useSendData} from '../hooks/use-send-data';
+import {useConfirmNotification} from '../hooks/use-confirm-notification';
 import {ListSkeleton} from './list-skeleton';
 import {MemberCard} from './member-card';
 import {WelcomeModal} from './welcome-modal';
@@ -23,7 +23,7 @@ export function Team() {
   const {data: notificationData, isLoading: isNotificationLoading} = useGetData<{welcome: string}>(
     '/api/notifications'
   );
-  const {send: setNotification} = useSendData('/api/notifications');
+  const confirmNotification = useConfirmNotification();
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const {data: subsStatus, isLoading: isSubsLoading} = useGetSubStatus();
   const router = useRouter();
@@ -36,7 +36,7 @@ export function Team() {
       const showWelcome = Boolean(!notificationData?.welcome && !isNotificationLoading);
       if (showWelcome) {
         setShowWelcomeModal(true);
-        await setNotification({name: 'welcome'}, 'PUT');
+        await confirmNotification('welcome');
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

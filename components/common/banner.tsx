@@ -3,6 +3,7 @@ import React from 'react';
 const BANNER_TYPE_CLASS = {
   info: 'bg-blue-100 border-l-4 border-blue-500 text-blue-700',
   warning: 'bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700',
+  success: 'bg-green-100 border-l-4 border-green-500 text-green-700',
 };
 
 type BannerType = keyof typeof BANNER_TYPE_CLASS;

@@ -5,7 +5,7 @@ import React, {useCallback, useState} from 'react';
 import {KIND, Notification} from 'baseui/notification';
 import {Tooltip} from 'flowbite-react';
 
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {BiCaretDown, BiCaretRight, BiHide, BiMinusCircle} from 'react-icons/bi';
 import {BsInfoCircle} from 'react-icons/bs';
 import {ControlledInput} from '../../common/controlled-input';
@@ -20,6 +20,10 @@ import {Button} from '../../common/button';
 import {DEFAULT_SETTINGS_IDLE_TIME_SEC} from '../../../const/team';
 import {ErrorResponse} from '../../../types/api';
 import {DAY} from '../../../const/member';
+import {Banner} from '../../common/banner';
+import {USER_FIRST_INIT_PARAM} from '../../../const/url';
+import {WelcomeModal} from '../welcome-modal';
+import {useConfirmNotification} from '../../hooks/use-confirm-notification';
 import {RadioTrackMode} from './form/radio-track-mode';
 import {TIME_PRESETS, WorkHours} from './form/work-hours';
 
@@ -46,6 +50,10 @@ const defaultValues: CreateMemberDataType = {
 export function MemberForm({editingMember}: CreateMemberProps) {
   const isEditing = Boolean(editingMember);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isInitPage = searchParams?.has(USER_FIRST_INIT_PARAM);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const confirmNotification = useConfirmNotification();
 
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
     isEditing ? `/api/member/${editingMember?.id}` : '/api/member'
@@ -107,6 +115,14 @@ export function MemberForm({editingMember}: CreateMemberProps) {
     setValue('settings.workHours.time', newVal);
   };
 
+  const handleOpenWelcomeModal = () => {
+    setShowWelcomeModal(true);
+    confirmNotification('welcome');
+  };
+  const handleCloseWelcomeModal = () => {
+    setShowWelcomeModal(false);
+  };
+
   const formSectionStyle = 'border border-black border-opacity-[0.08] rounded-lg p-4';
 
   const trackMode = watch('settings.trackMode');
@@ -120,6 +136,29 @@ export function MemberForm({editingMember}: CreateMemberProps) {
 
   return (
     <form className="flex flex-col gap-y-2" onSubmit={handleSubmit(onSubmit)}>
+      {isInitPage && (
+        <Banner type="success">
+          <div className="flex flex-col gap-3">
+            <strong className="text-20">
+              <span>👋</span> Welcome to TrackerJam!
+            </strong>
+            <p>Let&apos;s create a first member. It can be for you or your team member.</p>
+            <p>
+              Read our{' '}
+              <span className="pointer underline" role="button" onClick={handleOpenWelcomeModal}>
+                Welcome
+              </span>{' '}
+              message for more details.
+            </p>
+          </div>
+
+          <WelcomeModal
+            isOpen={showWelcomeModal}
+            onClose={handleCloseWelcomeModal}
+            hideCreateButton={true}
+          />
+        </Banner>
+      )}
       {Boolean(error) && (
         <Notification
           kind={KIND.negative}

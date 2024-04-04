@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {FaSpinner} from 'react-icons/fa';
 const kindClassNames = {
   primary:
-    'text-white bg-green-700 flex hover:bg-slate-950 font-medium items-center py-3.5 px-4 rounded-lg hover:disabled:bg-green-700',
+    'text-white bg-green-600 flex hover:bg-slate-950 font-medium items-center py-3.5 px-4 rounded-lg hover:disabled:bg-green-700',
   secondary:
     'text-black bg-white px-4 py-3.5 rounded-lg hover:bg-[#E2E2E2] disabled:bg-[#292929] disabled:text-[#6b6b6b] hover:disabled:bg-white',
   gray: 'px-2 py-1.5 text-12 text-black bg-gray-80 rounded-lg hover:bg-gray-90 hover:disabled:bg-gray-80',

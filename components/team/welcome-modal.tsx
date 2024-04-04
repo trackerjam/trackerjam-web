@@ -12,9 +12,10 @@ import {CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../const/url';
 interface WelcomeProps {
   isOpen: boolean;
   onClose: () => void;
+  hideCreateButton?: boolean;
 }
 
-export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
+export function WelcomeModal({isOpen, onClose, hideCreateButton = false}: WelcomeProps) {
   const trackEvent = useTrackEvent();
 
   return (
@@ -118,16 +119,18 @@ export function WelcomeModal({isOpen, onClose}: WelcomeProps) {
           <Button className="mt-4" kind="gray" onClick={() => onClose()}>
             Close
           </Button>
-          <Button className="mt-4" onClick={() => onClose()}>
-            <Link
-              href="/team/add-member"
-              onClick={() => {
-                trackEvent('click-create-member-welcome-button');
-              }}
-            >
-              Create a new Member
-            </Link>
-          </Button>
+          {!hideCreateButton && (
+            <Button className="mt-4" onClick={() => onClose()}>
+              <Link
+                href="/team/add-member"
+                onClick={() => {
+                  trackEvent('click-create-member-welcome-button');
+                }}
+              >
+                Create a new Member
+              </Link>
+            </Button>
+          )}
         </div>
       </Modal.Body>
     </Modal>

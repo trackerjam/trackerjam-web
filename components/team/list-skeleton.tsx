@@ -1,5 +1,5 @@
 import {Skeleton} from 'baseui/skeleton';
-import {GRID_TEMPLATE} from './list';
+import {GRID_TEMPLATE} from './team';
 
 export function ListSkeleton() {
   return (
