@@ -12,6 +12,7 @@ import {logger} from '../../../lib/logger';
 import {classifyDomain, isKnownDomain} from '../../../utils/classification/classification';
 import {maskEmailAddress} from '../../../utils/mask-email';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
+import {calcTrialEnd} from '../../../utils/api/calc-trial-end';
 
 const TIME_WINDOW_DAYS = 7;
 const isWithinTimeWindow = (date: Date | string) => {
@@ -60,6 +61,7 @@ async function get({res, session}: AuthMethodContext) {
       const {member, ...rest} = user;
       return {
         ...rest,
+        trialEndsAt: calcTrialEnd(user.createdAt as Date),
         email: user?.email ? maskEmailAddress(user.email) : '(unknown)',
         member: member.map(({summary, _count}) => {
           return {

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, {useMemo} from 'react';
 import {Tooltip} from 'flowbite-react';
 import {MemberCountsInfo} from '../../types/api';
-import {formatDateFull} from '../../utils/date';
+import {formatDateTime} from '../../utils/date';
 
 interface MemberDotsProps {
   membersInfo: MemberCountsInfo[];
@@ -38,7 +38,7 @@ export function MemberDots({membersInfo}: MemberDotsProps) {
                 <div>Member events: {memberEvent}</div>
                 <div>
                   Last session:{' '}
-                  {lastSessionEndDatetime ? formatDateFull(lastSessionEndDatetime) : 'none'}
+                  {lastSessionEndDatetime ? formatDateTime(lastSessionEndDatetime) : 'none'}
                 </div>
               </div>
             }

@@ -1,13 +1,14 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import * as Sentry from '@sentry/nextjs';
 import {PaymentStatus} from '@prisma/client';
-import {addDays, format} from 'date-fns';
+import {format} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
 import {AuthMethodContext, SubscriptionStatusResponse} from '../../../types/api';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
-import {PRODUCT_LIMITS, TRIAL_DAYS} from '../../../const/payment';
+import {PRODUCT_LIMITS} from '../../../const/payment';
+import {calcTrialEnd} from '../../../utils/api/calc-trial-end';
 
 // Get user subscription status
 export async function getSubscriptionStatus(userId: string): Promise<SubscriptionStatusResponse> {
@@ -36,7 +37,7 @@ export async function getSubscriptionStatus(userId: string): Promise<Subscriptio
     }
 
     const now = new Date();
-    const trialEndsAt = addDays(new Date(user.createdAt), TRIAL_DAYS);
+    const trialEndsAt = calcTrialEnd(user.createdAt);
     const hasTrial = now < trialEndsAt;
 
     if (hasTrial) {

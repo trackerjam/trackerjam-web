@@ -149,6 +149,7 @@ export type MemberUsageInfo = {
 };
 export type SuperadminResponse = {
   users: (User & {
+    trialEndsAt: string;
     member: MemberCountsInfo[];
     provider: string;
   })[];
