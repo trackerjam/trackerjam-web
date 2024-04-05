@@ -1,13 +1,14 @@
 'use client';
 
 import {useForm} from 'react-hook-form';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {KIND, Notification} from 'baseui/notification';
 import {Tooltip} from 'flowbite-react';
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {BiCaretDown, BiCaretRight, BiHide, BiMinusCircle} from 'react-icons/bi';
 import {BsInfoCircle} from 'react-icons/bs';
+import classnames from 'classnames';
 import {ControlledInput} from '../../common/controlled-input';
 import {useSendData} from '../../hooks/use-send-data';
 import {extractDomains} from '../../../utils/extract-domains';
@@ -58,10 +59,11 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
     isEditing ? `/api/member/${editingMember?.id}` : '/api/member'
   );
-  const {handleSubmit, control, setValue, watch, getValues, register} = useForm({
-    reValidateMode: 'onBlur',
-    defaultValues: editingMember || defaultValues,
-  });
+  const {handleSubmit, control, setValue, watch, getValues, register, setFocus, getFieldState} =
+    useForm({
+      reValidateMode: 'onChange',
+      defaultValues: editingMember || defaultValues,
+    });
   const [excludedListShown, setExcludedListShown] = useState(
     Boolean(editingMember?.settings.excludeDomains?.length)
   );
@@ -123,16 +125,27 @@ export function MemberForm({editingMember}: CreateMemberProps) {
     setShowWelcomeModal(false);
   };
 
-  const formSectionStyle = 'border border-black border-opacity-[0.08] rounded-lg p-4';
-
   const trackMode = watch('settings.trackMode');
   const settings = watch('settings');
   const domainListsDisabled = trackMode === 'ALL';
   const AdvancedCaredIcon = showAdvanced ? BiCaretDown : BiCaretRight;
-
-  const textAreaClass = 'bg-gray-100 rounded-lg p-4 w-full';
-
   const hasTimeMetadata = Boolean(editingMember?.createdAt || editingMember?.updatedAt);
+
+  const formSectionStyle = 'border border-black border-opacity-[0.08] rounded-lg p-4';
+  const textAreaClass = 'bg-stone-50 border-2 border-stone-200 rounded-lg p-4 w-full';
+
+  const textAreaClassWrapper = classnames({
+    hidden: domainListsDisabled,
+  });
+
+  useEffect(() => {
+    if (!domainListsDisabled) {
+      const {isTouched} = getFieldState('settings.trackMode');
+      if (isTouched) {
+        setFocus('settings.includeDomains');
+      }
+    }
+  }, [domainListsDisabled]);
 
   return (
     <form className="flex flex-col gap-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -201,8 +214,11 @@ export function MemberForm({editingMember}: CreateMemberProps) {
       <h3 className="text-20 leading-tight mt-4 font-bold mb-2.5">Tracking mode</h3>
 
       <div className={formSectionStyle}>
-        <RadioTrackMode control={control} name="settings.trackMode" />
-        <div>
+        <div className="py-2">
+          <RadioTrackMode control={control} name="settings.trackMode" />
+        </div>
+
+        <div className={textAreaClassWrapper}>
           <textarea
             {...register('settings.includeDomains')}
             className={textAreaClass}

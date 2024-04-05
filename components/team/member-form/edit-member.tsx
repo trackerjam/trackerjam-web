@@ -2,6 +2,7 @@
 import {useGetData} from '../../hooks/use-get-data';
 import {EditMemberDataType} from '../../../types/member';
 import {ErrorDetails} from '../../common/error-details';
+import {Spinner} from '../../common/spinner';
 import {MemberForm} from './member-form';
 
 interface Params {
@@ -18,7 +19,7 @@ export function EditMember({editingId}: Params) {
   return (
     <>
       {error && <ErrorDetails error={error} />}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <Spinner />}
       {Boolean(editingMember) && <MemberForm editingMember={editingMember} />}
     </>
   );
