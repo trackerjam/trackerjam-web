@@ -35,6 +35,7 @@ Returns member settings
         "showDomainsCount": boolean,
         "showSessionsCount": boolean
     }
+    "subscriptionStatus": <STATUS> | null | undefined
 }
 ```
 

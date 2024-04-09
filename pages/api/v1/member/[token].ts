@@ -71,6 +71,12 @@ async function get({req, res}: PublicMethodContext) {
       },
     });
 
+    const subscriptionRecord = await prismadb.payment.findUnique({
+      where: {
+        userId: member.mangerId,
+      },
+    });
+
     if (!settingsRecord?.settings) {
       const msg = `MemberSettings not found, memberId: ${member.id}`;
       console.error(msg);
@@ -78,7 +84,11 @@ async function get({req, res}: PublicMethodContext) {
     }
 
     const settings = settingsRecord?.settings ?? {};
-    return res.status(200).json({token, settings});
+    return res.status(200).json({
+      token,
+      settings,
+      subscriptionStatus: subscriptionRecord?.status,
+    });
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
     console.error(e);
