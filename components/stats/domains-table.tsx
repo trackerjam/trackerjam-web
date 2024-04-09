@@ -177,7 +177,7 @@ export function DomainsTable({
                             }}
                             className="flex items-center gap-2 border-2 border-gray-100 rounded px-1 text-12 text-gray-700 hover:bg-blue-200 transition-colors duration-150"
                           >
-                            Focus
+                            Details
                             <BsEyeFill
                               title="Focus on domain"
                               size={18}
