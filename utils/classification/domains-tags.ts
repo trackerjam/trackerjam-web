@@ -32291,7 +32291,9 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Other": 0.1
   },
   "pornhub.com": {
-    "Adult": 1
+    "Adult": 1,
+    "VideoStreaming": 0.8,
+    "Media": 0.3,
   },
   "pornone.com": {
     "Adult": 1
