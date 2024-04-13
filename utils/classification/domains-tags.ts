@@ -51968,8 +51968,8 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "News": 0.5
   },
   "indiehackers.com": {
-    "Community": 1,
-    "Technology": 0.8,
+    "Technology": 0.9,
+    "Community": 0.9,
     "Educational": 0.5
   },
   "infullbroker.ru": {
