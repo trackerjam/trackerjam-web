@@ -5,6 +5,7 @@ import {buildError} from '../../../utils/build-error';
 import {ApiMethodContext, PublicMethodContext} from '../../../types/api';
 import {classifyDomain, isKnownDomain} from '../../../utils/classification/classification';
 import {getProductivityScore} from '../../../utils/classification/get-score';
+import {logger} from '../../../lib/logger';
 
 async function get({req, res}: ApiMethodContext) {
   const {domain} = req.query;
@@ -17,6 +18,13 @@ async function get({req, res}: ApiMethodContext) {
     const domainsTags = classifyDomain(domain as string);
     const isKnown = isKnownDomain(domain as string);
     const score = getProductivityScore(domainsTags);
+
+    logger.info('Domain classification', {
+      domain: domain as string,
+      tags: domainsTags,
+      score,
+      isKnown,
+    });
 
     return res.status(200).json({
       tags: domainsTags,
