@@ -6,7 +6,7 @@ export const TAG_PRODUCTIVITY_SCORE: {[tag: string]: number} = {
   CDN: 0.6, // Content delivery is useful for web-related tasks.
   CloudService: 0.9, // Often used for work-related file storage.
   Collaboration: 1, // Directly related to teamwork and project management.
-  Community: 0.5, // Can be related to professional networking.
+  Community: 0.6, // Can be related to professional networking.
   Cryptocurrency: 0.3, // Less relevant to typical office tasks.
   Design: 0.9, // Relevant for design and media tasks.
   Development: 1, // For software and web development.
