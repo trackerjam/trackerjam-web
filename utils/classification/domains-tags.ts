@@ -51968,8 +51968,8 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "News": 0.5
   },
   "indiehackers.com": {
-    "Technology": 1,
-    "Community": 0.5,
+    "Community": 1,
+    "Technology": 0.8,
     "Educational": 0.5
   },
   "infullbroker.ru": {
@@ -57792,13 +57792,14 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Technology": 0.5
   },
   "pitchwall.co": {
-    "Career": 0.7,
-    "ProfessionalService": 0.5,
-    "Other": 0.1
+    "Technology": 0.7,
+    "Career": 0.2,
+    "ProfessionalService": 0.1,
   },
   "betalist.com": {
-    "Technology": 0.6,
-    "Community": 0.4
+    "Technology": 0.7,
+    "Community": 0.4,
+    "Design": 0.1
   },
   "aaply.app": {
     "WebApp": 0.8,
