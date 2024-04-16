@@ -6,10 +6,9 @@ import {Member} from '@prisma/client';
 import {BsPlusCircle} from 'react-icons/bs';
 import {Banner} from '../../common/banner';
 import {Button} from '../../common/button';
-import {ADD_NEW_MEMBER, CHROME_EXTENSION_URL, EDGE_EXTENSION_URL} from '../../../const/url';
+import {ADD_NEW_MEMBER} from '../../../const/url';
 import {useTrackEvent} from '../../hooks/use-track-event';
-import ChromeStoreImage from './chrome-store.png';
-import EdgeStoreImage from './edge-store.png';
+import {ExtensionLinksBlock} from '../../common/extension-links-block/extension-links-block';
 import InsertKeyScreen from './insert-key-screen.png';
 
 interface DoneScreenProps {
@@ -67,35 +66,7 @@ export function DoneScreen({member}: DoneScreenProps) {
         </div>
       </Banner>
 
-      <div className="mt-6 p-8 bg-stone-100 rounded-xl">
-        <h3 className="mb-2 text-16 font-bold">Install the browser extension</h3>
-
-        <div className="flex gap-4">
-          <a
-            href={CHROME_EXTENSION_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="hover:shadow-lg transition-shadow duration-200 ease-in-out"
-          >
-            <Image
-              src={ChromeStoreImage}
-              alt="Chrome store"
-              width={200}
-              height={60}
-              className="mt-2"
-            />
-          </a>
-
-          <a
-            href={EDGE_EXTENSION_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="hover:shadow-lg transition-shadow duration-200 ease-in-out"
-          >
-            <Image src={EdgeStoreImage} alt="Edge store" width={200} height={60} className="mt-2" />
-          </a>
-        </div>
-      </div>
+      <ExtensionLinksBlock classNames="w-full" />
 
       <div className="mt-4">
         <a
