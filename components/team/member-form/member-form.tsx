@@ -60,7 +60,7 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const isInitPage = searchParams?.has(USER_FIRST_INIT_PARAM);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const confirmNotification = useConfirmNotification();
-  const [displayedScreen, setDisplayedScreen] = useState<SCREENS>(SCREENS.DONE);
+  const [displayedScreen, setDisplayedScreen] = useState<SCREENS>(SCREENS.FORM);
   const [createResult, setCreateResult] = useState<null | Member>(null);
 
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
