@@ -143,8 +143,9 @@ export function MemberStatistics({memberId}: {memberId: string}) {
       {isLoading && <Spinner size="lg" />}
 
       {!hasCurrentDayData && hasDataResponse && (
-        <div className="flex flex-row justify-between items-center">
-          <h3 className="text-gray-500 text-20">No data available yet</h3>
+        <div className="flex flex-col gap-2">
+          <h3 className="text-gray-500 text-20">Waiting for first data to come in...</h3>
+          <p>It may take up to 5 minutes for the first data to appear.</p>
         </div>
       )}
 
