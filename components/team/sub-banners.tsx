@@ -47,7 +47,7 @@ export function SubscriptionBanners({subsStatus, isSubsLoading}: SubscriptionBan
   return (
     <>
       {(hasReachedLimit || hasNoSubs) && (
-        <Banner type="warning">
+        <Banner type="info">
           {hasReachedLimit && <ReachedLimitMessage />}
           {hasNoSubs && <NoSubsMessage />}
           <ContactForTrialExtension />
