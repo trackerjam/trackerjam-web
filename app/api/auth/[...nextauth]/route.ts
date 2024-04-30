@@ -37,6 +37,8 @@ export const authOptions: NextAuthOptions = {
   },
   theme: {
     colorScheme: 'light',
+    logo: '/logo-small.png',
+    brandColor: '#6E6DA9',
   },
 };
 
