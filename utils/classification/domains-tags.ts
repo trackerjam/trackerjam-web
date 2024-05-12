@@ -55032,11 +55032,6 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Educational": 0.7,
     "Design": 0.3
   },
-  "feely.one": {
-    "HealthFitness": 1,
-    "PersonalBlog": 0.6,
-    "Other": 0.4
-  },
   "accounts.autodesk.com": {
     "ProfessionalService": 1,
     "Productivity": 0.6,
@@ -71034,8 +71029,7 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Media": 0.1
   },
   "app.feely.one": {
-    "HealthFitness": 0.7,
-    "WebApp": 0.2,
+    "WebApp": 0.8,
     "Technology": 0.1
   },
   "statology.org": {
@@ -71242,11 +71236,6 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "Educational": 0.4,
     "WebApp": 0.3,
     "Other": 0.3
-  },
-  "xn--ap-ulc.feely.one": {
-    "Adult": 0.6,
-    "Unknown": 0.2,
-    "Other": 0.2
   },
   "wpvivid.com": {
     "Technology": 0.4,
