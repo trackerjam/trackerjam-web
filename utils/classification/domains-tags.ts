@@ -365,11 +365,6 @@ export const DOMAIN_TAGS: DomainTagsStruct = {
     "ECommerce": 0.7,
     "Technology": 0.6
   },
-  "example.com": {
-    "Unknown": 1,
-    "Other": 0.5,
-    "Technology": 0.05
-  },
   "facebook-hardware.com": {
     "Technology": 1,
     "SocialNetwork": 0.8,
