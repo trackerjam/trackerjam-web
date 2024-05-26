@@ -47,108 +47,57 @@ function bucketizeDomains(hourData: HourlyData, N = 5): HourlyData {
 
 export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[] {
   const hourlyData = Array.from({length: 24}, (_, i) => ({
-    id: String(i).padStart(2, '0') + 'h',
-    [TOTAL_KEY]: 0, // Initialize the 'total' property to 0 for each hour
+    id: `${i.toString().padStart(2, '0')}h`,
+    [TOTAL_KEY]: 0,
   })) as HourlyData[];
 
   data.forEach((session) => {
     session.sessionActivities.forEach((activity) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const start = new Date(Date.parse(activity.startDatetime));
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const end = new Date(Date.parse(activity.endDatetime));
+      let start = new Date(activity.startDatetime);
+      let end = new Date(activity.endDatetime);
 
-      // Convert start and end dates to UTC
-      let startUTC = new Date(
-        Date.UTC(
-          start.getUTCFullYear(),
-          start.getUTCMonth(),
-          start.getUTCDate(),
-          start.getUTCHours(),
-          start.getUTCMinutes(),
-          start.getUTCSeconds()
-        )
-      );
-      let endUTC = new Date(
-        Date.UTC(
-          end.getUTCFullYear(),
-          end.getUTCMonth(),
-          end.getUTCDate(),
-          end.getUTCHours(),
-          end.getUTCMinutes(),
-          end.getUTCSeconds()
-        )
-      );
+      // Correct end time if it exceeds the current day
+      const endOfDay = new Date(start);
+      endOfDay.setUTCHours(23, 59, 59);
+      if (end > endOfDay) end = endOfDay;
 
-      // Adjust the end time if it exceeds the day boundary
-      const endOfDay = new Date(
-        Date.UTC(
-          startUTC.getUTCFullYear(),
-          startUTC.getUTCMonth(),
-          startUTC.getUTCDate(),
-          23,
-          59,
-          59
-        )
-      );
-      if (endUTC > endOfDay) {
-        endUTC = endOfDay;
-      }
+      while (start < end) {
+        const hourIndex = start.getUTCHours();
+        const nextHour = new Date(start);
+        nextHour.setUTCHours(hourIndex + 1, 0, 0);
+        const intervalEnd = end > nextHour ? nextHour : end;
+        const durationSeconds = (intervalEnd.getTime() - start.getTime()) / 1000;
+        const currentHourData = hourlyData[hourIndex];
 
-      let durationSeconds = (endUTC.getTime() - startUTC.getTime()) / 1000; // Convert to seconds
+        // Ensure the domain property exists
+        currentHourData[session.domainName] = currentHourData[session.domainName] || 0;
 
-      while (durationSeconds > 0) {
-        const currentHour = startUTC.getUTCHours();
-        const endOfCurrentHour = new Date(
-          Date.UTC(
-            startUTC.getUTCFullYear(),
-            startUTC.getUTCMonth(),
-            startUTC.getUTCDate(),
-            currentHour + 1,
-            0,
-            0
-          )
+        // Update seconds for the current hour and total
+        const secondsToAdd = Math.min(
+          3600 - (currentHourData[session.domainName] as number),
+          durationSeconds
         );
 
-        let currentHourSeconds;
-        if (endUTC > endOfCurrentHour) {
-          currentHourSeconds = (endOfCurrentHour.getTime() - startUTC.getTime()) / 1000; // Convert to seconds
-          startUTC = endOfCurrentHour;
-        } else {
-          currentHourSeconds = durationSeconds;
+        // Ensure the domain property exists and is treated as a number
+        if (typeof currentHourData[session.domainName] !== 'number') {
+          currentHourData[session.domainName] = 0; // Ensure initialization as a number
         }
+        (currentHourData[session.domainName] as number) += secondsToAdd;
+        currentHourData[TOTAL_KEY] += secondsToAdd;
 
-        if (!hourlyData[currentHour][session.domainName]) {
-          hourlyData[currentHour][session.domainName] = 0;
-        }
-
-        // Add the current hour's seconds but make sure not to exceed 3600 seconds (1 hour)
-        const totalSecondsInCurrentHour = hourlyData[currentHour][session.domainName] as number;
-        const remainingSeconds = 3600 - totalSecondsInCurrentHour;
-        const secondsToAdd = Math.min(remainingSeconds, currentHourSeconds);
-        (hourlyData[currentHour][session.domainName] as number) += secondsToAdd;
-
-        // Update the 'total' property in seconds
-        hourlyData[currentHour][TOTAL_KEY] += secondsToAdd;
-
-        durationSeconds -= currentHourSeconds;
+        // Move to next interval
+        start = intervalEnd;
       }
     });
   });
 
-  // Convert all values (except 'id' and 'total') from seconds to minutes
+  // Convert to minutes for domain-specific and total values
   hourlyData.forEach((hourData) => {
-    for (const key in hourData) {
+    Object.keys(hourData).forEach((key) => {
       if (key !== 'id' && key !== TOTAL_KEY) {
         hourData[key] = (hourData[key] as number) / 60;
       }
-    }
-  });
-
-  // Convert the 'total' property from seconds to minutes
-  hourlyData.forEach((hourData) => {
+    });
     hourData[TOTAL_KEY] /= 60;
   });
 
