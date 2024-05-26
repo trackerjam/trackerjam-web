@@ -45,26 +45,68 @@ function bucketizeDomains(hourData: HourlyData, N = 5): HourlyData {
   return clonedHourData;
 }
 
-export function getHourlyData(data: MemberStatisticActivityType[]): HourlyData[] {
+export function getHourlyData(
+  data: MemberStatisticActivityType[],
+  useLocalTime: boolean = false
+): HourlyData[] {
   const hourlyData = Array.from({length: 24}, (_, i) => ({
     id: `${i.toString().padStart(2, '0')}h`,
     [TOTAL_KEY]: 0,
   })) as HourlyData[];
 
+  const getHourIndex = (date: Date): number => {
+    return useLocalTime ? date.getHours() : date.getUTCHours();
+  };
+
+  const adjustToLocalTime = (date: Date): Date => {
+    return useLocalTime
+      ? new Date(
+          date.toLocaleString('en-US', {timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone})
+        )
+      : date;
+  };
+
   data.forEach((session) => {
     session.sessionActivities.forEach((activity) => {
-      let start = new Date(activity.startDatetime);
-      let end = new Date(activity.endDatetime);
+      const startUTC = new Date(activity.startDatetime);
+      const endUTC = new Date(activity.endDatetime);
 
-      // Correct end time if it exceeds the current day
+      let start = adjustToLocalTime(startUTC);
+      let end = adjustToLocalTime(endUTC);
+
+      // Calculate the original and adjusted hours
+      const originalStartHour = startUTC.getUTCHours();
+      const adjustedStartHour = start.getHours();
+
+      // Filter out activities that fall into the next day after applying the local time zone
+      if (useLocalTime && adjustedStartHour < originalStartHour) {
+        return;
+      }
+
+      // Define the boundaries of the current day
+      const startOfDay = new Date(start);
       const endOfDay = new Date(start);
-      endOfDay.setUTCHours(23, 59, 59);
+      if (useLocalTime) {
+        startOfDay.setHours(0, 0, 0, 0);
+        endOfDay.setHours(23, 59, 59, 999);
+      } else {
+        startOfDay.setUTCHours(0, 0, 0, 0);
+        endOfDay.setUTCHours(23, 59, 59, 999);
+      }
+
+      // Adjust start and end times to be within the current day
+      if (start < startOfDay) start = startOfDay;
       if (end > endOfDay) end = endOfDay;
 
-      while (start < end) {
-        const hourIndex = start.getUTCHours();
+      // Ensure activity falls within the same day
+      while (start < end && start <= endOfDay) {
+        const hourIndex = getHourIndex(start);
         const nextHour = new Date(start);
-        nextHour.setUTCHours(hourIndex + 1, 0, 0);
+        if (useLocalTime) {
+          nextHour.setHours(hourIndex + 1, 0, 0);
+        } else {
+          nextHour.setUTCHours(hourIndex + 1, 0, 0);
+        }
         const intervalEnd = end > nextHour ? nextHour : end;
         const durationSeconds = (intervalEnd.getTime() - start.getTime()) / 1000;
         const currentHourData = hourlyData[hourIndex];

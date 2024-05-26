@@ -2,6 +2,7 @@ import {useMemo, useState} from 'react';
 import dynamic from 'next/dynamic';
 import {useStyletron} from 'baseui';
 import {Checkbox} from 'baseui/checkbox';
+import {Button} from 'flowbite-react';
 import {MemberStatisticActivityType} from '../../../types/api';
 import {OTHER_BUCKET_STR} from '../../../const/string';
 import {getHourlyData, TOTAL_KEY} from './get-hourly-data';
@@ -18,7 +19,8 @@ interface TimelineChartProps {
 }
 
 export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
-  const [isDetailsEnabled, setIsDetailsEnabled] = useState<boolean>(false);
+  const [isDetailsEnabled, setIsDetailsEnabled] = useState<boolean>(true);
+  const [useBrowserTimeZone, setUseBrowserTimeZone] = useState<boolean>(true);
   const [css, theme] = useStyletron();
 
   const wrapperStyle = css({
@@ -44,7 +46,7 @@ export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
       if (focusedDomainName) {
         filteredData = data.filter((d) => d.domainName === focusedDomainName);
       }
-      const chartData = getHourlyData(filteredData);
+      const chartData = getHourlyData(filteredData, useBrowserTimeZone);
       const domains = getDomainNamesFromData(chartData);
 
       return {
@@ -53,7 +55,7 @@ export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
       };
     }
     return {};
-  }, [data, focusedDomainName]);
+  }, [data, focusedDomainName, useBrowserTimeZone]);
 
   const chartKeys = isDetailsEnabled ? domains : [TOTAL_KEY];
 
@@ -64,13 +66,38 @@ export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
         {Boolean(focusedDomainName) && ` for ${focusedDomainName}`}
       </h3>
 
-      <div className={chartSettingsStyle}>
-        <Checkbox
-          checked={isDetailsEnabled}
-          onChange={(e) => setIsDetailsEnabled(e.target.checked)}
-        >
-          Domain details
-        </Checkbox>
+      <div className="flex justify-end">
+        <div className={chartSettingsStyle}>
+          <Button
+            size="xs"
+            color={useBrowserTimeZone ? 'dark' : 'gray'}
+            className="!text-10 p-0 mr-1"
+            onClick={() => {
+              setUseBrowserTimeZone(true);
+            }}
+          >
+            Local Time
+          </Button>
+          <Button
+            size="xs"
+            color={useBrowserTimeZone ? 'gray' : 'dark'}
+            className="!text-10 p-0"
+            onClick={() => {
+              setUseBrowserTimeZone(false);
+            }}
+          >
+            UTC Time
+          </Button>
+        </div>
+
+        <div className={chartSettingsStyle}>
+          <Checkbox
+            checked={isDetailsEnabled}
+            onChange={(e) => setIsDetailsEnabled(e.target.checked)}
+          >
+            Domain details
+          </Checkbox>
+        </div>
       </div>
 
       <div className={timelineChartStyle}>
@@ -93,7 +120,7 @@ export function TimelineChart({data, focusedDomainName}: TimelineChartProps) {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'UTC Hour',
+            legend: useBrowserTimeZone ? 'Hour' : 'UTC Hour',
             legendPosition: 'middle',
             legendOffset: 32,
           }}
