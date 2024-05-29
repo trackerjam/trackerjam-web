@@ -147,12 +147,15 @@ export type MemberUsageInfo = {
   date: string;
   activityTime: number;
 };
+
+export type SuperadminResponseUser = User & {
+  trialEndsAt: string;
+  member: MemberCountsInfo[];
+  provider: string;
+  product: number | null;
+};
 export type SuperadminResponse = {
-  users: (User & {
-    trialEndsAt: string;
-    member: MemberCountsInfo[];
-    provider: string;
-  })[];
+  users: SuperadminResponseUser[];
   domains: {
     classified: number;
     unclassified: number;

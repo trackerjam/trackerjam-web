@@ -1,9 +1,10 @@
 'use client';
-import {Table} from 'flowbite-react';
+import {Table, Button} from 'flowbite-react';
 import {Sparklines, SparklinesBars} from 'react-sparklines';
+import {useMemo, useState} from 'react';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
-import {SuperadminResponse} from '../../types/api';
+import {SuperadminResponse, SuperadminResponseUser} from '../../types/api';
 import {Spinner} from '../common/spinner';
 import {formatDateTime} from '../../utils/date';
 import {formatTrialEnd} from '../../utils/format-trial-end';
@@ -32,8 +33,47 @@ function Title({children}: {children: React.ReactNode}) {
   return <h2 className="text-20 mb-2">{children}</h2>;
 }
 
+enum TableTabs {
+  ALL,
+  ACTIVATED,
+  PAYING,
+  EMPTY,
+}
+
 export function Superadmin() {
   const {data, error, isLoading} = useGetData<SuperadminResponse>('/api/superadmin');
+  const [activeTab, setActiveTab] = useState<TableTabs>(TableTabs.ACTIVATED);
+
+  const userTabsData = useMemo(() => {
+    if (!data?.users) {
+      return null;
+    }
+
+    return {
+      [TableTabs.ALL]: data.users,
+      [TableTabs.ACTIVATED]: data.users.filter((user) => user.member.length > 0),
+      [TableTabs.PAYING]: data.users.filter((user) => user.product),
+      [TableTabs.EMPTY]: data.users.filter((user) => !user.member?.length),
+    };
+  }, [data]);
+
+  const filteredUsers: SuperadminResponseUser[] | undefined | null = useMemo(() => {
+    if (!data?.users) {
+      return null;
+    }
+
+    switch (activeTab) {
+      case TableTabs.ACTIVATED:
+        return userTabsData?.[TableTabs.ACTIVATED];
+      case TableTabs.PAYING:
+        return userTabsData?.[TableTabs.PAYING];
+      case TableTabs.EMPTY:
+        return userTabsData?.[TableTabs.EMPTY];
+      case TableTabs.ALL:
+      default:
+        return userTabsData?.[TableTabs.ALL];
+    }
+  }, [activeTab, userTabsData]);
 
   return (
     <div>
@@ -48,26 +88,63 @@ export function Superadmin() {
       {Boolean(data) && (
         <>
           <div>
-            <Title>Users</Title>
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="flex justify-end mb-3 gap-4">
+              <Button.Group>
+                <Button
+                  size="xs"
+                  color={activeTab === TableTabs.ALL ? 'success' : 'gray'}
+                  onClick={() => setActiveTab(TableTabs.ALL)}
+                >
+                  All ({userTabsData?.[TableTabs.ALL]?.length})
+                </Button>
+                <Button
+                  size="xs"
+                  color={activeTab === TableTabs.ACTIVATED ? 'success' : 'gray'}
+                  onClick={() => setActiveTab(TableTabs.ACTIVATED)}
+                >
+                  Activated ({userTabsData?.[TableTabs.ACTIVATED]?.length})
+                </Button>
+                <Button
+                  size="xs"
+                  color={activeTab === TableTabs.PAYING ? 'success' : 'gray'}
+                  onClick={() => setActiveTab(TableTabs.PAYING)}
+                >
+                  Paying ({userTabsData?.[TableTabs.PAYING]?.length})
+                </Button>
+                <Button
+                  size="xs"
+                  color={activeTab === TableTabs.EMPTY ? 'success' : 'gray'}
+                  onClick={() => setActiveTab(TableTabs.EMPTY)}
+                >
+                  Empty ({userTabsData?.[TableTabs.EMPTY]?.length})
+                </Button>
+              </Button.Group>
+            </div>
+            <div className="overflow-x-auto max-h-[600px] shadow-lg">
+              <Table className="text-12">
                 <Table.Head>
-                  <Table.HeadCell></Table.HeadCell>
+                  <Table.HeadCell>№</Table.HeadCell>
                   <Table.HeadCell>Name</Table.HeadCell>
                   <Table.HeadCell>Email</Table.HeadCell>
                   <Table.HeadCell>Created</Table.HeadCell>
                   <Table.HeadCell>TrialEnds</Table.HeadCell>
+                  <Table.HeadCell>Product</Table.HeadCell>
                   <Table.HeadCell>Members</Table.HeadCell>
                   <Table.HeadCell>7-day Usage</Table.HeadCell>
                 </Table.Head>
-                <Table.Body className="divide-y">
-                  {data?.users.map((user, index) => (
+                <Table.Body className="divide-y text-12">
+                  {filteredUsers?.map((user, index) => (
                     <Table.Row key={user.id}>
-                      <Table.Cell>{index + 1}</Table.Cell>
+                      <Table.Cell>{filteredUsers?.length - index}</Table.Cell>
                       <Table.Cell>
                         <div className="flex gap-2 ">
                           {user.image && (
-                            <img width={28} height={28} src={user.image} className="rounded-full" />
+                            <img
+                              width={28}
+                              height={28}
+                              src={user.image}
+                              className="rounded-full w-[28px] h-[28px]"
+                            />
                           )}
                           {user.name}
                         </div>
@@ -75,7 +152,8 @@ export function Superadmin() {
                       <Table.Cell>{user.email}</Table.Cell>
                       <Table.Cell>{formatDateTime(user.createdAt)}</Table.Cell>
                       <Table.Cell>{formatTrialEnd(user.trialEndsAt)}</Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell>{user?.product}</Table.Cell>
+                      <Table.Cell className="max-w-[120px] overflow-x-auto">
                         <MemberDots membersInfo={user?.member} />
                       </Table.Cell>
                       <Table.Cell>

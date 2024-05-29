@@ -13,6 +13,7 @@ import {classifyDomain, isKnownDomain} from '../../../utils/classification/class
 import {maskEmailAddress} from '../../../utils/mask-email';
 import {getIsoDateString} from '../../../utils/get-iso-date-string';
 import {calcTrialEnd} from '../../../utils/api/calc-trial-end';
+import {PRODUCT_NAMES} from '../../../const/payment';
 
 const TIME_WINDOW_DAYS = 7;
 const isWithinTimeWindow = (date: Date | string) => {
@@ -22,6 +23,13 @@ const isWithinTimeWindow = (date: Date | string) => {
 
   return isWithinInterval(checkDate, {start: startDate, end: now});
 };
+
+function getProductNameByProductId(productId: string | null | undefined) {
+  if (!productId) {
+    return null;
+  }
+  return PRODUCT_NAMES[productId] ?? null;
+}
 
 async function get({res, session}: AuthMethodContext) {
   const perf = new PerfMarks();
@@ -53,6 +61,11 @@ async function get({res, session}: AuthMethodContext) {
             _count: true,
           },
         },
+        payment: {
+          select: {
+            product: true,
+          },
+        },
       },
     });
 
@@ -63,6 +76,7 @@ async function get({res, session}: AuthMethodContext) {
         ...rest,
         trialEndsAt: calcTrialEnd(user.createdAt as Date),
         email: user?.email ? maskEmailAddress(user.email) : '(unknown)',
+        product: getProductNameByProductId(user.payment?.product),
         member: member.map(({summary, _count}) => {
           return {
             lastSessionEndDatetime: summary[0]?.lastSessionEndDatetime,

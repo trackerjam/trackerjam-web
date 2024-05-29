@@ -21,4 +21,9 @@ export const PRODUCT_LIMITS: {[planName: string]: number} = {
   prod_PPxXxfy7HA2SM1: PRO_LIMIT,
 };
 
+export const PRODUCT_NAMES: {[planName: string]: string} = {
+  prod_PPxQPbhStOBkDb: `START: ${START_LIMIT}`,
+  prod_PPxXxfy7HA2SM1: `PRO: ${PRO_LIMIT}`,
+};
+
 export const TRIAL_DAYS = 14;
