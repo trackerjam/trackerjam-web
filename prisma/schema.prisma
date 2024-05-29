@@ -54,9 +54,10 @@ model Payment {
   id         String        @id @default(uuid())
   userId     String        @unique
   user       User          @relation(fields: [userId], references: [id])
-  customerId String?
+  customerId String?       @unique // stripe customer id
   product    String?
   status     PaymentStatus @default(FREE)
+  paidUntil  DateTime?
 }
 
 enum PaymentStatus {

@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import {NextRequest, NextResponse} from 'next/server';
+import * as Sentry from '@sentry/nextjs';
 import {buildError} from '../../../../utils/build-error';
 import {logger} from '../../../../lib/logger';
 import prismadb from '../../../../lib/prismadb';
@@ -12,6 +13,7 @@ import {PerfMarks} from '../../../../utils/perf';
 const StripeEvent = {
   CheckoutSessionCompleted: 'checkout.session.completed',
   CustomerSubscriptionDeleted: 'customer.subscription.deleted',
+  CustomerSubscriptionUpdated: 'customer.subscription.updated',
   InvoicePaid: 'invoice.paid',
 } as const;
 
@@ -43,21 +45,25 @@ export async function POST(req: NextRequest) {
 
   perf.mark('parseStripeEvent');
 
-  let isProcesses: boolean = false;
+  let isProcessed: boolean = false;
   let result: boolean | Error = false;
 
   switch (event.type) {
     case StripeEvent.CheckoutSessionCompleted:
       result = await handleSessionCompleted(event.data.object);
-      isProcesses = true;
+      isProcessed = true;
+      break;
+    case StripeEvent.CustomerSubscriptionUpdated:
+      result = await handleUpdated(event.data.object);
+      isProcessed = true;
       break;
     case StripeEvent.InvoicePaid:
       result = await handleInvoicePaid(event.data.object);
-      isProcesses = true;
+      isProcessed = true;
       break;
     case StripeEvent.CustomerSubscriptionDeleted:
       result = await handleDeletion(event.data.object);
-      isProcesses = true;
+      isProcessed = true;
       break;
     default:
   }
@@ -69,9 +75,10 @@ export async function POST(req: NextRequest) {
     perfMarks: perf.getObjectLogs(),
   });
 
-  if (isProcesses && (!result || result instanceof Error)) {
+  if (isProcessed && (!result || result instanceof Error)) {
     const errorMsg = result instanceof Error ? result.message : 'false';
     logger.error('Webhook processing error', {error: errorMsg});
+    Sentry.captureException(errorMsg);
     return NextResponse.json(buildError('Webhook processing error'), {status: 500});
   }
 
@@ -182,6 +189,34 @@ async function handleInvoicePaid(eventData: Stripe.Invoice) {
   }
 }
 
+async function handleUpdated(eventData: Stripe.Subscription) {
+  try {
+    const customerId = eventData.customer;
+
+    if (!customerId) {
+      logger.error('[Updated]: No customer id');
+      // Ignore silently
+      return true;
+    }
+
+    await prismadb.payment.update({
+      where: {
+        customerId: customerId as string,
+      },
+      data: {
+        paidUntil: eventData.current_period_end
+          ? new Date(eventData.current_period_end * 1000) // Convert seconds to milliseconds
+          : null,
+      },
+    });
+
+    return true;
+  } catch (e: any) {
+    logger.error('Update payment processing error', {error: e.message});
+    return new Error('Update payment processing error');
+  }
+}
+
 async function handleDeletion(eventData: Stripe.Subscription) {
   try {
     const customerId = eventData.customer;
@@ -194,10 +229,13 @@ async function handleDeletion(eventData: Stripe.Subscription) {
 
     await prismadb.payment.update({
       where: {
-        userId: customerId as string,
+        customerId: customerId as string,
       },
       data: {
         status: 'CANCELLED',
+        paidUntil: eventData.current_period_end
+          ? new Date(eventData.current_period_end * 1000) // Convert seconds to milliseconds
+          : null,
       },
     });
 
