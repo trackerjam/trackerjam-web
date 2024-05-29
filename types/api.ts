@@ -90,6 +90,7 @@ export type MemberSummaryType = {
   sessionCount: number | null;
   lastSessionEndDatetime: Date | null;
   isToday: boolean;
+  topDomain: string | null;
   updatedAt?: Date | null;
 };
 

@@ -20,6 +20,7 @@ import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {logger} from '../../../lib/logger';
 import {PerfMarks} from '../../../utils/perf';
+import {getDomainNamesByIds} from '../../../utils/api/get-domain-names';
 
 const MAX_LIMIT = 30;
 
@@ -80,23 +81,8 @@ async function get({req, res}: AuthMethodContext) {
 
     // Batch query for domain names
     const uniqueDomainIds = [...new Set(activities.map((activity) => activity.domainId))];
-    const domainRecords = await prismadb.domain.findMany({
-      where: {
-        id: {
-          in: uniqueDomainIds,
-        },
-      },
-      select: {
-        domain: true,
-        id: true,
-      },
-    });
+    const domainMap = await getDomainNamesByIds(uniqueDomainIds);
     perf.mark('getDomains');
-
-    const domainMap: {[id: string]: string} = {};
-    domainRecords.forEach((record) => {
-      domainMap[record.id] = record.domain;
-    });
 
     // Extend activities with the real domain name
     const extendedActivities = activities.map((activity) => {

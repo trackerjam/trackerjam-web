@@ -1,7 +1,7 @@
 import Avatar from 'boring-avatars';
 import {SIZE, KIND as ButtonKind} from 'baseui/button';
 import {HiMenu as MenuIcon} from 'react-icons/hi';
-import {LuCopyCheck, LuTimer, LuAppWindow, LuCopy} from 'react-icons/lu';
+import {LuCopyCheck, LuTimer, LuAppWindow, LuCopy, LuGlobe} from 'react-icons/lu';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {BiCopy, BiTrash, BiRightArrowAlt, BiEdit, BiLinkExternal} from 'react-icons/bi';
 import copy from 'copy-to-clipboard';
@@ -19,6 +19,7 @@ import {WorkHours} from '../common/work-hours';
 import {UserStatusDot} from '../common/user-status-dot';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {PRICING_URL} from '../../const/url';
+import {Favicon} from '../stats/favicon';
 
 interface MemberCardProps {
   data: TeamMembersType;
@@ -97,7 +98,7 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
     ? new Date(lastSummary?.lastSessionEndDatetime).getTime()
     : null;
 
-  const {activityTimeFormatted, sessionCount} = useMemo(() => {
+  const {activityTimeFormatted, sessionCount, topDomain} = useMemo(() => {
     if (!lastSummary?.isToday) {
       return {
         activityTimeFormatted: null,
@@ -110,6 +111,7 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
         longUnits: true,
       }),
       sessionCount: lastSummary.sessionCount ?? 0,
+      topDomain: lastSummary.topDomain,
     };
   }, [lastSummary]);
   const memberStatus = data?.status;
@@ -206,9 +208,22 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
         <div className={statsColumnStyle}>
           <span className={statsLabel}>
             <LuTimer title="" />
-            Time today (UTC)
+            Web Activity Today
           </span>
           <span className={statsValue}>{activityTimeFormatted || NO_DATA_STR}</span>
+        </div>
+
+        <div className={statsColumnStyle}>
+          <span className={statsLabel}>
+            <LuGlobe title="" />
+            Top Domain
+          </span>
+          <span className={statsValue}>
+            <span className="flex gap-1 items-center">
+              {typeof topDomain === 'string' && <Favicon domain={topDomain} />}
+              {topDomain || NO_DATA_STR}
+            </span>
+          </span>
         </div>
 
         <div className={statsColumnStyle}>

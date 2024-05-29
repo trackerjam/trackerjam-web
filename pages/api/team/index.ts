@@ -8,6 +8,7 @@ import {endpointHandler} from '../../../utils/api/endpoint-handler';
 import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {PerfMarks} from '../../../utils/perf';
 import {logger} from '../../../lib/logger';
+import {getDomainNamesByIds} from '../../../utils/api/get-domain-names';
 
 async function get({res, session}: AuthMethodContext) {
   const perf = new PerfMarks();
@@ -36,12 +37,30 @@ async function get({res, session}: AuthMethodContext) {
             },
           },
           settings: true,
+          domainActivity: {
+            orderBy: [{date: 'desc'}, {timeSpent: 'desc'}],
+            take: 1,
+          },
         },
       },
     },
   });
 
   perf.mark('findTeams');
+
+  let domainMap: {[id: string]: string} = {};
+  if (response?.length) {
+    const uniqueDomainIds = [
+      ...new Set(
+        response
+          .map((team) => team.members.map((member) => member.domainActivity[0]?.domainId).flat())
+          .flat()
+          .filter((id) => id)
+      ),
+    ];
+    domainMap = await getDomainNamesByIds(uniqueDomainIds);
+  }
+  perf.mark('domainNames');
 
   try {
     const result = response.map((team) => {
@@ -59,6 +78,7 @@ async function get({res, session}: AuthMethodContext) {
               isToday: summary?.lastSessionEndDatetime
                 ? isToday(new Date(summary?.lastSessionEndDatetime))
                 : false,
+              topDomain: domainMap[member.domainActivity[0]?.domainId] || null,
               ...summary,
             },
           };
