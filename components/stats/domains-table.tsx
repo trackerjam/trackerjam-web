@@ -4,6 +4,8 @@ import {BsEyeFill, BsBackspace} from 'react-icons/bs';
 import {useTrackEvent} from '../hooks/use-track-event';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {getBestTag} from '../../utils/best-tag';
+import {Button} from '../common/button';
+import {PRICING_URL} from '../../const/url';
 import {AggregatedDataType} from './types';
 import {Favicon} from './favicon';
 import {ScoreTag} from './score-tag';
@@ -15,6 +17,7 @@ interface DomainTableProps {
   hoveredLabel?: null | string;
   onDomainFocus: (domainId: string | null) => void;
   focusedDomainName?: null | string;
+  hasSub: boolean;
 }
 
 const TABLE_HEADER = [
@@ -53,11 +56,14 @@ export function DomainsTable({
   hoveredLabel,
   onDomainFocus,
   focusedDomainName,
+  hasSub,
 }: DomainTableProps) {
   const [css, theme] = useStyletron();
   const trackEvent = useTrackEvent();
 
   const totalTime = data.reduce((acc, {value}) => acc + value, 0);
+
+  const shouldHideDetails = Boolean(focusedDomainName && !hasSub);
 
   const tableWrapperStyle = css({
     width: '100%',
@@ -65,12 +71,14 @@ export function DomainsTable({
     maxHeight: height,
     minHeight: height,
     overflow: 'scroll',
+    position: 'relative',
     borderRadius: theme.borders.radius200,
     ...theme.borders.border200,
   });
 
   const tableStyle = css({
     width: '100%',
+    position: 'relative',
   });
 
   const tableHeadCellStyle = css({
@@ -88,7 +96,9 @@ export function DomainsTable({
     ...theme.borders.border200,
   });
 
-  const tableRowStyle = css({});
+  const tableRowStyle = css({
+    filter: shouldHideDetails ? 'blur(5px)' : 'none',
+  });
 
   const domainLabelStyle = css({
     display: 'flex',
@@ -135,6 +145,22 @@ export function DomainsTable({
               </tr>
             </>
           )}
+          {shouldHideDetails && (
+            <tr>
+              <td colSpan={7} className="px-4 py-4 bg-orange-100 border border-solid text-center">
+                Upgrade your subscription to see exact page details.{' '}
+                <Button
+                  size="xs"
+                  href={PRICING_URL}
+                  target="_blank"
+                  className="font-bold text-blue-600"
+                  onClick={() => trackEvent('click-upgrade-from-table')}
+                >
+                  Upgrade
+                </Button>
+              </td>
+            </tr>
+          )}
           {data.map(
             ({
               label,
@@ -151,6 +177,7 @@ export function DomainsTable({
                 totalActivityTime: totalTime,
                 value,
               });
+
               return (
                 <tr
                   key={id}
@@ -166,7 +193,9 @@ export function DomainsTable({
                     <div className={domainLabelStyle}>
                       <div className="flex flex-row items-center gap-2">
                         <Favicon domain={domainName || label} />
-                        <span>{label}</span>
+                        <span className={domainLabelStyle}>
+                          {shouldHideDetails ? 'Aaaaaaaaaaa aaaa a aaaaaa aaa a aaaaa' : label}
+                        </span>
                       </div>
                       {Boolean(children?.length) && (
                         <div>

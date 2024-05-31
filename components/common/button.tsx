@@ -30,6 +30,7 @@ type ButtonType = {
   onClick?: () => void;
   isLoading?: boolean;
   title?: string;
+  [key: string]: unknown;
 };
 
 export function Button({

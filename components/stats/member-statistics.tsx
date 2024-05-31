@@ -240,6 +240,7 @@ export function MemberStatistics({memberId}: {memberId: string}) {
                       onHover={setHoveredLabel}
                       focusedDomainName={focusedDomainName}
                       onDomainFocus={setFocusedDomainName}
+                      hasSub={hasAnySub}
                     />
                   </div>
                   <div className="flex mt-5 gap-4 2xl:flex-col">
