@@ -26,6 +26,7 @@ import {Banner} from '../../common/banner';
 import {USER_FIRST_INIT_PARAM} from '../../../const/url';
 import {WelcomeModal} from '../welcome-modal';
 import {useConfirmNotification} from '../../hooks/use-confirm-notification';
+import {useGetSubStatus} from '../../hooks/use-get-sub-status';
 import {RadioTrackMode} from './form/radio-track-mode';
 import {TIME_PRESETS, WorkHours} from './form/work-hours';
 import {DoneScreen} from './done-screen';
@@ -62,6 +63,7 @@ export function MemberForm({editingMember}: CreateMemberProps) {
   const confirmNotification = useConfirmNotification();
   const [displayedScreen, setDisplayedScreen] = useState<SCREENS>(SCREENS.FORM);
   const [createResult, setCreateResult] = useState<null | Member>(null);
+  const {hasActiveSub} = useGetSubStatus();
 
   const {send, isLoading, error} = useSendData<EditMemberDataType>(
     isEditing ? `/api/member/${editingMember?.id}` : '/api/member'
@@ -343,7 +345,7 @@ export function MemberForm({editingMember}: CreateMemberProps) {
         </form>
       )}
 
-      {isDoneScreen && <DoneScreen member={createResult} />}
+      {isDoneScreen && <DoneScreen member={createResult} hasActiveSub={hasActiveSub} />}
     </>
   );
 }

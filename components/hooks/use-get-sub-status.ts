@@ -7,6 +7,7 @@ export interface UseGetSubStatusReturnType {
   isLoading: boolean;
   error: string | null;
   hasAnySub: boolean | null | undefined;
+  hasActiveSub: boolean | null | undefined;
 }
 export function useGetSubStatus(): UseGetSubStatusReturnType {
   const {data, isLoading, error} = useGetData<SubscriptionStatusResponse>('/api/subs');
@@ -14,6 +15,7 @@ export function useGetSubStatus(): UseGetSubStatusReturnType {
   const hasActiveStatus = data?.status === PaymentStatus.ACTIVE;
   const hasTrial = data?.hasTrial;
   const hasAnySub = hasActiveStatus || hasTrial;
+  const hasActiveSub = hasActiveStatus && !hasTrial;
 
-  return {data, isLoading, error, hasAnySub};
+  return {data, isLoading, error, hasAnySub, hasActiveSub};
 }
