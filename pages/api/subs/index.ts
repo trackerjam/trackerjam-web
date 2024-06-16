@@ -52,7 +52,7 @@ export async function getSubscriptionStatus(userId: string): Promise<Subscriptio
 
     // Early return in case of not active status
     return {
-      status: payment?.status ?? PaymentStatus.FREE,
+      status: payment?.status ?? PaymentStatus.CANCELLED,
       canAddMember: false,
       hasTrial: false,
     };

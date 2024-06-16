@@ -5,6 +5,7 @@ import prismadb from '../../../../lib/prismadb';
 import {getErrorMessage} from '../../../../utils/get-error-message';
 import {buildError} from '../../../../utils/build-error';
 import {PublicMethodContext} from '../../../../types/api';
+import {getSubscriptionStatus} from '../../subs';
 
 type UpdateParams = {
   token: string;
@@ -71,11 +72,7 @@ async function get({req, res}: PublicMethodContext) {
       },
     });
 
-    const subscriptionRecord = await prismadb.payment.findUnique({
-      where: {
-        userId: member.mangerId,
-      },
-    });
+    const subsStatusObject = await getSubscriptionStatus(member.mangerId);
 
     if (!settingsRecord?.settings) {
       const msg = `MemberSettings not found, memberId: ${member.id}`;
@@ -87,7 +84,10 @@ async function get({req, res}: PublicMethodContext) {
     return res.status(200).json({
       token,
       settings,
-      subscriptionStatus: subscriptionRecord?.status,
+      subscriptionStatus: subsStatusObject?.status,
+      hasTrial: subsStatusObject?.hasTrial,
+      canAddMember: subsStatusObject?.canAddMember,
+      trialEndsAt: subsStatusObject?.trialEndsAt,
     });
   } catch (e) {
     res.status(500).json(buildError(getErrorMessage(e)));
