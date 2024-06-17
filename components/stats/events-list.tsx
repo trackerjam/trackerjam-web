@@ -35,7 +35,9 @@ export function EventsList({events}: EventsListProps) {
 
   return (
     <div>
-      <div className="text-gray-500 mb-2 text-12">Displayed in local browser time</div>
+      <div className="text-gray-500 mb-2 text-12">
+        Last 30 days. Displayed in local browser time
+      </div>
 
       {Object.keys(groupedEvents).map((date) => (
         <div key={date}>

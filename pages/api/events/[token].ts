@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import * as Sentry from '@sentry/nextjs';
 import {MemberEvent} from '.prisma/client';
+import {subDays} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -23,6 +24,9 @@ async function get({req, res}: AuthMethodContext) {
     const memberEvents = await prismadb.memberEvent.findMany({
       where: {
         memberToken: token,
+        date: {
+          gte: subDays(new Date(), 30),
+        },
       },
       orderBy: {
         date: 'desc',
