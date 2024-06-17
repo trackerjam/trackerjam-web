@@ -97,6 +97,7 @@ export type MemberSummaryType = {
 export type TeamMembersType = Member & {
   lastSummary: MemberSummaryType;
   settings: SettingsType | null;
+  summary7days: Array<{date: string; time: number}>;
 };
 
 export type SessionActivityOptionalUrl = SessionActivity & {url?: string};

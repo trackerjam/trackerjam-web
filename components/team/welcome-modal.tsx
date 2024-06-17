@@ -2,7 +2,6 @@ import Link from 'next/link';
 import {BsSun, BsInfoCircle, BsPlusCircleDotted} from 'react-icons/bs';
 import {FaEdge} from 'react-icons/fa6';
 
-import {TbBeta} from 'react-icons/tb';
 import {Modal} from 'flowbite-react';
 import {FaChrome} from 'react-icons/fa';
 import {useTrackEvent} from '../hooks/use-track-event';
@@ -98,21 +97,6 @@ export function WelcomeModal({isOpen, onClose, hideCreateButton = false}: Welcom
               The first data will appear in about 5 minutes.
             </li>
           </ol>
-        </div>
-
-        <div
-          className="bg-blue-50 border-t border-b border-blue-200 text-blue-600 px-4 py-3"
-          role="alert"
-        >
-          <p className="font-bold flex items-center gap-2 mb-2">
-            <TbBeta title="" />
-            Beta Version Notice
-          </p>
-          <p className="text-14 mb-2">
-            This is the Beta version of our app. Your feedback is really important for us to make
-            things better. Please keep in mind that our tracking isn’t perfect yet, and all the
-            times on the Statistics page are in UTC.
-          </p>
         </div>
 
         <div className="justify-end flex gap-3">

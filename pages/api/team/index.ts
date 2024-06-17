@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {isToday} from 'date-fns';
+import {isToday, subDays} from 'date-fns';
 import prismadb from '../../../lib/prismadb';
 import {getErrorMessage} from '../../../utils/get-error-message';
 import {buildError} from '../../../utils/build-error';
@@ -9,6 +9,7 @@ import {unwrapSettings} from '../../../utils/api/unwrap-settings';
 import {PerfMarks} from '../../../utils/perf';
 import {logger} from '../../../lib/logger';
 import {getDomainNamesByIds} from '../../../utils/api/get-domain-names';
+import {getIsoDateString} from '../../../utils/get-iso-date-string';
 
 async function get({res, session}: AuthMethodContext) {
   const perf = new PerfMarks();
@@ -28,8 +29,9 @@ async function get({res, session}: AuthMethodContext) {
             orderBy: {
               date: 'desc',
             },
-            take: 1, // Only take the last record
+            take: 7, // Only take the last record
             select: {
+              date: true,
               activityTime: true,
               domainsCount: true,
               sessionCount: true,
@@ -69,11 +71,42 @@ async function get({res, session}: AuthMethodContext) {
         id,
         members: team.members.map((member) => {
           const memberWithSettings = unwrapSettings(member);
-          const {summary: summaryArr, ...resetMemberData} = memberWithSettings;
+          const {summary: summaryArr, ...restMemberData} = memberWithSettings;
           const summary = summaryArr[0];
 
+          const existingSummary7days = [...summaryArr]
+            .map((s) => ({
+              date: getIsoDateString(s.date),
+              time: s.activityTime || 0,
+            }))
+            .reverse();
+
+          let last7Days: Array<{date: string; time: number}> = [];
+          if (existingSummary7days.length > 0 && existingSummary7days.length < 7) {
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+              const date = subDays(today, i);
+              const dateStr = getIsoDateString(date);
+              const existing = existingSummary7days.find((s) => s.date === dateStr);
+              if (existing) {
+                last7Days.unshift({
+                  date: dateStr,
+                  time: existing.time,
+                });
+              } else {
+                last7Days.unshift({
+                  date: dateStr,
+                  time: 0,
+                });
+              }
+            }
+          } else {
+            last7Days = [...existingSummary7days];
+          }
+
           return {
-            ...resetMemberData,
+            ...restMemberData,
             lastSummary: {
               isToday: summary?.lastSessionEndDatetime
                 ? isToday(new Date(summary?.lastSessionEndDatetime))
@@ -81,6 +114,7 @@ async function get({res, session}: AuthMethodContext) {
               topDomain: domainMap[member.domainActivity[0]?.domainId] || null,
               ...summary,
             },
+            summary7days: last7Days,
           };
         }),
       };

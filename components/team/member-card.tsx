@@ -11,6 +11,8 @@ import {useRouter} from 'next/navigation';
 
 import * as Toast from '@radix-ui/react-toast';
 import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import {BarDatum} from '@nivo/bar';
 import {useSendData} from '../hooks/use-send-data';
 import {shortenUUID} from '../../utils/shorten-uuid';
 import {TeamMembersType} from '../../types/api';
@@ -20,6 +22,10 @@ import {UserStatusDot} from '../common/user-status-dot';
 import {formatTimeDuration} from '../../utils/format-time-duration';
 import {PRICING_URL} from '../../const/url';
 import {Favicon} from '../stats/favicon';
+
+const ResponsiveBar = dynamic(() => import('@nivo/bar').then((m) => m.ResponsiveBar), {
+  ssr: false,
+});
 
 interface MemberCardProps {
   data: TeamMembersType;
@@ -49,6 +55,24 @@ const menuItems = [
 ];
 
 const NO_DATA_STR = '-';
+
+// Custom tooltip function
+const CustomTooltip = ({value, indexValue}: BarDatum) => {
+  let day = '';
+  if (indexValue) {
+    const date = new Date(indexValue);
+    day = date.toLocaleDateString('en-US', {
+      dateStyle: 'full',
+    });
+  }
+  return (
+    <div className="p-2 drop-shadow-md bg-white rounded-md text-10 flex flex-col font-normal">
+      <strong className="mb-1">{day}</strong>
+      <div>Activity time</div>
+      <div className="text-12">{value ? formatTimeDuration(value as number) : 'n/a'}</div>
+    </div>
+  );
+};
 
 export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps) {
   const {name, title, token, lastSummary, id: memberId} = data;
@@ -115,6 +139,8 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
     };
   }, [lastSummary]);
   const memberStatus = data?.status;
+
+  const barData = data?.summary7days || [];
 
   return (
     <div className="relative flex flex-col rounded-lg shadow border border-black border-opacity-[0.08] p-4 hover:shadow-md transition-shadow duration-200">
@@ -204,7 +230,57 @@ export function MemberCard({data, onDelete, hasNoSubscription}: MemberCardProps)
         <UserStatusDot lastUpdateTs={lastUpdateTs} isCompact={true} memberStatus={memberStatus} />
       </div>
 
-      <div className="flex flex-col gap-3 content-evenly py-4 border-t border-b border-gray-200 my-2">
+      <div className={statsColumnStyle}>
+        <div className={statsValue + ' w-full'}>
+          <div className="w-[100%] h-[60px] border border-gray-100 rounded-md bg-gray-100">
+            {!barData?.length && (
+              <div className="flex justify-center items-center grow h-full">
+                <span className="text-gray-300 text-10 italic">No usage data yet</span>
+              </div>
+            )}
+            {Boolean(barData?.length) && (
+              <ResponsiveBar
+                margin={{top: 5, right: 5, bottom: 15, left: 5}}
+                data={barData}
+                colors={{scheme: 'accent'}}
+                indexBy="date"
+                keys={['time']}
+                minValue={0}
+                enableLabel={false}
+                valueFormat={(l) => formatTimeDuration(l, {skipSeconds: true})}
+                enableGridX={false}
+                enableGridY={false}
+                axisLeft={null}
+                tooltip={(datum) => (
+                  <CustomTooltip value={datum.value} indexValue={datum.indexValue} />
+                )}
+                axisBottom={{
+                  tickSize: 3,
+                  tickPadding: 3,
+                  tickRotation: 0,
+                  legend: '',
+                  format: (dateStr: string) => {
+                    return new Date(dateStr).toLocaleDateString('en-US', {
+                      weekday: 'short',
+                    });
+                  },
+                }}
+                theme={{
+                  axis: {
+                    ticks: {
+                      text: {
+                        fontSize: 8,
+                      },
+                    },
+                  },
+                }}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3 content-evenly py-2 border-t border-b border-gray-200 my-2">
         <div className={statsColumnStyle}>
           <span className={statsLabel}>
             <LuTimer title="" />
