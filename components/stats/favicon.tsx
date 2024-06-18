@@ -34,10 +34,12 @@ export function Favicon({domain}: FaviconProps) {
     return <ExceptionIcon title={domain} className={iconStyle} />;
   }
 
+  const siteUrl = domain.startsWith('http') ? domain : 'https://' + domain;
+
   return (
     <img
       className={faviconStyle}
-      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
+      src={`https://www.google.com/s2/favicons?domain=${siteUrl}&sz=128`}
       alt={`${domain} favicon`}
     />
   );
