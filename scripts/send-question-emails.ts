@@ -1,87 +1,9 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
-const sent = [
-  '',
-  // 'vannnyle@gmail.com',
-  // 'almas.abulkhairov@gmail.com',
-  // 'nompo4ta@gmail.com',
-  // 'smyk.oa@gmail.com',
-  // 'kartikeyj123@gmail.com',
-  // 'msaco.testacc@gmail.com',
-  // 'td.eliteclass@gmail.com',
-  // 'ebenezerrahul@gmail.com',
-  // 'castlewania.alex@gmail.com',
-  // 'ahmmburr.rose@gmail.com',
-  // 'hello@filip.us',
-  // 'cbuspri@outlook.com',
-  // 'airobot67@gmail.com',
-  // 'decorkkmc@gmail.com',
-  // 'chahalvishal000@gmail.com',
-  // 'brizhaclaudiaatoch@gmail.com',
-  // 'qerqt22@gmail.com',
-  // 'ishii@fmi.co.jp',
-  // 'lizheng8318@gmail.com',
-  // 'pawankumaragarwal1782@gmail.com',
-  // 'vannnyle@gmail.com',
-  // 'almas.abulkhairov@gmail.com',
-  // 'nompo4ta@gmail.com',
-  // 'smyk.oa@gmail.com',
-  // 'kartikeyj123@gmail.com',
-  // 'msaco.testacc@gmail.com',
-  // 'td.eliteclass@gmail.com',
-  // 'ebenezerrahul@gmail.com',
-  // 'ahmmburr.rose@gmail.com',
-  // 'hello@filip.us',
-  // 'cbuspri@outlook.com',
-  // 'aravindnirmal10@gmail.com',
-  // 'shradhadalvi3051@gmail.com',
-  // 'anushreeshekhar120@gmail.com',
-  // 'iblondin@tink.ca',
-  // 'aadiljannath666@gmail.com',
-  // 'ahmmburr.rose@gmail.com',
-  // 'castlewania.alex+@gmail.com',
-  // 'd3liaz@yandex.com',
-  // 'ebenezerrahul@gmail.com',
-  // 'gabrielmorenoibarra@gmail.com',
-  // 'hatredforlife66@gmail.com',
-  // 'iblondin@tink.ca',
-  // 'kartikeyj123@gmail.com',
-  // 'msaco.testacc@gmail.com',
-  // 'qerqt22@gmail.com',
-  // 'qertest09@gmail.com',
-  // 'rjonesfisherman@gmail.com',
-  // 'shradhadalvi3051@gmail.com',
-  // 'smyk.oa@gmail.com',
-  // 'soshi.nakama@onedrops.com',
-  // 'tim.hein@victoriousseo.com',
-];
+const sent: string[] = [];
 
-const allUsers = [
-  // 'd3liaz@gmail.com',
-  'castlewania.alex@gmail.com',
-  'aadiljannath007@gmail.com',
-  'teampodteam@gmail.com',
-  'mintmnr@gmail.com',
-  'kaichiny@gmail.com',
-  'hemanthsairaj009@gmail.com',
-  'sunil.p112233@gmail.com',
-  'krishna427549@gmail.com',
-  'real.wh1t30@gmail.com',
-  'khaledapanna1617@gmail.com',
-  'onekertis@gmail.com',
-  'pawankumaragarwal1782@gmail.com',
-  'lizheng8318@gmail.com',
-  'ishii@fmi.co.jp',
-  'brizhaclaudiaatoch@gmail.com',
-  'chahalvishal000@gmail.com',
-  'decorkkmc@gmail.com',
-  'anushreeshekhar120@gmail.com',
-  'aravindnirmal10@gmail.com',
-  'cbuspri@outlook.com',
-  'hello@filip.us',
-  'td.eliteclass@gmail.com',
-];
+const allUsers = ['d3liaz@gmail.com', 'vannnyle@gmail.com'];
 
 function getHtml() {
   return `
@@ -122,17 +44,21 @@ function getHtml() {
 <body>
 <main>
     <p class="content">
-        Hi,
-        <br/> This is Denis from TrackerJam.com
+        Hey 👋
     </p>
 
+   <p class="content">
+        I just wanted to mention the new update we recently released
+    </p>
+
+    <blockquote class="twitter-tweet"><p lang="en" dir="ltr">🚀 Exciting update! Member Cards now feature a 📊 last week&#39;s activity trend bar chart. Check it out: <a href="https://twitter.com/hashtag/TrackerJam?src=hash&amp;ref_src=twsrc%5Etfw">#TrackerJam</a> <a href="https://twitter.com/hashtag/ProductUpdate?src=hash&amp;ref_src=twsrc%5Etfw">#ProductUpdate</a> <a href="https://twitter.com/hashtag/NewFeature?src=hash&amp;ref_src=twsrc%5Etfw">#NewFeature</a> <a href="https://twitter.com/hashtag/DataViz?src=hash&amp;ref_src=twsrc%5Etfw">#DataViz</a> <a href="https://t.co/gBkIYn067q">pic.twitter.com/gBkIYn067q</a></p>&mdash; TrackerJam (@TrackerJam) <a href="https://twitter.com/TrackerJam/status/1804223615212351856?ref_src=twsrc%5Etfw">June 21, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <img src="https://pbs.twimg.com/media/GQnjNbFWUAAkzv8?format=png&name=medium" alt="Member card update" style="width: 480px; margin: 20px 0; border: 1px solid #ddd;">
+
     <p class="content">
-        I see you signed up for TrackerJam but haven't installed the extension yet.
-        <br>
-        Let&apos;s set up a quick call to help you get started!
+        Thanks again for choosing TrackerJam. I'd love to hear your thoughts on the product and how we can make it better.
     </p>
     <p class="content">
-        Feel free to pick a time slot that works for you: <a href="https://calendly.com/d3liaz/25min">Calendly</a>
+        If you have any questions, feel free to hit Reply to this email or book a <a href="https://calendly.com/d3liaz/25min">call</a> with me.
     </p>
 </main>
 
@@ -163,10 +89,10 @@ export async function sendEmail(to: string) {
 
   return transporter.sendMail({
     to,
-    from: 'Denis L <hi@trackerjam.com>',
+    from: 'Denis <hi@trackerjam.com>',
     replyTo: 'hi@trackerjam.com',
     sender: 'Denis from TrackerJam',
-    subject: 'Call about TrackerJam', // Subject line
+    subject: 'Member card UI update', // Subject line
     text: '', // plain text body
     html: getHtml(),
   });
