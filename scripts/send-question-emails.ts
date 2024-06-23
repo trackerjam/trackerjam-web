@@ -1,9 +1,13 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
-const sent: string[] = [];
+const sent: string[] = [
+  // Optional: Insert emails to exclude from sending
+];
 
-const allUsers = ['d3liaz@gmail.com', 'vannnyle@gmail.com'];
+const allUsers: string[] = [
+  // Insert emails list here. Do not commit.
+];
 
 function getHtml() {
   return `
@@ -66,7 +70,8 @@ function getHtml() {
     <p>
         -----<br/>
         Best regards, <br/>
-        Denis from <a href="https://trackerjam.com/">TrackerJam.com</a>
+        Denis from <a href="https://trackerjam.com/">TrackerJam.com</a> <br/>
+        <a href="https://x.com/TrackerJam">@TrackerJam</a>
     </p>
     <p class="unsubscribe">
         You are receiving this email because you signed up for TrackerJam. <a href="%unsubscribe_url%">Unsubscribe</a>.
