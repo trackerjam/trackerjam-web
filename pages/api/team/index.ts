@@ -81,28 +81,24 @@ async function get({res, session}: AuthMethodContext) {
             }))
             .reverse();
 
-          let last7Days: Array<{date: string; time: number}> = [];
-          if (existingSummary7days.length > 0 && existingSummary7days.length < 7) {
-            const today = new Date();
+          const last7Days: Array<{date: string; time: number}> = [];
+          const today = new Date();
 
-            for (let i = 0; i < 7; i++) {
-              const date = subDays(today, i);
-              const dateStr = getIsoDateString(date);
-              const existing = existingSummary7days.find((s) => s.date === dateStr);
-              if (existing) {
-                last7Days.unshift({
-                  date: dateStr,
-                  time: existing.time,
-                });
-              } else {
-                last7Days.unshift({
-                  date: dateStr,
-                  time: 0,
-                });
-              }
+          for (let i = 0; i < 7; i++) {
+            const date = subDays(today, i);
+            const dateStr = getIsoDateString(date);
+            const existing = existingSummary7days.find((s) => s.date === dateStr);
+            if (existing) {
+              last7Days.unshift({
+                date: dateStr,
+                time: existing.time,
+              });
+            } else {
+              last7Days.unshift({
+                date: dateStr,
+                time: 0,
+              });
             }
-          } else {
-            last7Days = [...existingSummary7days];
           }
 
           return {
