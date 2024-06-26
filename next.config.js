@@ -30,8 +30,8 @@ module.exports = withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
 
-    org: 'deliaz',
-    project: 'trackerjam',
+    org: 'trackerjam-org',
+    project: 'trackerjam-web',
   },
   {
     // For all available options, see:
