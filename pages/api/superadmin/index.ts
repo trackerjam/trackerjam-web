@@ -64,6 +64,7 @@ async function get({res, session}: AuthMethodContext) {
         payment: {
           select: {
             product: true,
+            status: true,
           },
         },
       },
@@ -77,6 +78,7 @@ async function get({res, session}: AuthMethodContext) {
         trialEndsAt: calcTrialEnd(user.createdAt as Date),
         email: user?.email ? maskEmailAddress(user.email) : '(unknown)',
         product: getProductNameByProductId(user.payment?.product),
+        paymentStatus: user.payment?.status ?? null,
         member: member.map(({summary, _count}) => {
           return {
             lastSessionEndDatetime: summary[0]?.lastSessionEndDatetime,

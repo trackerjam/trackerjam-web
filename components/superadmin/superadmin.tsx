@@ -2,6 +2,7 @@
 import {Table, Button} from 'flowbite-react';
 import {Sparklines, SparklinesBars} from 'react-sparklines';
 import {useMemo, useState} from 'react';
+import {PaymentStatus} from '@prisma/client';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse, SuperadminResponseUser} from '../../types/api';
@@ -38,6 +39,7 @@ enum TableTabs {
   ACTIVATED,
   PAYING,
   EMPTY,
+  CANCELLED,
 }
 
 export function Superadmin() {
@@ -52,7 +54,12 @@ export function Superadmin() {
     return {
       [TableTabs.ALL]: data.users,
       [TableTabs.ACTIVATED]: data.users.filter((user) => user.member.length > 0),
-      [TableTabs.PAYING]: data.users.filter((user) => user.product),
+      [TableTabs.PAYING]: data.users.filter(
+        (user) => user.product && user?.paymentStatus === PaymentStatus.ACTIVE
+      ),
+      [TableTabs.CANCELLED]: data.users.filter(
+        (user) => user.product && user?.paymentStatus === PaymentStatus.CANCELLED
+      ),
       [TableTabs.EMPTY]: data.users.filter((user) => !user.member?.length),
     };
   }, [data]);
@@ -67,6 +74,8 @@ export function Superadmin() {
         return userTabsData?.[TableTabs.ACTIVATED];
       case TableTabs.PAYING:
         return userTabsData?.[TableTabs.PAYING];
+      case TableTabs.CANCELLED:
+        return userTabsData?.[TableTabs.CANCELLED];
       case TableTabs.EMPTY:
         return userTabsData?.[TableTabs.EMPTY];
       case TableTabs.ALL:
@@ -110,6 +119,13 @@ export function Superadmin() {
                   onClick={() => setActiveTab(TableTabs.PAYING)}
                 >
                   Paying ({userTabsData?.[TableTabs.PAYING]?.length})
+                </Button>
+                <Button
+                  size="xs"
+                  color={activeTab === TableTabs.CANCELLED ? 'success' : 'gray'}
+                  onClick={() => setActiveTab(TableTabs.CANCELLED)}
+                >
+                  Cancelled ({userTabsData?.[TableTabs.CANCELLED]?.length})
                 </Button>
                 <Button
                   size="xs"

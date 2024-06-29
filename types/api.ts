@@ -155,6 +155,7 @@ export type SuperadminResponseUser = User & {
   member: MemberCountsInfo[];
   provider: string;
   product: number | null;
+  paymentStatus: PaymentStatus | null;
 };
 export type SuperadminResponse = {
   users: SuperadminResponseUser[];
