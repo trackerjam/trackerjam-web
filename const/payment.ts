@@ -26,4 +26,4 @@ export const PRODUCT_NAMES: {[planName: string]: string} = {
   prod_PPxXxfy7HA2SM1: `PRO: ${PRO_LIMIT}`,
 };
 
-export const TRIAL_DAYS = 14;
+export const TRIAL_DAYS = 7;
