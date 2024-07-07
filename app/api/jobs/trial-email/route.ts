@@ -32,7 +32,7 @@ export async function sendEmail(to: string, htmlTemplate: string) {
   });
 }
 
-export async function GET() {
+export async function POST() {
   logger.info('[job/trial-ends] Running trial-email job');
 
   try {
