@@ -33,7 +33,7 @@ export async function sendEmail(to: string, htmlTemplate: string) {
 }
 
 export async function POST() {
-  logger.info('[job/trial-ends] Running trial-email job');
+  logger.debug('[job/trial-ends] Running trial-email job');
 
   try {
     const usersWithTrialEnds = await prismadb.user.findMany({
@@ -74,17 +74,17 @@ export async function POST() {
       .filter(Boolean);
 
     if (!extendedUsers.length) {
-      logger.info('[job/trial-ends] No users with trial ends found');
+      logger.debug('[job/trial-ends] No users with trial ends found');
       return NextResponse.json(buildError('No users with trial ends found'), {
         status: 404,
       });
     }
-    logger.info('[job/trial-ends] Found users with trial ends', {count: extendedUsers.length});
+    logger.debug('[job/trial-ends] Found users with trial ends', {count: extendedUsers.length});
 
     let count = 0;
     for (const user of extendedUsers) {
       if (user?.email) {
-        logger.info('[job/trial-ends] Sending email', {email: user.email});
+        logger.debug('[job/trial-ends] Sending email', {email: user.email});
         await sendEmail(user.email, getTemplate({timeLeft: user.timeLeft}));
 
         await prismadb.notification.upsert({
@@ -107,6 +107,7 @@ export async function POST() {
       }
     }
 
+    logger.debug('[job/trial-ends] Finished sending emails', {count});
     return NextResponse.json({success: true, count, userIds: extendedUsers.map((u) => u?.id)});
   } catch (e: any) {
     logger.error('Error running trial-email job', {error: e.message});
