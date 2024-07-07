@@ -75,10 +75,11 @@ model VerificationToken {
 }
 
 model Notification {
-  id      String   @id @default(uuid())
-  userId  String   @unique
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  welcome DateTime
+  id       String    @id @default(uuid())
+  userId   String    @unique
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  welcome  DateTime?
+  trialEnd DateTime?
 }
 
 model Team {
