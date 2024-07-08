@@ -3,6 +3,7 @@ import {Table, Button} from 'flowbite-react';
 import {Sparklines, SparklinesBars} from 'react-sparklines';
 import {useMemo, useState} from 'react';
 import {PaymentStatus} from '@prisma/client';
+import {FaRegHandPeace, FaHourglassEnd} from 'react-icons/fa';
 import {useGetData} from '../hooks/use-get-data';
 import {ErrorDetails} from '../common/error-details';
 import {SuperadminResponse, SuperadminResponseUser} from '../../types/api';
@@ -145,6 +146,7 @@ export function Superadmin() {
                   <Table.HeadCell>Created</Table.HeadCell>
                   <Table.HeadCell>TrialEnds</Table.HeadCell>
                   <Table.HeadCell>Product</Table.HeadCell>
+                  <Table.HeadCell>Notif</Table.HeadCell>
                   <Table.HeadCell>Members</Table.HeadCell>
                   <Table.HeadCell>7-day Usage</Table.HeadCell>
                 </Table.Head>
@@ -169,6 +171,16 @@ export function Superadmin() {
                       <Table.Cell>{formatDateTime(user.createdAt)}</Table.Cell>
                       <Table.Cell>{formatTrialEnd(user.trialEndsAt)}</Table.Cell>
                       <Table.Cell>{user?.product}</Table.Cell>
+                      <Table.Cell>
+                        <div className="flex gap-1">
+                          {Boolean(user?.notifications?.welcome) && (
+                            <FaRegHandPeace title="Sent: Welcome email" />
+                          )}
+                          {Boolean(user?.notifications?.trialEnd) && (
+                            <FaHourglassEnd title="Sent: Trial ends soon email" />
+                          )}
+                        </div>
+                      </Table.Cell>
                       <Table.Cell className="max-w-[120px] overflow-x-auto">
                         <MemberDots membersInfo={user?.member} />
                       </Table.Cell>

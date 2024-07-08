@@ -67,6 +67,12 @@ async function get({res, session}: AuthMethodContext) {
             status: true,
           },
         },
+        notifications: {
+          select: {
+            trialEnd: true,
+            welcome: true,
+          },
+        },
       },
     });
 

@@ -156,6 +156,10 @@ export type SuperadminResponseUser = User & {
   provider: string;
   product: number | null;
   paymentStatus: PaymentStatus | null;
+  notifications: {
+    trialEnd: string | null;
+    welcome: boolean | null;
+  };
 };
 export type SuperadminResponse = {
   users: SuperadminResponseUser[];
