@@ -38,3 +38,5 @@ next-env.d.ts
 
 # Sentry Auth Token
 .sentryclirc
+
+scripts/classified-top-domains.json
