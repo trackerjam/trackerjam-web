@@ -17,7 +17,13 @@ export async function initUserFirstTime(user: User) {
     logger.error('Missing user email server');
     Sentry.captureMessage('Missing user email server');
   } else {
-    await sendWelcomeEmail(user.email);
+    try {
+      logger.info('Sending welcome email', {email: user.email});
+      await sendWelcomeEmail(user.email);
+    } catch (error) {
+      logger.error('Failed to send welcome email', {error});
+      Sentry.captureException(error);
+    }
   }
 }
 
