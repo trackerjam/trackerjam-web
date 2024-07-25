@@ -25,6 +25,7 @@ type ActivityPerfReport = {
 
 const OLD_SESSION_THRESHOLD = 96 * 60 * 60 * 1000; // 96 hours
 const FUTURE_SESSION_LIMIT = 30 * 1000; // 30 seconds
+const TRIM_LONG_STRING_LIMIT = 255;
 
 async function upsertDomain(domain: string) {
   // Check if the domain already exists
@@ -245,11 +246,11 @@ async function handleRecordActivity({activity, token, requestId}: HandleRecordAc
   const sessionData = newSessions.map(({url, title, startTime, endTime}) => {
     const isHTTPS = url?.toLowerCase().startsWith('https');
     return {
-      url,
+      url: url?.slice(0, TRIM_LONG_STRING_LIMIT),
       domainActivityId: domainActivityRecord.id,
       startDatetime: new Date(startTime),
       endDatetime: new Date(endTime),
-      title: title ?? undefined,
+      title: title?.slice(0, TRIM_LONG_STRING_LIMIT) ?? undefined,
       isHTTPS,
     };
   });
