@@ -24,7 +24,7 @@
     "@nivo/pie": "^0.83.1",
     "@nivo/radar": "^0.83.1",
     "@paralleldrive/cuid2": "^2.2.2",
-    "@prisma/client": "^5.15.0",
+    "@prisma/client": "^5.17.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-toast": "^1.1.5",
     "@sentry/nextjs": "^7.109.0",
@@ -91,7 +91,7 @@
     "jest": "^29.7.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
-    "prisma": "^5.15.0",
+    "prisma": "^5.17.0",
     "tailwindcss": "^3.4.3",
     "ts-jest": "^29.1.2",
     "typescript": "5.4.3"
