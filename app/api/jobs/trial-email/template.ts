@@ -20,7 +20,7 @@ export function getTemplate({timeLeft}: TrialEmailJob) {
 <body>
 <main>
     <p class="content">
-        Hey 👋, this is Denis
+        Hey 👋, this is Marcus
     </p>
 
     <p class="content">
@@ -40,7 +40,7 @@ export function getTemplate({timeLeft}: TrialEmailJob) {
     <p>
         -----<br/>
         Best regards, <br/>
-        Denis from <a href="https://trackerjam.com/">TrackerJam.com</a> <br/>
+        Marcus from <a href="https://trackerjam.com/">TrackerJam.com</a> <br/>
         <a href="https://x.com/TrackerJam">@TrackerJam</a>
     </p>
     <p class="unsubscribe">
