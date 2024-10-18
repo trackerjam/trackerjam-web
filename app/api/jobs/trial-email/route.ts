@@ -23,9 +23,9 @@ export async function sendEmail(to: string, htmlTemplate: string) {
 
   return transporter.sendMail({
     to,
-    from: 'Denis <hi@trackerjam.com>',
+    from: 'Marcus <hi@trackerjam.com>',
     replyTo: 'hi@trackerjam.com',
-    sender: 'Denis from TrackerJam',
+    sender: 'Marcus from TrackerJam',
     subject: 'Your trial ends soon',
     text: '',
     html: htmlTemplate,
