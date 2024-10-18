@@ -14,7 +14,7 @@ function getHtml() {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Denis from TrackerJam.com</title>
+    <title>Marcus from TrackerJam.com</title>
     <style>
         body {
             font-family: Arial, sans-serif;
